@@ -1,0 +1,786 @@
+{% extends 'base_layout.html' %}
+{% block content %}
+
+    <section class="content">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                Ana Sayfa
+
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Ana Sayfa</a></li>
+
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <!-- Info boxes -->
+            <div class="row">
+
+                <!-- ./col -->
+                <div class="col-lg-3 col-xs-6">
+                    <!-- small box -->
+                    <div class="small-box bg-green">
+                        <div class="inner">
+                            <h3>{{ total_club }}<sup style="font-size: 20px"></sup></h3>
+
+                            <p>Kulüp Sayısı</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fa fa-male"></i>
+                        </div>
+                        <a href="{% url "wushu:kulupler" %}" class="small-box-footer">
+                            Daha Fazla <i class="fa fa-arrow-circle-right"></i>
+                        </a>
+                    </div>
+                </div>
+                <!-- ./col -->
+                <div class="col-lg-3 col-xs-6">
+                    <!-- small box -->
+                    <div class="small-box bg-yellow">
+                        <div class="inner">
+                            <h3>{{ total_club_user }}</h3>
+
+                            <p>Kulüp Üyesi Sayısı</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-ios-people-outline"></i>
+                        </div>
+                        <a href="{% url "wushu:kulup-uyeleri" %}" class="small-box-footer">
+                            Daha Fazla <i class="fa fa-arrow-circle-right"></i>
+                        </a>
+                    </div>
+                </div>
+                <!-- ./col -->
+                <div class="col-lg-3 col-xs-6">
+                    <!-- small box -->
+                    <div class="small-box bg-red">
+                        <div class="inner">
+                            <h3>{{ total_athlete }}</h3>
+
+                            <p>Sporcu Sayısı</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fa fa-home"></i>
+                        </div>
+                        <a href="{% url "wushu:sporcular" %}" class="small-box-footer">
+                            Daha Fazla <i class="fa fa-arrow-circle-right"></i>
+                        </a>
+                    </div>
+                </div>
+                <!-- /.col -->
+                <div class="col-lg-3 col-xs-6">
+                    <!-- small box -->
+                    <div class="small-box bg-light-blue">
+                        <div class="inner">
+                            <h3>{{ total_coachs }}</h3>
+
+                            <p>Antrenör Sayısı</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fa fa-home"></i>
+                        </div>
+                        <a href="{% url "wushu:antrenorler" %}" class="small-box-footer">
+                            Daha Fazla <i class="fa fa-arrow-circle-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- /.row -->
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Aylık Rapor</h3>
+
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                        class="fa fa-minus"></i>
+                                </button>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-box-tool dropdown-toggle"
+                                            data-toggle="dropdown">
+                                        <i class="fa fa-wrench"></i></button>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="#">Action</a></li>
+                                        <li><a href="#">Another action</a></li>
+                                        <li><a href="#">Something else here</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="#">Separated link</a></li>
+                                    </ul>
+                                </div>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i
+                                        class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <p class="text-center">
+                                        <strong>Wushu Sporcu Sayısı Artışı</strong>
+                                    </p>
+
+                                    <div class="chart">
+                                        <!-- Sales Chart Canvas -->
+                                        <canvas id="salesChart2" style="height: 180px; width: 816px;" width="1020"
+                                                height="225"></canvas>
+                                    </div>
+                                    <!-- /.chart-responsive -->
+                                </div>
+                                <!-- /.col -->
+                                <div class="col-md-4">
+                                    <p class="text-center">
+                                        <strong>Ulaşılan Hedefler</strong>
+                                    </p>
+
+                                    <div class="progress-group">
+                                        <span class="progress-text">Toplam Sporcu</span>
+                                        <span class="progress-number"><b>{{total_athlete}}</b>/{{ total_athlete }}</span>
+
+                                        <div class="progress sm">
+                                            <div class="progress-bar progress-bar-aqua" style="width: 100%"></div>
+                                        </div>
+                                    </div>
+                                    <!-- /.progress-group -->
+                                    <div class="progress-group">
+                                        <span class="progress-text">Toplam Erkek Sporcu</span>
+                                        <span class="progress-number"><b>{{total_athlete_gender_man}}</b>/{{ total_athlete_gender_man }}</span>
+
+                                        <div class="progress sm">
+                                            <div class="progress-bar progress-bar-red" style="width: 100%"></div>
+                                        </div>
+                                    </div>
+                                    <!-- /.progress-group -->
+                                    <div class="progress-group">
+                                        <span class="progress-text">Toplam Kadın Sporcu</span>
+                                        <span class="progress-number"><b>{{ total_athlete_gender_woman }}</b>/{{ total_athlete_gender_woman }}</span>
+
+                                        <div class="progress sm">
+                                            <div class="progress-bar progress-bar-green" style="width: 100%"></div>
+                                        </div>
+                                    </div>
+                                    <!-- /.progress-group -->
+                                    <div class="progress-group">
+                                        <span class="progress-text">Toplam Antrenör</span>
+                                        <span class="progress-number"><b>{{total_coachs}}</b>/{{ total_coachs }}</span>
+
+                                        <div class="progress sm">
+                                            <div class="progress-bar progress-bar-yellow" style="width: 100%"></div>
+                                        </div>
+                                    </div>
+                                    <!-- /.progress-group -->
+                                </div>
+                                <!-- /.col -->
+                            </div>
+                            <!-- /.row -->
+                        </div>
+
+                    </div>
+                    <!-- /.box -->
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+
+            <!-- Main row -->
+            <div class="row">
+                <!-- Left col -->
+                <div class="col-md-8">
+
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Braşlarin Sporcu Sayılari</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <table class="table table-bordered">
+                                <tbody>
+                                <tr>
+                                    <th style="width: 10px">#</th>
+                                    <th>Brans</th>
+
+                                    <th>Sporcu Sayısı</th>
+                                </tr>
+                                <tr>
+                                    <td>1.</td>
+                                    <td>AIKIDO</td>
+                                    <td><span class="badge ">{{ total_brans_aikido }}</span></td>
+                                </tr>
+                                <tr>
+                                    <td>2.</td>
+                                    <td>WUSHU</td>
+                                    <td><span class="badge ">{{ total_brans_wushu }}</span></td>
+                                </tr>
+                                <tr>
+                                    <td>3.</td>
+                                    <td>WING CHUN</td>
+                                    <td><span class="badge ">{{ total_brans_wing_chun }}</span></td>
+                                </tr>
+                                <tr>
+                                    <td>4.</td>
+                                    <td>KYOKUSHIN ASHIHARA</td>
+                                    <td><span class="badge ">{{ total_brans_kyokushin_ashihara }}</span></td>
+                                </tr>
+                                <tr>
+                                    <td>5.</td>
+                                    <td>JEET KUNE DO KULELKAVIDO</td>
+                                    <td><span class="badge ">{{ total_brans_jeet_kune_do_kulelkavi }}</span></td>
+                                </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.box-body -->
+                        <div class="box-footer clearfix">
+                            <ul class="pagination pagination-sm no-margin pull-right">
+                                <li><a href="#">«</a></li>
+                                <li><a href="#">1</a></li>
+                                <li><a href="#">»</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+
+                    <!-- /.box -->
+                    <div class="row">
+                        <div class="col-md-6">
+
+                        </div>
+                        <!-- /.col -->
+
+                        <div class="col-md-12">
+                            <!-- USERS LIST -->
+                            <div class="box box-danger">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Antrenörler</h3>
+
+                                    <div class="box-tools pull-right">
+
+                                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                                class="fa fa-minus"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i
+                                                class="fa fa-times"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="box-body no-padding">
+                                    <ul class="users-list clearfix">
+                                        <li>
+                                            <img src="/media/elif-akyuz.jpg" style="width: 100px;height: 100px"
+                                                 alt="User Image">
+                                            <a class="users-list-name" href="#">Kevin Durant</a>
+
+                                        </li>
+                                        <li>
+                                            <img src="/media/elif-akyuz.jpg" style="width: 100px;height: 100px"
+                                                 alt="User Image">
+                                            <a class="users-list-name" href="#">Stephen Curry</a>
+
+                                        </li>
+                                        <li>
+                                            <img src="/media/elif-akyuz.jpg" style="width: 100px;height: 100px"
+                                                 alt="User Image">
+                                            <a class="users-list-name" href="#">Paul George</a>
+
+                                        </li>
+                                        <li>
+                                            <img src="/media/elif-akyuz.jpg" style="width: 100px;height: 100px"
+                                                 alt="User Image">
+                                            <a class="users-list-name" href="#">Kawhi Leonard</a>
+
+                                        </li>
+                                        <li>
+                                            <img src="/media/elif-akyuz.jpg" style="width: 100px;height: 100px"
+                                                 alt="User Image">
+                                            <a class="users-list-name" href="#">Kyrie Irving</a>
+
+                                        </li>
+                                        <li>
+                                            <img src="/media/elif-akyuz.jpg" style="width: 100px;height: 100px"
+                                                 alt="User Image">
+                                            <a class="users-list-name" href="#">John Wall</a>
+
+                                        </li>
+                                        <li>
+                                            <img src="/media/elif-akyuz.jpg" style="width: 100px;height: 100px"
+                                                 alt="User Image">
+                                            <a class="users-list-name" href="#">Mike Conley</a>
+
+                                        </li>
+                                        <li>
+                                            <img src="/media/elif-akyuz.jpg" style="width: 100px;height: 100px"
+                                                 alt="User Image">
+                                            <a class="users-list-name" href="#">Nadia</a>
+
+                                        </li>
+                                    </ul>
+                                    <!-- /.users-list -->
+                                </div>
+                                <!-- /.box-body -->
+                                <div class="box-footer text-center">
+                                    <a href="javascript:void(0)" class="uppercase">Tüm Antrenörleri Görüntüleyin</a>
+                                </div>
+                                <!-- /.box-footer -->
+                            </div>
+                            <!--/.box -->
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+
+                    <!-- TABLE: LATEST ORDERS -->
+                    <div class="box box-info">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Son Müsabakalar</h3>
+
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                        class="fa fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i
+                                        class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <div class="table-responsive">
+                                <table class="table no-margin">
+                                    <thead>
+                                    <tr>
+
+                                        <th>Rakip</th>
+                                        <th>Sonuç</th>
+                                        <th>Müsabaka Süresi</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+
+                                        <td>Keviin Durant</td>
+                                        <td><span class="label label-success">Galibiyet</span></td>
+                                        <td>
+                                            <div class="sparkbar" data-color="#00a65a" data-height="20">
+                                                <canvas width="34" height="20"
+                                                        style="display: inline-block; width: 34px; height: 20px; vertical-align: top;"></canvas>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+
+                                        <td>Stephen Curry</td>
+                                        <td><span class="label label-warning">Galibiyet</span></td>
+                                        <td>
+                                            <div class="sparkbar" data-color="#00a65a" data-height="20">
+                                                <canvas width="34" height="20"
+                                                        style="display: inline-block; width: 34px; height: 20px; vertical-align: top;"></canvas>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+
+                                        <td>Kawhi Leonard</td>
+                                        <td><span class="label label-danger">Galibiyet</span></td>
+                                        <td>
+                                            <div class="sparkbar" data-color="#00a65a" data-height="20">
+                                                <canvas width="34" height="20"
+                                                        style="display: inline-block; width: 34px; height: 20px; vertical-align: top;"></canvas>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+
+                                        <td>Paul George</td>
+                                        <td><span class="label label-info">Galibiyet</span></td>
+                                        <td>
+                                            <div class="sparkbar" data-color="#00a65a" data-height="20">
+                                                <canvas width="34" height="20"
+                                                        style="display: inline-block; width: 34px; height: 20px; vertical-align: top;"></canvas>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+
+                                        <td>Kyrie Irving</td>
+                                        <td><span class="label label-warning">Galibiyet</span></td>
+                                        <td>
+                                            <div class="sparkbar" data-color="#00a65a" data-height="20">
+                                                <canvas width="34" height="20"
+                                                        style="display: inline-block; width: 34px; height: 20px; vertical-align: top;"></canvas>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+
+                                        <td>Draymond Green</td>
+                                        <td><span class="label label-danger">Galibiyet</span></td>
+                                        <td>
+                                            <div class="sparkbar" data-color="#00a65a" data-height="20">
+                                                <canvas width="34" height="20"
+                                                        style="display: inline-block; width: 34px; height: 20px; vertical-align: top;"></canvas>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+
+                                        <td>Mike Conley</td>
+                                        <td><span class="label label-success">Galibiyet</span></td>
+                                        <td>
+                                            <div class="sparkbar" data-color="#00a65a" data-height="20">
+                                                <canvas width="34" height="20"
+                                                        style="display: inline-block; width: 34px; height: 20px; vertical-align: top;"></canvas>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.table-responsive -->
+                        </div>
+                        <!-- /.box-body -->
+                        <div class="box-footer clearfix">
+
+                            <a href="javascript:void(0)" class="btn btn-sm btn-default btn-flat pull-right">Tüm
+                                Müsabakaları Göster</a>
+                        </div>
+                        <!-- /.box-footer -->
+                    </div>
+                    <!-- /.box -->
+                </div>
+                <!-- /.col -->
+
+                <div class="col-md-4">
+                    <!-- Info Boxes Style 2 -->
+                    <div class="info-box bg-yellow">
+                        <span class="info-box-icon"><i class="fa fa-male"></i></span>
+
+                        <div class="info-box-content">
+                            <span class="info-box-text">En İyi Sporcu</span>
+                            <span class="info-box-number">Elif Akyüz</span>
+
+
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                    <!-- /.info-box -->
+                    <div class="info-box bg-green">
+                        <span class="info-box-icon"><i class="fa fa-male"></i></span>
+
+                        <div class="info-box-content">
+                            <span class="info-box-text">En İyi Antrenör</span>
+                            <span class="info-box-number">Salih Orhan </span>
+
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                    <!-- /.info-box -->
+                    <div class="info-box bg-red">
+                        <span class="info-box-icon"><i class="fa fa-home"></i></span>
+
+                        <div class="info-box-content">
+                            <span class="info-box-text">En İyi Kulüp</span>
+                            <span class="info-box-number">Kobiltek Spor Kulubü</span>
+
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                    <!-- /.info-box -->
+                    <div class="info-box bg-aqua">
+                        <span class="info-box-icon"><i class="fa  fa-flag-checkered"></i></span>
+
+                        <div class="info-box-content">
+                            <span class="info-box-text">En İyi Müsabaka</span>
+                            <span class="info-box-number">Antalta Müsabakası </span>
+
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                    <!-- /.info-box -->
+
+                    <div class="box box-default">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Sporcularda Cinsiyet Dağılımı</h3>
+
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                        class="fa fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i
+                                        class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="chart-responsive">
+                                        <canvas id="pieChart2" height="202" width="303"
+                                                style="width: 243px; height: 162px;"></canvas>
+                                    </div>
+                                    <!-- ./chart-responsive -->
+                                </div>
+                                <!-- /.col -->
+                                <div class="col-md-4">
+                                    <ul class="chart-legend clearfix">
+
+                                        <li><i class="fa fa-circle-o text-green"></i> Erkek</li>
+                                        <li><i class="fa fa-circle-o text-red"></i> Kadın</li>
+
+                                    </ul>
+                                </div>
+                                <!-- /.col -->
+                            </div>
+                            <!-- /.row -->
+                        </div>
+                        <!-- /.box-body -->
+                        <div class="box-footer no-padding">
+                            <ul class="nav nav-pills nav-stacked">
+                                <li><a href="#">Kadın
+                                    <span class="pull-right text-red"><i class="fa fa-angle-down"></i> {{ total_athlete_gender_woman }}</span></a>
+                                </li>
+                                <li><a href="#">Erkek <span class="pull-right text-green"><i class="fa fa-angle-up"></i> {{ total_athlete_gender_man }}</span></a>
+                                </li>
+
+                            </ul>
+                        </div>
+                        <!-- /.footer -->
+                    </div>
+                    <!-- /.box -->
+
+                    <!-- PRODUCT LIST -->
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Son Eklenen Sporcular</h3>
+
+
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                        class="fa fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i
+                                        class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                        <!-- /.box-header -->
+
+
+                        <div class="box-body">
+                            <ul class="products-list product-list-in-box">
+                                {% for athlete in last_athletes %}
+                                    <li class="item">
+                                        <div class="product-img">
+                                            <img src="/media/{{ athlete.person.profileImage }}" alt="Product Image">
+
+                                        </div>
+                                        <div class="product-info">
+                                            <a href="{% url "wushu:update-athletes" athlete.pk %}"
+                                               class="product-title">{{ athlete.user.first_name }} {{ athlete.user.last_name }}
+                                            </a>
+                                            <span class="product-description">     {{ athlete.licenses.last.sportsClub }}
+                                              </span>
+                                        </div>
+                                    </li>
+
+                                {% endfor %}
+
+
+                            </ul>
+                        </div>
+                        <!-- /.box-body -->
+                        <div class="box-footer text-center">
+                            <a href="{% url "wushu:sporcular" %}" class="uppercase">Tüm Sporcuları Görüntüle</a>
+                        </div>
+                        <!-- /.box-footer -->
+                    </div>
+                    <!-- /.box -->
+                </div>
+                <!-- /.col -->
+            </div>
+
+
+        </section>
+    </section>
+
+
+
+    <script>
+        {#var myLineChart = new Chart(ctxL, {#}
+        {#    type: 'line',#}
+        {#    data: {#}
+        {#        labels: ["January", "February", "March", "April", "May", "June", "July"],#}
+        {#        datasets: [#}
+        {#            {#}
+        {#                label: "My First dataset",#}
+        {#                data: [0, 65, 45, 65, 35, 65, 0],#}
+        {#                backgroundColor: '#AD35BA',#}
+        {#                borderColor: [#}
+        {#                    '#AD35BA',#}
+        {#                ],#}
+        {#                borderWidth: 2,#}
+        {#                pointBorderColor: "#fff",#}
+        {#                pointBackgroundColor: "rgba(173, 53, 186, 0.1)",#}
+        {#            }#}
+        {#        ]#}
+        {#    },#}
+        {#    options: {#}
+        {#        responsive: true#}
+        {#    }#}
+        {#});#}
+    </script>
+
+
+    <script>
+        $(function () {
+            console.log('benim bir gelecegim var ');
+            var salesChartCanvas = $('#salesChart2').get(0).getContext('2d');
+            // This will get the first returned node in the jQuery collection.
+            var salesChart = new Chart(salesChartCanvas);
+
+            let time = new Date().getMonth();
+            weekday = new Array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
+            months = new Array('Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Agustos', 'Eylül ', 'Ekim', 'Kasım', 'Aralık');
+            if (time != 1) {
+                geri = months[time - 1]
+            } else {
+                geri = months[11]
+            }
+            var salesChartData = {
+                labels: ['   ', geri, months[time]],
+
+                datasets: [
+                    {#{#}
+                    {#  label               : 'Electronics',#}
+                    {#  fillColor           : 'rgb(210, 214, 222)',#}
+                    {#  strokeColor         : 'rgb(210, 214, 222)',#}
+                    {#  pointColor          : 'rgb(210, 214, 222)',#}
+                    {#  pointStrokeColor    : '#c1c7d1',#}
+                    {#  pointHighlightFill  : '#fff',#}
+                    {#  pointHighlightStroke: 'rgb(220,220,220)',#}
+                    {#  data                : [500, 600,{{ total_athlete }}]#}
+                    {#}, #}
+                    {
+                        label: 'Digital Goods',
+                        fillColor: 'rgba(60,141,188,0.9)',
+                        strokeColor: 'rgba(60,141,188,0.8)',
+                        pointColor: '#3b8bba',
+                        pointStrokeColor: 'rgba(60,141,188,1)',
+                        pointHighlightFill: '#fff',
+                        pointHighlightStroke: 'rgba(60,141,188,1)',
+                        data: [200, 500, {{ total_athlete }}],
+                    }
+
+                ]
+            };
+
+            var salesChartOptions = {
+                // Boolean - If we should show the scale at all
+                showScale: true,
+                // Boolean - Whether grid lines are shown across the chart
+                scaleShowGridLines: false,
+                // String - Colour of the grid lines
+                scaleGridLineColor: 'rgba(0,0,0,.05)',
+                // Number - Width of the grid lines
+                scaleGridLineWidth: 1,
+                // Boolean - Whether to show horizontal lines (except X axis)
+                scaleShowHorizontalLines: true,
+                // Boolean - Whether to show vertical lines (except Y axis)
+                scaleShowVerticalLines: true,
+                // Boolean - Whether the line is curved between points
+                bezierCurve: true,
+                // Number - Tension of the bezier curve between points
+                bezierCurveTension: 0.3,
+                // Boolean - Whether to show a dot for each point
+                pointDot: false,
+                // Number - Radius of each point dot in pixels
+                pointDotRadius: 4,
+                // Number - Pixel width of point dot stroke
+                pointDotStrokeWidth: 1,
+                // Number - amount extra to add to the radius to cater for hit detection outside the drawn point
+                pointHitDetectionRadius: 20,
+                // Boolean - Whether to show a stroke for datasets
+                datasetStroke: true,
+                // Number - Pixel width of dataset stroke
+                datasetStrokeWidth: 2,
+                // Boolean - Whether to fill the dataset with a color
+                datasetFill: true,
+                // String - A legend template
+                legendTemplate: ' ',
+                // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
+                maintainAspectRatio: true,
+                // Boolean - whether to make the chart responsive to window resizing
+                responsive: true
+            };
+
+            // Create the line chart
+            salesChart.Line(salesChartData, salesChartOptions);
+
+
+        {#pie log#}
+        var pieChartCanvas = $('#pieChart2').get(0).getContext('2d');
+        var pieChart = new Chart(pieChartCanvas);
+        var PieData = [
+            {
+                value: {{total_athlete_gender_woman}},
+                color: '#f56954',
+                highlight: '#f56954',
+                label: 'Kadın'
+            },
+            {
+                value: {{total_athlete_gender_man}},
+                color: '#00a65a',
+                highlight: '#00a65a',
+                label: 'Erkek'
+            },
+
+        ];
+        var pieOptions = {
+            // Boolean - Whether we should show a stroke on each segment
+            segmentShowStroke: true,
+            // String - The colour of each segment stroke
+            segmentStrokeColor: '#fff',
+            // Number - The width of each segment stroke
+            segmentStrokeWidth: 1,
+            // Number - The percentage of the chart that we cut out of the middle
+            percentageInnerCutout: 50, // This is 0 for Pie charts
+            // Number - Amount of animation steps
+            animationSteps: 100,
+            // String - Animation easing effect
+            animationEasing: 'easeOutBounce',
+            // Boolean - Whether we animate the rotation of the Doughnut
+            animateRotate: true,
+            // Boolean - Whether we animate scaling the Doughnut from the centre
+            animateScale: false,
+            // Boolean - whether to make the chart responsive to window resizing
+            responsive: true,
+            // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
+            maintainAspectRatio: false,
+            // String - A legend template
+            legendTemplate: '',
+            // String - A tooltip template
+            tooltipTemplate: ''
+        };
+        // Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+        pieChart.Doughnut(PieData, pieOptions);
+        // -----------------
+        // - END PIE CHART -
+
+
+
+
+
+
+        });
+
+
+
+    </script>
+    <script>
+    </script>
+
+{% endblock %}
