@@ -93,14 +93,35 @@
 
     <section class="content-header">
         <h1>
-            Müsabaka İncele
+            Vize Semineri İncele
 
         </h1>
         <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i>Müsabaka İncele</a></li>
+            <li><a href="#"><i class="fa fa-dashboard"></i>Vize Semineri İncele</a></li>
 
         </ol>
     </section>
+    <div class="box box-primary">
+
+        <div class="box-header with-border">
+            <div class="box-header with-border">
+                <h3 class="box-title">Onay Durumu</h3>
+                <div class="box-header with-border">
+                    <h3 class="box-title">{{ competition.status }}</h3>
+
+
+                    <div class="text-right">
+                        <a href="{% url "wushu:seminar-onayla" competition.pk %}"
+                           type="button" class="btn btn-warning"><i
+                                class="fa fa-edit"></i>Onayla
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
     <section class="content">
 
         <form method="post" enctype="multipart/form-data" role="form">
@@ -125,10 +146,6 @@
                                         {{ competition_form.startDate }}
                                     </div>
 
-                                    <div class="form-group">
-                                        <label> {{ competition_form.finishDate.label }}</label>
-                                        {{ competition_form.finishDate }}
-                                    </div>
 
                                     <div class="form-group">
                                         <label> {{ competition_form.location.label }}</label>
@@ -142,21 +159,12 @@
                                         <label> {{ competition_form.branch.label }}</label>
                                         {{ competition_form.branch }}
                                     </div>
-
                                     <div class="form-group">
-                                        <label> {{ competition_form.subBranch.label }}</label>
-                                        {{ competition_form.subBranch }}
+                                        <label> {{ competition_form.finishDate.label }}</label>
+                                        {{ competition_form.finishDate }}
                                     </div>
 
-                                    <div class="form-group">
-                                        <label> {{ competition_form.status.label }}</label>
-                                        {{ competition_form.status }}
-                                    </div>
 
-                                    <div class="form-group">
-                                        <label> {{ competition_form.type.label }}</label>
-                                        {{ competition_form.type }}
-                                    </div>
                                 </div>
 
 
@@ -181,15 +189,15 @@
                 <div class="col-lg-12">
                     <div class="box box-primary">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Sporcular</h3>
+                            <h3 class="box-title"> Seçili Antrenörler</h3>
                         </div>
                         <div class="box-header with-border">
                             <div class="btn-group">
 
-                                    <a href="{% url "wushu:musabaka-sporcu-sec" competition.pk %}"
-                                       type="button" class="btn btn-success"><i
-                                            class="fa fa-edit"></i>Sporcu Ekle
-                                    </a>
+                                <a href="{% url "wushu:vize-semineri-antroner-sec" competition.pk %}"
+                                   type="button" class="btn btn-success"><i
+                                        class="fa fa-edit"></i>Antrenör Ekle
+                                </a>
 
                             </div>
                         </div>
@@ -200,11 +208,9 @@
                                     <th>#</th>
                                     <th>Ad Soyad</th>
                                     <th>Doğum Tarihi</th>
-                                    {% if user.groups.all.0.name == 'Yonetim' or user.groups.all.0.name == 'Admin' %}
-                                        <th>Kulüp</th>
-                                    {% endif %}
-                                    <th>Branş</th>
-                                    <th>Kuşak</th>
+                                    {#                                    {% if user.groups.all.0.name == 'Yonetim' or user.groups.all.0.name == 'Admin' %}#}
+                                    {#                                        <th>Kulüp</th>#}
+                                    {#                                    {% endif %}#}
                                     <th>İşlemler</th>
 
 
@@ -215,20 +221,17 @@
                                     {% for athlete in athletes %}
                                         <tr>
                                             <td>{{ forloop.counter }} </td>
-                                            <td>{{ athlete.athlete.user.first_name }} {{ athlete.athlete.user.last_name }} </td>
-                                            <td>{{ athlete.athlete.person.birthDate }} </td>
-                                            {% if user.groups.all.0.name == 'Yonetim' or user.groups.all.0.name == 'Admin' %}
-                                                <td>{{ athlete.athlete.licenses.last.sportsClub }}</td>
-                                            {% endif %}
-                                            <td>{{ athlete.athlete.licenses.last.branch }}</td>
-                                            <td>{{ athlete.athlete.belts.last.definition }}</td>
+                                            <td>{{ athlete.user.first_name }} {{ athlete.user.last_name }} </td>
+                                            <td>{{ athlete.person.birthDate }} </td>
+
+
                                             <td>
                                                 <div class="btn-group">
 
-                                                        <a onclick="deleteAthlete({{ athlete.id }})"
-                                                           type="button" class="btn btn-danger"><i
-                                                                class="fa fa-edit"></i>Kaldır
-                                                        </a>
+                                                    <a onclick="deleteAthlete({{ athlete.id }}, {{ competition.pk }})"
+                                                       type="button" class="btn btn-danger"><i
+                                                            class="fa fa-edit"></i>Kaldır
+                                                    </a>
 
 
                                                 </div>
@@ -257,14 +260,15 @@
     </section>
 
     <script>
-        function deleteAthlete(id) {
+        function deleteAthlete(id, competition) {
 
             console.log(id);
+            console.log(competition)
             var html = '';
             $("#modal-danger").on("shown.bs.modal", function (e) {
                 $("#btn-conf").click(function () {
                     $.ajax({
-                        url: "{% url "wushu:musabaka-sporcu-kaldir" pk=212121223232323232 %}".replace(/212121223232323232/, id.toString()),
+                        url: "{% url "wushu:visaSeminar-antrenör-sil" pk=212121223232323232 competition=999999999999999 %}".replace(/212121223232323232/, id.toString()).replace(/999999999999999/, competition.toString()),
                         type: "POST",
                         data: {
                             'csrfmiddlewaretoken': "{{  csrf_token  }}",
@@ -272,13 +276,13 @@
                         },
                         success: function (result) {
 
-                            html = 'Sporcu başarıyla kaldırıldı.';
-                        debugger;
+                            html = ' Başarıyla Silindi.';
+                            debugger;
                             $(".successModal").html(html);
                             $('#modal-success').on("shown.bs.modal", function (e) {
                                 $(".btn-ok").click(function () {
 
-                                    window.location.replace("{% url "wushu:musabaka-duzenle" competition.pk %}");
+                                    window.location.replace("{% url "wushu:seminar-duzenle" competition.pk %}");
 
                                 });
 
@@ -294,7 +298,8 @@
                 $('#modal-danger').modal('hide');
             });
 
-        }
+        };
+
     </script>
 
 {% endblock %}

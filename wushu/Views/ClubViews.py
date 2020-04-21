@@ -220,6 +220,7 @@ def updateClubPersons(request, pk):
     person_form = PersonForm(request.POST or None, instance=person)
     communication_form = CommunicationForm(request.POST or None, instance=communication)
     sportClubUser_form = SportClubUserForm(request.POST or None, instance=athlete)
+    clubs = SportsClub.objects.filter(clubUser__user=user)
 
     if request.method == 'POST':
 
@@ -246,7 +247,7 @@ def updateClubPersons(request, pk):
 
     return render(request, 'kulup/kulup-uyesi-duzenle.html',
                   {'user_form': user_form, 'communication_form': communication_form,
-                   'person_form': person_form, 'sportClubUser_form': sportClubUser_form})
+                   'person_form': person_form, 'sportClubUser_form': sportClubUser_form, 'clubs': clubs})
 
 
 @login_required
@@ -628,8 +629,6 @@ def detail_belt_exam(request, pk):
         logout(request)
         return redirect('accounts:login')
     exam = BeltExam.objects.get(pk=pk)
-
-
     return render(request, 'kulup/kusak-sinavi-incele.html', {'exam': exam})
 
 
@@ -778,30 +777,40 @@ def add_belt_exam(request):
 
 @login_required
 def update_belt_exam(request, pk):
+    print('kusak sinavi düzenle çalisti')
     perm = general_methods.control_access(request)
-
     if not perm:
         logout(request)
         return redirect('accounts:login')
-    club = SportsClub.objects.get(id=pk)
-    com_id = club.communication.pk
-    communication = Communication.objects.get(id=com_id)
-    club_form = ClubForm(request.POST or None, instance=club)
-    communication_form = CommunicationForm(request.POST or None, instance=communication)
-    clubPersons = SportClubUser.objects.filter(sportClub=club)
+    sinav = BeltExam.objects.get(pk=pk)
+    # license_form = LicenseForm(request.POST or None, request.FILES or None, instance=license,initial={'sportsClub': license.sportsClub})
+    print(sinav.sportClub)
+    exam_form = BeltExamForm(request.POST or None, request.FILES or None, instance=sinav,
+                             initial={'sportsClub': sinav.sportClub.name})
+    print(exam_form)
+    user = request.user
+    if user.groups.filter(name='KulupUye'):
+        sc_user = SportClubUser.objects.get(user=user)
+        clubs = SportsClub.objects.filter(clubUser=sc_user)
+        clubsPk = []
+        for club in clubs:
+            clubsPk.append(club.pk)
+        exam_form.fields['sportClub'].queryset = SportsClub.objects.filter(id__in=clubsPk)
+
+
+    elif user.groups.filter(name__in=['Yonetim', 'Admin']):
+        exam_form.fields['sportClub'].queryset = SportsClub.objects.all()
 
     if request.method == 'POST':
-        if club_form.is_valid():
-            club_form.save()
-            communication_form.save()
-            messages.success(request, 'Başarıyla Güncellendi')
-            return redirect('wushu:kulupler')
+        exam_form = BeltExamForm(request.POST, request.FILES or None)
+        if exam_form.is_valid():
+            exam = exam_form.save()
+            messages.success(request, 'Sınav başarıyla güncellendi')
+            return redirect('wushu:kusak-sinavlari')
         else:
             messages.warning(request, 'Alanları Kontrol Ediniz')
 
-    return render(request, 'kulup/kulupDuzenle.html',
-                  {'club_form': club_form, 'communication_form': communication_form, 'clubPersons': clubPersons,
-                   'club': club})
+    return render(request, 'kulup/kusak-sinavi-güncelle.html', {'exam_form': exam_form})
 
 
 @login_required

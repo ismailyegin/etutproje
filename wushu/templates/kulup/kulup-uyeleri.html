@@ -213,8 +213,7 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Ad Soyad</th>
-                                    <th>Rolü</th>
-                                    <th>Cep Tel</th>
+
                                     <th>E-Mail</th>
                                     {% if user.groups.all.0.name == 'Yonetim' or user.groups.all.0.name == 'Admin' %}
                                         <th>İşlemler</th>
@@ -227,15 +226,15 @@
                                         <tr>
                                             <td>{{ forloop.counter }} </td>
                                             <td>{{ athlete.user.first_name }} {{ athlete.user.last_name }} </td>
-                                            <td>{{ athlete.role.name }} </td>
-                                            <td>{{ athlete.communication.phoneNumber }} </td>
+
+
                                             <td>{{ athlete.user.email }} </td>
                                             {% if user.groups.all.0.name == 'Yonetim' or user.groups.all.0.name == 'Admin' %}
                                                 <td>
                                                     <div class="btn-group">
                                                         <a href="{% url "wushu:kulup-uyesi-guncelle" athlete.pk %}"
                                                            type="button" class="btn btn-warning"><i
-                                                                class="fa fa-edit"></i>Güncelle
+                                                                class="fa fa-edit"></i>İncele
                                                         </a>
 
 
@@ -273,8 +272,8 @@
                 language: {
                     buttons: {
                         pageLength: {
-                            _: " %d  Tane Seçili",
-                            '-1': "Hepsi Seçili"
+                            _: " %d  Tane Göster",
+                            '-1': "Hepsini Göster"
                         }
                     }
                 },
@@ -318,7 +317,7 @@
                         exportOptions: {
                             columns: [0, 1, 2, 3, 4, 5]
                         },
-                        titleAttr: 'Pfd Kaydet'
+                        titleAttr: 'Pdf Kaydet'
                     },
 
                     {

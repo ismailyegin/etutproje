@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.forms import ModelForm
+from django.db import models
 
 
 class UserForm(ModelForm):
@@ -29,5 +30,17 @@ class UserForm(ModelForm):
             return data
         else:
             return data
+
+    # def save(self, commit=False):
+    #     self.first_name=self.cleaned_data['first_name'].upper()
+    #     self.last_name=self.cleaned_data['last_name'].upper()
+    #     print(self.first_name)
+    #     # self.first_name = self.first_name.upper()
+    #     # self.last_name = self.last_name.upper()
+    #     return ModelForm.save(self, commit=False)
+
+
+
+
     def __str__(self):
         return '%s %s' % (self.user.first_name, self.user.last_name)

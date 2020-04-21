@@ -17,7 +17,9 @@ urlpatterns = [
     url(r'groups/$', views.groups, name='group'),
     url(r'permission-save-api/$', views.permission_post, name="save-permission"),
 
-    url(r'deneme/$', views.deneme, name='deneme'),
+    url(r'mail/$', views.mail, name='mail'),
+    url(r'newpassword$', views.updateUrlProfile, name='newPassword')
+
 
 
 ]

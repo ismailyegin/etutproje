@@ -139,22 +139,51 @@
                             <div class="box-body">
                                 {% csrf_token %}
 
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <div class="form-group">
                                         <label> {{ user_form.first_name.label }}</label>
                                         {{ user_form.first_name }}
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <div class="form-group">
                                         <label> {{ user_form.last_name.label }}</label>
                                         {{ user_form.last_name }}
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <div class="form-group">
                                         <label> {{ user_form.email.label }}</label>
                                         {{ user_form.email }}
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label> {{ branch.branch.label }}</label>
+                                        {{ branch.branch }}
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label> {{ user_form.definition.label }}</label>
+                                        {{ user_form.definition }}
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label> Vize</label>
+                                        <select name="visa" class="form-control select2 select2-hidden-accessible"
+                                                style="width: 100%; " id="id_visa" tabindex="-1"
+                                                aria-hidden="true">
+                                            <option value="" selected="">Seçiniz</option>
+
+                                            <option value="VISA">Vizeli</option>
+
+                                            <option value="NONE">Vizesiz</option>
+
+                                        </select>
+
+
                                     </div>
                                 </div>
 
@@ -203,11 +232,13 @@
                                 <tr>
                                     <th>#</th>
                                     <th> Ad Soyad</th>
-                                    <th>Doğum Tarihi</th>
-                                    <th>İl</th>
-                                    <th>Cep Tel</th>
                                     <th>E-Mail</th>
-                                    <th>Güncelleme</th>
+                                    <th>Branş</th>
+                                    <th>Kademe</th>
+                                    <th>Vize</th>
+                                    {% if user.groups.all.0.name == 'Yonetim' or user.groups.all.0.name == 'Admin' %}
+                                        <th>İncele/Sil</th>
+                                    {% endif %}
 
 
                                 </tr>
@@ -218,15 +249,51 @@
                                         <tr>
                                             <td>{{ forloop.counter }} </td>
                                             <td>{{ referee.user.first_name }} {{ referee.user.last_name }} </td>
-                                            <td>{{ referee.person.tc }} </td>
-                                            <td>{{ referee.communication.city }} </td>
-                                            <td>{{ referee.communication.phoneNumber }} </td>
                                             <td>{{ referee.user.email }} </td>
+                                            <td>
+
+
+                                                {% for grade in referee.grades.all %}
+                                                    {% if  grade.status == 'Onaylandı' and grade.isActive == True %}
+
+                                                        <p>{{ grade.branch }}  </p>
+                                                    {% endif %}
+
+
+                                                {% endfor %}
+
+                                            </td>
+                                            <td>
+
+
+                                                {% for grade in referee.grades.all %}
+                                                    {% if  grade.status == 'Onaylandı' and grade.isActive == True %}
+
+                                                        <p>{{ grade.definition }}  </p>
+                                                    {% endif %}
+
+
+                                                {% endfor %}
+
+                                            </td>
+                                            <td>
+
+
+                                                {% for grade in referee.visa.all %}
+                                                    {% if  grade.status == 'Onaylandı' and grade.isActive == True %}
+
+                                                        <p>{{ grade.branch }}  </p>
+                                                    {% endif %}
+
+
+                                                {% endfor %}
+
+                                            </td>
                                             <td>
                                                 <div class="btn-group">
                                                     <a href="{% url "wushu:hakem-duzenle" referee.pk %}"
                                                        type="button" class="btn btn-warning"><i
-                                                            class="fa fa-edit"></i> Güncelle
+                                                            class="fa fa-edit"></i> İncele
                                                     </a>
                                                     <a class="btn btn-danger"
                                                        data-toggle="modal" onclick=deleteReferee({{ referee.pk }})><i
@@ -290,7 +357,7 @@
                         success: function (result) {
 
                             html = 'Hakem Başarıyla Silindi';
-                        debugger;
+                            debugger;
                             $(".successModal").html(html);
                             $('#modal-success').on("shown.bs.modal", function (e) {
                                 $(".btn-ok").click(function () {

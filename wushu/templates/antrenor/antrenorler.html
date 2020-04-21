@@ -139,22 +139,51 @@
                             <div class="box-body">
                                 {% csrf_token %}
 
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <div class="form-group">
                                         <label> {{ user_form.first_name.label }}</label>
                                         {{ user_form.first_name }}
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <div class="form-group">
                                         <label> {{ user_form.last_name.label }}</label>
                                         {{ user_form.last_name }}
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <div class="form-group">
                                         <label> {{ user_form.email.label }}</label>
                                         {{ user_form.email }}
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label> {{ branch.branch.label }}</label>
+                                        {{ branch.branch }}
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label> {{ user_form.definition.label }}</label>
+                                        {{ user_form.definition }}
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label> Vize</label>
+                                        <select name="visa" class="form-control select2 select2-hidden-accessible"
+                                                style="width: 100%; " id="id_visa" tabindex="-1"
+                                                aria-hidden="true">
+                                            <option value="" selected="">Seçiniz</option>
+
+                                            <option value="VISA">Vizeli</option>
+
+                                            <option value="NONE">Vizesiz</option>
+
+                                        </select>
+
+
                                     </div>
                                 </div>
 
@@ -204,12 +233,12 @@
                                 <tr>
                                     <th>#</th>
                                     <th> Ad Soyad</th>
-                                    <th>Doğum Tarihi</th>
-                                    <th>İl</th>
-                                    <th>Cep Tel</th>
                                     <th>E-Mail</th>
+                                    <th>Branş</th>
+                                    <th>Kademe</th>
+                                    <th>Vize</th>
                                     {% if user.groups.all.0.name == 'Yonetim' or user.groups.all.0.name == 'Admin' %}
-                                        <th>Güncelleme</th>
+                                        <th>İncele/Sil</th>
                                     {% endif %}
 
 
@@ -221,16 +250,53 @@
                                         <tr>
                                             <td>{{ forloop.counter }} </td>
                                             <td>{{ coach.user.first_name }} {{ coach.user.last_name }} </td>
-                                            <td>{{ coach.person.tc }} </td>
-                                            <td>{{ coach.communication.city }} </td>
-                                            <td>{{ coach.communication.phoneNumber }} </td>
                                             <td>{{ coach.user.email }} </td>
+                                            <td>
+
+
+                                                {% for grade in coach.grades.all %}
+                                                    {% if  grade.status == 'Onaylandı' and grade.isActive == True %}
+
+                                                        <p>{{ grade.branch }}  </p>
+                                                    {% endif %}
+
+
+                                                {% endfor %}
+
+                                            </td>
+                                            <td>
+
+
+                                                {% for grade in coach.grades.all %}
+                                                    {% if  grade.status == 'Onaylandı'  and grade.isActive == True %}
+
+                                                        <p>{{ grade.definition }}  </p>
+                                                    {% endif %}
+
+
+                                                {% endfor %}
+
+                                            </td>
+                                            <td>
+
+
+                                                {% for grade in coach.visa.all %}
+                                                    {% if  grade.status == 'Onaylandı' and  grade.isActive == True %}
+
+                                                        <p>{{ grade.branch }}  </p>
+                                                    {% endif %}
+
+
+                                                {% endfor %}
+
+                                            </td>
+
                                             {% if user.groups.all.0.name == 'Yonetim' or user.groups.all.0.name == 'Admin' %}
                                                 <td>
                                                     <div class="btn-group">
                                                         <a href="{% url "wushu:update-coach" coach.pk %}"
                                                            type="button" class="btn btn-warning"><i
-                                                                class="fa fa-edit"></i> Güncelle
+                                                                class="fa fa-edit"></i> İncele
                                                         </a>
                                                         <a class="btn btn-danger"
                                                            data-toggle="modal" onclick=deleteCoach({{ coach.pk }})><i
@@ -270,8 +336,8 @@
                 language: {
                     buttons: {
                         pageLength: {
-                            _: " %d  Tane Seçili",
-                            '-1': "Hepsi Seçili"
+                            _: " %d  Tane Göster",
+                            '-1': "Hepsini Göster"
                         }
                     }
                 },
@@ -315,7 +381,7 @@
                         exportOptions: {
                             columns: [0, 1, 2, 3, 4, 5]
                         },
-                        titleAttr: 'Pfd Kaydet'
+                        titleAttr: 'Pdf Kaydet'
                     },
 
                     {

@@ -159,8 +159,9 @@
                                 <th> Hak Kazanma Tarihi</th>
 
 
-                                <th> Tanımı</th>
+
                                 <th> Onay Durumu</th>
+                                <th> Kademe</th>
                                 <th> Dekont</th>
 
                                 <th> İşlemler</th>
@@ -177,7 +178,7 @@
 
                                         <td>
 
-                                            <a target="_blank">{{ belt.athlete_set.first }} </a>
+                                            <a target="_blank">{{ belt.CoachGrades.first }} </a>
 
                                         </td>
                                         <td>{{ belt.branch }}</td>
@@ -248,8 +249,8 @@
                 language: {
                     buttons: {
                         pageLength: {
-                            _: " %d  Tane Seçili",
-                            '-1': "Hepsi Seçili"
+                            _: " %d  Tane Göster",
+                            '-1': "Hepsini Göster"
                         }
                     }
                 },
@@ -293,7 +294,7 @@
                         exportOptions: {
                             columns: [0, 1, 2, 3, 4, 5]
                         },
-                        titleAttr: 'Pfd Kaydet'
+                        titleAttr: 'Pdf Kaydet'
                     },
 
                     {
@@ -353,7 +354,7 @@
                             },
                             success: function (result) {
 
-                                html = 'Kuşaklar başari ile onaylandı.';
+                                html = 'Başari ile onaylandı.';
                                 debugger;
                                 $(".successModal").html(html);
                                 $('#modal-success').on("shown.bs.modal", function (e) {
@@ -396,7 +397,7 @@
                             },
                             success: function (result) {
 
-                                html = 'Kuşaklar basari ile reddedildi.';
+                                html = 'Başarı ile reddedildi.';
                                 debugger;
                                 $(".successModal").html(html);
                                 $('#modal-success').on("shown.bs.modal", function (e) {

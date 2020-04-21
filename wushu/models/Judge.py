@@ -13,7 +13,11 @@ class Judge(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     creationDate = models.DateTimeField(auto_now_add=True)
     modificationDate = models.DateTimeField(auto_now=True)
+    grades = models.ManyToManyField(Level, related_name='Judgegrades')
+    visa = models.ManyToManyField(Level, related_name='Judgevisa')
 
+    def __str__(self):
+        return '%s %s' % (self.user.first_name, self.user.last_name)
 
     class Meta:
         default_permissions = ()

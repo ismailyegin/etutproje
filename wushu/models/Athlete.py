@@ -24,8 +24,3 @@ class Athlete(models.Model):
 
     class Meta:
         ordering = ['pk']
-
-
-
-
-

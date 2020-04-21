@@ -32,7 +32,6 @@ urlpatterns = [
     # path('accounts/', include('django.contrib.auth.urls'))
     path('', include('accounts.urls')),
     path('wushu/', include('wushu.urls')),
-    path('api/token/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
 
 ]
 

@@ -77,13 +77,15 @@ def return_add_athlete(request):
         if user_form.is_valid() and person_form.is_valid() and license_form.is_valid() and communication_form.is_valid():
             user = User()
             user.username = user_form.cleaned_data['email']
-            user.first_name = user_form.cleaned_data['first_name']
-            user.last_name = user_form.cleaned_data['last_name']
+            user.first_name = user_form.cleaned_data['first_name'].upper()
+            user.last_name = user_form.cleaned_data['last_name'].upper()
             user.email = user_form.cleaned_data['email']
             group = Group.objects.get(name='Sporcu')
             password = User.objects.make_random_password()
             user.set_password(password)
+            user.is_active = False
             user.save()
+
             user.groups.add(group)
             user.save()
 
@@ -186,7 +188,7 @@ def return_athletes(request):
                 if sportsclup:
                     query &=Q(licenses__sportsClub__in=clubsPk)
                 if brans:
-                    query &= Q(licenses__branch=brans)
+                    query &= Q(licenses__branch=brans, licenses__status='Onaylandı')
 
                 if user.groups.filter(name='KulupUye'):
                     sc_user = SportClubUser.objects.get(user=user)
@@ -195,8 +197,10 @@ def return_athletes(request):
                     for club in clubs:
                         clubsPk.append(club.pk)
                     athletes = Athlete.objects.filter(licenses__sportsClub__in=clubsPk).filter(query).distinct()
+
                 elif user.groups.filter(name__in=['Yonetim', 'Admin']):
                     athletes = Athlete.objects.filter(query).distinct()
+
     sportclup = SearchClupForm(request.POST, request.FILES or None)
     if user.groups.filter(name='KulupUye'):
         sc_user = SportClubUser.objects.get(user=user)
@@ -233,9 +237,10 @@ def updateathletes(request, pk):
 
         if user_form.is_valid() and communication_form.is_valid() and person_form.is_valid():
             user = user_form.save(commit=False)
+            print('user=', user.first_name)
             user.username = user_form.cleaned_data['email']
-            user.first_name = user_form.cleaned_data['first_name']
-            user.last_name = user_form.cleaned_data['last_name']
+            user.first_name = user_form.cleaned_data['first_name'].upper()
+            user.last_name = user_form.cleaned_data['last_name'].upper()
             user.email = user_form.cleaned_data['email']
             user.save()
             person_form.save()
@@ -431,7 +436,7 @@ def sporcu_lisans_ekle(request, pk):
         if license_form.is_valid():
             license = license_form.save()
             athlete.licenses.add(license)
-
+            athlete.save()
             messages.success(request, 'Lisans Başarıyla Eklenmiştir.')
             return redirect('wushu:update-athletes', pk=pk)
 
@@ -451,11 +456,21 @@ def sporcu_lisans_onayla(request, license_pk, athlete_pk):
     if not perm:
         logout(request)
         return redirect('accounts:login')
-    license = License.objects.get(pk=license_pk)
-    license.status = License.APPROVED
-    license.save()
+    try:
+        athlete = Athlete.objects.get(pk=athlete_pk)
+        license = License.objects.get(pk=license_pk)
+        for item in athlete.licenses.all():
+            if item.branch == license.branch:
+                item.isActive = False
+                item.save()
+        license.status = License.APPROVED
+        license.isActive = True
+        license.save()
+        messages.success(request, 'Lisans Onaylanmıştır')
+    except:
+        messages.warning(request, 'Yeniden deneyiniz.')
 
-    messages.success(request, 'Lisans Onaylanmıştır')
+
     return redirect('wushu:update-athletes', pk=athlete_pk)
 
 
@@ -485,10 +500,22 @@ def sporcu_lisans_listesi_onayla(request, license_pk):
     if not perm:
         logout(request)
         return redirect('accounts:login')
-    license = License.objects.get(pk=license_pk)
-    license.status = License.APPROVED
-    license.save()
-    messages.success(request, 'Lisans Onaylanmıştır')
+    try:
+        license = License.objects.get(pk=license_pk)
+        athlete = license.athlete_set.first()
+        for item in athlete.licenses.all():
+            if item.branch == license.branch:
+                item.isActive = False
+                item.save()
+        license.status = Level.APPROVED
+        license.isActive = True
+        license.save()
+        messages.success(request, 'Lisans Onaylanmıştır')
+    except:
+        messages.success(request, 'Yeniden deneyiniz')
+
+
+
     return redirect('wushu:lisans-listesi')
 @login_required
 def sporcu_lisans_listesi_onayla_mobil(request, license_pk,count):
@@ -497,11 +524,21 @@ def sporcu_lisans_listesi_onayla_mobil(request, license_pk,count):
     if not perm:
         logout(request)
         return redirect('accounts:login')
-    license = License.objects.get(pk=license_pk)
-    license.status = License.APPROVED
-    license.reddetwhy='';
-    license.save()
-    messages.success(request, 'Lisans Onaylanmıştır')
+    try:
+        license = License.objects.get(pk=license_pk)
+        athlete = license.athlete_set.first()
+        for item in athlete.licenses.all():
+            if item.branch == license.branch:
+                item.isActive = False
+                item.save()
+        license.status = License.APPROVED
+        license.isActive = True
+        license.save()
+        messages.success(request, 'Lisans Onaylanmıştır')
+    except:
+        messages.warning(request, 'Yeniden deneyiniz')
+
+
     return redirect('wushu:sporcu-lisans-duzenle-mobil',count)
 @login_required
 
@@ -562,10 +599,21 @@ def sporcu_kusak_listesi_onayla(request, belt_pk):
     if not perm:
         logout(request)
         return redirect('accounts:login')
-    belt = Level.objects.get(pk=belt_pk)
-    belt.status = Level.APPROVED
-    belt.save()
-    messages.success(request, 'Kuşak Onaylanmıştır')
+    try:
+        belt = Level.objects.get(pk=belt_pk)
+        athlete = belt.athlete_set.first()
+        for item in athlete.belts.all():
+            if item.branch == belt.branch:
+                item.isActive = False
+                item.save()
+        belt.status = Level.APPROVED
+        belt.isActive = True
+        belt.save()
+        messages.success(request, 'Kuşak Onaylanmıştır')
+    except:
+        messages.success(request, 'Yeniden deneyiniz')
+
+
     return redirect('wushu:kusak-listesi')
 @login_required
 def sporcu_kusak_listesi_reddet(request, belt_pk):
@@ -588,13 +636,23 @@ def sporcu_kusak_listesi_hepsinionayla(request):
     if not perm:
         logout(request)
         return redirect('accounts:login')
+    try:
+        belt = Level.objects.filter(status='Beklemede', levelType=EnumFields.LEVELTYPE.BELT)
+        for bt in belt:
+            athlete = bt.athlete_set.first()
+            for item in athlete.belts.all():
+                if item.branch == bt.branch:
+                    item.isActive = False
+                    item.save()
+            bt.status = Level.APPROVED
+            bt.isActive = True
+            bt.save()
 
-    belt = Level.objects.filter(status='Beklemede',levelType=EnumFields.LEVELTYPE.BELT)
-    for bt in belt:
+        messages.success(request, 'Kuşaklar basari  Onaylanmıştır')
+    except:
+        messages.warning(request, 'Yeniden deneyiniz.')
 
-        bt.status = Level.APPROVED
-        bt.save()
-    messages.success(request, 'Kuşaklar basari  Onaylanmıştır')
+
     return redirect('wushu:kusak-listesi')
 
 
@@ -605,11 +663,22 @@ def sporcu_kusak_onayla(request, belt_pk, athlete_pk):
     if not perm:
         logout(request)
         return redirect('accounts:login')
-    belt = Level.objects.get(pk=belt_pk)
-    belt.status = Level.APPROVED
-    belt.save()
+    try:
+        belt = Level.objects.get(pk=belt_pk)
+        athlete = Athlete.objects.get(pk=athlete_pk)
+        for item in athlete.belts.all():
+            if item.branch == belt.branch:
+                item.isActive = False
+                item.save()
+        belt.status = Level.APPROVED
+        belt.isActive = True
+        belt.save()
 
-    messages.success(request, 'Kuşak Onaylanmıştır')
+        messages.success(request, 'Kuşak Onaylanmıştır')
+    except:
+        messages.warning(request, 'Yeniden deneyiniz.')
+
+
     return redirect('wushu:update-athletes', pk=athlete_pk)
 
 
@@ -956,8 +1025,8 @@ def updateAthleteProfile(request, pk):
         if user_form.is_valid() and communication_form.is_valid() and person_form.is_valid() and password_form.is_valid():
 
             user.username = user_form.cleaned_data['email']
-            user.first_name = user_form.cleaned_data['first_name']
-            user.last_name = user_form.cleaned_data['last_name']
+            user.first_name = user_form.cleaned_data['first_name'].upper()
+            user.last_name = user_form.cleaned_data['last_name'].upper()
             user.email = user_form.cleaned_data['email']
             user.set_password(password_form.cleaned_data['new_password1'])
             user.save()
@@ -984,11 +1053,21 @@ def updateAthleteProfile(request, pk):
 
 @login_required
 def sporcu_lisans_listesi_hepsionay(request):
-    licenses = License.objects.filter(status='Beklemede')
+    try:
+        licenses = License.objects.filter(status='Beklemede')
+        for license in licenses:
+            athlete = license.athlete_set.first()
+            for item in athlete.licenses.all():
+                if item.branch == license.branch:
+                    item.isActive = False
+                    item.save()
+            license.status = Level.APPROVED
+            license.isActive = True
+            license.save()
+    except:
+        messages.warning(request, 'Yeniden deneyiniz')
 
-    for license in licenses:
-        license.status = License.APPROVED
-        license.save()
+
     return redirect('wushu:lisans-listesi')
 # lisanslarda beklemede olanlarin hepsini reddet
 @login_required

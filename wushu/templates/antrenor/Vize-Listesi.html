@@ -172,7 +172,7 @@
 
                                         <td>
 
-                                            <a target="_blank">{{ belt.athlete_set}} </a>
+                                            <a target="_blank">{{ belt.CoachVisa.first }} </a>
 
                                         </td>
                                        <td>{{ belt.branch }}</td>
@@ -219,20 +219,6 @@
         </div>
 
     </section>
-
-    <script>
-        $(function () {
-            $('#kusak-listesi').DataTable({
-                'paging': true,
-                'lengthChange': true,
-                'searching': true,
-                'ordering': true,
-                'info': true,
-                'autoWidth': true
-            })
-
-        })
-    </script>
 
     <script>
         $(function () {
@@ -287,7 +273,7 @@
                         exportOptions: {
                             columns: [0, 1, 2, 3, 4, 5]
                         },
-                        titleAttr: 'Pfd Kaydet'
+                        titleAttr: 'Pdf Kaydet'
                     },
 
                     {
@@ -327,94 +313,10 @@
             })
 
         })
-    </script>
-
-    {% if user.groups.all.0.name == 'Yonetim' or user.groups.all.0.name == 'Admin' %}
-        <script>
-
-            function onay() {
-                console.log('gelecek senin ellerinde ')
-                var html = '';
-                $("#modal-danger").on("shown.bs.modal", function (e) {
-                    $("#btn-conf").click(function () {
-                        $.ajax({
-                            url: "{% url "wushu:kademe-list-onay-hepsi"%}".replace(),
-                            type: "POST",
-                            data: {
-                                'csrfmiddlewaretoken': "{{  csrf_token  }}",
-                                isActive: 'False'
-                            },
-                            success: function (result) {
-
-                                html = 'Kuşaklar başari ile onaylandı.';
-                                debugger;
-                                $(".successModal").html(html);
-                                $('#modal-success').on("shown.bs.modal", function (e) {
-                                    $(".btn-ok").click(function () {
-
-                                        window.location.replace("{% url "wushu:kademe-listesi"%}");
-
-                                    });
-
-                                }).modal('show');
-
-
-                                console.log(result.status)
-                            }
-                        });
-                    });
-                }).modal('show');
-                $('#btn-close').click(function () {
-                    $('#modal-danger').modal('hide');
-                });
-            }
-
 
         </script>
-        <script>
 
 
-            function reddet() {
-
-                console.log("reddet çalisti");
-                var html = '';
-                $("#modal-danger").on("shown.bs.modal", function (e) {
-                    $("#btn-conf").click(function () {
-                        $.ajax({
-                            url: "{% url "wushu:kademe-list-reddet-hepsi"%}".replace(),
-                            type: "POST",
-                            data: {
-                                'csrfmiddlewaretoken': "{{  csrf_token  }}",
-                                isActive: 'False'
-                            },
-                            success: function (result) {
-
-                                html = 'Kuşaklar basari ile reddedildi.';
-                                debugger;
-                                $(".successModal").html(html);
-                                $('#modal-success').on("shown.bs.modal", function (e) {
-                                    $(".btn-ok").click(function () {
-
-                                        window.location.replace("{% url "wushu:kademe-listesi"%}");
-
-                                    });
-
-                                }).modal('show');
-
-
-                                console.log(result.status)
-                            }
-                        });
-                    });
-                }).modal('show');
-                $('#btn-close').click(function () {
-                    $('#modal-danger').modal('hide');
-                });
-
-            }
-        </script>
-
-    {% endif %}
 
 
 

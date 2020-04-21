@@ -17,6 +17,7 @@ from wushu.Forms.PersonForm import PersonForm
 from wushu.Forms.SportClubUserForm import SportClubUserForm
 from wushu.Forms.UserForm import UserForm
 from wushu.Forms.UserSearchForm import UserSearchForm
+from accounts.models import Forgot
 from wushu.models import SportClubUser, Person, Communication
 from wushu.services import general_methods
 
@@ -28,7 +29,7 @@ def return_users(request):
     if not perm:
         logout(request)
         return redirect('accounts:login')
-    users = User.objects.all()
+    users = User.objects.none()
     user_form = UserSearchForm()
     if request.method == 'POST':
         user_form = UserSearchForm(request.POST)
@@ -36,8 +37,10 @@ def return_users(request):
             firstName = user_form.cleaned_data.get('first_name')
             lastName = user_form.cleaned_data.get('last_name')
             email = user_form.cleaned_data.get('email')
-            if not (firstName or lastName or email):
-                messages.warning(request, 'Lütfen Arama Kriteri Giriniz.')
+            active = request.POST.get('is_active')
+            print(active)
+            if not (firstName or lastName or email or active):
+                users = User.objects.all()
             else:
                 query = Q()
                 if lastName:
@@ -46,7 +49,13 @@ def return_users(request):
                     query &= Q(first_name__icontains=firstName)
                 if email:
                     query &= Q(email__icontains=email)
-                print(query)
+                if active == 'True':
+                    print(active)
+                    query &= Q(is_active=True)
+                if active == 'False':
+                    query &= Q(is_active=False)
+
+                    print('geldim ')
                 users = User.objects.filter(query)
     return render(request, 'kullanici/kullanicilar.html', {'users': users, 'user_form': user_form})
 
@@ -110,26 +119,38 @@ def send_information(request, pk):
         return redirect('accounts:login')
     if request.method == 'POST' and request.is_ajax():
 
-        obj = User.objects.get(pk=pk)
+        user = User.objects.get(pk=pk)
 
-        if not obj.is_active:
+        if not user.is_active:
             return JsonResponse({'status': 'Fail', 'msg': 'Kullanıcıyı aktifleştirin.'})
+        fdk = Forgot(user=user, status=False)
+        fdk.save()
 
-        password = User.objects.make_random_password()
-        obj.set_password(password)
-        # form.cleaned_data['password'] = make_password(form.cleaned_data['password'])
-        user = obj.save()
         html_content = ''
-        subject, from_email, to = 'TWF Bilgi Sistemi Kullanıcı Bilgileri', 'no-reply@twf.gov.tr', obj.email
-        text_content = 'Aşağıda ki bilgileri kullanarak sisteme giriş yapabilirsiniz.'
-        html_content = '<p> <strong>Site adresi:</strong> <a href="http://sbs.twf.gov.tr:81"></a>sbs.twf.gov.tr:81</p>'
-        html_content = html_content + '<p><strong>Kullanıcı Adı:</strong>' + obj.username + '</p>'
-        html_content = html_content + '<p><strong>Şifre:</strong>' + password + '</p>'
-        msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
+        subject, from_email, to = 'TWF Bilgi Sistemi Kullanıcı Bilgileri', 'no-reply@twf.gov.tr', user.email
+        html_content = '<h2>TÜRKİYE WUSHU KUNG FU FEDERASYONU BİLGİ SİSTEMİ</h2>'
+        html_content = html_content + '<p><strong>Kullanıcı Adınız :' + str(fdk.user.username) + '</strong></p>'
+        html_content = html_content + '<p> <strong>Site adresi:</strong> <a href="http://sbs.twf.gov.tr:81/newpassword?query=' + str(
+            fdk.uuid) + '">http://sbs.twf.gov.tr:81/wushu/profil-guncelle/?query=' + str(fdk.uuid) + '</p></a>'
+        msg = EmailMultiAlternatives(subject, '', from_email, [to])
         msg.attach_alternative(html_content, "text/html")
         msg.send()
 
-        print(obj.is_active)
+        # password = User.objects.make_random_password()
+        # obj.set_password(password)
+        # # form.cleaned_data['password'] = make_password(form.cleaned_data['password'])
+        # user = obj.save()
+        # html_content = ''
+        # subject, from_email, to = 'TWF Bilgi Sistemi Kullanıcı Bilgileri', 'no-reply@twf.gov.tr', obj.email
+        # text_content = 'Aşağıda ki bilgileri kullanarak sisteme giriş yapabilirsiniz.'
+        # html_content = '<p> <strong>Site adresi:</strong> <a href="http://sbs.twf.gov.tr:81"></a>sbs.twf.gov.tr:81</p>'
+        # html_content = html_content + '<p><strong>Kullanıcı Adı:</strong>' + obj.username + '</p>'
+        # html_content = html_content + '<p><strong>Şifre:</strong>' + password + '</p>'
+        # msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
+        # msg.attach_alternative(html_content, "text/html")
+        # msg.send()
+
+        # print(obj.is_active)
         return JsonResponse({'status': 'Success', 'msg': 'Şifre başarıyla gönderildi'})
 
     else:

@@ -45,3 +45,9 @@ class Person(models.Model):
 
     class Meta:
         default_permissions = ()
+
+    def save(self, force_insert=False, force_update=False):
+        self.birthplace = self.birthplace.upper()
+        self.motherName = self.motherName.upper()
+        self.fatherName = self.fatherName.upper()
+        super(Person, self).save(force_insert, force_update)

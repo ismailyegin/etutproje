@@ -241,7 +241,7 @@
                                     <th> Kısa Adı</th>
                                     <th>İl</th>
                                     <th>Kuruluş Tarihi</th>
-                                    <th>Güncelleme/Silme</th>
+                                    <th>İnceleme/Silme</th>
 
 
                                 </tr>
@@ -259,7 +259,7 @@
                                                 <div class="btn-group">
                                                     <a href="{% url "wushu:update-club" club.pk %}"
                                                        type="button" class="btn btn-warning"><i
-                                                            class="fa fa-edit"></i>Güncelle
+                                                            class="fa fa-edit"></i>İncele
                                                     </a>
                                                     {% if user.groups.all.0.name == 'Yonetim' or user.groups.all.0.name == 'Admin' %}
                                                         <a class="btn btn-danger"
@@ -302,8 +302,8 @@
                 language: {
                     buttons: {
                         pageLength: {
-                            _: " %d  Tane Seçili",
-                            '-1': "Hepsi Seçili"
+                            _: " %d  Tane Göster",
+                            '-1': "Hepsini Göster"
                         }
                     }
                 },
@@ -347,7 +347,7 @@
                         exportOptions: {
                             columns: [0, 1, 2, 3, 4, 5]
                         },
-                        titleAttr: 'Pfd Kaydet'
+                        titleAttr: 'Pdf Kaydet'
                     },
 
                     {

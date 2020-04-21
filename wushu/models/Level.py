@@ -1,6 +1,7 @@
 import enum
 
 from django.db import models
+
 from wushu.models.City import City
 from wushu.models.EnumFields import EnumFields
 from wushu.models.CategoryItem import CategoryItem
@@ -21,7 +22,7 @@ class Level(models.Model):
 
     levelType = models.CharField(max_length=128, verbose_name='Leveller', choices=EnumFields.LEVELTYPE.value)
     branch = models.CharField(max_length=128, verbose_name='Branş', choices=EnumFields.BRANCH.value)
-    isActive = models.BooleanField(default=True)
+    isActive = models.BooleanField(default=False)
     startDate = models.DateField()
     expireDate = models.DateField(null=True, blank=True, )
     durationDay = models.IntegerField(null=True, blank=True, )

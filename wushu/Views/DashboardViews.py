@@ -2,11 +2,12 @@ from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
-from rest_framework_simplejwt import views as jwt_views
+# from rest_framework_simplejwt import views as jwt_views
+from django.http import JsonResponse
 
 from wushu.models import SportClubUser, SportsClub, Coach, Level, License, Athlete,Person
 from wushu.services import general_methods
-from rest_framework.authtoken.models import Token
+# from rest_framework.authtoken.models import Token
 
 
 from datetime import date,datetime
@@ -61,6 +62,11 @@ def return_club_user_dashboard(request):
     if not perm:
         logout(request)
         return redirect('accounts:login')
+
+    if not perm:
+        logout(request)
+        return redirect('accounts:login')
+
     belts = Level.objects.all()
     login_user = request.user
     user = User.objects.get(pk=login_user.pk)
@@ -94,8 +100,12 @@ def return_admin_dashboard(request):
     if not perm:
         logout(request)
         return redirect('accounts:login')
-    # son eklenen 5 sporcuyu ekledik
-    last_athlete=Athlete.objects.order_by('-creationDate')[:5]
+
+    if not perm:
+        logout(request)
+        return redirect('accounts:login')
+    # son eklenen 8 sporcuyu ekledik
+    last_athlete = Athlete.objects.order_by('-creationDate')[:8]
     total_club = SportsClub.objects.all().count()
     total_athlete = Athlete.objects.all().count()
     total_athlete_gender_man=Athlete.objects.filter(person__gender='Erkek').count()
@@ -115,3 +125,21 @@ def return_admin_dashboard(request):
                    'total_brans_wushu':total_brans_wushu,'total_brans_aikido':total_brans_aikido,'total_brans_wing_chun':total_brans_wing_chun,
                    'total_brans_kyokushin_ashihara':total_brans_kyokushin_ashihara,'total_brans_jeet_kune_do_kulelkavi':total_brans_jeet_kune_do_kulelkavi
                    })
+
+
+@login_required
+def City_athlete_cout(request):
+    if request.method == 'POST' and request.is_ajax():
+        try:
+            cout = Athlete.objects.filter(communication__city__name__icontains=request.POST.get('city')).count()
+            data = {
+                'say': cout,
+            }
+            return JsonResponse(data)
+        except Level.DoesNotExist:
+            return JsonResponse({'status': 'Fail'})
+
+    else:
+        return JsonResponse({'status': 'Fail'})
+#
+#
