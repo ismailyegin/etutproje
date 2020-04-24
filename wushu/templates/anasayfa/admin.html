@@ -33,6 +33,21 @@
             pointer-events: none;
         }
 
+
+        #il-isimleri {
+            font-family: 'Open Sans';
+        {#display: inline-block;#} display: none;
+            background: #1094F6;
+            color: #fff;
+            padding: 8px 16px;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+            position: absolute;
+            z-index: 2;
+
+        }
+
         #sehir {
             font-size: 30px;
             text-align: center;
@@ -47,13 +62,12 @@
     <script type="text/javascript">
         $(function () {
             $("g").hover(
-                function () {
+                function (e) {
                     var id = $(this).attr("id");
-                    $("#sehir").text(id);
                 });
 
             $("g").click(
-                function () {
+                function (e) {
                     var id = $(this).attr("id");
                     $.ajax({
                         url: "{% url "wushu:sehir-sporcu-sayisi"%}",
@@ -65,9 +79,21 @@
                             'city': id.toString(),
                         },
                         success: function (result) {
+                            var position = $('#svg-turkiye-haritasi').position();
+                            $('#il-isimleri').toggle();
 
-                            {#debugger;#}
-                            $("#sehir").text(id + '   Sporcu sayisi =' + result.say)
+                            $('#il-isimleri').animate({
+                                top: e.pageY - position.top + 25 + 'px',
+                                left: e.pageX - position.left + 25 + 'px',
+
+                            });
+
+                            $('#il-isimleri').html(id +
+                                ' <br>Sporcu=' + result.athlete +
+                                ' <br>Antrenör=' + result.coach +
+                                ' <br>Hakem =' + result.referee +
+                                ' <br>Klüp=' + result.sportsClub);
+
                         }
                     });
 
@@ -462,11 +488,13 @@
             </div>
 
 
-            <div class="row">
+            <div>
+
                 <div class="box box-danger">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Şehirlerin Sporcu Sayilari</h3>
+                        <h3 class="box-title">Şehir Degerlendirme</h3>
                         <div id="sehir"></div>
+
 
                         <div class="box-tools pull-right">
 
@@ -478,7 +506,9 @@
                             </button>
                         </div>
                     </div>
+                    <!-- /.box-header -->
                     <div class="box-body no-padding">
+                        <div id="il-isimleri"> il isimleri</div>
 
                         <div class="svg-turkiye-haritasi">
                             <svg version="1.1" id="svg-turkiye-haritasi" viewBox="0 0 1007.478 527.323">
@@ -750,11 +780,17 @@
                                     </g>
 
                             </svg>
-                        </div>
 
+
+                            <!-- /.users-list -->
+                        </div>
+                        <!-- /.box-body -->
+                        <div class="box-footer text-center">
+                            <a href="{% url "wushu:sporcular" %}" class="uppercase">Tüm Sporculari Görüntüleyin</a>
+                        </div>
+                        <!-- /.box-footer -->
                     </div>
                 </div>
-            </div>
 
 
         </section>

@@ -5,18 +5,18 @@ from wushu.models.Athlete import Athlete
 from wushu.models.Competition import Competition
 
 
-class simlecategory(models.Model):
+class Simlecategory(models.Model):
     categoryName = models.CharField(max_length=255, null=True, blank=True)
-    compCategoryCompleted=models.BooleanField()
-    compOrder=models.IntegerField()
+    compCategoryCompleted = models.BooleanField(null=True, blank=True)
+    compOrder = models.IntegerField(null=True, blank=True)
     creationDate=models.DateTimeField(auto_now_add=True)
-    isDuilian=models.BooleanField()
-    kobilId=models.IntegerField()
+    isDuilian = models.BooleanField(null=True, blank=True)
+    kobilId = models.IntegerField(null=True, blank=True)
     operationDate=models.DateTimeField(auto_now_add=True)
-    playersOrdered=models.BooleanField()
-    recordCompleted=models.BooleanField()
-    competition=models.IntegerField()
-    area=models.IntegerField()
+    playersOrdered = models.BooleanField(null=True, blank=True)
+    recordCompleted = models.BooleanField(null=True, blank=True)
+    competition = models.IntegerField(null=True, blank=True)
+    area = models.IntegerField(null=True, blank=True)
 
 
 

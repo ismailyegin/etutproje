@@ -482,6 +482,7 @@ def vısa_ekle(request, pk):
                 if item.branch == visa.branch:
                     item.isActive = False
                     item.save()
+            visa.isActive = True
             visa.save()
             referee.visa.add(visa)
             referee.save()
@@ -710,9 +711,14 @@ def visaSeminar_onayla(request, pk):
         visa.definition = CategoryItem.objects.get(forWhichClazz='VISA_REFEREE')
         visa.levelType = EnumFields.LEVELTYPE.VISA
         visa.status = Level.APPROVED
+        visa.isActive = True
         visa.save()
 
         for item in seminar.referee.all():
+            for referee in item.visa.all():
+                if referee.branch == visa.branch:
+                    referee.isActive = False
+                    referee.save()
             item.visa.add(visa)
             item.save()
         seminar.status = VisaSeminar.APPROVED

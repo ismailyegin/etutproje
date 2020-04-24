@@ -8,10 +8,33 @@ from django.urls import reverse
 
 from wushu.Forms.CompetitionForm import CompetitionForm
 from wushu.models import SportClubUser, SportsClub, Competition, Athlete
+from wushu.models.Simplecategory import Simlecategory
 from wushu.models.EnumFields import EnumFields
 from wushu.models.SandaAthlete import SandaAthlete
 from wushu.models.TaoluAthlete import TaoluAthlete
 from wushu.services import general_methods
+from wushu.Forms.SimplecategoryForm import SimplecategoryForm
+
+
+@login_required
+def categori_ekle(request):
+    perm = general_methods.control_access(request)
+
+    if not perm:
+        logout(request)
+        return redirect('accounts:login')
+    simplecategoryForm = SimplecategoryForm()
+    categoryitem = Simlecategory.objects.all()
+    if request.method == 'POST':
+        simplecategoryForm = SimplecategoryForm(request.POST)
+        if simplecategoryForm.is_valid():
+            simplecategoryForm.save()
+            messages.success(request, 'Kategori Başarıyla Güncellenmiştir.')
+        else:
+            messages.warning(request, 'Birşeyler ters gitti yeniden deneyiniz.')
+
+    return render(request, 'musabaka/müsabaka-Simplecategori.html',
+                  {'category_item_form': simplecategoryForm, 'categoryitem': categoryitem})
 
 
 @login_required
