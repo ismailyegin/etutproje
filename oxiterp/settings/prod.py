@@ -20,20 +20,20 @@ ALLOWED_HOSTS = ['*']
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'oxit-wushu',
+        'NAME': 'halterfirtina',
         'HOST': 'localhost',
-        'PORT': '3307',
-        'USER': 'bitnami',
-        'PASSWORD': '00babf99dc'
+        'PORT': '3306',
+        'USER': 'root',
+        'PASSWORD': 'kobil2013'
     }
 }
 
 
-STATIC_ROOT = "C:/Bitnami/djangostack-2.2.5-0/apache2/htdocs/static/"
+STATIC_ROOT = "C:/Bitnami/djangostack-2.2.12-0/apache2/htdocs/static/"
 
 STAICFILES_DIR = [
 
-    "C:/Bitnami/djangostack-2.2.5-0/apache2/htdocs/static/"
+    "C:/Bitnami/djangostack-2.2.12-0/apache2/htdocs/static/"
 
 ]
 
