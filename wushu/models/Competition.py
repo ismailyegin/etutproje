@@ -12,37 +12,51 @@ class Competition(models.Model):
     WAITED = 'Beklemede'
 
     STATUS_CHOICES = (
-        (OPEN,'Ön Kayıt Açık'),
+        (OPEN, 'Ön Kayıt Açık'),
         (CLOSED, 'Ön Kayıt Tamamlandı'),
         (WAITED, 'Beklemede')
     )
 
-    INTERNATIONAL = 'Uluslararası'
-    INTERSCHOOL = 'Okullar Arası'
-    INTERUNIVERSITY = 'Üniversiteler Arası'
-    NATIONAL = 'Ulusal'
+    TURKEY = 'Türkiye'
+    WORLD = 'Dünya'
+    OLYMPIAD = 'Olimpiyat'
+    EUROPE = 'Avrupa'
 
-    COMPETITION_TYPE = (
-        (INTERNATIONAL, 'Uluslararası'),
-        (INTERSCHOOL, 'Okullar Arası'),
+    COMPGENERALTYPE = (
+        (TURKEY, 'Türkiye'),
+        (WORLD, 'Dünya'),
+        (OLYMPIAD, 'Olimpiyat'),
+        (EUROPE, 'Avrupa')
+    )
+
+    INTERUNIVERSITY = 'Üniversiteler Arası'
+    INTERSCHOOL = 'Okullar Arası'
+    PERSONAL = 'Ferdi'
+
+    COMPTYPE = (
         (INTERUNIVERSITY, 'Üniversiteler Arası'),
-        (NATIONAL, 'Ulusal')
+        (INTERSCHOOL, 'Okullar Arası'),
+        (PERSONAL, 'Ferdi'),
     )
 
     creationDate = models.DateTimeField(auto_now_add=True)
-    modificationDate = models.DateTimeField(auto_now=True)
+    operationDate = models.DateTimeField(auto_now=True)
     name = models.CharField(blank=False, null=False, max_length=1000)
     startDate = models.DateTimeField()
-
     finishDate = models.DateTimeField()
-    location = models.CharField(blank=False, null=False, max_length=1000)
-    branch = models.CharField(max_length=128, verbose_name='Branş', choices=EnumFields.BRANCH.value)
-    subBranch = models.CharField(max_length=128, verbose_name='Alt Branş', choices=EnumFields.SUBBRANCH.value)
-    status = models.CharField(max_length=128, verbose_name='Kayıt Durumu', choices=STATUS_CHOICES, default=WAITED)
-    type =  models.CharField(max_length=128, verbose_name='Türü', choices=COMPETITION_TYPE, default=NATIONAL)
+    eventDate = models.CharField(max_length=1000, null=True, blank=True)
+    eventPlace = models.CharField(max_length=1000, null=True, blank=True)
+    compType = models.IntegerField(null=True, blank=True, choices=COMPTYPE)
+    compGeneralType = models.IntegerField(null=True, blank=True, choices=COMPGENERALTYPE)
+    juryCount = models.IntegerField(null=True, blank=True)
+    eskimi = models.BooleanField(default=False)
+    isOpen = models.BooleanField(default=False)
+    registerStartDate = models.DateTimeField()
+    registerFinishDate = models.DateTimeField()
 
     def __str__(self):
         return '%s ' % self.name
 
     class Meta:
-        default_permissions=()
+        default_permissions = ()
+        db_table = "competition"

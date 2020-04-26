@@ -160,10 +160,7 @@
                                     <th>İsim</th>
                                     <th>Başl. Tarihi</th>
                                     <th>Bitiş. Tarihi</th>
-                                    <th>Yer</th>
-                                    <th>Branş</th>
-                                    <th>Alt Branş</th>
-                                    <th>Kayıt Durumu</th>
+                                    <th>Genel Türü</th>
                                     <th>Türü</th>
 
 
@@ -177,11 +174,8 @@
                                             <td>{{ competition.name }}</td>
                                             <td>{{ competition.startDate }} </td>
                                             <td>{{ competition.finishDate }}</td>
-                                            <td>{{ competition.location }}</td>
-                                            <td>{{ competition.branch }}</td>
-                                            <td>{{ competition.subBranch }}</td>
-                                            <td>{{ competition.status }}</td>
-                                            <td>{{ competition.type }}</td>
+                                            <td>{{ competition.compGeneralType }}</td>
+                                            <td>{{ competition.compType }}</td>
                                             <td>
                                                 <div class="btn-group">
                                                     <a href="{% url "wushu:musabaka-duzenle" competition.pk %}"

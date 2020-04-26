@@ -1,5 +1,10 @@
 import enum
 
+from enum import IntEnum
+
+
+
+
 
 class EnumFields(enum.Enum):
     class LEVELTYPE2(enum.Enum):
@@ -46,7 +51,6 @@ class EnumFields(enum.Enum):
         (SANDA, 'SANDA'),
         (TAOLU, 'TAOLU'),
     )
-
 
     VISA = 'VISA'
     GRADE = 'GRADE'

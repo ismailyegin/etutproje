@@ -12,10 +12,9 @@ class CompetitionForm(ModelForm):
         model = Competition
 
         fields = (
-            'name', 'startDate', 'finishDate', 'location', 'branch', 'status','type','subBranch')
+            'name', 'startDate', 'finishDate','compType','compGeneralType')
 
-        labels = {'name': 'İsim', 'startDate': 'Başlangıç Tarihi', 'finishDate': 'Bitiş Tarihi',
-                  'location': 'Yer', 'branch': 'Branş', 'status':'Kayıt Durumu','type':'Türü','subBranch':'Alt Branş'}
+        labels = {'name': 'İsim', 'startDate': 'Başlangıç Tarihi', 'finishDate': 'Bitiş Tarihi', 'compType': 'Türü', 'compGeneralType': 'Genel Türü'}
 
         widgets = {
 
@@ -27,21 +26,12 @@ class CompetitionForm(ModelForm):
                 attrs={'class': 'form-control  pull-right', 'id': 'datepicker4', 'autocomplete': 'on',
                        'onkeydown': 'return true'}),
 
-            'branch': forms.Select(attrs={'class': 'form-control select2 select2-hidden-accessible',
-                                          'style': 'width: 100%; '}),
-
-            'subBranch': forms.Select(attrs={'class': 'form-control select2 select2-hidden-accessible',
-                                          'style': 'width: 100%; '}),
-
             'name': forms.TextInput(attrs={'class': 'form-control', 'required': 'required'}),
 
-            'location': forms.TextInput(attrs={'class': 'form-control', 'required': 'required'}),
-
-            'status': forms.Select(attrs={'class': 'form-control select2 select2-hidden-accessible',
-                                        'style': 'width: 100%;', 'required': 'required'}),
-
-            'type': forms.Select(attrs={'class': 'form-control select2 select2-hidden-accessible',
-                                          'style': 'width: 100%;', 'required': 'required'}),
+            'compType': forms.Select(attrs={'class': 'form-control select2 select2-hidden-accessible',
+                                          'style': 'width: 100%; '}),
+            'compGeneralType': forms.Select(attrs={'class': 'form-control select2 select2-hidden-accessible',
+                                            'style': 'width: 100%; '}),
 
 
 
