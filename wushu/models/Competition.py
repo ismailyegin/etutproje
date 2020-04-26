@@ -46,4 +46,3 @@ class Competition(models.Model):
 
     class Meta:
         default_permissions=()
-        db_table = "competition"
