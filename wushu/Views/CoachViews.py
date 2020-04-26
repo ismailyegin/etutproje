@@ -797,6 +797,7 @@ def antrenor_vısa_ekle(request, pk):
                 if item.branch == visa.branch:
                     item.isActive = False
                     item.save()
+            visa.isActive = True
             visa.save()
             coach.visa.add(visa)
             coach.save()
@@ -888,7 +889,13 @@ def visaSeminar_onayla(request, pk):
         visa.save()
 
         for item in seminar.coach.all():
+
+            for coach in item.visa.all():
+                if coach.branch == visa.branch:
+                    coach.isActive = False
+                    coach.save()
             item.visa.add(visa)
+            item.isActive = True
             item.save()
         seminar.status = VisaSeminar.APPROVED
         seminar.save()

@@ -52,7 +52,6 @@ class EnumFields(enum.Enum):
     GRADE = 'GRADE'
     BELT = 'BELT'
 
-
     LEVELTYPE = (
         (VISA, 'VISA'),
         (GRADE, 'GRADE'),

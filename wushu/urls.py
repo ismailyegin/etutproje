@@ -316,6 +316,7 @@ urlpatterns = [
         name='musabaka-sporcu-sec'),
     url(r'musabaka/musabaka-duzenle/kaldir/(?P<pk>\d+)/$', CompetitionViews.musabaka_sporcu_sil,
         name='musabaka-sporcu-kaldir'),
+    url(r'musabaka/KategoriEkle/$', CompetitionViews.categori_ekle, name='kategori-ekle'),
     #     Yardım ve destek
 
     url(r'yardim$', HelpViews.help, name='help'),

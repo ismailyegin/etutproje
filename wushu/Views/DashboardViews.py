@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect
 # from rest_framework_simplejwt import views as jwt_views
 from django.http import JsonResponse
 
-from wushu.models import SportClubUser, SportsClub, Coach, Level, License, Athlete,Person
+from wushu.models import SportClubUser, SportsClub, Coach, Level, License, Athlete, Person, Judge
 from wushu.services import general_methods
 # from rest_framework.authtoken.models import Token
 
@@ -126,14 +126,22 @@ def return_admin_dashboard(request):
                    'total_brans_kyokushin_ashihara':total_brans_kyokushin_ashihara,'total_brans_jeet_kune_do_kulelkavi':total_brans_jeet_kune_do_kulelkavi
                    })
 
-
 @login_required
 def City_athlete_cout(request):
+
     if request.method == 'POST' and request.is_ajax():
         try:
-            cout = Athlete.objects.filter(communication__city__name__icontains=request.POST.get('city')).count()
+            athletecout = Athlete.objects.filter(communication__city__name__icontains=request.POST.get('city')).count()
+            coachcout = Coach.objects.filter(communication__city__name__icontains=request.POST.get('city')).count()
+            refereecout = Judge.objects.filter(communication__city__name__icontains=request.POST.get('city')).count()
+            sportsClub = SportsClub.objects.filter(
+                communication__city__name__icontains=request.POST.get('city')).count()
             data = {
-                'say': cout,
+                'athlete': athletecout,
+                'coach': coachcout,
+                'referee': refereecout,
+                'sportsClub': sportsClub
+
             }
             return JsonResponse(data)
         except Level.DoesNotExist:
