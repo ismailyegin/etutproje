@@ -6,11 +6,11 @@ from oxiterp.settings.base import *
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'Kobil',
+        'NAME': 'sbs',
         'USER': 'postgres',
-        'PASSWORD': '1',
+        'PASSWORD': 'kobil2013',
         'HOST': 'localhost',
-        'PORT': '5433',
+        'PORT': '5432',
     }
 # DATABASES = {
 #     'default': {
