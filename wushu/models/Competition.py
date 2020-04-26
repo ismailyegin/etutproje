@@ -60,7 +60,6 @@ class Competition(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'competition'
         default_permissions = ()
 
 
