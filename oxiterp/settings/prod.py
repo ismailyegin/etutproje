@@ -20,11 +20,11 @@ ALLOWED_HOSTS = ['*']
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'oxit-wushu',
+        'NAME': 'halterfirtina',
         'HOST': 'localhost',
-        'PORT': '3307',
-        'USER': 'bitnami',
-        'PASSWORD': '00babf99dc'
+        'PORT': '3306',
+        'USER': 'root',
+        'PASSWORD': 'kobil2013'
     }
 }
 
