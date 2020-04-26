@@ -4,18 +4,6 @@ from django.db import models
 
 from wushu.models.Athlete import Athlete
 from wushu.models.EnumFields import EnumFields
-
-
-
-
-
-
-
-
-
-
-
-
 class Competition(models.Model):
     TURKEY = 'Türkiye'
     WORLD = 'Dünya'
@@ -42,7 +30,6 @@ class Competition(models.Model):
     compType = models.IntegerField(db_column='compType', blank=True, null=True, choices=COMPTYPE)  # Field name made lowercase.
     creationDate = models.DateTimeField(db_column='creationDate', blank=True, null=True)  # Field name made lowercase.
     finishDate = models.DateTimeField(db_column='finishDate', blank=True, null=True)  # Field name made lowercase.
-    kobilId = models.IntegerField(db_column='kobilId')  # Field name made lowercase.
     name = models.CharField(max_length=255, blank=True, null=True)
     operationDate = models.DateTimeField(db_column='operationDate', blank=True, null=True)  # Field name made lowercase.
     startDate = models.DateTimeField(db_column='startDate', blank=True, null=True)  # Field name made lowercase.
@@ -55,12 +42,14 @@ class Competition(models.Model):
     registerStartDate = models.DateTimeField(db_column='registerStartDate', blank=True, null=True)  # Field name made lowercase.
     registerFinishDate = models.DateTimeField(db_column='registerFinishDate', blank=True, null=True)  # Field name made lowercase.
 
+    kobilId = models.IntegerField(db_column='kobilId')  # Field name made lowercase.
     def __str__(self):
         return '%s ' % self.name
 
     class Meta:
-        managed = False
         default_permissions = ()
+        db_table = 'competition'
+
 
 
 
