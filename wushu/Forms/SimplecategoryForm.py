@@ -1,11 +1,11 @@
 from django import forms
 from django.forms import ModelForm
-from wushu.models.Simplecategory import Simlecategory
+from wushu.models.SimpleCategory import SimpleCategory
 
 
 class SimplecategoryForm(ModelForm):
     class Meta:
-        model = Simlecategory
+        model = SimpleCategory
 
         fields = ('categoryName',)
 

@@ -153,10 +153,10 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'mail.twf.gov.tr'
+EMAIL_HOST = 'mail.halter.gov.tr'
 EMAIL_PORT = '587'
-EMAIL_HOST_USER = 'no-reply@twf.gov.tr'
-EMAIL_HOST_PASSWORD = 'kobil2013'
+EMAIL_HOST_USER = 'no-reply@halter.gov.tr'
+EMAIL_HOST_PASSWORD = 'Kobil20123*'
 EMAIL_USE_TLS = False
 EMAIL_USE_SSL = False
 

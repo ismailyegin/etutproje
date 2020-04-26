@@ -25,4 +25,5 @@ from .MenuCoach import MenuCoach
 from .MenuDirectory import MenuDirectory
 from .MenuReferee import MenuReferee
 from .MenuClubUser import MenuClubUser
+from .SimpleCategory import SimpleCategory
 

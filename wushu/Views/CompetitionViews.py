@@ -8,7 +8,7 @@ from django.urls import reverse
 
 from wushu.Forms.CompetitionForm import CompetitionForm
 from wushu.models import SportClubUser, SportsClub, Competition, Athlete
-from wushu.models.Simplecategory import Simlecategory
+from wushu.models.SimpleCategory import SimpleCategory
 from wushu.models.EnumFields import EnumFields
 from wushu.models.SandaAthlete import SandaAthlete
 from wushu.models.TaoluAthlete import TaoluAthlete
@@ -24,7 +24,7 @@ def categori_ekle(request):
         logout(request)
         return redirect('accounts:login')
     simplecategoryForm = SimplecategoryForm()
-    categoryitem = Simlecategory.objects.all()
+    categoryitem = SimpleCategory.objects.all()
     if request.method == 'POST':
         simplecategoryForm = SimplecategoryForm(request.POST)
         if simplecategoryForm.is_valid():

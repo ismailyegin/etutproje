@@ -31,7 +31,7 @@ urlpatterns = [
     # path('', include('accounts.urls')),
     # path('accounts/', include('django.contrib.auth.urls'))
     path('', include('accounts.urls')),
-    path('wushu/', include('wushu.urls')),
+    path('sbs/', include('wushu.urls')),
 
 ]
 
