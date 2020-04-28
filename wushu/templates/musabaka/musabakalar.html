@@ -158,6 +158,7 @@
                                 <tr>
                                     <th>#</th>
                                     <th>İsim</th>
+                                    <th>YIl</th>
                                     <th>Başl. Tarihi</th>
                                     <th>Bitiş. Tarihi</th>
                                     <th>Genel Türü</th>
@@ -172,8 +173,9 @@
                                         <tr>
                                             <td>{{ forloop.counter }} </td>
                                             <td>{{ competition.name }}</td>
-                                            <td>{{ competition.startDate }} </td>
-                                            <td>{{ competition.finishDate }}</td>
+                                            <td>{{ competition.year }}</td>
+                                            <td>{{ competition.startDate | date }} </td>
+                                            <td>{{ competition.finishDate | date }}</td>
                                             <td>{{ competition.get_compGeneralType_display }}</td>
                                             <td>{{ competition.get_compType_display }}</td>
                                             <td>

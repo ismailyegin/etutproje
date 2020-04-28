@@ -42,6 +42,7 @@ class Competition(models.Model):
     registerStartDate = models.DateTimeField(db_column='registerStartDate', blank=True, null=True)  # Field name made lowercase.
     registerFinishDate = models.DateTimeField(db_column='registerFinishDate', blank=True, null=True)  # Field name made lowercase.
     kobilId = models.IntegerField(db_column='kobilId')  # Field name made lowercase.
+    year = models.IntegerField( blank=True, null=True,)  # Field name made lowercase.
     def __str__(self):
         return '%s ' % self.name
 
