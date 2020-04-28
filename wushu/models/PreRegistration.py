@@ -69,8 +69,8 @@ class PreRegistration(models.Model):
     phoneNumber = models.CharField(max_length=120, null=True, blank=True)
     phoneNumber2 = models.CharField(max_length=120, null=True, blank=True)
     address = models.TextField(blank=True, null=True, verbose_name='Adres')
-    city = models.ForeignKey(City, on_delete=models.CASCADE, verbose_name='İl')
-    country = models.ForeignKey(Country, on_delete=models.CASCADE, verbose_name='Ülke')
+    city = models.ForeignKey(City, on_delete=models.CASCADE, verbose_name='İl',related_name='user_city')
+    country = models.ForeignKey(Country, on_delete=models.CASCADE, verbose_name='Ülke',related_name='user_country')
 
     # sportClup
     name = models.CharField(blank=True, null=True, max_length=120)

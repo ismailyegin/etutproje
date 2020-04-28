@@ -82,11 +82,11 @@ def musabaka_duzenle(request, pk):
         return redirect('accounts:login')
 
     musabaka = Competition.objects.get(pk=pk)
-    athletes=TaoluAthlete.objects.none()
-    if musabaka.subBranch == EnumFields.SANDA:
-        athletes = SandaAthlete.objects.filter(competition=musabaka.pk)
-    if musabaka.subBranch == EnumFields.TAOLU:
-        athletes = TaoluAthlete.objects.filter(competition=musabaka.pk)
+    # athletes=TaoluAthlete.objects.none()
+    # if musabaka.subBranch == EnumFields.SANDA:
+    #     athletes = SandaAthlete.objects.filter(competition=musabaka.pk)
+    # if musabaka.subBranch == EnumFields.TAOLU:
+    #     athletes = TaoluAthlete.objects.filter(competition=musabaka.pk)
     competition_form = CompetitionForm(request.POST or None, instance=musabaka)
     if request.method == 'POST':
         if competition_form.is_valid():
@@ -99,7 +99,7 @@ def musabaka_duzenle(request, pk):
             messages.warning(request, 'Alanları Kontrol Ediniz')
 
     return render(request, 'musabaka/musabaka-duzenle.html',
-                  {'competition_form': competition_form, 'competition': musabaka, 'athletes': athletes})
+                  {'competition_form': competition_form, 'competition': musabaka})
 
 
 @login_required

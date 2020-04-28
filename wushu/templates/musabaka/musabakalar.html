@@ -174,8 +174,8 @@
                                             <td>{{ competition.name }}</td>
                                             <td>{{ competition.startDate }} </td>
                                             <td>{{ competition.finishDate }}</td>
-                                            <td>{{ competition.compGeneralType }}</td>
-                                            <td>{{ competition.compType }}</td>
+                                            <td>{{ competition.get_compGeneralType_display }}</td>
+                                            <td>{{ competition.get_compType_display }}</td>
                                             <td>
                                                 <div class="btn-group">
                                                     <a href="{% url "wushu:musabaka-duzenle" competition.pk %}"
