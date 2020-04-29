@@ -157,13 +157,13 @@
                                     </thead>
                                     <tbody>
                                     {% if athletes.all %}
-                                        {% for athlete in athletes %}
+                                        {% for compAthlete in athletes %}
                                             <tr>
 
                                                 <td><input type="checkbox" name="selected_options"
-                                                           value="{{ athlete.pk }}"></td>
-                                                <td>{{ athlete.user.first_name }} {{ athlete.user.last_name }} </td>
-                                                <td>{{ athlete.licenses.last.sportsClub }}</td>
+                                                           value="{{ compAthlete.athlete.pk }}"></td>
+                                                <td>{{ compAthlete.athlete.user.first_name }} {{ compAthlete.athlete.user.last_name }} </td>
+                                                <td>{{ compAthlete.athlete.licenses.last.sportsClub }}</td>
 
                                             </tr>
 

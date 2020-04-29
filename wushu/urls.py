@@ -274,7 +274,6 @@ urlpatterns = [
     url(r'hakem/vize-Liste-Onayla/(?P<referee_pk>\d+)$', RefereeViews.vize_onayla_liste,
         name='hakem-vize-list-onay'),
 
-
     # Yönetim Kurulu
     url(r'yonetim/kurul-uyeleri/$', DirectoryViews.return_directory_members, name='kurul-uyeleri'),
     url(r'yonetim/kurul-uyesi-ekle/$', DirectoryViews.add_directory_member, name='kurul-uyesi-ekle'),
@@ -314,6 +313,9 @@ urlpatterns = [
     url(r'musabaka/musabakalar/musabaka-sil(?P<pk>\d+)$', CompetitionViews.musabaka_sil, name='musabaka-sil'),
     url(r'musabaka/musabaka-duzenle/musabaka-sporcu-sec/(?P<pk>\d+)$', CompetitionViews.musabaka_sporcu_sec,
         name='musabaka-sporcu-sec'),
+    url(r'musabaka/musabaka-duzenle/musabaka_sporcu_ekle/(?P<athlete_pk>\d+)/(?P<competition_pk>\d+)$',
+        CompetitionViews.musabaka_sporcu_ekle,
+        name='musabaka_sporcu_ekle'),
     url(r'musabaka/musabaka-duzenle/kaldir/(?P<pk>\d+)/$', CompetitionViews.musabaka_sporcu_sil,
         name='musabaka-sporcu-kaldir'),
     url(r'musabaka/KategoriEkle/$', CompetitionViews.categori_ekle, name='kategori-ekle'),

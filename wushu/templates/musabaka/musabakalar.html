@@ -184,14 +184,15 @@
                                                        type="button" class="btn btn-warning"><i
                                                             class="fa fa-edit"></i>İncele
                                                     </a>
-                                                </div>
-                                                {% if user.groups.all.0.name == 'Yonetim' or user.groups.all.0.name == 'Admin' %}
 
-                                                    <a class="btn btn-danger"
-                                                       data-toggle="modal"
-                                                       onclick=deleteCompetition({{ competition.pk }})><i
-                                                            class="fa fa-trash"></i>Sil</a>
-                                                {% endif %}
+                                                    {% if user.groups.all.0.name == 'Yonetim' or user.groups.all.0.name == 'Admin' %}
+
+                                                        <a class="btn btn-danger"
+                                                           data-toggle="modal"
+                                                           onclick=deleteCompetition({{ competition.pk }})><i
+                                                                class="fa fa-trash"></i>Sil</a>
+                                                    {% endif %}
+                                                </div>
                                             </td>
 
                                         </tr>

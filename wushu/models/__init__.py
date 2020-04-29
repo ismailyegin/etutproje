@@ -26,4 +26,8 @@ from .MenuDirectory import MenuDirectory
 from .MenuReferee import MenuReferee
 from .MenuClubUser import MenuClubUser
 from .SimpleCategory import SimpleCategory
+from .CompAthlete import CompAthlete
+from .CompCategory import CompCategory
+from .GrupForReport import GrupForReport
+from .Weight import Weight
 

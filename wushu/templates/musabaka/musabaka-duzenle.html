@@ -168,12 +168,12 @@
                         </div>
                         <div class="box-header with-border">
                             <div class="btn-group">
-                                {% if competition.status == 'Ön Kayıt Açık' and competition.subBranch == 'SANDA' %}
-                                    <a href="{% url "wushu:musabaka-sporcu-sec" competition.pk %}"
-                                       type="button" class="btn btn-success"><i
-                                            class="fa fa-edit"></i>Sporcu Ekle
-                                    </a>
-                                {% endif %}
+
+                                <a href="{% url "wushu:musabaka-sporcu-sec" competition.pk %}"
+                                   type="button" class="btn btn-success"><i
+                                        class="fa fa-edit"></i>Sporcu Ekle
+                                </a>
+
                             </div>
                         </div>
                         <div class="box-body">
@@ -186,8 +186,8 @@
                                     {% if user.groups.all.0.name == 'Yonetim' or user.groups.all.0.name == 'Admin' %}
                                         <th>Kulüp</th>
                                     {% endif %}
-                                    <th>Branş</th>
-                                    <th>Kuşak</th>
+                                    <th>Siklet</th>
+                                    <th>Giriş Toplamı</th>
                                     <th>İşlemler</th>
 
 
@@ -195,24 +195,27 @@
                                 </thead>
                                 <tbody>
                                 {% if athletes %}
-                                    {% for athlete in athletes %}
+                                    {% for compathlete in athletes %}
                                         <tr>
                                             <td>{{ forloop.counter }} </td>
-                                            <td>{{ athlete.athlete.user.first_name }} {{ athlete.athlete.user.last_name }} </td>
-                                            <td>{{ athlete.athlete.person.birthDate }} </td>
+                                            <td>{{ compathlete.athlete.user.first_name }} {{ compathlete.athlete.user.last_name }} </td>
+                                            <td>{{ compathlete.athlete.person.birthDate }} </td>
                                             {% if user.groups.all.0.name == 'Yonetim' or user.groups.all.0.name == 'Admin' %}
-                                                <td>{{ athlete.athlete.licenses.last.sportsClub }}</td>
+                                                <td>{{ compathlete.athlete.licenses.last.sportsClub }}</td>
                                             {% endif %}
-                                            <td>{{ athlete.athlete.licenses.last.branch }}</td>
-                                            <td>{{ athlete.athlete.belts.last.definition }}</td>
+                                            <td>{{ compathlete.sıklet.weight }}</td>
+                                            <td>{{ compathlete.total }}</td>
                                             <td>
                                                 <div class="btn-group">
-                                                    {% if competition.status == 'Ön Kayıt Açık' %}
-                                                        <a onclick="deleteAthlete({{ athlete.id }})"
-                                                           type="button" class="btn btn-danger"><i
-                                                                class="fa fa-edit"></i>Kaldır
-                                                        </a>
-                                                    {% endif %}
+                                                    <a onclick="deleteAthlete({{ compathlete.id }})"
+                                                       type="button" class="btn btn-primary"><i
+                                                            class="fa fa-edit"></i>Güncelle
+                                                    </a>
+                                                    <a onclick="deleteAthlete({{ compathlete.id }})"
+                                                       type="button" class="btn btn-danger"><i
+                                                            class="fa fa-remove"></i>Kaldır
+                                                    </a>
+
 
                                                 </div>
                                             </td>

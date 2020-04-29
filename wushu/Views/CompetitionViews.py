@@ -7,7 +7,7 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 
 from wushu.Forms.CompetitionForm import CompetitionForm
-from wushu.models import SportClubUser, SportsClub, Competition, Athlete
+from wushu.models import SportClubUser, SportsClub, Competition, Athlete, CompAthlete, Weight
 from wushu.models.SimpleCategory import SimpleCategory
 from wushu.models.EnumFields import EnumFields
 from wushu.models.SandaAthlete import SandaAthlete
@@ -82,11 +82,7 @@ def musabaka_duzenle(request, pk):
         return redirect('accounts:login')
 
     musabaka = Competition.objects.get(pk=pk)
-    # athletes=TaoluAthlete.objects.none()
-    # if musabaka.subBranch == EnumFields.SANDA:
-    #     athletes = SandaAthlete.objects.filter(competition=musabaka.pk)
-    # if musabaka.subBranch == EnumFields.TAOLU:
-    #     athletes = TaoluAthlete.objects.filter(competition=musabaka.pk)
+    athletes = CompAthlete.objects.filter(competition=pk)
     competition_form = CompetitionForm(request.POST or None, instance=musabaka)
     if request.method == 'POST':
         if competition_form.is_valid():
@@ -99,7 +95,7 @@ def musabaka_duzenle(request, pk):
             messages.warning(request, 'Alanları Kontrol Ediniz')
 
     return render(request, 'musabaka/musabaka-duzenle.html',
-                  {'competition_form': competition_form, 'competition': musabaka})
+                  {'competition_form': competition_form, 'competition': musabaka, 'athletes': athletes})
 
 
 @login_required
@@ -121,6 +117,25 @@ def musabaka_sil(request, pk):
         return JsonResponse({'status': 'Fail', 'msg': 'Not a valid request'})
 
 
+def musabaka_sporcu_ekle(request, athlete_pk, competition_pk):
+    perm = general_methods.control_access(request)
+
+    if not perm:
+        logout(request)
+        return redirect('accounts:login')
+
+    if request.method == 'POST':
+        compAthlete = CompAthlete()
+        compAthlete.athlete = Athlete.objects.get(pk=athlete_pk)
+        compAthlete.competition = Competition.objects.get(pk=competition_pk)
+        compAthlete.sıklet = Weight.objects.get(pk=request.POST.get('weight'))
+        compAthlete.total = request.POST.get('total')
+        compAthlete.save()
+        messages.success(request, 'Sporcu Eklenmiştir')
+
+    return redirect('wushu:lisans-listesi')
+
+
 @login_required
 def musabaka_sporcu_sec(request, pk):
     perm = general_methods.control_access(request)
@@ -131,6 +146,7 @@ def musabaka_sporcu_sec(request, pk):
     login_user = request.user
     user = User.objects.get(pk=login_user.pk)
     competition = Competition.objects.get(pk=pk)
+    weights = Weight.objects.all()
     if user.groups.filter(name='KulupUye'):
         sc_user = SportClubUser.objects.get(user=user)
         clubsPk = []
@@ -140,21 +156,33 @@ def musabaka_sporcu_sec(request, pk):
         athletes = Athlete.objects.filter(licenses__sportsClub__in=clubsPk).distinct()
     elif user.groups.filter(name__in=['Yonetim', 'Admin']):
         athletes = Athlete.objects.all()
-    if request.method == 'POST':
+    return render(request, 'musabaka/musabaka-sporcu-sec.html',
+                  {'athletes': athletes, 'competition': competition, 'weights': weights})
 
+
+@login_required
+def musabaka_sporcu_tamamla(request, athletes):
+    perm = general_methods.control_access(request)
+
+    if not perm:
+        logout(request)
+        return redirect('accounts:login')
+
+    if request.method == 'POST':
         athletes1 = request.POST.getlist('selected_options')
         if athletes1:
-            for x in athletes1:
-                if competition.subBranch == 'SANDA':
-                    print('islem testi',x)
-                    athlete = Athlete.objects.get(pk=x)
-                    sandaAthlete = SandaAthlete()
-                    sandaAthlete.athlete = athlete
-                    sandaAthlete.competition = competition
-                    sandaAthlete.save()
+            return redirect('wushu:musabaka-sporcu-tamamla', athletes=athletes1)
+            # for x in athletes1:
+            #
+            #         athlete = Athlete.objects.get(pk=x)
+            #         compAthlete = CompAthlete()
+            #         compAthlete.athlete = athlete
+            #         compAthlete.competition = competition
+            #         compAthlete.save()
+        else:
+            messages.warning(request, 'Sporcu Seçiniz')
 
-        return redirect('wushu:musabaka-duzenle', pk=pk)
-    return render(request, 'kulup/kusak-sinavi-sporcu-sec.html', {'athletes': athletes})
+    return render(request, 'musabaka/musabaka-sporcu-tamamla.html', {'athletes': athletes})
 
 
 @login_required

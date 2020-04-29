@@ -51,6 +51,41 @@
         <!-- /.modal-dialog -->
     </div>
 
+    <div class="modal modal-warning fade in deneme23" tabindex="-1" role="dialog" id="reddetwhy"
+         aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title">Ek Bilgileri Giriniz</h4>
+                </div>
+                <div class="modal-body">
+                    <label for="inputState">Siklet</label>
+                    <select id="weight" class="form-control">
+                        <option selected>Seçiniz...</option>
+                        {% for weight in weights %}
+                            <option value="{{ weight.pk }}">{{ weight.weight }}</option>
+                        {% endfor %}
+                    </select>
+                    <label for="total">Toplam Kaldırış</label>
+                    <input type="text" name="total" id="total" class="form-control" required>
+
+                </div>
+
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline pull-left btn-ok" id="btn-gonder"
+                            data-dismiss="modal">Kaydet
+                    </button>
+                    <button type="button" class="btn btn-outline" id="btn-closereddet">Geri Dön</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
 
 
     {% if messages %}
@@ -142,15 +177,16 @@
                         <div class="box-header with-border">
                             <h3 class="box-title">Sporcu Seç</h3>
                         </div>
-                        <div class="box-body berktug"  >
+                        <div class="box-body berktug">
                             <form method="post" enctype="multipart/form-data" role="form">
                                 {% csrf_token %}
                                 <table id="sporcular" class="table table-bordered table-hover">
                                     <thead>
                                     <tr>
-                                        <th>Seç1</th>
+                                        <th>#</th>
                                         <th>Ad Soyad</th>
                                         <th>Kulüp</th>
+                                        <th>İşlemler</th>
 
 
                                     </tr>
@@ -160,11 +196,19 @@
                                         {% for athlete in athletes %}
                                             <tr>
 
-                                                <td><input type="checkbox" name="selected_options"
-                                                           value="{{ athlete.pk }}"></td>
+                                                <td>{{ forloop.counter }}</td>
                                                 <td>{{ athlete.user.first_name }} {{ athlete.user.last_name }} </td>
                                                 <td>{{ athlete.licenses.last.sportsClub }}</td>
+                                                <td>
+                                                    <div class="btn-group">
 
+                                                        <a class="btn btn-primary"
+                                                           data-toggle="modal"
+                                                           onclick=addPlayer({{ athlete.pk }},{{ competition.pk }})><i
+                                                                class="fa fa-plus"></i>Ekle</a>
+
+                                                    </div>
+                                                </td>
                                             </tr>
 
                                         {% endfor %}
@@ -173,12 +217,6 @@
 
                                     </tbody>
                                 </table>
-
-                                <div class="box-header with-border">
-                                    <div class="box-footer">
-                                        <button type="submit" class="btn btn-primary">Devam Et</button>
-                                    </div>
-                                </div>
                             </form>
                         </div>
                     </div>
@@ -234,6 +272,57 @@
             })
 
         })
+    </script>
+
+    <script>
+
+        function addPlayer(id, competitionId) {
+
+            $("#reddetwhy").on("shown.bs.modal", function (e) {
+
+                $("#btn-gonder").click(function () {
+
+                    console.log('buradan girdi', competitionId)
+                    $.ajax({
+                        url: "{% url "wushu:musabaka_sporcu_ekle" athlete_pk=212121223232323232 competition_pk=999999999999999 %}".replace(/212121223232323232/, id.toString()).replace(/999999999999999/, competitionId.toString()),
+                        type: "POST",
+                        data: {
+                            'csrfmiddlewaretoken': "{{  csrf_token  }}",
+                            total: $('#total').val(),
+                            weight: $('#weight').val(),
+                            isActive: 'False'
+
+                        },
+                        success: function (result) {
+
+                            html = 'Sporcu Başarıyla Eklendi .';
+                        debugger;
+                            $(".successModal").html(html);
+                            $('#modal-success').on("shown.bs.modal", function (e) {
+                                $(".btn-ok").click(function () {
+
+                                     window.location.replace("{% url "wushu:musabaka-sporcu-sec" competition.pk  %}");
+
+                                });
+
+                            }).modal('show');
+                        }
+                    });
+                });
+
+
+            }).modal('show');
+            $('#btn-closereddet').click(function () {
+                console.log('buradan çık')
+
+                $('#modal-warning').modal('hide');
+                $('.modal').modal('hide');
+
+            });
+
+        }
+
+
     </script>
 
 {% endblock %}
