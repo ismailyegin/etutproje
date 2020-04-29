@@ -16,3 +16,4 @@ class City(models.Model):
 
     class Meta:
         default_permissions = ()
+        db_table = 'city'
