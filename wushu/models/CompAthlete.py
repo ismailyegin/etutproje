@@ -42,3 +42,4 @@ class CompAthlete(models.Model):
 
     class Meta:
         db_table = 'compathlete'
+        managed = False

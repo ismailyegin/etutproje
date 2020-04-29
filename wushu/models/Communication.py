@@ -15,3 +15,4 @@ class Communication(models.Model):
     class Meta:
         default_permissions = ()
         db_table = 'communication'
+        managed = False

@@ -14,3 +14,4 @@ class Country(models.Model):
     class Meta:
         default_permissions = ()
         db_table = 'country'
+        managed = False

@@ -18,3 +18,4 @@ class CompCategory(models.Model):
 
     class Meta:
         db_table = 'compcategory'
+        managed = False

@@ -23,3 +23,4 @@ class CategoryItem(models.Model):
     class Meta:
         default_permissions = ()
         db_table = 'categoryitem'
+        managed = False
