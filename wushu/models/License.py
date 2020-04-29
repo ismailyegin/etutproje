@@ -45,3 +45,4 @@ class License(models.Model):
 
     class Meta:
         default_permissions = ()
+        db_table = 'license'

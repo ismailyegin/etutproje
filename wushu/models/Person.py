@@ -45,6 +45,7 @@ class Person(models.Model):
 
     class Meta:
         default_permissions = ()
+        db_table = 'person'
 
     def save(self, force_insert=False, force_update=False):
         self.birthplace = self.birthplace.upper()

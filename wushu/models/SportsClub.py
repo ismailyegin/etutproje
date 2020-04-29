@@ -33,3 +33,4 @@ class SportsClub(models.Model):
 
     class Meta:
         default_permissions = ()
+        db_table = 'sportclub'

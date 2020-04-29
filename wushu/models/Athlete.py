@@ -24,3 +24,5 @@ class Athlete(models.Model):
 
     class Meta:
         ordering = ['pk']
+        default_permissions = ()
+        db_table = 'athlete'
