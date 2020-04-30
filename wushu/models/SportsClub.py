@@ -18,7 +18,7 @@ class SportsClub(models.Model):
     logo = models.ImageField(upload_to='club/', null=True, blank=True, verbose_name='Kulüp Logo')
     communication = models.OneToOneField(Communication, on_delete=models.CASCADE)
     creationDate = models.DateTimeField(auto_now_add=True)
-    modificationDate = models.DateTimeField(auto_now=True)
+    operationDate = models.DateTimeField(auto_now=True)
     coachs = models.ManyToManyField(Coach)
     isFormal = models.BooleanField(default=True,choices=IsFormal)
     clubUser = models.ManyToManyField(SportClubUser)

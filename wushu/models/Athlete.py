@@ -16,7 +16,7 @@ class Athlete(models.Model):
     belts = models.ManyToManyField(Level)
     licenses = models.ManyToManyField(License)
     creationDate = models.DateTimeField(auto_now_add=True)
-    modificationDate = models.DateTimeField(auto_now=True)
+    operationDate = models.DateTimeField(auto_now=True)
 
 
     def __str__(self):

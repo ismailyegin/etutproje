@@ -21,7 +21,7 @@ class License(models.Model):
     )
 
     creationDate = models.DateTimeField(auto_now_add=True)
-    modificationDate = models.DateTimeField(auto_now=True)
+    operationDate = models.DateTimeField(auto_now=True)
     branch = models.CharField(max_length=128, verbose_name='Branş', choices=EnumFields.BRANCH.value)
     sportsClub = models.ForeignKey(SportsClub, on_delete=models.CASCADE)
     isActive = models.BooleanField(default=False)
