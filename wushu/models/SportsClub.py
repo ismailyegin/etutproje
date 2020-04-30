@@ -15,7 +15,7 @@ class SportsClub(models.Model):
     shortName = models.CharField(blank=True, null=True, max_length=120)
     foundingDate = models.CharField(blank=True, null=True, max_length=120)
     clubMail = models.CharField(blank=True, null=True, max_length=120)
-    logo = models.ImageField(upload_to='club/', null=True, blank=True, verbose_name='Kulüp Logo')
+    logo = models.ImageField(upload_to='club/', null=True, blank=True, verbose_name='Kulüp Logo', db_column='communication')
     communication = models.OneToOneField(Communication, on_delete=models.CASCADE)
     creationDate = models.DateTimeField(auto_now_add=True)
     operationDate = models.DateTimeField(auto_now=True)
