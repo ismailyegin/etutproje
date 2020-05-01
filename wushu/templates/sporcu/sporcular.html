@@ -228,8 +228,7 @@
                                     {% if user.groups.all.0.name == 'Yonetim' or user.groups.all.0.name == 'Admin' %}
                                         <th>Kulüp</th>
                                     {% endif %}
-                                    <th>Branş</th>
-                                    <th>Kuşak</th>
+{#                                    <th>Branş</th>#}
                                     <th>İşlemler</th>
 
 
@@ -264,13 +263,13 @@
                                             </td>
 
 
-                                            <td>
+                                            {% comment %}<td>
                                                 {% for belts in athlete.belts.all %}
                                                     {% if  belts.status == 'Onaylandı' %}
                                                         <p>{{ belts.definition }}</p>
                                                     {% endif %}
                                                 {% endfor %}
-                                            </td>
+                                            </td>{% endcomment %}
 
 
                                             <td>

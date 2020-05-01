@@ -2,8 +2,8 @@ from django.db import models
 
 
 class Person(models.Model):
-    MALE = 'Erkek'
-    FEMALE = 'Kadın'
+    MALE = 0
+    FEMALE = 1
 
     AB1 = 'AB Rh+'
     AB2 = 'AB Rh-'
@@ -34,23 +34,21 @@ class Person(models.Model):
     tc = models.CharField(max_length=120, null=True, blank=True)
     height = models.CharField(max_length=120, null=True, blank=True)
     weight = models.CharField(max_length=120, null=True, blank=True)
-    birthplace = models.CharField(max_length=120, null=True, blank=True,verbose_name='Doğum Yeri')
-    motherName = models.CharField(max_length=120, null=True, blank=True,verbose_name='Anne Adı')
-    fatherName = models.CharField(max_length=120, null=True, blank=True,verbose_name='Baba Adı')
+    birthplace = models.CharField(max_length=120, null=True, blank=True, verbose_name='Doğum Yeri')
+    motherName = models.CharField(max_length=120, null=True, blank=True, verbose_name='Anne Adı')
+    fatherName = models.CharField(max_length=120, null=True, blank=True, verbose_name='Baba Adı')
     profileImage = models.ImageField(upload_to='profile/', null=True, blank=True, default='profile/user.png',
                                      verbose_name='Profil Resmi')
     birthDate = models.DateField(null=True, blank=True, verbose_name='Doğum Tarihi')
     bloodType = models.CharField(max_length=128, verbose_name='Kan Grubu', choices=BLOODTYPE, default=AB1)
-    gender = models.CharField(max_length=128, verbose_name='Cinsiyeti', choices=GENDER_CHOICES, default=MALE)
+    gender = models.IntegerField(blank=True, null=True, choices=GENDER_CHOICES)
 
     class Meta:
         default_permissions = ()
         db_table = 'person'
-        managed = False
 
     def save(self, force_insert=False, force_update=False):
         self.birthplace = self.birthplace.upper()
         self.motherName = self.motherName.upper()
         self.fatherName = self.fatherName.upper()
         super(Person, self).save(force_insert, force_update)
-
