@@ -24,7 +24,7 @@ class SportsClub(models.Model):
     clubUser = models.ManyToManyField(SportClubUser)
 
     def __str__(self):
-        return '%s %s %s' % (self.shortName, '-', self.name)
+        return '%s' % ( self.name)
 
     def save(self, force_insert=False, force_update=False):
         self.name = self.name.upper()
