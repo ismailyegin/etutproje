@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('wushu', '0002_auto_20200428_1704'),
+        ('sbs', '0002_auto_20200428_1704'),
     ]
 
     operations = [

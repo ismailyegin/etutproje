@@ -7,18 +7,18 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('wushu', '0007_auto_20200430_1458'),
+        ('sbs', '0007_auto_20200430_1458'),
     ]
 
     operations = [
         migrations.AlterField(
             model_name='license',
             name='cityHeadShip',
-            field=models.ForeignKey(db_column='cityHeadShip', on_delete=django.db.models.deletion.CASCADE, to='wushu.City'),
+            field=models.ForeignKey(db_column='cityHeadShip', on_delete=django.db.models.deletion.CASCADE, to='sbs.City'),
         ),
         migrations.AlterField(
             model_name='license',
             name='sportsClub',
-            field=models.ForeignKey(db_column='sportsClub', on_delete=django.db.models.deletion.CASCADE, to='wushu.SportsClub'),
+            field=models.ForeignKey(db_column='sportsClub', on_delete=django.db.models.deletion.CASCADE, to='sbs.SportsClub'),
         ),
     ]

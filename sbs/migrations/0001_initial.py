@@ -48,7 +48,7 @@ class Migration(migrations.Migration):
                 ('modificationDate', models.DateTimeField(auto_now=True)),
                 ('branch', models.CharField(blank=True, choices=[('AIKIDO', 'AIKIDO'), ('WING CHUN', 'WING CHUN'), ('WUSHU', 'WUSHU'), ('KYOKUSHIN ASHIHARA', 'KYOKUSHIN ASHIHARA'), ('JEET KUNE DO KULELKAVIDO', 'JEET KUNE DO KULELKAVIDO')], max_length=128, null=True, verbose_name='Seçiniz')),
                 ('isFirst', models.BooleanField()),
-                ('parent', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='wushu.CategoryItem')),
+                ('parent', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='sbs.CategoryItem')),
             ],
             options={
                 'default_permissions': (),
@@ -94,7 +94,7 @@ class Migration(migrations.Migration):
                 ('phoneNumber', models.CharField(blank=True, max_length=120, null=True)),
                 ('phoneNumber2', models.CharField(blank=True, max_length=120, null=True)),
                 ('address', models.TextField(blank=True, null=True, verbose_name='Adres')),
-                ('city', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='wushu.City', verbose_name='İl')),
+                ('city', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='sbs.City', verbose_name='İl')),
             ],
             options={
                 'default_permissions': (),
@@ -161,7 +161,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('creationDate', models.DateTimeField(auto_now_add=True)),
                 ('modificationDate', models.DateTimeField(auto_now=True)),
-                ('communication', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='wushu.Communication')),
+                ('communication', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='sbs.Communication')),
             ],
             options={
                 'default_permissions': (),
@@ -227,9 +227,9 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('creationDate', models.DateTimeField(auto_now_add=True)),
                 ('modificationDate', models.DateTimeField(auto_now=True)),
-                ('communication', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='wushu.Communication')),
-                ('person', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='wushu.Person')),
-                ('role', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='wushu.ClubRole', verbose_name='Üye Rolü')),
+                ('communication', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='sbs.Communication')),
+                ('person', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='sbs.Person')),
+                ('role', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='sbs.ClubRole', verbose_name='Üye Rolü')),
                 ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
             options={
@@ -249,8 +249,8 @@ class Migration(migrations.Migration):
                 ('branch', models.CharField(choices=[('AIKIDO', 'AIKIDO'), ('WING CHUN', 'WING CHUN'), ('WUSHU', 'WUSHU'), ('KYOKUSHIN ASHIHARA', 'KYOKUSHIN ASHIHARA'), ('JEET KUNE DO KULELKAVIDO', 'JEET KUNE DO KULELKAVIDO')], max_length=128, verbose_name='Branş')),
                 ('status', models.CharField(choices=[('Onaylandı', 'Onaylandı'), ('Onaya Gönderildi', 'Onaya Gönderildi'), ('Reddedildi', 'Reddedildi'), ('Beklemede', 'Beklemede')], default='Beklemede', max_length=128, verbose_name='Kayıt Durumu')),
                 ('forWhichClazz', models.CharField(max_length=255)),
-                ('coach', models.ManyToManyField(to='wushu.Coach')),
-                ('referee', models.ManyToManyField(to='wushu.Judge')),
+                ('coach', models.ManyToManyField(to='sbs.Coach')),
+                ('referee', models.ManyToManyField(to='sbs.Judge')),
             ],
             options={
                 'default_permissions': (),
@@ -260,9 +260,9 @@ class Migration(migrations.Migration):
             name='TaoluAthlete',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('athlete', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='wushu.Athlete')),
-                ('categori', models.ManyToManyField(to='wushu.SimpleCategory')),
-                ('competition', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='wushu.Competition')),
+                ('athlete', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='sbs.Athlete')),
+                ('categori', models.ManyToManyField(to='sbs.SimpleCategory')),
+                ('competition', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='sbs.Competition')),
             ],
             options={
                 'default_permissions': (),
@@ -280,9 +280,9 @@ class Migration(migrations.Migration):
                 ('creationDate', models.DateTimeField(auto_now_add=True)),
                 ('modificationDate', models.DateTimeField(auto_now=True)),
                 ('isFormal', models.BooleanField(choices=[(True, 'Spor Kulubü'), (False, 'Diger(Özel Salon-Dojo-Sportif Dernek)')], default=True)),
-                ('clubUser', models.ManyToManyField(to='wushu.SportClubUser')),
-                ('coachs', models.ManyToManyField(to='wushu.Coach')),
-                ('communication', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='wushu.Communication')),
+                ('clubUser', models.ManyToManyField(to='sbs.SportClubUser')),
+                ('coachs', models.ManyToManyField(to='sbs.Coach')),
+                ('communication', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='sbs.Communication')),
             ],
             options={
                 'default_permissions': (),
@@ -292,8 +292,8 @@ class Migration(migrations.Migration):
             name='SandaAthlete',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('athlete', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='wushu.Athlete')),
-                ('competition', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='wushu.Competition')),
+                ('athlete', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='sbs.Athlete')),
+                ('competition', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='sbs.Competition')),
             ],
             options={
                 'default_permissions': (),
@@ -337,11 +337,11 @@ class Migration(migrations.Migration):
                 ('is_active', models.BooleanField(default=False, help_text='Designates whether this user should be treated as active. ')),
                 ('dekont', models.FileField(upload_to='dekont/', verbose_name='Dekont ')),
                 ('petition', models.FileField(upload_to='dekont/', verbose_name='Dilekçe ')),
-                ('city', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='user_city', to='wushu.City', verbose_name='İl')),
-                ('clubcity', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='wushu.City', verbose_name='İl')),
-                ('clubcountry', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='wushu.Country', verbose_name='Ülke')),
-                ('country', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='user_country', to='wushu.Country', verbose_name='Ülke')),
-                ('role', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='wushu.ClubRole', verbose_name='Üye Rolü')),
+                ('city', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='user_city', to='sbs.City', verbose_name='İl')),
+                ('clubcity', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='sbs.City', verbose_name='İl')),
+                ('clubcountry', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='sbs.Country', verbose_name='Ülke')),
+                ('country', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='user_country', to='sbs.Country', verbose_name='Ülke')),
+                ('role', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='sbs.ClubRole', verbose_name='Üye Rolü')),
             ],
             options={
                 'default_permissions': (),
@@ -356,7 +356,7 @@ class Migration(migrations.Migration):
                 ('is_parent', models.BooleanField(default=True)),
                 ('is_show', models.BooleanField(default=True)),
                 ('fa_icon', models.CharField(blank=True, max_length=120, null=True)),
-                ('parent', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='wushu.MenuReferee')),
+                ('parent', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='sbs.MenuReferee')),
                 ('permission', models.ManyToManyField(to=settings.AUTH_USER_MODEL)),
             ],
             options={
@@ -372,7 +372,7 @@ class Migration(migrations.Migration):
                 ('is_parent', models.BooleanField(default=True)),
                 ('is_show', models.BooleanField(default=True)),
                 ('fa_icon', models.CharField(blank=True, max_length=120, null=True)),
-                ('parent', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='wushu.MenuDirectory')),
+                ('parent', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='sbs.MenuDirectory')),
                 ('permission', models.ManyToManyField(to=settings.AUTH_USER_MODEL)),
             ],
             options={
@@ -388,7 +388,7 @@ class Migration(migrations.Migration):
                 ('is_parent', models.BooleanField(default=True)),
                 ('is_show', models.BooleanField(default=True)),
                 ('fa_icon', models.CharField(blank=True, max_length=120, null=True)),
-                ('parent', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='wushu.MenuCoach')),
+                ('parent', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='sbs.MenuCoach')),
                 ('permission', models.ManyToManyField(to=settings.AUTH_USER_MODEL)),
             ],
             options={
@@ -404,7 +404,7 @@ class Migration(migrations.Migration):
                 ('is_parent', models.BooleanField(default=True)),
                 ('is_show', models.BooleanField(default=True)),
                 ('fa_icon', models.CharField(blank=True, max_length=120, null=True)),
-                ('parent', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='wushu.MenuClubUser')),
+                ('parent', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='sbs.MenuClubUser')),
                 ('permission', models.ManyToManyField(to=settings.AUTH_USER_MODEL)),
             ],
             options={
@@ -420,7 +420,7 @@ class Migration(migrations.Migration):
                 ('is_parent', models.BooleanField(default=True)),
                 ('is_show', models.BooleanField(default=True)),
                 ('fa_icon', models.CharField(blank=True, max_length=120, null=True)),
-                ('parent', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='wushu.MenuAthlete')),
+                ('parent', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='sbs.MenuAthlete')),
                 ('permission', models.ManyToManyField(to=settings.AUTH_USER_MODEL)),
             ],
             options={
@@ -436,7 +436,7 @@ class Migration(migrations.Migration):
                 ('is_parent', models.BooleanField(default=True)),
                 ('is_show', models.BooleanField(default=True)),
                 ('fa_icon', models.CharField(blank=True, max_length=120, null=True)),
-                ('parent', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='wushu.MenuAdmin')),
+                ('parent', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='sbs.MenuAdmin')),
                 ('permission', models.ManyToManyField(to=settings.AUTH_USER_MODEL)),
             ],
             options={
@@ -452,7 +452,7 @@ class Migration(migrations.Migration):
                 ('is_parent', models.BooleanField(default=True)),
                 ('is_show', models.BooleanField(default=True)),
                 ('fa_icon', models.CharField(blank=True, max_length=120, null=True)),
-                ('parent', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='wushu.Menu')),
+                ('parent', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='sbs.Menu')),
                 ('permission', models.OneToOneField(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='MenuPermission', to='auth.Permission')),
             ],
             options={
@@ -473,8 +473,8 @@ class Migration(migrations.Migration):
                 ('status', models.CharField(choices=[('Onaylandı', 'Onaylandı'), ('Onaya Gönderildi', 'Onaya Gönderildi'), ('Reddedildi', 'Reddedildi'), ('Beklemede', 'Beklemede')], default='Beklemede', max_length=128, verbose_name='Onay Durumu')),
                 ('lisansPhoto', models.FileField(upload_to='lisans/', verbose_name='Lisans')),
                 ('reddetwhy', models.CharField(blank=True, max_length=255, null=True)),
-                ('cityHeadShip', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='wushu.City')),
-                ('sportsClub', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='wushu.SportsClub')),
+                ('cityHeadShip', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='sbs.City')),
+                ('sportsClub', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='sbs.SportsClub')),
             ],
             options={
                 'default_permissions': (),
@@ -495,8 +495,8 @@ class Migration(migrations.Migration):
                 ('status', models.CharField(choices=[('Onaylandı', 'Onaylandı'), ('Onaya Gönderildi', 'Onaya Gönderildi'), ('Reddedildi', 'Reddedildi'), ('Beklemede', 'Beklemede')], default='Beklemede', max_length=128, verbose_name='Onay Durumu')),
                 ('dekont', models.FileField(upload_to='dekont/', verbose_name='Dekont ')),
                 ('form', models.FileField(upload_to='form/', verbose_name='Form ')),
-                ('city', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='wushu.City', verbose_name='İl')),
-                ('definition', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='wushu.CategoryItem')),
+                ('city', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='sbs.City', verbose_name='İl')),
+                ('definition', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='sbs.CategoryItem')),
             ],
             options={
                 'default_permissions': (),
@@ -505,12 +505,12 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='judge',
             name='grades',
-            field=models.ManyToManyField(related_name='Judgegrades', to='wushu.Level'),
+            field=models.ManyToManyField(related_name='Judgegrades', to='sbs.Level'),
         ),
         migrations.AddField(
             model_name='judge',
             name='person',
-            field=models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='wushu.Person'),
+            field=models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='sbs.Person'),
         ),
         migrations.AddField(
             model_name='judge',
@@ -520,7 +520,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='judge',
             name='visa',
-            field=models.ManyToManyField(related_name='Judgevisa', to='wushu.Level'),
+            field=models.ManyToManyField(related_name='Judgevisa', to='sbs.Level'),
         ),
         migrations.CreateModel(
             name='DirectoryMember',
@@ -528,10 +528,10 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('creationDate', models.DateTimeField(auto_now_add=True)),
                 ('modificationDate', models.DateTimeField(auto_now=True)),
-                ('commission', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='wushu.DirectoryCommission', verbose_name='Kurulu')),
-                ('communication', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='wushu.Communication')),
-                ('person', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='wushu.Person')),
-                ('role', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='wushu.DirectoryMemberRole', verbose_name='Üye Rolü')),
+                ('commission', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='sbs.DirectoryCommission', verbose_name='Kurulu')),
+                ('communication', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='sbs.Communication')),
+                ('person', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='sbs.Person')),
+                ('role', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='sbs.DirectoryMemberRole', verbose_name='Üye Rolü')),
                 ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
             options={
@@ -541,22 +541,22 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='communication',
             name='country',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='wushu.Country', verbose_name='Ülke'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='sbs.Country', verbose_name='Ülke'),
         ),
         migrations.AddField(
             model_name='coach',
             name='communication',
-            field=models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='wushu.Communication'),
+            field=models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='sbs.Communication'),
         ),
         migrations.AddField(
             model_name='coach',
             name='grades',
-            field=models.ManyToManyField(related_name='CoachGrades', to='wushu.Level'),
+            field=models.ManyToManyField(related_name='CoachGrades', to='sbs.Level'),
         ),
         migrations.AddField(
             model_name='coach',
             name='person',
-            field=models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='wushu.Person'),
+            field=models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='sbs.Person'),
         ),
         migrations.AddField(
             model_name='coach',
@@ -566,7 +566,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='coach',
             name='visa',
-            field=models.ManyToManyField(related_name='CoachVisa', to='wushu.Level'),
+            field=models.ManyToManyField(related_name='CoachVisa', to='sbs.Level'),
         ),
         migrations.CreateModel(
             name='BeltExam',
@@ -582,9 +582,9 @@ class Migration(migrations.Migration):
                 ('status', models.CharField(choices=[('Onaylandı', 'Onaylandı'), ('Onaya Gönderildi', 'Onaya Gönderildi'), ('Reddedildi', 'Reddedildi'), ('Beklemede', 'Beklemede')], default='Beklemede', max_length=128, verbose_name='Onay Durumu')),
                 ('description', models.CharField(blank=True, max_length=255, null=True)),
                 ('branch', models.CharField(choices=[('AIKIDO', 'AIKIDO'), ('WING CHUN', 'WING CHUN'), ('WUSHU', 'WUSHU'), ('KYOKUSHIN ASHIHARA', 'KYOKUSHIN ASHIHARA'), ('JEET KUNE DO KULELKAVIDO', 'JEET KUNE DO KULELKAVIDO')], max_length=128)),
-                ('athletes', models.ManyToManyField(to='wushu.Athlete')),
-                ('coachs', models.ManyToManyField(to='wushu.Coach')),
-                ('sportClub', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='wushu.SportsClub')),
+                ('athletes', models.ManyToManyField(to='sbs.Athlete')),
+                ('coachs', models.ManyToManyField(to='sbs.Coach')),
+                ('sportClub', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='sbs.SportsClub')),
             ],
             options={
                 'default_permissions': (),
@@ -593,22 +593,22 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='athlete',
             name='belts',
-            field=models.ManyToManyField(to='wushu.Level'),
+            field=models.ManyToManyField(to='sbs.Level'),
         ),
         migrations.AddField(
             model_name='athlete',
             name='communication',
-            field=models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='wushu.Communication'),
+            field=models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='sbs.Communication'),
         ),
         migrations.AddField(
             model_name='athlete',
             name='licenses',
-            field=models.ManyToManyField(to='wushu.License'),
+            field=models.ManyToManyField(to='sbs.License'),
         ),
         migrations.AddField(
             model_name='athlete',
             name='person',
-            field=models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='wushu.Person'),
+            field=models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='sbs.Person'),
         ),
         migrations.AddField(
             model_name='athlete',

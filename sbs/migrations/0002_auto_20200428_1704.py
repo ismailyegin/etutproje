@@ -7,7 +7,7 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('wushu', '0001_initial'),
+        ('sbs', '0001_initial'),
     ]
 
     operations = [
@@ -47,7 +47,7 @@ class Migration(migrations.Migration):
                 ('techcontrollerone', models.CharField(blank=True, db_column='techControllerOne', max_length=255, null=True)),
                 ('techcontrollertwo', models.CharField(blank=True, db_column='techControllerTwo', max_length=255, null=True)),
                 ('timekeeper', models.CharField(blank=True, db_column='timeKeeper', max_length=255, null=True)),
-                ('competition', models.ForeignKey(blank=True, db_column='competition', null=True, on_delete=django.db.models.deletion.CASCADE, to='wushu.Competition')),
+                ('competition', models.ForeignKey(blank=True, db_column='competition', null=True, on_delete=django.db.models.deletion.CASCADE, to='sbs.Competition')),
             ],
             options={
                 'db_table': 'grupforreport',
@@ -65,8 +65,8 @@ class Migration(migrations.Migration):
                 ('startdate', models.CharField(blank=True, db_column='startDate', max_length=45, null=True)),
                 ('name', models.CharField(blank=True, max_length=45, null=True)),
                 ('starttime', models.CharField(blank=True, db_column='startTime', max_length=45, null=True)),
-                ('competition', models.ForeignKey(blank=True, db_column='competition', null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='wushu.Competition')),
-                ('grupforreport', models.ForeignKey(blank=True, db_column='grupForReport', null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='wushu.GrupForReport')),
+                ('competition', models.ForeignKey(blank=True, db_column='competition', null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='sbs.Competition')),
+                ('grupforreport', models.ForeignKey(blank=True, db_column='grupForReport', null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='sbs.GrupForReport')),
             ],
             options={
                 'db_table': 'compcategory',
@@ -104,10 +104,10 @@ class Migration(migrations.Migration):
                 ('weight', models.FloatField()),
                 ('lastliftvalue', models.IntegerField(blank=True, db_column='lastLiftValue', null=True)),
                 ('lastsilkliftvalue', models.IntegerField(blank=True, db_column='lastSilkLiftValue', null=True)),
-                ('athlete', models.ForeignKey(blank=True, db_column='athlete', null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='wushu.Athlete')),
-                ('compcategory', models.ForeignKey(blank=True, db_column='compCategory', null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='wushu.CompCategory')),
-                ('competition', models.ForeignKey(blank=True, db_column='competition', null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='wushu.Competition')),
-                ('sıklet', models.ForeignKey(blank=True, db_column='sıklet', null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='wushu.Weight')),
+                ('athlete', models.ForeignKey(blank=True, db_column='athlete', null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='sbs.Athlete')),
+                ('compcategory', models.ForeignKey(blank=True, db_column='compCategory', null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='sbs.CompCategory')),
+                ('competition', models.ForeignKey(blank=True, db_column='competition', null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='sbs.Competition')),
+                ('sıklet', models.ForeignKey(blank=True, db_column='sıklet', null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='sbs.Weight')),
             ],
             options={
                 'db_table': 'compathlete',
