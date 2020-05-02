@@ -30,18 +30,12 @@ class EnumFields(enum.Enum):
         NATIONAL = 1
         INTERNATIONAL = 2
 
-    WUSHU = 'WUSHU'
-    AIKIDO = 'AIKIDO'
-    WINGCHUN = 'WING CHUN'
-    KYOKUSHIN = 'KYOKUSHIN ASHIHARA'
-    JEETKUNEDO = 'JEET KUNE DO KULELKAVIDO'
+    HALTER = 'HALTER'
+
 
     BRANCH = (
-        (AIKIDO, 'AIKIDO'),
-        (WINGCHUN, 'WING CHUN'),
-        (WUSHU, 'WUSHU'),
-        (KYOKUSHIN, 'KYOKUSHIN ASHIHARA'),
-        (JEETKUNEDO, 'JEET KUNE DO KULELKAVIDO'),
+        (HALTER, 'HALTER'),
+
     )
 
     SANDA = 'SANDA'
