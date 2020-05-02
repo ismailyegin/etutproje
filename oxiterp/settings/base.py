@@ -46,7 +46,7 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'accounts',
-    'wushu',
+    'sbs',
 
 ]
 
@@ -74,14 +74,14 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.i18n',
-                'wushu.services.general_methods.getMenu',
-                'wushu.services.general_methods.getAdminMenu',
-                'wushu.services.general_methods.getAthleteMenu',
-                'wushu.services.general_methods.getRefereeMenu',
-                'wushu.services.general_methods.getCoachMenu',
-                'wushu.services.general_methods.getDirectoryMenu',
-                'wushu.services.general_methods.getClubUserMenu',
-                'wushu.services.general_methods.getProfileImage',
+                'sbs.services.general_methods.getMenu',
+                'sbs.services.general_methods.getAdminMenu',
+                'sbs.services.general_methods.getAthleteMenu',
+                'sbs.services.general_methods.getRefereeMenu',
+                'sbs.services.general_methods.getCoachMenu',
+                'sbs.services.general_methods.getDirectoryMenu',
+                'sbs.services.general_methods.getClubUserMenu',
+                'sbs.services.general_methods.getProfileImage',
 
                 # "education.services.general_methods.append_privileges",
             ],

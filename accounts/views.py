@@ -9,14 +9,14 @@ from django.shortcuts import render, redirect, render_to_response
 from accounts.forms import LoginForm, PermForm
 from accounts.models import Forgot
 
-from wushu.Forms.PreRegidtrationForm import PreRegistrationForm
+from sbs.Forms.PreRegidtrationForm import PreRegistrationForm
 
 from django.contrib import auth, messages
 
-from wushu import urls
-from wushu.models import MenuAthlete, MenuCoach, MenuReferee, MenuDirectory, MenuAdmin, MenuClubUser
-from wushu.services import general_methods
-from wushu.services.general_methods import show_urls
+from sbs import urls
+from sbs.models import MenuAthlete, MenuCoach, MenuReferee, MenuDirectory, MenuAdmin, MenuClubUser
+from sbs.services import general_methods
+from sbs.services.general_methods import show_urls
 
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 
@@ -27,7 +27,7 @@ def index(request):
 
 def login(request):
     if request.user.is_authenticated is True:
-        return redirect('wushu:admin')
+        return redirect('sbs:admin')
 
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -39,22 +39,22 @@ def login(request):
             auth.login(request, user)
 
             if user.groups.all()[0].name == 'Antrenor':
-                return redirect('wushu:antrenor')
+                return redirect('sbs:antrenor')
 
             elif user.groups.all()[0].name == 'Hakem':
-                return redirect('wushu:hakem')
+                return redirect('sbs:hakem')
 
             elif user.groups.all()[0].name == 'Sporcu':
-                return redirect('wushu:sporcu')
+                return redirect('sbs:sporcu')
 
             elif user.groups.all()[0].name == 'Yonetim':
-                return redirect('wushu:federasyon')
+                return redirect('sbs:federasyon')
 
             elif user.groups.all()[0].name == 'Admin':
-                return redirect('wushu:admin')
+                return redirect('sbs:admin')
 
             elif user.groups.all()[0].name == 'KulupUye':
-                return redirect('wushu:kulup-uyesi')
+                return redirect('sbs:kulup-uyesi')
 
 
             else:
@@ -252,10 +252,10 @@ def forgot(request):
 
             html_content = ''
             subject, from_email, to = 'TWF Bilgi Sistemi Kullanıcı Bilgileri', 'no-reply@twf.gov.tr', mail
-            html_content = '<h2>TÜRKİYE WUSHU KUNG FU FEDERASYONU BİLGİ SİSTEMİ</h2>'
+            html_content = '<h2>TÜRKİYE HALTER FEDERASYONU BİLGİ SİSTEMİ</h2>'
             html_content = html_content + '<p><strong>Kullanıcı Adınız :' + str(fdk.user.username) + '</strong></p>'
             html_content = html_content + '<p> <strong>Site adresi:</strong> <a href="http://sbs.twf.gov.tr:81/newpassword?query=' + str(
-                fdk.uuid) + '">http://sbs.twf.gov.tr:81/wushu/profil-guncelle/?query=' + str(fdk.uuid) + '</p></a>'
+                fdk.uuid) + '">http://sbs.halter.gov.tr:81/sbs/profil-guncelle/?query=' + str(fdk.uuid) + '</p></a>'
 
             msg = EmailMultiAlternatives(subject, '', from_email, [to])
             msg.attach_alternative(html_content, "text/html")

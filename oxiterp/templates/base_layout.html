@@ -198,38 +198,38 @@
 
 
                                     {% if user.groups.all.0.name == "Sporcu" %}
-                                        <a href="{% url "wushu:sporcu-profil-guncelle" %}"
+                                        <a href="{% url "sbs:sporcu-profil-guncelle" %}"
                                            class="btn btn-default btn-flat">Profil Bilgisi</a>
 
                                     {% elif user.groups.all.0.name == "Admin" %}
-                                        <a href="{% url "wushu:admin-profil-guncelle" %}"
+                                        <a href="{% url "sbs:admin-profil-guncelle" %}"
                                            class="btn btn-default btn-flat">Profil Bilgisi</a>
 
                                     {% elif user.groups.all.0.name == "Hakem" %}
-                                        <a href="{% url "wushu:hakem-profil-guncelle" %}"
+                                        <a href="{% url "sbs:hakem-profil-guncelle" %}"
                                            class="btn btn-default btn-flat">Profil Bilgisi</a>
 
 
 
                                     {% elif user.groups.all.0.name == "Admin" %}
-                                        <a href="{% url "wushu:kullanici-duzenle" %}"
+                                        <a href="{% url "sbs:kullanici-duzenle" %}"
                                            class="btn btn-default btn-flat">Profil Bilgisi</a>
 
 
                                     {% elif user.groups.all.0.name == "Yonetim" %}
-                                        <a href="{% url "wushu:yonetim-kurul-profil-guncelle" %}"
+                                        <a href="{% url "sbs:yonetim-kurul-profil-guncelle" %}"
                                            class="btn btn-default btn-flat">Profil Bilgisi</a>
 
 
                                     {% elif user.groups.all.0.name == "KulupUye" %}
-                                        <a href="{% url "wushu:kulup-uyesi-profil-guncelle" %}"
+                                        <a href="{% url "sbs:kulup-uyesi-profil-guncelle" %}"
                                            class="btn btn-default btn-flat">Profil Bilgisi</a>
 
 
 
 
                                     {% elif user.groups.all.0.name == "Antrenor" %}
-                                        <a href="{% url "wushu:antrenor-profil-guncelle" %}"
+                                        <a href="{% url "sbs:antrenor-profil-guncelle" %}"
                                            class="btn btn-default btn-flat">Profil Bilgisi</a>
 
 

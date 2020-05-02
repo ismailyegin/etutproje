@@ -1,0 +1,545 @@
+{% extends 'base_layout.html' %}
+{% block content %}
+
+    <!-- success modal -->
+    <div class="modal modal-success modal-success-food fade in" id="modal-success" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title">İşlem Başarılı</h4>
+                </div>
+                <div class="modal-body successModal">
+                    ...
+                </div>
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-outline btn-ok">Tamam</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+    <div class="modal modal-danger fade in deneme22" tabindex="-1" role="dialog" id="modal-danger"
+         aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title">Uyarı</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Silmek istediğinizden emin misiniz?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline pull-left btn-ok" id="btn-conf"
+                            data-dismiss="modal">Evet
+                    </button>
+                    <button type="button" class="btn btn-outline" id="btn-close">Hayır</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+    <div class="modal modal-warning fade in deneme22" tabindex="-1" role="dialog" id="reddetwhy"
+         aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title">Lütfen reddetme nedenini giriniz?</h4>
+                </div>
+                <div class="modal-body">
+                    <input type="text" name="reddetwhytext" id="reddetwhytext" class="form-control" required>
+
+                </div>
+
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline pull-left btn-ok" id="btn-gonder"
+                            data-dismiss="modal">Gönder
+                    </button>
+                    <button type="button" class="btn btn-outline" id="btn-closereddet">Geri Dön</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+    {% if messages %}
+        {% for message in messages %}
+
+
+            {% if message.tags == 'warning' %}
+
+                <div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <h4><i class="icon fa fa-ban"></i> Hata!</h4>
+
+
+                    <ul class="messages">
+                        {% for message in messages %}
+                            <li class="{{ message.tags }}">{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+
+
+                </div>
+
+            {% endif %}
+
+
+            {% if message.tags == 'success' %}
+
+                <div class="alert alert-success alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <h4><i class="icon fa fa-check"></i> Başarılı!</h4>
+
+
+                    <ul class="messages">
+                        {% for message in messages %}
+                            <li class="{{ message.tags }}">{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+
+
+                </div>
+
+            {% endif %}
+        {% endfor %}
+
+
+    {% endif %}
+
+    <section class="content-header">
+        <h1>
+            Sporcu Güncelle
+
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i>Sporcu Güncelle</a></li>
+
+        </ol>
+    </section>
+    <section class="content">
+
+        <form method="post" enctype="multipart/form-data" role="form">
+            {% csrf_token %}
+            <div class="row">
+
+                <div class="col-lg-6">
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Genel Bilgiler</h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label> {{ person_form.profileImage.label }}</label>
+                                        {{ person_form.profileImage }}
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label> {{ person_form.tc.label }}</label>
+                                        {{ person_form.tc }}
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <label> {{ user_form.first_name.label }}</label>
+                                        {{ user_form.first_name }}
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label> {{ user_form.last_name.label }}</label>
+                                        {{ user_form.last_name }}
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <label> {{ person_form.bloodType.label }}</label>
+                                        {{ person_form.bloodType }}
+                                    </div>
+
+
+                                </div>
+                                <br>
+                                <div class="col-lg-6">
+
+
+                                    <div class="form-group">
+                                        <label> {{ person_form.motherName.label }}</label>
+                                        {{ person_form.motherName }}
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <label> {{ person_form.fatherName.label }}</label>
+                                        {{ person_form.fatherName }}
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label> {{ person_form.birthplace.label }}</label>
+                                        {{ person_form.birthplace }}
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <label> {{ person_form.birthDate.label }}</label>
+                                        {{ person_form.birthDate }}
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <label> {{ person_form.gender.label }}</label>
+                                        {{ person_form.gender }}
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="box-footer">
+                            <button class="btn btn-primary" type="submit">Kaydet</button>
+                        </div>
+
+
+                    </div>
+
+                </div>
+                <div class="col-lg-6">
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">İletişim Bilgileri</h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label> {{ user_form.email.label }}</label>
+                                        {{ user_form.email }}
+                                    </div>
+                                    <div class="form-group">
+                                        <label> {{ communication_form.phoneNumber.label }}</label>
+                                        {{ communication_form.phoneNumber }}
+                                    </div>
+                                    <div class="form-group">
+                                        <label> {{ communication_form.phoneNumber2.label }}</label>
+                                        {{ communication_form.phoneNumber2 }}
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label> {{ communication_form.country.label }}</label>
+                                        {{ communication_form.country }}
+                                    </div>
+                                    <div class="form-group">
+                                        <label> {{ communication_form.city.label }}</label>
+                                        {{ communication_form.city }}
+                                    </div>
+                                    <div class="form-group">
+                                        <label> {{ communication_form.postalCode.label }}</label>
+                                        {{ communication_form.postalCode }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label> {{ communication_form.address.label }}</label>
+                                        {{ communication_form.address }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box-footer">
+                            <button class="btn btn-primary" type="submit">Kaydet</button>
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Lisans Bilgileri</h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="box-header with-border">
+                                <div class="btn-group">
+
+                                    <a href="{% url "sbs:sporcu-lisans-ekle"  athlete.pk %}"
+                                       type="button" class="btn btn-success"><i
+                                            class="fa fa-edit"></i> Yeni Lisans Ekle
+                                    </a>
+                                </div>
+                            </div>
+                            <table id="license" class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Kulüp</th>
+                                    <th> Başlama Tarihi</th>
+                                    <th> Bitiş Tarihi</th>
+                                    <th> Branş</th>
+                                    <th> Lisans No</th>
+                                    <th> Lisans Foto.</th>
+                                    <th> Onay Durumu</th>
+                                    <th> İşlemler</th>
+
+
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% if licenses_form.all %}
+                                    {% for license in licenses_form %}
+                                        <tr>
+                                            <td>{{ forloop.counter }} </td>
+                                            <td>{{ license.sportsClub }}</td>
+                                            <td>{{ license.startDate }}  </td>
+                                            <td>{{ license.expireDate }}  </td>
+                                            <td>{{ license.branch }}  </td>
+                                            <td>{{ license.licenseNo }}  </td>
+                                            <td><a href="/media/{{ license.lisansPhoto }}" target="_blank"> <img
+                                                    src="/media/{{ license.lisansPhoto }}" class="user-image" alt="None"
+                                                    style=" width: 30px;height: 30px;"></a></td>
+                                            <td>{{ license.status }}
+                                                {% if  license.status == 'Reddedildi' %}
+                                                    (  {{ license.reddetwhy }})
+                                                {% endif %}
+
+
+                                            </td>
+
+                                            <td>
+                                                <div class="btn-group">
+
+
+                                                    {% if user.groups.all.0.name == 'Yonetim' or user.groups.all.0.name == 'Admin' %}
+                                                        <a href="{% url "sbs:sporcu-lisans-onayla" license_pk=license.pk athlete_pk=athlete.pk %}"
+                                                           type="button" class="btn btn-success"><i
+                                                                class="fa fa-edit"></i>Onayla
+                                                        </a>
+
+
+
+
+                                                        <button type="button" class="btn btn-danger"
+                                                                onclick="reddetwhy({{ license.pk }},{{ athlete.pk }})"><i
+                                                                class="fa fa-trash"></i>Reddet
+                                                        </button>
+
+
+
+
+                                                        <a onclick="deleteLisans({{ license.id }}, {{ athlete.pk }})"
+                                                           type="button" class="btn btn-danger"><i
+                                                                class="fa fa-edit"></i>Sil
+                                                        </a>
+
+                                                    {% endif %}
+                                                    {% if license.status != 'Onaylandı' or  user.groups.all.0.name == 'Admin' %}
+
+
+                                                        <a href="{% url "sbs:sporcu-lisans-duzenle" license_pk=license.pk athlete_pk=athlete.pk %}"
+                                                           type="button" class="btn btn-warning"><i
+                                                                class="fa fa-edit"></i>Güncelle
+                                                        </a>
+                                                    {% endif %}
+
+
+                                                </div>
+                                            </td>
+
+
+                                        </tr>
+
+                                    {% endfor %}
+                                {% endif %}
+
+
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+
+
+    </section>
+
+
+
+
+
+    <script>
+        $(function () {
+            $('#license').DataTable({
+                'paging': true,
+                'lengthChange': true,
+                'searching': false,
+                'ordering': false,
+                'info': true,
+                'autoWidth': true,
+                'responsive':true
+            })
+
+        })
+    </script>
+
+    <script>
+        function deleteKusak(id, club_id) {
+
+            console.log(id);
+            var html = '';
+            $("#modal-danger").on("shown.bs.modal", function (e) {
+                $("#btn-conf").click(function () {
+                    $.ajax({
+                        url: "{% url "sbs:sporcu-kusak-sil" pk=212121223232323232 athlete_pk=999999999999999 %}".replace(/212121223232323232/, id.toString()).replace(/999999999999999/, club_id.toString()),
+                        type: "POST",
+                        data: {
+
+                            'csrfmiddlewaretoken': "{{  csrf_token  }}",
+
+                            isActive: 'False'
+                        },
+                        success: function (result) {
+
+                            html = 'Kuşak Başarıyla Silindi.';
+                            debugger;
+                            $(".successModal").html(html);
+                            $('#modal-success').on("shown.bs.modal", function (e) {
+                                $(".btn-ok").click(function () {
+
+                                    window.location.replace("{% url "sbs:update-athletes" athlete.pk %}");
+
+                                });
+
+                            }).modal('show');
+
+
+                            console.log(result.status)
+                        }
+                    });
+                });
+            }).modal('show');
+            $('#btn-close').click(function () {
+                $('#modal-danger').modal('hide');
+            });
+
+        }
+    </script>
+
+
+
+
+    <script>
+        function deleteLisans(id, club_id) {
+
+            console.log(id);
+            var html = '';
+            $("#modal-danger").on("shown.bs.modal", function (e) {
+                $("#btn-conf").click(function () {
+                    $.ajax({
+                        url: "{% url "sbs:sporcu-lisans-sil" pk=212121223232323232 athlete_pk=999999999999999 %}".replace(/212121223232323232/, id.toString()).replace(/999999999999999/, club_id.toString()),
+                        type: "POST",
+                        data: {
+                            'csrfmiddlewaretoken': "{{  csrf_token  }}",
+                            isActive: 'False'
+                        },
+                        success: function (result) {
+
+                            html = 'Lisans Başarıyla Silindi.';
+                            debugger;
+                            $(".successModal").html(html);
+                            $('#modal-success').on("shown.bs.modal", function (e) {
+                                $(".btn-ok").click(function () {
+
+                                    window.location.replace("{% url "sbs:update-athletes" athlete.pk%}");
+
+                                });
+
+                            }).modal('show');
+
+
+                        }
+                    });
+                });
+            }).modal('show');
+            $('#btn-close').click(function () {
+                $('#modal-danger').modal('hide');
+            });
+
+        }
+    </script>
+       <script>
+
+            function reddetwhy(id,athlete) {
+                $("#reddetwhy").on("shown.bs.modal", function (e) {
+
+                    $("#btn-gonder").click(function () {
+                        $.ajax({
+
+                             url: "{% url "sbs:sporcu-lisans-reddet" license_pk=212121223232323232 athlete_pk=999999999999999 %}".replace(/212121223232323232/, id.toString()).replace(/999999999999999/, athlete.toString()),
+
+                            type: "POST",
+                            data: {
+                                'csrfmiddlewaretoken': "{{  csrf_token  }}",
+                                 reddetwhy:$('#reddetwhytext').val(),
+                                isActive: 'False',
+
+
+                            },
+                            success: function (result) {
+
+                                html = 'Lisans reddedildi .';
+                                debugger;
+                                $(".successModal").html(html);
+                                $('#modal-success').on("shown.bs.modal", function (e) {
+                                    $(".btn-ok").click(function () {
+
+                                        window.location.replace("{%  url "sbs:update-athletes" athlete.pk %}");
+
+                                    });
+
+                                }).modal('show');
+                            }
+                        });
+                    });
+
+
+                }).modal('show');
+                $('#btn-closereddet').click(function () {
+                    $('#modal-warning').modal('hide');
+                    $('.modal').modal('hide');
+
+                });
+
+            }
+
+
+        </script>
+
+
+{% endblock %}
+
+
+
