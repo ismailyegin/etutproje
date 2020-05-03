@@ -263,9 +263,11 @@ def forgot(request):
     if request.method == 'POST':
         mail = request.POST.get('username')
         obj = User.objects.filter(username=mail)
+        print('ben geldim ')
 
         if obj.count() != 0:
             user = User.objects.get(username=mail)
+            print(user)
             fdk = Forgot(user=user, status=False)
             fdk.save()
 
@@ -273,7 +275,9 @@ def forgot(request):
             subject, from_email, to = 'TWF Bilgi Sistemi Kullanıcı Bilgileri', 'no-reply@twf.gov.tr', mail
             html_content = '<h2>TÜRKİYE HALTER FEDERASYONU BİLGİ SİSTEMİ</h2>'
             html_content = html_content + '<p><strong>Kullanıcı Adınız :' + str(fdk.user.username) + '</strong></p>'
-            html_content = html_content + '<p> <strong>Site adresi:</strong> <a href="http://sbs.twf.gov.tr:81/newpassword?query=' + str(
+            # html_content = html_content + '<p> <strong>Site adresi:</strong> <a href="http://127.0.0.1:8000/newpassword?query=' + str(
+            #     fdk.uuid) + '">http://127.0.0.1:8000/sbs/profil-guncelle/?query=' + str(fdk.uuid) + '</p></a>'
+            html_content = html_content + '<p> <strong>Site adresi:</strong> <a href="http://sbs.halter.gov.tr:81/newpassword?query=' + str(
                 fdk.uuid) + '">http://sbs.halter.gov.tr:81/sbs/profil-guncelle/?query=' + str(fdk.uuid) + '</p></a>'
 
             msg = EmailMultiAlternatives(subject, '', from_email, [to])
@@ -327,7 +331,7 @@ def newlogin(request, pk):
                 clup.communication = communication
                 clup.save()
 
-                messages.success(request, 'Kulüp Başarıyla Güncellenmiştir.')
+                messages.success(request, 'Bilgileriniz Başarıyla Güncellenmiştir.')
 
                 user = User()
                 user.username = user_form.cleaned_data['email']
@@ -352,24 +356,27 @@ def newlogin(request, pk):
 
                 club_person.save()
 
-                # fdk = Forgot(user=user, status=False)
-                # fdk.save()
+                fdk = Forgot(user=user, status=False)
+                fdk.save()
 
-                # html_content = ''
-                #             # subject, from_email, to = 'TWF Bilgi Sistemi Kullanıcı Bilgileri', 'no-reply@twf.gov.tr', user.email
-                #             # html_content = '<h2>TÜRKİYE HALTER FEDERASYONU BİLGİ SİSTEMİ</h2>'
-                #             # html_content = html_content + '<p><strong>Kullanıcı Adınız :' + str(fdk.user.username) + '</strong></p>'
-                #             # html_content = html_content + '<p> <strong>Site adresi:</strong> <a href="http://sbs.halter.gov.tr:81/newpassword?query=' + str(
-                #             #     fdk.uuid) + '">http://sbs.halter.gov.tr:81/sbs/profil-guncelle/?query=' + str(fdk.uuid) + '</p></a>'
-                #
-                #             # msg = EmailMultiAlternatives(subject, '', from_email, [to])
-                #             # msg.attach_alternative(html_content, "text/html")
-                #             # msg.send()
+                html_content = ''
+                subject, from_email, to = 'TWF Bilgi Sistemi Kullanıcı Bilgileri', 'no-reply@halter.gov.tr', user.email
+                html_content = '<h2>TÜRKİYE HALTER FEDERASYONU BİLGİ SİSTEMİ</h2>'
+                html_content = html_content + '<p><strong>Kullanıcı Adınız :' + str(fdk.user.username) + '</strong></p>'
+                # html_content = html_content + '<p> <strong>Site adresi:</strong> <a href="http://127.0.0.1:8000/newpassword?query=' + str(
+                #     fdk.uuid) + '">http://127.0.0.1:8000/sbs/profil-guncelle/?query=' + str(fdk.uuid) + '</p></a>'
+                html_content = html_content + '<p> <strong>Site adresi:</strong> <a href="http://sbs.halter.gov.tr:81/newpassword?query=' + str(
+                    fdk.uuid) + '">http://sbs.halter.gov.tr:81/sbs/profil-guncelle/?query=' + str(fdk.uuid) + '</p></a>'
+
+                msg = EmailMultiAlternatives(subject, '', from_email, [to])
+                msg.attach_alternative(html_content, "text/html")
+                msg.send()
+
 
                 clup.clubUser.add(club_person)
                 clup.dataAccessControl = True
                 clup.save()
-                messages.success(request, 'Mail adresinize gelen link ile giriş yapabilirsiniz.')
+                messages.success(request, 'Mail adresinize gelen link ile sisteme giriş yapabilirsiniz.')
                 return redirect("accounts:login")
         except:
             messages.warning(request, 'Lütfen Yeniden Deneyiniz')
