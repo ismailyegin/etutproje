@@ -29,7 +29,7 @@ class ClubForm(ModelForm):
             'clubMail': forms.TextInput(attrs={'class': 'form-control'}),
 
             'foundingDate': forms.DateInput(
-                attrs={'class': 'form-control  pull-right', 'id': 'datepicker', 'autocomplete': 'off',
+                attrs={'class': 'form-control  pull-right', 'id': 'datepicker2', 'autocomplete': 'off',
                        'onkeydown': 'return false', 'required': 'required'}),
 
         }
