@@ -488,18 +488,29 @@ def clubUpdate(request, pk):
         logout(request)
         return redirect('accounts:login')
     club = SportsClub.objects.get(id=pk)
-    com_id = club.communication.pk
-    communication = Communication.objects.get(id=com_id)
+    try:
+        com_id = club.communication.pk
+        communication = Communication.objects.get(id=com_id)
+        communication_form = CommunicationForm(request.POST or None, instance=communication)
+    except:
+        communication_form = CommunicationForm(request.POST or None)
     club_form = ClubForm(request.POST or None, instance=club)
-    communication_form = CommunicationForm(request.POST or None, instance=communication)
     clubPersons = club.clubUser.all()
-
     clubCoachs = club.coachs.all()
-
     if request.method == 'POST':
         if club_form.is_valid():
             club_form.save()
-            communication_form.save()
+
+            if  not club.communication:
+                communication = communication_form.save(commit=False)
+                communication.save()
+                club.communication=communication
+                club.save()
+
+            else:
+                communication_form.save()
+
+
             messages.success(request, 'Başarıyla Güncellendi')
             return redirect('sbs:kulupler')
         else:
