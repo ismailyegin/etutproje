@@ -156,7 +156,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'mail.halter.gov.tr'
 EMAIL_PORT = '587'
 EMAIL_HOST_USER = 'no-reply@halter.gov.tr'
-EMAIL_HOST_PASSWORD = 'Kobil20123*'
+EMAIL_HOST_PASSWORD = 'Kobil2013*'
 EMAIL_USE_TLS = False
 EMAIL_USE_SSL = False
 
