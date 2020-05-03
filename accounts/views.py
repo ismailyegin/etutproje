@@ -14,9 +14,22 @@ from sbs.Forms.PreRegidtrationForm import PreRegistrationForm
 from django.contrib import auth, messages
 
 from sbs import urls
-from sbs.models import MenuAthlete, MenuCoach, MenuReferee, MenuDirectory, MenuAdmin, MenuClubUser
+from sbs.models import MenuAthlete, MenuCoach, MenuReferee, MenuDirectory, MenuAdmin, MenuClubUser, SportsClub, \
+    SportClubUser
+from sbs.models.PreRegistration import PreRegistration
 from sbs.services import general_methods
 from sbs.services.general_methods import show_urls
+
+from sbs.Forms.ClubForm import ClubForm
+from sbs.Forms.ClubRoleForm import ClubRoleForm
+from sbs.Forms.CommunicationForm import CommunicationForm
+from sbs.Forms.DisabledCommunicationForm import DisabledCommunicationForm
+from sbs.Forms.DisabledPersonForm import DisabledPersonForm
+from sbs.Forms.DisabledSportClubUserForm import DisabledSportClubUserForm
+from sbs.Forms.DisabledUserForm import DisabledUserForm
+from sbs.Forms.PersonForm import PersonForm
+from sbs.Forms.SportClubUserForm import SportClubUserForm
+from sbs.Forms.UserForm import UserForm
 
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 
@@ -30,10 +43,10 @@ def login(request):
         return redirect('sbs:admin')
 
     if request.method == 'POST':
+
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = auth.authenticate(username=username, password=password)
-
         if user is not None:
             # correct username and password login the user
             auth.login(request, user)
@@ -61,6 +74,15 @@ def login(request):
                 return redirect('accounts:logout')
 
         else:
+            # eski kullanici olma ihtimaline göre sisteme girme yöntemi
+            try:
+                user = SportsClub.objects.get(username=request.POST.get('username'),
+                                              password=request.POST.get('password'))
+                if user is not None:
+                    return redirect('accounts:newlogin', user.pk)
+            except:
+                print()
+
             messages.add_message(request, messages.SUCCESS, 'Mail Adresi Ve Şifre Uyumsuzluğu')
             return render(request, 'registration/login.html')
 
@@ -102,7 +124,7 @@ def pre_registration(request):
     PreRegistrationform = PreRegistrationForm()
 
     if request.method == 'POST':
-        PreRegistrationform=PreRegistrationForm(request.POST or None, request.FILES or None)
+        PreRegistrationform = PreRegistrationForm(request.POST or None, request.FILES or None)
 
         if PreRegistrationform.is_valid():
             if User.objects.filter(email=PreRegistrationform.cleaned_data['email']).exists():
@@ -115,13 +137,11 @@ def pre_registration(request):
                 messages.success(request,
                                  "Başarili bir şekilde kayıt başvurunuz alındı Sistem onayından sonra girdiginiz mail adresinize gelen mail ile sisteme giris yapabilirsiniz.")
 
-
             # bildirim ve geçis sayfasi yap
             return redirect('accounts:login')
 
         else:
             messages.warning(request, "Alanlari kontrol ediniz")
-
 
     return render(request, 'registration/cluppre-registration.html', {'preRegistrationform': PreRegistrationform})
 
@@ -133,7 +153,6 @@ def pagelogout(request):
 
 def mail(request):
     return redirect('accounts:login')
-
 
 
 def groups(request):
@@ -268,3 +287,95 @@ def forgot(request):
             return redirect("accounts:forgot")
 
     return render(request, 'registration/forgot-password.html')
+
+
+def newlogin(request, pk):
+    print('ben geldim')
+    clup = SportsClub.objects.get(pk=pk)
+    # clüp
+    club_form = ClubForm(instance=clup)
+    communication_formclup = CommunicationForm(instance=clup.communication)
+    # klüp üyesi
+    user_form = UserForm()
+    person_form = PersonForm()
+    communication_form = CommunicationForm()
+    sportClubUser_form = SportClubUserForm()
+
+    if request.method == 'POST':
+
+        try:
+
+            user_form = UserForm(request.POST)
+            person_form = PersonForm(request.POST, request.FILES)
+            communication_form = CommunicationForm(request.POST, request.FILES)
+            sportClubUser_form = SportClubUserForm(request.POST)
+
+            club_form = ClubForm(request.POST, request.FILES)
+            communication_formclup = CommunicationForm(request.POST, request.FILES)
+
+            if club_form.is_valid() and user_form.is_valid() and person_form.is_valid() and communication_form.is_valid() and sportClubUser_form.is_valid():
+                print('hepsi dolu ')
+                clup.name=request.POST.get('name')
+                clup.shortName=request.POST.get('shortName')
+                clup.foundingDate=request.POST.get('foundingDate')
+                clup.logo=request.POST.get('logo')
+                clup.clubMail=request.POST.get('clubMail')
+                clup.isFormal = request.POST.get('isFormal')
+
+                communication = communication_formclup.save(commit=False)
+                communication.save()
+                clup.communication = communication
+                clup.save()
+
+                messages.success(request, 'Kulüp Başarıyla Güncellenmiştir.')
+
+                user = User()
+                user.username = user_form.cleaned_data['email']
+                user.first_name = user_form.cleaned_data['first_name']
+                user.last_name = user_form.cleaned_data['last_name']
+                user.email = user_form.cleaned_data['email']
+                group = Group.objects.get(name='KulupUye')
+                user.save()
+                user.groups.add(group)
+                user.save()
+
+                person = person_form.save(commit=False)
+                communication = communication_form.save(commit=False)
+                person.save()
+                communication.save()
+
+                club_person = SportClubUser(
+                    user=user, person=person, communication=communication,
+                    role=sportClubUser_form.cleaned_data['role'],
+
+                )
+
+                club_person.save()
+
+                # fdk = Forgot(user=user, status=False)
+                # fdk.save()
+
+                # html_content = ''
+                #             # subject, from_email, to = 'TWF Bilgi Sistemi Kullanıcı Bilgileri', 'no-reply@twf.gov.tr', user.email
+                #             # html_content = '<h2>TÜRKİYE HALTER FEDERASYONU BİLGİ SİSTEMİ</h2>'
+                #             # html_content = html_content + '<p><strong>Kullanıcı Adınız :' + str(fdk.user.username) + '</strong></p>'
+                #             # html_content = html_content + '<p> <strong>Site adresi:</strong> <a href="http://sbs.halter.gov.tr:81/newpassword?query=' + str(
+                #             #     fdk.uuid) + '">http://sbs.halter.gov.tr:81/sbs/profil-guncelle/?query=' + str(fdk.uuid) + '</p></a>'
+                #
+                #             # msg = EmailMultiAlternatives(subject, '', from_email, [to])
+                #             # msg.attach_alternative(html_content, "text/html")
+                #             # msg.send()
+
+                clup.clubUser.add(club_person)
+                clup.dataAccessControl = True
+                clup.save()
+                messages.success(request, 'Mail adresinize gelen link ile giriş yapabilirsiniz.')
+                return redirect("accounts:login")
+        except:
+            messages.warning(request, 'Lütfen Yeniden Deneyiniz')
+            return redirect("accounts:login")
+
+    return render(request, 'registration/newlogin.html',
+                  {'user_form': user_form, 'person_form': person_form, 'communication_form': communication_form,
+                   'sportClubUser_form': sportClubUser_form, 'club_form': club_form,
+                   'communication_formclup': communication_formclup})

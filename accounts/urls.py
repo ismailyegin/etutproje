@@ -18,7 +18,8 @@ urlpatterns = [
     url(r'permission-save-api/$', views.permission_post, name="save-permission"),
 
     url(r'mail/$', views.mail, name='mail'),
-    url(r'newpassword$', views.updateUrlProfile, name='newPassword')
+    url(r'newpassword$', views.updateUrlProfile, name='newPassword'),
+    url(r'newlogin/(?P<pk>\d+)$', views.newlogin, name='newlogin'),
 
 
 

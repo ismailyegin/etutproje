@@ -22,6 +22,11 @@ class SportsClub(models.Model):
     coachs = models.ManyToManyField(Coach)
     isFormal = models.BooleanField(default=True,choices=IsFormal)
     clubUser = models.ManyToManyField(SportClubUser)
+    dataAccessControl=models.BooleanField(blank=True, null=True)
+    password=models.CharField(blank=True, null=True, max_length=120)
+    username=models.CharField(blank=True, null=True, max_length=120)
+
+
 
     def __str__(self):
         return '%s' % ( self.name)

@@ -226,7 +226,7 @@
             $("#modal-danger").on("shown.bs.modal", function (e) {
                 $("#btn-conf").click(function () {
                     $.ajax({
-                        url: "{% url "wushu:referee-delete" pk=212121223232323232 %}".replace(/212121223232323232/, id.toString()),
+                        url: "{% url "sbs:referee-delete" pk=212121223232323232 %}".replace(/212121223232323232/, id.toString()),
                         type: "POST",
                         data: {
                             'csrfmiddlewaretoken': "{{  csrf_token  }}",
@@ -240,7 +240,7 @@
                             $('#modal-success').on("shown.bs.modal", function (e) {
                                 $(".btn-ok").click(function () {
 
-                                    window.location.replace("{% url "wushu:hakemler" %}");
+                                    window.location.replace("{% url "sbs:hakemler" %}");
 
                                 });
 

@@ -225,7 +225,6 @@ def updateathletes(request, pk):
     user = User.objects.get(pk=athlete.user.pk)
     person = Person.objects.get(pk=athlete.person.pk)
     communication = Communication.objects.get(pk=athlete.communication.pk)
-
     user_form = UserForm(request.POST or None, instance=user)
     person_form = PersonForm(request.POST or None, instance=person)
     communication_form = CommunicationForm(request.POST or None, instance=communication)

@@ -569,7 +569,7 @@ def choose_sport_club_user(request, pk):
             lastName = user_form.cleaned_data.get('last_name')
             email = user_form.cleaned_data.get('email')
             if not (firstName or lastName or email):
-                print("asasa")
+                print('')
                 # messages.warning(request, 'Lütfen Arama Kriteri Giriniz.')
             else:
                 query = Q()
@@ -757,6 +757,7 @@ def add_belt_exam(request):
         clubs = SportsClub.objects.filter(clubUser=sc_user)
         clubsPk = []
         for club in clubs:
+            print(club.dataAccessControl)
             clubsPk.append(club.pk)
         exam_form.fields['sportClub'].queryset = SportsClub.objects.filter(id__in=clubsPk)
 
