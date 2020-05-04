@@ -221,7 +221,6 @@ def updateUrlProfile(request):
             gelen = Forgot.objects.get(uuid=data)
             user = gelen.user
             password_form = SetPasswordForm(user)
-            print(user)
             if gelen.status == False:
                 gelen.status = True
                 gelen.save()
@@ -306,81 +305,80 @@ def newlogin(request, pk):
     sportClubUser_form = SportClubUserForm()
 
     if request.method == 'POST':
+        user_form = UserForm(request.POST)
+        person_form = PersonForm(request.POST, request.FILES)
+        communication_form = CommunicationForm(request.POST, request.FILES)
+        sportClubUser_form = SportClubUserForm(request.POST)
 
-        try:
+        club_form = ClubForm(request.POST, request.FILES)
+        communication_formclup = CommunicationForm(request.POST, request.FILES)
 
-            user_form = UserForm(request.POST)
-            person_form = PersonForm(request.POST, request.FILES)
-            communication_form = CommunicationForm(request.POST, request.FILES)
-            sportClubUser_form = SportClubUserForm(request.POST)
+        if club_form.is_valid() and user_form.is_valid() and person_form.is_valid() and communication_form.is_valid() and sportClubUser_form.is_valid():
+            clup.name = request.POST.get('name')
+            clup.shortName = request.POST.get('shortName')
+            clup.foundingDate = request.POST.get('foundingDate')
+            clup.logo = request.POST.get('logo')
+            clup.clubMail = request.POST.get('clubMail')
+            clup.isFormal = request.POST.get('isFormal')
 
-            club_form = ClubForm(request.POST, request.FILES)
-            communication_formclup = CommunicationForm(request.POST, request.FILES)
+            communication = communication_formclup.save(commit=False)
+            communication.save()
+            clup.communication = communication
+            clup.save()
 
-            if club_form.is_valid() and user_form.is_valid() and person_form.is_valid() and communication_form.is_valid() and sportClubUser_form.is_valid():
-                print('hepsi dolu ')
-                clup.name=request.POST.get('name')
-                clup.shortName=request.POST.get('shortName')
-                clup.foundingDate=request.POST.get('foundingDate')
-                clup.logo=request.POST.get('logo')
-                clup.clubMail=request.POST.get('clubMail')
-                clup.isFormal = request.POST.get('isFormal')
+            messages.success(request, 'Bilgileriniz Başarıyla Güncellenmiştir.')
 
-                communication = communication_formclup.save(commit=False)
-                communication.save()
-                clup.communication = communication
-                clup.save()
+            user = User()
+            user.username = user_form.cleaned_data['email']
+            user.first_name = user_form.cleaned_data['first_name']
+            user.last_name = user_form.cleaned_data['last_name']
+            user.email = user_form.cleaned_data['email']
+            group = Group.objects.get(name='KulupUye')
+            user.save()
+            user.groups.add(group)
+            user.save()
 
-                messages.success(request, 'Bilgileriniz Başarıyla Güncellenmiştir.')
+            person = person_form.save(commit=False)
+            communication = communication_form.save(commit=False)
+            person.save()
+            communication.save()
 
-                user = User()
-                user.username = user_form.cleaned_data['email']
-                user.first_name = user_form.cleaned_data['first_name']
-                user.last_name = user_form.cleaned_data['last_name']
-                user.email = user_form.cleaned_data['email']
-                group = Group.objects.get(name='KulupUye')
-                user.save()
-                user.groups.add(group)
-                user.save()
+            club_person = SportClubUser(
+                user=user, person=person, communication=communication,
+                role=sportClubUser_form.cleaned_data['role'],
 
-                person = person_form.save(commit=False)
-                communication = communication_form.save(commit=False)
-                person.save()
-                communication.save()
+            )
 
-                club_person = SportClubUser(
-                    user=user, person=person, communication=communication,
-                    role=sportClubUser_form.cleaned_data['role'],
+            club_person.save()
 
-                )
+            fdk = Forgot(user=user, status=False)
+            fdk.save()
 
-                club_person.save()
+            html_content = ''
+            subject, from_email, to = 'TWF Bilgi Sistemi Kullanıcı Bilgileri', 'no-reply@halter.gov.tr', user.email
+            html_content = '<h2>TÜRKİYE HALTER FEDERASYONU BİLGİ SİSTEMİ</h2>'
+            html_content = html_content + '<p><strong>Kullanıcı Adınız :' + str(fdk.user.username) + '</strong></p>'
+            # html_content = html_content + '<p> <strong>Site adresi:</strong> <a href="http://127.0.0.1:8000/newpassword?query=' + str(
+            #     fdk.uuid) + '">http://127.0.0.1:8000/sbs/profil-guncelle/?query=' + str(fdk.uuid) + '</p></a>'
+            html_content = html_content + '<p> <strong>Site adresi:</strong> <a href="http://sbs.halter.gov.tr:81/newpassword?query=' + str(
+                fdk.uuid) + '">http://sbs.halter.gov.tr:81/sbs/profil-guncelle/?query=' + str(fdk.uuid) + '</p></a>'
 
-                fdk = Forgot(user=user, status=False)
-                fdk.save()
+            msg = EmailMultiAlternatives(subject, '', from_email, [to])
+            msg.attach_alternative(html_content, "text/html")
+            msg.send()
 
-                html_content = ''
-                subject, from_email, to = 'TWF Bilgi Sistemi Kullanıcı Bilgileri', 'no-reply@halter.gov.tr', user.email
-                html_content = '<h2>TÜRKİYE HALTER FEDERASYONU BİLGİ SİSTEMİ</h2>'
-                html_content = html_content + '<p><strong>Kullanıcı Adınız :' + str(fdk.user.username) + '</strong></p>'
-                # html_content = html_content + '<p> <strong>Site adresi:</strong> <a href="http://127.0.0.1:8000/newpassword?query=' + str(
-                #     fdk.uuid) + '">http://127.0.0.1:8000/sbs/profil-guncelle/?query=' + str(fdk.uuid) + '</p></a>'
-                html_content = html_content + '<p> <strong>Site adresi:</strong> <a href="http://sbs.halter.gov.tr:81/newpassword?query=' + str(
-                    fdk.uuid) + '">http://sbs.halter.gov.tr:81/sbs/profil-guncelle/?query=' + str(fdk.uuid) + '</p></a>'
-
-                msg = EmailMultiAlternatives(subject, '', from_email, [to])
-                msg.attach_alternative(html_content, "text/html")
-                msg.send()
-
-
-                clup.clubUser.add(club_person)
-                clup.dataAccessControl = True
-                clup.save()
-                messages.success(request, 'Mail adresinize gelen link ile sisteme giriş yapabilirsiniz.')
-                return redirect("accounts:login")
-        except:
-            messages.warning(request, 'Lütfen Yeniden Deneyiniz')
+            clup.clubUser.add(club_person)
+            clup.dataAccessControl = True
+            clup.save()
+            messages.success(request, 'Mail adresinize gelen link ile sisteme giriş yapabilirsiniz.')
             return redirect("accounts:login")
+
+        # try:
+        #
+        #
+        # except:
+        #     messages.warning(request, 'Lütfen Yeniden Deneyiniz')
+        #     return redirect("accounts:login")
 
     return render(request, 'registration/newlogin.html',
                   {'user_form': user_form, 'person_form': person_form, 'communication_form': communication_form,
