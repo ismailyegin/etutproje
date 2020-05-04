@@ -108,10 +108,8 @@ def return_admin_dashboard(request):
     last_athlete = Athlete.objects.order_by('-creationDate')[:8]
     total_club = SportsClub.objects.all().count()
     total_athlete = Athlete.objects.all().count()
-    total_athlete_gender_man=12
-    # Athlete.objects.filter(person__gender='Erkek').count()
-    total_athlete_gender_woman=12
-    # Athlete.objects.filter(person__gender='Kadın').count()
+    total_athlete_gender_man=Athlete.objects.filter(person__gender=Person.MALE).count()
+    total_athlete_gender_woman=Athlete.objects.filter(person__gender=Person.FEMALE).count()
     total_athlate_last_month=Athlete.objects.exclude(user__date_joined__month=datetime.now().month).count()
     total_club_user = SportClubUser.objects.all().count()
     total_coachs = Coach.objects.all().count()
