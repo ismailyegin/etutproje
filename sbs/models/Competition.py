@@ -51,6 +51,11 @@ class Competition(models.Model):
         default_permissions = ()
         db_table = 'competition'
         managed = False
+    def save(self, force_insert=False, force_update=False):
+        if self.name:
+            self.name = self.name.upper()
+        super(Competition, self).save(force_insert, force_update)
+
 
 
 

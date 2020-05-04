@@ -7,6 +7,8 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 
 from sbs.Forms.CompetitionForm import CompetitionForm
+from sbs.Forms.CompetitionSearchForm import CompetitionSearchForm
+from django.db.models import Q
 from sbs.models import SportClubUser, SportsClub, Competition, Athlete, CompAthlete, Weight
 from sbs.models.SimpleCategory import SimpleCategory
 from sbs.models.EnumFields import EnumFields
@@ -39,15 +41,33 @@ def categori_ekle(request):
 
 @login_required
 def return_competitions(request):
+
     perm = general_methods.control_access(request)
 
     if not perm:
         logout(request)
         return redirect('accounts:login')
-
-    competitions = Competition.objects.all()
-
-    return render(request, 'musabaka/musabakalar.html', {'competitions': competitions})
+    comquery=CompetitionSearchForm()
+    competitions=Competition.objects.none()
+    if request.method == 'POST':
+        name= request.POST.get('name')
+        startDate= request.POST.get('startDate')
+        compType= request.POST.get('compType')
+        compGeneralType= request.POST.get('compGeneralType')
+        if name or startDate or compType or compGeneralType:
+            query = Q()
+            if name:
+                query &= Q(name__icontains=name)
+            if startDate:
+                query &= Q(startDate__year=int(startDate))
+            if compType:
+                query &= Q(compType__in=compType)
+            if compGeneralType:
+                query &= Q(compGeneralType__in=compGeneralType)
+            competitions=Competition.objects.filter(query).distinct()
+        else:
+            competitions = Competition.objects.all()
+    return render(request, 'musabaka/musabakalar.html', {'competitions': competitions,'query':comquery})
 
 
 @login_required
