@@ -864,44 +864,18 @@ def updateClubPersonsProfile(request):
 
     if request.method == 'POST':
         data = request.POST.copy()
-        data['bloodType'] = "AB Rh+"
-        data['gender'] = "Erkek"
         person_form = DisabledPersonForm(data)
 
-        if person_form.is_valid() and password_form.is_valid():
-            if len(request.FILES) > 0:
-                person.profileImage = request.FILES['profileImage']
-                person.save()
-                messages.success(request, 'Profil Fotoğrafı Başarıyla Güncellenmiştir.')
+        if len(request.FILES) > 0:
+            person.profileImage = request.FILES['profileImage']
+            person.save()
+            messages.success(request, 'Profil Fotoğrafı Başarıyla Güncellenmiştir.')
 
+        if password_form.is_valid():
             user.set_password(password_form.cleaned_data['new_password2'])
             user.save()
             update_session_auth_hash(request, user)
             messages.success(request, 'Şifre Başarıyla Güncellenmiştir.')
-            return redirect('sbs:kulup-uyesi-profil-guncelle')
-
-
-
-        elif person_form.is_valid() and not password_form.is_valid():
-            if len(request.FILES) > 0:
-                person.profileImage = request.FILES['profileImage']
-                person.save()
-                messages.success(request, 'Profil Fotoğrafı Başarıyla Güncellenmiştir.')
-            else:
-                messages.warning(request, 'Alanları Kontrol Ediniz')
-            return redirect('sbs:kulup-uyesi-profil-guncelle')
-
-
-        elif not person_form.is_valid() and password_form.is_valid():
-            user.set_password(password_form.cleaned_data['new_password2'])
-            user.save()
-            update_session_auth_hash(request, user)
-            messages.success(request, 'Şifre Başarıyla Güncellenmiştir.')
-            return redirect('sbs:kulup-uyesi-profil-guncelle')
-
-        else:
-            messages.warning(request, 'Alanları Kontrol Ediniz.')
-
             return redirect('sbs:kulup-uyesi-profil-guncelle')
 
     return render(request, 'kulup/kulup-uyesi-profil-guncelle.html',
