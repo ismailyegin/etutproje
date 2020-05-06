@@ -202,7 +202,7 @@ def return_sporcu(request):
     if request.method == 'GET':
         datatables = request.GET
         pk = request.GET.get('cmd')
-        print('pk beklenen deger =',pk)
+        # print('pk beklenen deger =',pk)
         competition = Competition.objects.get(pk=pk)
         # kategori = CompetitionCategori.objects.get(pk=request.GET.get('cmd'))
 
@@ -263,7 +263,7 @@ def return_sporcu(request):
                 total = modeldata.count()
             elif user.groups.filter(name__in=['Yonetim', 'Admin']):
                 modeldata = Athlete.objects.all()[start:start + length]
-                total = modeldata.count()
+                total =  Athlete.objects.all().count()
 
 
     say = start + 1
