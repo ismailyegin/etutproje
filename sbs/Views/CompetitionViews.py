@@ -277,11 +277,15 @@ def return_sporcu(request):
 
     beka = []
     for item in modeldata:
-        klup='';
-        if item.licenses:
-            for lisans in item.licenses.all():
-                if lisans.sportsClub:
-                    klup = str(lisans.sportsClub) + "<br>" + klup
+        klup=''
+        try:
+            if item.licenses:
+                for lisans in item.licenses.all():
+                    if lisans.sportsClub:
+                        klup = str(lisans.sportsClub) + "<br>" + klup
+        except:
+            klup=''
+
 
 
         data = {
