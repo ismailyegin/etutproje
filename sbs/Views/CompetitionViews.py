@@ -17,6 +17,8 @@ from sbs.models.TaoluAthlete import TaoluAthlete
 from sbs.services import general_methods
 from sbs.Forms.SimplecategoryForm import SimplecategoryForm
 
+from datetime import datetime
+
 
 @login_required
 def categori_ekle(request):
@@ -48,7 +50,25 @@ def return_competitions(request):
         logout(request)
         return redirect('accounts:login')
     comquery=CompetitionSearchForm()
-    competitions=Competition.objects.none()
+    competitions=Competition.objects.filter(startDate__year=datetime.now().year,startDate__month=datetime.now().month)
+    for comp in competitions:
+        myDate = datetime.now()
+        formatedDate = myDate.strftime("%Y-%m-%d")
+        print(formatedDate)
+        print(comp.startDate)
+        print(comp.startDate.strftime("%Y-%m-%d"))
+
+
+        # date=datetime.date(2009,8,22)
+        # print(datetime.date(int(2009),int(8),int(22)))
+        # print(comp.finishDate)
+        # if int(comp.finishDate-datetime.now())>0:
+        #     print('ben geldim ')
+
+
+
+
+
     if request.method == 'POST':
         name= request.POST.get('name')
         startDate= request.POST.get('startDate')

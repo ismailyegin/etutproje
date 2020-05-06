@@ -12,11 +12,28 @@ class CompetitionForm(ModelForm):
         model = Competition
 
         fields = (
-            'name', 'startDate', 'finishDate','compType','compGeneralType')
+            'name', 'startDate', 'finishDate','compType','compGeneralType','eventPlace','eventDate','juryCount','registerStartDate','registerFinishDate')
 
-        labels = {'name': 'İsim', 'startDate': 'Başlangıç Tarihi', 'finishDate': 'Bitiş Tarihi', 'compType': 'Türü', 'compGeneralType': 'Genel Türü'}
+        labels = {'name': 'İsim', 'startDate': 'Başlangıç Tarihi', 'finishDate': 'Bitiş Tarihi', 'compType': 'Türü', 'compGeneralType': 'Genel Türü',
+                  'eventPlace':'Etkinlik Yeri','eventDate':'Etkinlik tarihi','juryCount':'Juri Sayisi','registerStartDate':'Ön Kayıt Başlangıç Tarihi',
+                  'registerFinishDate':'Ön Kayıt Bitiş Tarihi'}
 
         widgets = {
+
+
+
+            'juryCount': forms.NumberInput(attrs={'class': 'form-control'}),
+
+            'registerStartDate': forms.DateInput(
+                attrs={'class': 'form-control  pull-right datepicker6',  'autocomplete': 'on',
+                       'onkeydown': 'return true'}),
+            'registerFinishDate': forms.DateInput(
+                attrs={'class': 'form-control  pull-right datepicker6', 'autocomplete': 'on',
+                       'onkeydown': 'return true'}),
+            'eventDate': forms.DateInput(
+                attrs={'class': 'form-control  pull-right datepicker6', 'autocomplete': 'on',
+                       'onkeydown': 'return true'}),
+            'eventPlace': forms.TextInput(attrs={'class': 'form-control'}),
 
             'startDate': forms.DateInput(
                 attrs={'class': 'form-control  pull-right', 'id': 'datepicker2', 'autocomplete': 'on',
