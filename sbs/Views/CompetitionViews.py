@@ -237,33 +237,38 @@ def return_sporcu(request):
             for club in clubs:
                 clubsPk.append(club.pk)
 
-            modeldata = kategori.athlete.filter(licenses__sportsClub__in=clubsPk).distinct()
+            modeldata = Athlete.objects.filter(licenses__sportsClub__in=clubsPk).distinct()
             total = modeldata.count()
 
         elif user.groups.filter(name__in=['Yonetim', 'Admin']):
-            modeldata = kategori.athlete.all()
-            total = kategori.athlete.all().count()
+            modeldata = Athlete.objects.all()
+            total = Athlete.objects.all().count()
 
 
     else:
         if search:
-            modeldata = kategori.athlete.filter(
+            modeldata =Athlete.objects.filter(
                 Q(user__last_name__icontains=search) | Q(user__first_name__icontains=search) | Q(
                     user__email__icontains=search))
             total = modeldata.count();
 
         else:
+            compAthlete=CompAthlete.objects.filter(competition=competition)
+            athletes = []
+            for comp in compAthlete:
+                if comp.athlete:
+                        athletes.append(comp.athlete.pk)
             if user.groups.filter(name='KulupUye'):
                 sc_user = SportClubUser.objects.get(user=user)
                 clubsPk = []
                 clubs = SportsClub.objects.filter(clubUser=sc_user)
                 for club in clubs:
                     clubsPk.append(club.pk)
-                modeldata = Athlete.objects.filter(licenses__sportsClub__in=clubsPk).distinct()[start:start + length]
-                total = modeldata.count()
+                modeldata = Athlete.objects.exclude(pk__in=athletes).filter(licenses__sportsClub__in=clubsPk).distinct()[start:start + length]
+                total = mAthlete.objects.exclude(pk__in=athletes).filter(licenses__sportsClub__in=clubsPk).distinct().count()
             elif user.groups.filter(name__in=['Yonetim', 'Admin']):
-                modeldata = Athlete.objects.all()[start:start + length]
-                total =  Athlete.objects.all().count()
+                modeldata = Athlete.objects.exclude(pk__in=athletes)[start:start + length]
+                total =Athlete.objects.exclude(pk__in=athletes).count()
 
 
     say = start + 1
@@ -272,14 +277,17 @@ def return_sporcu(request):
 
     beka = []
     for item in modeldata:
+        klup='';
+        for  lisans in item.licenses.all():
+            klup= str(lisans.sportsClub)+"<br>"+klup
         data = {
             'say': say,
             'pk': item.pk,
+
             'name': item.user.first_name + ' ' + item.user.last_name,
-            # 'user': item.person.birthDate,
-            #             # 'klup': klup,
-            #             # 'brans': brans,
-            #             # 'kusak': kusak,
+             'birthDate':item.person.birthDate,
+
+            'klup':klup,
 
         }
         beka.append(data)

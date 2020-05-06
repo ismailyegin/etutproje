@@ -185,6 +185,7 @@
                                     <tr>
                                         <th>#</th>
                                         <th>Ad Soyad</th>
+                                        <th>Dogum Tarihi</th>
                                         <th>Kulüp</th>
                                         <th>İşlemler</th>
 
@@ -251,10 +252,17 @@
         });
 
 
-    {#    --------------------------------------------------------------------#}
-           $(function () {
-            {#table = $('#taoluathlete').DataTable();#}
-            {#table.destroy();#}
+        {#    --------------------------------------------------------------------#}
+        $(function () {
+            Playerlist();
+
+
+        });
+
+        function Playerlist() {
+            table = $('#sporcular').DataTable();
+            table.destroy();
+
             $('#sporcular').DataTable({
                 language: {
 
@@ -282,8 +290,8 @@
                     {#{"targets": -1},#}
                     {'data': 'say'},
                     {'data': 'name'},
-                    {#{'data': 'user'},#}
-                    {#{'data': 'klup'},#}
+                    {'data': 'birthDate'},
+                    {'data': 'klup'},
                     {#{'data': 'brans'},#}
                     {#{'data': 'kusak'},#}
 
@@ -293,9 +301,7 @@
                         "mRender": function (data) {
 
 
-
-                            return '<div class="btn-group"><a class="btn btn-primary" data-toggle="modal" onclick="addPlayer(' + data.pk + ',' + {{ pk }}+ ')" ><i class="fa fa-plus"></i>' + 'Ekle' + '</a></div>';
-
+                            return '<div class="btn-group"><a class="btn btn-primary" data-toggle="modal" onclick="addPlayer(' + data.pk + ',' + {{ pk }}+')" ><i class="fa fa-plus"></i>' + 'Ekle' + '</a></div>';
 
 
                         }
@@ -378,10 +384,10 @@
             });
 
 
-        });
+        }
 
 
-              function addPlayer(id, competitionId) {
+        function addPlayer(id, competitionId) {
 
             $("#reddetwhy").on("shown.bs.modal", function (e) {
 
@@ -401,12 +407,16 @@
                         success: function (result) {
 
                             html = 'Sporcu Başarıyla Eklendi .';
-                        debugger;
+                            debugger;
                             $(".successModal").html(html);
                             $('#modal-success').on("shown.bs.modal", function (e) {
                                 $(".btn-ok").click(function () {
 
-                                     {#window.location.replace("{% url "sbs:musabaka-sporcu-sec"  competition.pk  %}");#}
+                                    {#window.location.replace("{% url "sbs:musabaka-sporcu-sec"  competition.pk  %}");#}
+
+                                    $('#modal-warning').modal('hide');
+                                    $('.modal').modal('hide');
+                                    Playerlist();
 
                                 });
 
@@ -418,7 +428,7 @@
 
             }).modal('show');
             $('#btn-closereddet').click(function () {
-                console.log('buradan çık')
+
 
                 $('#modal-warning').modal('hide');
                 $('.modal').modal('hide');
@@ -426,8 +436,6 @@
             });
 
         }
-
-
 
 
     </script>
@@ -442,7 +450,7 @@
 
 
 
-{#    -----------------------------------------------------------#}
+    {#    -----------------------------------------------------------#}
 
 
 
