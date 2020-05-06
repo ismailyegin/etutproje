@@ -238,15 +238,6 @@
     </div>
 
 
-
-
-
-
-
-
-
-
-
     <script>
         $(function () {
             //Enable iCheck plugin for checkboxes
@@ -258,25 +249,139 @@
             });
 
         });
-    </script>
 
-    <script>
-        $(function () {
+
+    {#    --------------------------------------------------------------------#}
+           $(function () {
+            {#table = $('#taoluathlete').DataTable();#}
+            {#table.destroy();#}
             $('#sporcular').DataTable({
+                language: {
+
+                    url: "//cdn.datatables.net/plug-ins/1.10.20/i18n/Turkish.json"
+
+                },
                 'paging': true,
-                'lengthChange': true,
                 'searching': true,
                 'ordering': true,
-                'info': true,
-                'autoWidth': true
-            })
+                'responsive': true,
+                'autoWidth': true,
+                "serverSide": true,
+                "processing": true,
+                'ajax': {
 
-        })
-    </script>
+                    "url": '{% url "sbs:Kategorilerin-Sporculari"%}',
+                    "methot": 'POST',
+                    "data": {
+                        "cmd":{{ pk }},
+                    },
+                },
 
-    <script>
 
-        function addPlayer(id, competitionId) {
+                'columns': [
+                    {#{"targets": -1},#}
+                    {'data': 'say'},
+                    {'data': 'name'},
+                    {#{'data': 'user'},#}
+                    {#{'data': 'klup'},#}
+                    {#{'data': 'brans'},#}
+                    {#{'data': 'kusak'},#}
+
+                    {
+                        "data": null,
+                        "bSortable": false,
+                        "mRender": function (data) {
+
+
+
+                            return '<div class="btn-group"><a class="btn btn-primary" data-toggle="modal" onclick="addPlayer(' + data.pk + ',' + {{ pk }}+ ')" ><i class="fa fa-plus"></i>' + 'Ekle' + '</a></div>';
+
+
+
+                        }
+                    }
+                ],
+                dom: 'Bfrtip',
+                language: {
+                    buttons: {
+                        pageLength: {
+                            _: " %d  Tane Göster",
+                            '-1': "Hepsini Göster"
+                        }
+                    }
+                },
+                lengthMenu: [
+                    [10, 25, 50, 100, -1],
+                    ['10 tane', '25 tane ', '50 tane ', '100 Tane', 'Hepsini Getir']
+                ],
+                'buttons': [
+
+
+                    {
+                        extend: "pageLength",
+                    },
+
+
+                    {
+                        extend: 'colvis',
+                        text: '<i class=" fa  fa-th-list"></i>',
+                        titleAttr: 'Ekle Çıkar'
+
+
+                    },
+                    {
+                        extend: 'print',
+                        title: 'Sporcular',
+                        text: '<i class="fa  fa-print"></i>',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4, 5]
+                        },
+                        titleAttr: 'Yazdır'
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        download: 'open',
+                        text: '<i class="fa fa-file-pdf-o"></i>',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4, 5]
+                        },
+                        titleAttr: 'Pdf Kaydet'
+                    },
+
+                    {
+                        extend: 'excelHtml5',
+                        title: 'Sporcular',
+                        text: '<i class="fa fa-file-excel-o"></i>',
+                        messageTop: 'Twf Bilgi Sistemi ',
+                        footer: true,
+                        exportOptions: {
+                            {#yer degisimi de yapilabilir.#}
+                            columns: [0, 2, 1, 3, 4, 5]
+
+                        },
+                        titleAttr: 'Excel Kaydet'
+                    },
+                    {
+                        text: '<i class="fa fa-file-text-o"></i>',
+                        action: function (e, dt, button, config) {
+                            var data = dt.buttons.exportData();
+
+                            $.fn.dataTable.fileSave(
+                                new Blob([JSON.stringify(data)]),
+                                'Sporcular.json'
+                            );
+                        }
+                    }
+                ],
+
+
+            });
+
+
+        });
+
+
+              function addPlayer(id, competitionId) {
 
             $("#reddetwhy").on("shown.bs.modal", function (e) {
 
@@ -284,7 +389,7 @@
 
                     console.log('buradan girdi', competitionId)
                     $.ajax({
-                        url: "{% url "wushu:musabaka_sporcu_ekle" athlete_pk=212121223232323232 competition_pk=999999999999999 %}".replace(/212121223232323232/, id.toString()).replace(/999999999999999/, competitionId.toString()),
+                        url: "{% url "sbs:catagori-sporcu-sec-ajax" pk=212121223232323232 competition=999999999999999 %}".replace(/212121223232323232/, id.toString()).replace(/999999999999999/, competitionId.toString()),
                         type: "POST",
                         data: {
                             'csrfmiddlewaretoken': "{{  csrf_token  }}",
@@ -301,7 +406,7 @@
                             $('#modal-success').on("shown.bs.modal", function (e) {
                                 $(".btn-ok").click(function () {
 
-                                     window.location.replace("{% url "wushu:musabaka-sporcu-sec" competition.pk  %}");
+                                     {#window.location.replace("{% url "sbs:musabaka-sporcu-sec"  competition.pk  %}");#}
 
                                 });
 
@@ -323,7 +428,27 @@
         }
 
 
+
+
     </script>
+
+
+
+
+
+
+
+
+
+
+
+{#    -----------------------------------------------------------#}
+
+
+
+
+
+
 
 {% endblock %}
 

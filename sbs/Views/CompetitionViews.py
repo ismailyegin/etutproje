@@ -17,7 +17,8 @@ from sbs.models.TaoluAthlete import TaoluAthlete
 from sbs.services import general_methods
 from sbs.Forms.SimplecategoryForm import SimplecategoryForm
 
-from datetime import datetime
+from datetime import date,datetime
+from django.utils import timezone
 
 
 @login_required
@@ -50,25 +51,15 @@ def return_competitions(request):
         logout(request)
         return redirect('accounts:login')
     comquery=CompetitionSearchForm()
-    competitions=Competition.objects.filter(startDate__year=datetime.now().year,startDate__month=datetime.now().month)
-    for comp in competitions:
-        myDate = datetime.now()
-        formatedDate = myDate.strftime("%Y-%m-%d")
-        print(formatedDate)
-        print(comp.startDate)
-        print(comp.startDate.strftime("%Y-%m-%d"))
-
-
-        # date=datetime.date(2009,8,22)
-        # print(datetime.date(int(2009),int(8),int(22)))
-        # print(comp.finishDate)
-        # if int(comp.finishDate-datetime.now())>0:
-        #     print('ben geldim ')
-
-
-
-
-
+    compe=Competition.objects.filter(registerStartDate__year=timezone.now().year,registerStartDate__month=timezone.now().month)
+    Pk = []
+    for comp in compe:
+        now=datetime.now()
+        startDate = datetime(comp.registerStartDate.year, comp.registerStartDate.month, comp.registerStartDate.day)
+        finishDate=datetime(comp.registerFinishDate.year, comp.registerFinishDate.month, comp.registerFinishDate.day)
+        if (now-startDate).days>=0 and (now-finishDate).days<=0:
+            Pk.append(comp.pk)
+    competitions=Competition.objects.filter(pk__in=Pk)
     if request.method == 'POST':
         name= request.POST.get('name')
         startDate= request.POST.get('startDate')
@@ -183,31 +174,172 @@ def musabaka_sporcu_sec(request, pk):
     if not perm:
         logout(request)
         return redirect('accounts:login')
+    print(pk)
+    weights = Weight.objects.all()
+    # login_user = request.user
+    # user = User.objects.get(pk=login_user.pk)
+    # competition = Competition.objects.get(pk=pk)
+    # weights = Weight.objects.all()
+    # if user.groups.filter(name='KulupUye'):
+    #     sc_user = SportClubUser.objects.get(user=user)
+    #     clubsPk = []
+    #     clubs = SportsClub.objects.filter(clubUser=sc_user)
+    #     for club in clubs:
+    #         clubsPk.append(club.pk)
+    #     athletes = Athlete.objects.filter(licenses__sportsClub__in=clubsPk).distinct()
+    # elif user.groups.filter(name__in=['Yonetim', 'Admin']):
+    #     athletes = Athlete.objects.all()
+
+    return render(request, 'musabaka/musabaka-sporcu-sec.html',
+                  {'pk':pk,'weights': weights})
+                  # ,{'athletes': athletes, 'competition': competition, })
+
+@login_required
+def return_sporcu(request):
     login_user = request.user
     user = User.objects.get(pk=login_user.pk)
-    competition = Competition.objects.get(pk=pk)
-    weights = Weight.objects.all()
-    if user.groups.filter(name='KulupUye'):
-        sc_user = SportClubUser.objects.get(user=user)
-        clubsPk = []
-        clubs = SportsClub.objects.filter(clubUser=sc_user)
-        for club in clubs:
-            clubsPk.append(club.pk)
-        athletes = Athlete.objects.filter(licenses__sportsClub__in=clubsPk).distinct()
-    elif user.groups.filter(name__in=['Yonetim', 'Admin']):
-        athletes = Athlete.objects.all()
-    return render(request, 'musabaka/musabaka-sporcu-sec.html',
-                  {'athletes': athletes, 'competition': competition, 'weights': weights})
+    # /datatablesten gelen veri kümesi datatables degiskenine alindi
+    if request.method == 'GET':
+        datatables = request.GET
+        pk = request.GET.get('cmd')
+        print('pk beklenen deger =',pk)
+        competition = Competition.objects.get(pk=pk)
+        # kategori = CompetitionCategori.objects.get(pk=request.GET.get('cmd'))
+
+    elif request.method == 'POST':
+        datatables = request.POST
+        # print(datatables)
+        # print("post islemi gerceklesti")
+
+    # /Sayfanın baska bir yerden istenmesi durumunda degerlerin None dönmemesi icin degerler try boklari icerisine alindi
+    try:
+        draw = int(datatables.get('draw'))
+        # print("draw degeri =", draw)
+        # Ambil start
+        start = int(datatables.get('start'))
+        # print("start degeri =", start)
+        # Ambil length (limit)
+        length = int(datatables.get('length'))
+        # print("lenght  degeri =", length)
+        # Ambil data search
+        search = datatables.get('search[value]')
+        # print("search degeri =", search)
+    except:
+        draw = 1
+        start = 0
+        length = 10
+
+    if length == -1:
+        if user.groups.filter(name='KulupUye'):
+            sc_user = SportClubUser.objects.get(user=user)
+            clubsPk = []
+            clubs = SportsClub.objects.filter(clubUser=sc_user)
+            for club in clubs:
+                clubsPk.append(club.pk)
+
+            modeldata = kategori.athlete.filter(licenses__sportsClub__in=clubsPk).distinct()
+            total = modeldata.count()
+
+        elif user.groups.filter(name__in=['Yonetim', 'Admin']):
+            modeldata = kategori.athlete.all()
+            total = kategori.athlete.all().count()
+
+
+    else:
+        if search:
+            modeldata = kategori.athlete.filter(
+                Q(user__last_name__icontains=search) | Q(user__first_name__icontains=search) | Q(
+                    user__email__icontains=search))
+            total = modeldata.count();
+
+        else:
+            if user.groups.filter(name='KulupUye'):
+                sc_user = SportClubUser.objects.get(user=user)
+                clubsPk = []
+                clubs = SportsClub.objects.filter(clubUser=sc_user)
+                for club in clubs:
+                    clubsPk.append(club.pk)
+                modeldata = Athlete.objects.filter(licenses__sportsClub__in=clubsPk).distinct()[start:start + length]
+                total = modeldata.count()
+            elif user.groups.filter(name__in=['Yonetim', 'Admin']):
+                modeldata = Athlete.objects.all()[start:start + length]
+                total = modeldata.count()
+
+
+    say = start + 1
+    start = start + length
+    page = start / length
+
+    beka = []
+    for item in modeldata:
+        data = {
+            'say': say,
+            'pk': item.pk,
+            'name': item.user.first_name + ' ' + item.user.last_name,
+            # 'user': item.person.birthDate,
+            #             # 'klup': klup,
+            #             # 'brans': brans,
+            #             # 'kusak': kusak,
+
+        }
+        beka.append(data)
+        say += 1
+
+
+    response = {
+
+        'data': beka,
+        'draw': draw,
+        'recordsTotal': total,
+        'recordsFiltered': total,
+
+    }
+    return JsonResponse(response)
+
+
+@login_required
+def choose_athlete(request, pk, competition):
+    perm = general_methods.control_access(request)
+    login_user = request.user
+
+    if not perm:
+        logout(request)
+        return redirect('accounts:login')
+    if request.method == 'POST' and request.is_ajax():
+        try:
+            user = User.objects.get(pk=login_user.pk)
+            competition = Competition.objects.get(pk=competition)
+            athlete = Athlete.objects.get(pk=pk)
+            compAthlete = CompAthlete()
+            compAthlete.athlete = athlete
+            compAthlete.competition = competition
+            compAthlete.total = request.POST.get('total')
+            compAthlete.weight = request.POST.get('weight')
+            compAthlete.save()
+
+            return JsonResponse({'status': 'Success', 'messages': 'save successfully'})
+        except SandaAthlete.DoesNotExist:
+            return JsonResponse({'status': 'Fail', 'msg': 'Object does not exist'})
+
+    else:
+        return JsonResponse({'status': 'Fail', 'msg': 'Not a valid request'})
+
+
+
+
+
+
+
+
+
 
 
 @login_required
 def musabaka_sporcu_tamamla(request, athletes):
     perm = general_methods.control_access(request)
-
     if not perm:
         logout(request)
         return redirect('accounts:login')
-
     if request.method == 'POST':
         athletes1 = request.POST.getlist('selected_options')
         if athletes1:
