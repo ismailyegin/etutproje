@@ -1,3 +1,5 @@
+from itertools import combinations
+
 from django.contrib import messages
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
@@ -51,15 +53,8 @@ def return_competitions(request):
         logout(request)
         return redirect('accounts:login')
     comquery=CompetitionSearchForm()
-    compe=Competition.objects.filter(registerStartDate__year=timezone.now().year,registerStartDate__month=timezone.now().month)
-    Pk = []
-    for comp in compe:
-        now=datetime.now()
-        startDate = datetime(comp.registerStartDate.year, comp.registerStartDate.month, comp.registerStartDate.day)
-        finishDate=datetime(comp.registerFinishDate.year, comp.registerFinishDate.month, comp.registerFinishDate.day)
-        if (now-startDate).days>=0 and (now-finishDate).days<=0:
-            Pk.append(comp.pk)
-    competitions=Competition.objects.filter(pk__in=Pk)
+    competitions = Competition.objects.filter(registerStartDate__lte=timezone.now(),registerFinishDate__gt=timezone.now())
+
     if request.method == 'POST':
         name= request.POST.get('name')
         startDate= request.POST.get('startDate')
