@@ -53,7 +53,7 @@ def return_competitions(request):
         logout(request)
         return redirect('accounts:login')
     comquery=CompetitionSearchForm()
-    competitions = Competition.objects.filter(registerStartDate__lte=timezone.now(),registerFinishDate__gt=timezone.now())
+    competitions = Competition.objects.filter(registerStartDate__lte=timezone.now(),registerFinishDate__gte=timezone.now())
 
     if request.method == 'POST':
         name= request.POST.get('name')
