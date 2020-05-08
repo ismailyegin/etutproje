@@ -1,7 +1,7 @@
 from django.conf.urls import url
 
 from sbs.Views import DashboardViews, AthleteViews, RefereeViews, ClubViews, CoachViews, DirectoryViews, UserViews, \
-    CompetitionViews, AdminViews, HelpViews, PageViews, PreRegistration
+    CompetitionViews, AdminViews, HelpViews, PageViews, PreRegistration, EPProjectViews
 
 app_name = 'sbs'
 
@@ -311,7 +311,7 @@ urlpatterns = [
     url(r'musabaka/musabaka-ekle/$', CompetitionViews.musabaka_ekle, name='musabaka-ekle'),
     url(r'musabaka/musabaka-duzenle/(?P<pk>\d+)$', CompetitionViews.musabaka_duzenle, name='musabaka-duzenle'),
     url(r'musabaka/musabakalar/musabaka-sil(?P<pk>\d+)$', CompetitionViews.musabaka_sil, name='musabaka-sil'),
-    url(r'musabaka/musabaka-sporcu-sec/(?P<pk>\d+)$', CompetitionViews.musabaka_sporcu_sec,name='musabaka-sporcu-sec'),
+    url(r'musabaka/musabaka-sporcu-sec/(?P<pk>\d+)$', CompetitionViews.musabaka_sporcu_sec, name='musabaka-sporcu-sec'),
     url(r'musabaka/sporcu-sec/(?P<pk>\d+)/(?P<competition>\d+)$', CompetitionViews.choose_athlete,
         name='catagori-sporcu-sec-ajax'),
     url(r'musabaka/KategorilerinSporculari/$', CompetitionViews.return_sporcu, name='Kategorilerin-Sporculari'),
@@ -324,5 +324,10 @@ urlpatterns = [
     #     Yardım ve destek
 
     url(r'yardim$', HelpViews.help, name='help'),
+
+    # ETÜT PROJE
+
+    url(r'etut-proje/projeler/$', EPProjectViews.return_projects, name='projeler'),
+    url(r'etut-proje/proje-ekle/$', EPProjectViews.add_project, name='proje-ekle'),
 
 ]
