@@ -3745,7 +3745,7 @@ table.text-center th {
 
 .login-page,
 .register-page {
-    background: url("/media/sbs-arkaplan.jpg") no-repeat fixed center;
+    background: url("/etutproje/media/sbs-arkaplan.jpg") no-repeat fixed center;
     background-size: cover;
 }
 
