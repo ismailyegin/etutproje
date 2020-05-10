@@ -1,5 +1,7 @@
 from django.db import models
 
+from sbs.models import City
+
 
 class EPProject(models.Model):
     GENEL_ISYURTLARI = 'Genel/İş Yurtları'
@@ -32,11 +34,13 @@ class EPProject(models.Model):
     insaatAlani = models.FloatField(default=0)
     tahminiOdenekTutari = models.DecimalField(max_digits=12, decimal_places=2,default=0)
     yaklasikMaliyet = models.DecimalField(max_digits=12, decimal_places=2,default=0)
-    ihaleTarihi = models.DateTimeField(null=True)
+    ihaleTarihi = models.DateTimeField(null=True,blank=True)
     sozlesmeBedeli = models.DecimalField(max_digits=12, decimal_places=2,default=0)
-    sozlesmeTarihi = models.DateTimeField(null=True)
+    sozlesmeTarihi = models.DateTimeField(null=True,blank=True)
     isSUresi = models.IntegerField(default=0)
-    isBitimTarihi = models.DateTimeField(null=True)
+    isBitimTarihi = models.DateTimeField(null=True,blank=True)
+
+    city = models.ForeignKey(City, on_delete=models.CASCADE, verbose_name='İl', db_column='city')
 
     def __str__(self):
         return '%s ' % self.name

@@ -159,6 +159,9 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Tanımı</th>
+                                    <th>İli</th>
+                                    <th>Bütçe Yılı</th>
+                                    <th>Bütçe Cinsi</th>
                                     <th>İşlemler</th>
 
 
@@ -170,10 +173,13 @@
                                         <tr>
                                             <td>{{ forloop.counter }} </td>
                                             <td>{{ project.name }} </td>
+                                            <td>{{ project.city }} </td>
+                                            <td>{{ project.butceYili }} </td>
+                                            <td>{{ project.butceCinsi }} </td>
 
                                             <td>
                                                 <div class="btn-group">
-                                                    <a href="{% url "sbs:hakem-duzenle" project.pk %}"
+                                                    <a href="{% url "sbs:proje-duzenle" project.pk %}"
                                                        type="button" class="btn btn-warning"><i
                                                             class="fa fa-edit"></i> İncele
                                                     </a>
@@ -209,7 +215,7 @@
 
     <script>
         $(function () {
-            $('#hakemler').DataTable({
+            $('#projects').DataTable({
                 'paging': true,
                 'lengthChange': true,
                 'searching': true,
