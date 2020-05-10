@@ -29,11 +29,11 @@ DATABASES = {
 }
 
 
-STATIC_ROOT = "C:/Bitnami/djangostack-2.2.12-0/apache2/htdocs/static/"
+STATIC_ROOT = "C:/Bitnami/djangostack-2.2.12-0/apache2/htdocs/static2/"
 
 STAICFILES_DIR = [
 
-    "C:/Bitnami/djangostack-2.2.12-0/apache2/htdocs/static/"
+    "C:/Bitnami/djangostack-2.2.12-0/apache2/htdocs/static2/"
 
 ]
 
