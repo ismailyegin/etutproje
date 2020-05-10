@@ -82,6 +82,7 @@ TEMPLATES = [
                 'sbs.services.general_methods.getDirectoryMenu',
                 'sbs.services.general_methods.getClubUserMenu',
                 'sbs.services.general_methods.getProfileImage',
+                'django.template.context_processors.media', # set this explicitly
 
                 # "education.services.general_methods.append_privileges",
             ],
@@ -130,6 +131,7 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
