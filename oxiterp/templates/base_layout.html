@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="{% static 'bower_components/font-awesome/css/font-awesome.min.css' %}">
     <!-- Ionicons -->
     <link rel="stylesheet" href="{% static 'bower_components/Ionicons/css/ionicons.min.css' %} ">
-    <link rel="shortcut icon" type="image/png" href="/media/favicon.png"/>
+    <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.png' %}"/>
 
     <link rel="stylesheet" href="{% static 'plugins/iCheck/all.css' %}">
 
@@ -28,8 +28,7 @@
     <link rel="stylesheet" href="{% static 'bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css' %}">
 
 
-
-{#    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">#}
+    {#    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">#}
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.dataTables.min.css">
 
@@ -39,9 +38,9 @@
 
 
     {#    buton tasarimi icin#}
-{#     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/css/foundation.min.css">#}
-{#     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.foundation.min.css">#}
-{#     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.foundation.min.css">#}
+    {#     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/css/foundation.min.css">#}
+    {#     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.foundation.min.css">#}
+    {#     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.foundation.min.css">#}
 
     <link rel="stylesheet"
           href="{% static 'bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css' %}">
@@ -77,14 +76,6 @@
     {#    test harita #}
 
 
-
-
-
-
-
-
-
-
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -96,6 +87,7 @@
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
+{% load static %}
 <body class="hold-transition skin-blue fixed sidebar-mini">
 <div class="preloader"></div>
 <!-- Site wrapper -->
@@ -108,7 +100,8 @@
             <!-- mini logo for sidebar mini 50x50 pixels -->
             <span class="logo-mini"><b>THF</b></span>
             <!-- logo for regular state and mobile devices -->
-            <span class="logo-lg"><img src="/media/base-logo.png" alt="User Image" style="margin-bottom: 5px;"> </span>
+            <span class="logo-lg"><img src="{% static 'images/base-logo.png' %}" alt="User Image"
+                                       style="margin-bottom: 5px;"> </span>
         </a>
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top">
@@ -125,7 +118,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
 
 
-                            <img src="/media/{{ person.profileImage }}" class="user-image" alt="KOBİLTEK"
+                            <img src="/media/{{  person.profileImage }}" class="user-image" alt="KOBİLTEK"
                                  style=" width: 30px;height: 30px;">
                             <span class="hidden-xs">{{ user.first_name }}  {{ user.last_name }}  <i
                                     class="fa fa-angle-down pull-right"></i></span>
@@ -568,18 +561,18 @@
         <div class="pull-right">
 
 
-           <strong>Email: </strong> <a href="mailto:bilgisistemi@halter.gov.tr"> bilgisistemi@halter.gov.tr</a>
-            <strong>Tel</strong>:<a href="tel:+903122195654" > (0312) 219 56 54 <br></a>
-{#            <div class="pull-right"><b>Versiyon</b> 1.0.0 </div>#}
+            <strong>Email: </strong> <a href="mailto:bilgisistemi@halter.gov.tr"> bilgisistemi@halter.gov.tr</a>
+            <strong>Tel</strong>:<a href="tel:+903122195654"> (0312) 219 56 54 <br></a>
+            {#            <div class="pull-right"><b>Versiyon</b> 1.0.0 </div>#}
 
 
         </div>
 
 
-
-         <div class="text-left">
-        <strong>Copyright &copy; 2019 <a target="new_blank" href="http://www.kobiltek.com">KOBILTEK Informatics & Technology</a></strong> All rights reserved.
-         </div>
+        <div class="text-left">
+            <strong>Copyright &copy; 2019 <a target="new_blank" href="http://www.kobiltek.com">KOBILTEK Informatics &
+                Technology</a></strong> All rights reserved.
+        </div>
 
 
     </footer>
