@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect
 # from rest_framework_simplejwt import views as jwt_views
 from django.http import JsonResponse
 
-from sbs.models import SportClubUser, SportsClub, Coach, Level, License, Athlete, Person, Judge
+from sbs.models import SportClubUser, SportsClub, Coach, Level, License, Athlete, Person, Judge, EPProject, City
 from sbs.services import general_methods
 # from rest_framework.authtoken.models import Token
 
@@ -126,16 +126,9 @@ def City_athlete_cout(request):
 
     if request.method == 'POST' and request.is_ajax():
         try:
-            athletecout = Athlete.objects.filter(communication__city__name__icontains=request.POST.get('city')).count()
-            coachcout = Coach.objects.filter(communication__city__name__icontains=request.POST.get('city')).count()
-            refereecout = Judge.objects.filter(communication__city__name__icontains=request.POST.get('city')).count()
-            sportsClub = SportsClub.objects.filter(
-                communication__city__name__icontains=request.POST.get('city')).count()
+            totalprojects = EPProject.objects.filter(city__name__icontains=request.POST.get('city')).count()
             data = {
-                'athlete': athletecout,
-                'coach': coachcout,
-                'referee': refereecout,
-                'sportsClub': sportsClub
+                'totalprojects': totalprojects
 
             }
             return JsonResponse(data)
