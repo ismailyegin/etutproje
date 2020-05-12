@@ -31,3 +31,7 @@ from .CompCategory import CompCategory
 from .GrupForReport import GrupForReport
 from .Weight import Weight
 from .EPProject import EPProject
+from .EPEmployee import EPEmployee
+from .EPRequirements import EPRequirements
+from .EPPhase import EPPhase
+from .EPOffer import EPOffer

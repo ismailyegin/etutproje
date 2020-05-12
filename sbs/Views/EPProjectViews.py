@@ -1,11 +1,18 @@
+from datetime import datetime
+
 from django.contrib import messages
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
 from django.shortcuts import redirect, render
 
+from oxiterp.settings.base import MEDIA_URL
+from sbs.Forms.CategoryItemForm import CategoryItemForm
 from sbs.Forms.EPProjectForm import EPProjectForm
-from sbs.models import EPProject
+from sbs.models import EPProject, CategoryItem
+from sbs.models.Employee import Employee
 from sbs.services import general_methods
+from sbs.services.general_methods import getProfileImage
 
 
 @login_required
@@ -21,10 +28,10 @@ def add_project(request):
     if request.method == 'POST':
         project_form = EPProjectForm(request.POST)
         if project_form.is_valid():
-            project_form.save()
+            p = project_form.save()
             messages.success(request, 'Proje Kaydedilmiştir.')
 
-            return redirect('sbs:projeler')
+            return redirect('sbs:proje-duzenle', pk=p.pk)
 
         else:
 
@@ -43,8 +50,10 @@ def edit_project(request, pk):
         return redirect('accounts:login')
     project = EPProject.objects.get(pk=pk)
     project_form = EPProjectForm(request.POST or None, instance=project)
+    titles = CategoryItem.objects.filter(forWhichClazz="EPPROJECT_EMPLOYEE_TITLE")
+    employees = Employee.objects.all()
     if request.method == 'POST':
-        if project_form.is_valid() :
+        if project_form.is_valid():
 
             project_form.save()
 
@@ -54,7 +63,7 @@ def edit_project(request, pk):
             messages.warning(request, 'Alanları Kontrol Ediniz')
 
     return render(request, 'epproje/proje-duzenle.html',
-                  {'project_form': project_form})
+                  {'project_form': project_form, 'project': project, 'titles': titles, 'employees': employees})
 
 
 @login_required
@@ -67,3 +76,211 @@ def return_projects(request):
     projects = EPProject.objects.all()
 
     return render(request, 'epproje/projeler.html', {'projects': projects})
+
+
+@login_required
+def return_employeetitles(request):
+    perm = general_methods.control_access(request)
+
+    if not perm:
+        logout(request)
+        return redirect('accounts:login')
+    category_item_form = CategoryItemForm()
+
+    if request.method == 'POST':
+
+        category_item_form = CategoryItemForm(request.POST)
+        name = request.POST.get('name')
+        if name is not None:
+            categoryItem = CategoryItem(name=name)
+            categoryItem.forWhichClazz = "EPPROJECT_EMPLOYEE_TITLE"
+            categoryItem.isFirst = False
+            categoryItem.save()
+            return redirect('sbs:unvanlar')
+
+        else:
+
+            messages.warning(request, 'Alanları Kontrol Ediniz')
+    categoryitem = CategoryItem.objects.filter(forWhichClazz="EPPROJECT_EMPLOYEE_TITLE")
+    return render(request, 'epproje/unvanlar.html',
+                  {'category_item_form': category_item_form, 'categoryitem': categoryitem})
+
+
+@login_required
+def delete_employeetitle(request, pk):
+    perm = general_methods.control_access(request)
+
+    if not perm:
+        logout(request)
+        return redirect('accounts:login')
+    if request.method == 'POST' and request.is_ajax():
+        try:
+            obj = CategoryItem.objects.get(pk=pk)
+            obj.delete()
+            return JsonResponse({'status': 'Success', 'messages': 'save successfully'})
+        except CategoryItem.DoesNotExist:
+            return JsonResponse({'status': 'Fail', 'msg': 'Object does not exist'})
+
+    else:
+        return JsonResponse({'status': 'Fail', 'msg': 'Not a valid request'})
+
+
+@login_required
+def edit_employeetitle(request, pk):
+    perm = general_methods.control_access(request)
+
+    if not perm:
+        logout(request)
+        return redirect('accounts:login')
+    categoryItem = CategoryItem.objects.get(id=pk)
+    category_item_form = CategoryItemForm(request.POST or None, instance=categoryItem)
+    if request.method == 'POST':
+        if request.POST.get('name') is not None:
+            categoryItem.name = request.POST.get('name')
+            categoryItem.save()
+            messages.success(request, 'Başarıyla Güncellendi')
+            return redirect('sbs:unvanlar')
+        else:
+            messages.warning(request, 'Alanları Kontrol Ediniz')
+
+    return render(request, 'epproje/unvan-duzenle.html',
+                  {'category_item_form': category_item_form})
+
+
+@login_required
+def add_employee_to_project(request, pk):
+    perm = general_methods.control_access(request)
+
+    if not perm:
+        logout(request)
+        return redirect('accounts:login')
+    try:
+        title = CategoryItem.objects.get(pk=request.POST.get('title'))
+        employee = Employee.objects.get(pk=request.POST.get('employee'))
+        project = EPProject.objects.get(pk=pk)
+        project.employees.create(projectEmployeeTitle=title, employee=employee)
+        messages.success(request, 'Personel Eklenmiştir')
+    except:
+        messages.warning(request, 'Yeniden deneyiniz.')
+
+    return redirect('sbs:proje-duzenle', pk=pk)
+
+
+@login_required
+def delete_employee_from_project(request, project_pk, employee_pk):
+    perm = general_methods.control_access(request)
+
+    if not perm:
+        logout(request)
+        return redirect('accounts:login')
+    if request.method == 'POST' and request.is_ajax():
+        try:
+            athlete = EPProject.objects.get(pk=project_pk)
+            athlete.employees.remove(employee_pk)
+            return JsonResponse({'status': 'Success', 'messages': 'save successfully'})
+        except EPProject.DoesNotExist:
+            return JsonResponse({'status': 'Fail', 'msg': 'Object does not exist'})
+
+    else:
+        return JsonResponse({'status': 'Fail', 'msg': 'Not a valid request'})
+
+
+@login_required
+def add_requirement_to_project(request, pk):
+    perm = general_methods.control_access(request)
+
+    if not perm:
+        logout(request)
+        return redirect('accounts:login')
+    try:
+        amount = request.POST.get('amount')
+        definition = request.POST.get('definition')
+        project = EPProject.objects.get(pk=pk)
+        project.requirements.create(amount=amount, definition=definition)
+        messages.success(request, 'İhtiyaç Eklenmiştir')
+    except:
+        messages.warning(request, 'Yeniden deneyiniz.')
+
+    return redirect('sbs:proje-duzenle', pk=pk)
+
+
+@login_required
+def delete_requirement_from_project(request, project_pk, employee_pk):
+    perm = general_methods.control_access(request)
+
+    if not perm:
+        logout(request)
+        return redirect('accounts:login')
+    if request.method == 'POST' and request.is_ajax():
+        try:
+            athlete = EPProject.objects.get(pk=project_pk)
+            athlete.requirements.remove(employee_pk)
+            return JsonResponse({'status': 'Success', 'messages': 'save successfully'})
+        except EPProject.DoesNotExist:
+            return JsonResponse({'status': 'Fail', 'msg': 'Object does not exist'})
+
+    else:
+        return JsonResponse({'status': 'Fail', 'msg': 'Not a valid request'})
+
+
+@login_required
+def add_phase_to_project(request, pk):
+    perm = general_methods.control_access(request)
+
+    if not perm:
+        logout(request)
+        return redirect('accounts:login')
+    try:
+        date = request.POST.get('phaseDate')
+        dates = datetime.strptime(date, '%m/%d/%Y')
+        definition = request.POST.get('phaseDefinition')
+        project = EPProject.objects.get(pk=pk)
+        project.phases.create(phaseDate=dates, definition=definition)
+        messages.success(request, 'Aşama Eklenmiştir')
+    except:
+        messages.warning(request, 'Yeniden deneyiniz.')
+
+    return redirect('sbs:proje-duzenle', pk=pk)
+
+
+@login_required
+def delete_phase_from_project(request, project_pk, employee_pk):
+    perm = general_methods.control_access(request)
+
+    if not perm:
+        logout(request)
+        return redirect('accounts:login')
+    if request.method == 'POST' and request.is_ajax():
+        try:
+            athlete = EPProject.objects.get(pk=project_pk)
+            athlete.phases.remove(employee_pk)
+            return JsonResponse({'status': 'Success', 'messages': 'save successfully'})
+        except EPProject.DoesNotExist:
+            return JsonResponse({'status': 'Fail', 'msg': 'Object does not exist'})
+
+    else:
+        return JsonResponse({'status': 'Fail', 'msg': 'Not a valid request'})
+
+
+@login_required
+def add_offer_to_project(request, pk):
+    perm = general_methods.control_access(request)
+
+    if not perm:
+        logout(request)
+        return redirect('accounts:login')
+    try:
+        message = request.POST.get('message')
+        project = EPProject.objects.get(pk=pk)
+        username = request.user.first_name + " " + request.user.last_name
+        person = getProfileImage(request)
+        imageUrl = MEDIA_URL + "profile/logo.png"
+        date = datetime.now()
+        dates = date.strftime('%d/%m/%Y %H:%M')
+
+        project.offers.create(message=message, added_by=request.user)
+        return JsonResponse({'status': 'Success', 'username': username, 'image': imageUrl, 'dates': dates})
+    except:
+        return JsonResponse({'status': 'Fail', 'msg': 'Not a valid request'})
+
+    return redirect('sbs:proje-duzenle', pk=pk)

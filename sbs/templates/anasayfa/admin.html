@@ -84,13 +84,14 @@
                             $('#il-isimleri').toggle();
 
                             $('#il-isimleri').animate({
-                                top: e.pageY - position.top + 25 + 'px',
-                                left: e.pageX - position.left + 25 + 'px',
+                                top: e.pageY - position.top + 5 + 'px',
+                                left: e.pageX - position.left + 5 + 'px',
 
                             });
 
-                            $('#il-isimleri').html(iladi  +
-                                ' <br>Proje Sayısı :' + result.totalprojects);
+                            $("#il-isimleri").html('<a href="/sbs/etut-proje/projeler/" style="color:#ffffff;font-weight:bold;">'+iladi+'<br>Proje Sayısı :'+result.totalprojects+'</a>');
+
+
 
                         }
                     });

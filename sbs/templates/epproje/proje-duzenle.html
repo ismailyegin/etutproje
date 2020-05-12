@@ -1,6 +1,155 @@
 {% extends 'base_layout.html' %}
 {% block content %}
 
+    <!-- success modal -->
+    <div class="modal modal-success modal-success-food fade in" id="modal-success" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title">İşlem Başarılı</h4>
+                </div>
+                <div class="modal-body successModal">
+                    ...
+                </div>
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-outline btn-ok">Tamam</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+    <div class="modal modal-danger fade in deneme22" tabindex="-1" role="dialog" id="modal-danger"
+         aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title">Uyarı</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Silmek istediğinizden emin misiniz?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline pull-left btn-ok" id="btn-conf"
+                            data-dismiss="modal">Evet
+                    </button>
+                    <button type="button" class="btn btn-outline" id="btn-close">Hayır</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+    <div class="modal modal-warning fade in deneme23" tabindex="-1" role="dialog" id="reddetwhy"
+         aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title">Bilgileri Giriniz</h4>
+                </div>
+                <div class="modal-body">
+                    <label for="title">Ünvan</label>
+                    <select id="title" class="form-control" required>
+                        <option value="" selected>Seçiniz...</option>
+                        {% for title in titles %}
+                            <option value="{{ title.pk }}">{{ title.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <label for="employee">Personel</label>
+                    <select id="employee" class="form-control" required>
+                        <option value="" selected>Seçiniz...</option>
+                        {% for employee in employees %}
+                            <option value="{{ employee.pk }}">{{ employee }}</option>
+                        {% endfor %}
+                    </select>
+
+                </div>
+
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline pull-left btn-ok" id="btn-gonder"
+                            data-dismiss="modal">Kaydet
+                    </button>
+                    <button type="button" class="btn btn-outline" id="btn-closereddet">Geri Dön</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+    <div class="modal modal-warning fade in deneme23" tabindex="-1" role="dialog" id="requirement"
+         aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title">Bilgileri Giriniz</h4>
+                </div>
+                <div class="modal-body">
+                    <label for="amount">Adet</label>
+                    <input type="text" name="amount" id="amount" class="form-control" required>
+                    <label for="definition">Tanım</label>
+                    <input type="text" name="definition" id="definition" class="form-control" required>
+
+                </div>
+
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline pull-left btn-ok" id="btn-requirement-gonder"
+                            data-dismiss="modal">Kaydet
+                    </button>
+                    <button type="button" class="btn btn-outline" id="btn-requirement-reddet">Geri Dön</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+    <div class="modal modal-warning fade in deneme23" tabindex="-1" role="dialog" id="phase"
+         aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title">Bilgileri Giriniz</h4>
+                </div>
+                <div class="modal-body">
+                    <label for="phaseDate">Tarih</label>
+                    <input type="text" id="phaseDate" name="phaseDate" class="form-control"
+                           data-inputmask="'alias': 'dd/mm/yyyy'"
+                           data-mask="">
+                    <label for="phaseDefinition">Açıklama</label>
+                    <textarea class="form-control" rows="3" name="phaseDefinition" id="phaseDefinition"
+                              placeholder="..."></textarea>
+
+                </div>
+
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline pull-left btn-ok" id="btn-phase-gonder"
+                            data-dismiss="modal">Kaydet
+                    </button>
+                    <button type="button" class="btn btn-outline" id="btn-phase-reddet">Geri Dön</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
     {% if messages %}
         {% for message in messages %}
 
@@ -48,11 +197,11 @@
 
     <section class="content-header">
         <h1>
-            Yeni Proje Ekle
+            Proje Düzenle
 
         </h1>
         <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i>Yeni Proje Ekle</a></li>
+            <li><a href="#"><i class="fa fa-dashboard"></i>Proje Düzenle</a></li>
 
         </ol>
     </section>
@@ -177,75 +326,591 @@
 
 
             </div>
-            <div class="row">
 
-                <div class="col-lg-12">
-                    <div class="box box-primary">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="box box-danger collapsed-box">
                         <div class="box-header with-border">
                             <h3 class="box-title">PERSONEL BİLGİLERİ</h3>
+
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                        class="fa fa-plus"></i>
+                                </button>
+                            </div>
+                            <!-- /.box-tools -->
                         </div>
-                        <div class="box-body">
+                        <!-- /.box-header -->
+                        <div class="box-body" style="display: none;">
+                            <div class="row" style="padding-bottom: 10px">
+                                <div class="col-lg-12">
+                                    <div class="btn-group">
+                                        <a class="btn btn-success"
+                                           data-toggle="modal"
+                                           onclick=addEmployee({{ project.pk }})><i
+                                                class="fa fa-plus"></i> Personel Ekle</a>
+
+
+                                    </div>
+                                </div>
+
+                            </div>
                             <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label> {{ project_form.mimar.label }}</label>
-                                        {{ project_form.mimar }}
-                                    </div>
-                                    <div class="form-group">
-                                        <label> {{ project_form.insaatMuhStatik.label }}</label>
-                                        {{ project_form.insaatMuhStatik }}
-                                    </div>
-                                    <div class="form-group">
-                                        <label> {{ project_form.makineMuh.label }}</label>
-                                        {{ project_form.makineMuh }}
-                                    </div>
-                                    <div class="form-group">
-                                        <label> {{ project_form.elektrikMuh.label }}</label>
-                                        {{ project_form.elektrikMuh }}
-                                    </div>
-                                    <div class="form-group">
-                                        <label> {{ project_form.insaatMuhYaklasik.label }}</label>
-                                        {{ project_form.insaatMuhYaklasik }}
-                                    </div>
+                                <div class="col-lg-12">
+                                    <table id="kategori" class="table table-bordered table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Ünvan</th>
+                                            <th>Personel</th>
+                                            <th>İşlemler</th>
+
+                                        </tr>
+                                        </thead>
+
+                                        <tbody>
+
+
+                                        {% if project.employees.all %}
+                                            {% for item in project.employees.all %}
+                                                <tr>
+                                                    <td>{{ forloop.counter }} </td>
+                                                    <td>{{ item.projectEmployeeTitle }}</td>
+                                                    <td>{{ item.employee }}</td>
+                                                    <td>
+                                                        <div class="btn-group">
+
+
+                                                            <a class="btn btn-danger"
+                                                               data-toggle="modal"
+                                                               onclick=deleteEmployee({{ project.pk }},{{ item.pk }})><i
+                                                                    class="fa fa-trash"></i></a>
+                                                        </div>
+                                                    </td>
+
+                                                </tr>
+
+                                            {% endfor %}
+                                        {% endif %}
+
+
+                                        </tbody>
+                                    </table>
                                 </div>
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label> {{ project_form.elektronikMuh.label }}</label>
-                                        {{ project_form.elektronikMuh }}
-                                    </div>
-                                    <div class="form-group">
-                                        <label> {{ project_form.jeofizikMuh.label }}</label>
-                                        {{ project_form.jeofizikMuh }}
-                                    </div>
-                                    <div class="form-group">
-                                        <label> {{ project_form.cevreMuh.label }}</label>
-                                        {{ project_form.cevreMuh }}
-                                    </div>
-                                    <div class="form-group">
-                                        <label> {{ project_form.peyzajMimari.label }}</label>
-                                        {{ project_form.peyzajMimari }}
-                                    </div>
-                                    <div class="form-group">
-                                        <label> {{ project_form.musahitMuh.label }}</label>
-                                        {{ project_form.musahitMuh }}
-                                    </div>
-                                </div>
+
+
                             </div>
                         </div>
-                        <div class="box-footer">
-                            <button class="btn btn-primary" type="submit">Kaydet</button>
-                        </div>
+                        <!-- /.box-body -->
                     </div>
+                    <!-- /.box -->
+                </div>
+                <div class="col-md-6">
+                    <div class="box box-success collapsed-box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">İHTİYAÇ LİSTESİ</h3>
 
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                        class="fa fa-plus"></i>
+                                </button>
+                            </div>
+                            <!-- /.box-tools -->
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body" style="display: none;">
+                            <div class="row" style="padding-bottom: 10px">
+                                <div class="col-lg-12">
+                                    <div class="btn-group">
+                                        <a class="btn btn-success"
+                                           data-toggle="modal"
+                                           onclick=addRequirement({{ project.pk }})><i
+                                                class="fa fa-plus"></i> İhtiyaç Ekle</a>
+
+
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <table id="requirementtable" class="table table-bordered table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Adet</th>
+                                            <th>Tanım</th>
+                                            <th>İşlemler</th>
+
+                                        </tr>
+                                        </thead>
+
+                                        <tbody>
+
+
+                                        {% if project.requirements.all %}
+                                            {% for item in project.requirements.all %}
+                                                <tr>
+                                                    <td>{{ forloop.counter }} </td>
+                                                    <td>{{ item.amount }}</td>
+                                                    <td>{{ item.definition }}</td>
+                                                    <td>
+                                                        <div class="btn-group">
+
+
+                                                            <a class="btn btn-danger"
+                                                               data-toggle="modal"
+                                                               onclick=deleteRequirement({{ project.pk }},{{ item.pk }})><i
+                                                                    class="fa fa-trash"></i></a>
+                                                        </div>
+                                                    </td>
+
+                                                </tr>
+
+                                            {% endfor %}
+                                        {% endif %}
+
+
+                                        </tbody>
+                                    </table>
+                                </div>
+
+
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
                 </div>
 
 
             </div>
 
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="box box-info collapsed-box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">PROJE AŞAMALARI</h3>
+
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                        class="fa fa-plus"></i>
+                                </button>
+                            </div>
+                            <!-- /.box-tools -->
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body" style="display: none;">
+                            <div class="row" style="padding-bottom: 10px;">
+                                <div class="col-lg-12">
+                                    <div class="btn-group">
+                                        <a class="btn btn-success"
+                                           data-toggle="modal"
+                                           onclick=addPhase({{ project.pk }})><i
+                                                class="fa fa-plus"></i> Aşama Ekle</a>
+
+
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="box-body chat" id="chat-box1"
+                                     style="overflow: auto; width: auto; height: 250px; ">
+                                    <ul class="todo-list ui-sortable">
+                                        {% if project.phases.all %}
+                                            {% for item in project.phases.all %}
+                                                <li>
+                                                    <small style="font-size: 12px" class="label label-danger"><i
+                                                            class="fa fa-clock-o"></i>{{ item.phaseDate|date:"M d, Y" }}
+                                                    </small>
+                                                    <h4 class="text">{{ item.definition }}</h4>
+                                                    <div class="tools">
+                                                        <i class="fa fa-edit"></i>
+                                                        <i class="fa fa-trash-o"
+                                                           onclick=deletePhase({{ project.pk }},{{ item.pk }})></i>
+                                                    </div>
+                                                </li>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </ul>
+                                </div>
+
+
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+                </div>
+                <div class="col-md-6">
+                    <div class="box box-comment collapsed-box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">GÖRÜŞ VE ÖNERİLER</h3>
+
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                        class="fa fa-plus"></i>
+                                </button>
+                            </div>
+                            <!-- /.box-tools -->
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body" style="display: none;">
+
+                            <div class="box-body chat" id="chat-box"
+                                 style="overflow: auto; width: auto; height: 250px; ">
+                                {% if project.offers.all %}
+                                    {% for item in project.offers.all|dictsortreversed:"creationDate" %}
+                                        <div class="item">
+                                            <img src="{{ MEDIA_URL }}/profile/user.png" alt="user image"
+                                                 class="offline">
+
+                                            <p class="message">
+                                                <a href="#" class="name">
+                                                    <small class="text-muted pull-right"><i
+                                                            class="fa fa-clock-o"></i> {{ item.creationDate | date:"d/m/Y H:i" }}
+                                                    </small>
+                                                    {{ item.added_by.first_name }} {{ item.added_by.last_name  }}
+                                                </a>
+                                                {{ item.message }}
+                                            </p>
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
+
+                                <!-- /.box-body -->
+                            </div>
+                            <div class="box-footer">
+                                <div class="input-group">
+                                    <input class="form-control" id="offer" placeholder="Mesaj Giriniz...">
+
+                                    <div class="input-group-btn">
+                                        <button type="button" class="btn btn-success"><i class="fa fa-plus"
+                                                                                         data-toggle="modal"
+                                                                                         onclick=addOffer({{ project.pk }})></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.box -->
+                        </div>
+
+
+                    </div>
+
+
         </form>
 
 
     </section>
+    <script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+    <script>
+
+
+
+
+        function addOffer(id) {
+
+            $.ajax({
+                url: "{% url "sbs:proje-oneri-ekle" pk=212121223232323232  %}".replace(/212121223232323232/, id.toString()),
+                type: "POST",
+                data: {
+                    'csrfmiddlewaretoken': "{{  csrf_token  }}",
+                    message: $('#offer').val(),
+                    isActive: 'False'
+
+                },
+                success: function (result) {
+
+                debugger;
+                    var currentTime = new Date();
+                    console.log(result.image);
+                    $("#chat-box").prepend('<div class="item"><img src="' + result.image + '" alt="user image" class="offline">' +
+                        '<p class="message"><a href="#" class="name"><small class="text-muted pull-right">' +
+                        '<i class="fa fa-clock-o"></i>' + result.dates + '</small>' + result.username + '</a>' +
+                        $('#offer').val() + '</p></div>');
+
+                    $("#offer").val("");
+
+                }
+            });
+
+        }
+
+
+        function deleteEmployee(id, competitionId) {
+
+            console.log(id);
+            var html = '';
+            $("#modal-danger").on("shown.bs.modal", function (e) {
+                $("#btn-conf").click(function () {
+                    $.ajax({
+                        url: "{% url "sbs:proje-personel-kaldir" project_pk=212121223232323232 employee_pk=999999999999999 %}".replace(/212121223232323232/, id.toString()).replace(/999999999999999/, competitionId.toString()),
+                        type: "POST",
+                        data: {
+                            'csrfmiddlewaretoken': "{{  csrf_token  }}",
+                            isActive: 'False'
+                        },
+                        success: function (result) {
+
+                            html = 'Personel başarıyla kaldırıldı.';
+                        debugger;
+                            $(".successModal").html(html);
+                            $('#modal-success').on("shown.bs.modal", function (e) {
+                                $(".btn-ok").click(function () {
+
+                                    window.location.replace("{% url "sbs:proje-duzenle" project.pk %}");
+
+                                });
+
+                            }).modal('show');
+
+
+                            console.log(result.status)
+                        }
+                    });
+                });
+            }).modal('show');
+            $('#btn-close').click(function () {
+                $('#modal-danger').modal('hide');
+            });
+
+        }
+
+        function addEmployee(id) {
+
+            $("#reddetwhy").on("shown.bs.modal", function (e) {
+
+                $("#btn-gonder").click(function () {
+
+                    console.log('buradan girdi', id)
+                    $.ajax({
+                        url: "{% url "sbs:proje-personel-ekle" pk=212121223232323232  %}".replace(/212121223232323232/, id.toString()),
+                        type: "POST",
+                        data: {
+                            'csrfmiddlewaretoken': "{{  csrf_token  }}",
+                            title: $('#title').val(),
+                            employee: $('#employee').val(),
+                            isActive: 'False'
+
+                        },
+                        success: function (result) {
+
+                            html = 'Personel Başarıyla Eklendi .';
+
+                        debugger;
+                            $(".successModal").html(html);
+                            $('#modal-success').on("shown.bs.modal", function (e) {
+                                $(".btn-ok").click(function () {
+
+                                    window.location.replace("{% url "sbs:proje-duzenle"  project.pk  %}");
+
+                                    $('#modal-warning').modal('hide');
+                                    $('.modal').modal('hide');
+                                    Playerlist();
+
+                                });
+
+                            }).modal('show');
+                        }
+                    });
+                });
+
+
+            }).modal('show');
+            $('#btn-closereddet').click(function () {
+
+
+                $('#modal-warning').modal('hide');
+                $('.modal').modal('hide');
+
+            });
+
+        }
+
+        function deleteRequirement(id, competitionId) {
+
+            console.log(id);
+            var html = '';
+            $("#modal-danger").on("shown.bs.modal", function (e) {
+                $("#btn-conf").click(function () {
+                    $.ajax({
+                        url: "{% url "sbs:proje-ihtiyac-kaldir" project_pk=212121223232323232 employee_pk=999999999999999 %}".replace(/212121223232323232/, id.toString()).replace(/999999999999999/, competitionId.toString()),
+                        type: "POST",
+                        data: {
+                            'csrfmiddlewaretoken': "{{  csrf_token  }}",
+                            isActive: 'False'
+                        },
+                        success: function (result) {
+
+                            html = 'İhtiyaç başarıyla kaldırıldı.';
+                        debugger;
+                            $(".successModal").html(html);
+                            $('#modal-success').on("shown.bs.modal", function (e) {
+                                $(".btn-ok").click(function () {
+
+                                    window.location.replace("{% url "sbs:proje-duzenle" project.pk %}");
+
+                                });
+
+                            }).modal('show');
+
+
+                            console.log(result.status)
+                        }
+                    });
+                });
+            }).modal('show');
+            $('#btn-close').click(function () {
+                $('#modal-danger').modal('hide');
+            });
+
+        }
+
+        function addRequirement(id) {
+
+            $("#requirement").on("shown.bs.modal", function (e) {
+
+                $("#btn-requirement-gonder").click(function () {
+
+                    console.log('buradan girdi', id)
+                    $.ajax({
+                        url: "{% url "sbs:proje-ihtiyac-ekle" pk=212121223232323232  %}".replace(/212121223232323232/, id.toString()),
+                        type: "POST",
+                        data: {
+                            'csrfmiddlewaretoken': "{{  csrf_token  }}",
+                            amount: $('#amount').val(),
+                            definition: $('#definition').val(),
+                            isActive: 'False'
+
+                        },
+                        success: function (result) {
+
+                            html = 'İhtiyaç Başarıyla Eklendi .';
+
+                        debugger;
+                            $(".successModal").html(html);
+                            $('#modal-success').on("shown.bs.modal", function (e) {
+                                $(".btn-ok").click(function () {
+
+                                    window.location.replace("{% url "sbs:proje-duzenle"  project.pk  %}");
+
+                                    $('#modal-warning').modal('hide');
+                                    $('.modal').modal('hide');
+                                    Playerlist();
+
+                                });
+
+                            }).modal('show');
+                        }
+                    });
+                });
+
+
+            }).modal('show');
+            $('#btn-requirement-reddet').click(function () {
+
+
+                $('#modal-warning').modal('hide');
+                $('.modal').modal('hide');
+
+            });
+
+        }
+
+        function deletePhase(id, competitionId) {
+
+            console.log(id);
+            var html = '';
+            $("#modal-danger").on("shown.bs.modal", function (e) {
+                $("#btn-conf").click(function () {
+                    $.ajax({
+                        url: "{% url "sbs:proje-asama-kaldir" project_pk=212121223232323232 employee_pk=999999999999999 %}".replace(/212121223232323232/, id.toString()).replace(/999999999999999/, competitionId.toString()),
+                        type: "POST",
+                        data: {
+                            'csrfmiddlewaretoken': "{{  csrf_token  }}",
+                            isActive: 'False'
+                        },
+                        success: function (result) {
+
+                            html = 'Aşama başarıyla kaldırıldı.';
+                        debugger;
+                            $(".successModal").html(html);
+                            $('#modal-success').on("shown.bs.modal", function (e) {
+                                $(".btn-ok").click(function () {
+
+                                    window.location.replace("{% url "sbs:proje-duzenle" project.pk %}");
+
+                                });
+
+                            }).modal('show');
+
+
+                            console.log(result.status)
+                        }
+                    });
+                });
+            }).modal('show');
+            $('#btn-close').click(function () {
+                $('#modal-danger').modal('hide');
+            });
+
+        }
+
+        function addPhase(id) {
+
+            $("#phase").on("shown.bs.modal", function (e) {
+
+                $("#btn-phase-gonder").click(function () {
+
+                    console.log('buradan girdi', id)
+                    $.ajax({
+                        url: "{% url "sbs:proje-asama-ekle" pk=212121223232323232  %}".replace(/212121223232323232/, id.toString()),
+                        type: "POST",
+                        data: {
+                            'csrfmiddlewaretoken': "{{  csrf_token  }}",
+                            phaseDate: $('#phaseDate').val(),
+                            phaseDefinition: $('#phaseDefinition').val(),
+                            isActive: 'False'
+
+                        },
+                        success: function (result) {
+
+                            html = 'Aşama Başarıyla Eklendi .';
+
+                        debugger;
+                            $(".successModal").html(html);
+                            $('#modal-success').on("shown.bs.modal", function (e) {
+                                $(".btn-ok").click(function () {
+
+                                    window.location.replace("{% url "sbs:proje-duzenle"  project.pk  %}");
+
+                                    $('#modal-warning').modal('hide');
+                                    $('.modal').modal('hide');
+                                    Playerlist();
+
+                                });
+
+                            }).modal('show');
+                        }
+                    });
+                });
+
+
+            }).modal('show');
+            $('#btn-phase-reddet').click(function () {
+
+
+                $('#modal-warning').modal('hide');
+                $('.modal').modal('hide');
+
+            });
+
+        }
+
+
+    </script>
 
 {% endblock %}
 

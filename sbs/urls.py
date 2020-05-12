@@ -1,7 +1,7 @@
 from django.conf.urls import url
 
 from sbs.Views import DashboardViews, AthleteViews, RefereeViews, ClubViews, CoachViews, DirectoryViews, UserViews, \
-    CompetitionViews, AdminViews, HelpViews, PageViews, PreRegistration, EPProjectViews
+    CompetitionViews, AdminViews, HelpViews, PageViews, PreRegistration, EPProjectViews, EmployeeViews
 
 app_name = 'sbs'
 
@@ -330,5 +330,36 @@ urlpatterns = [
     url(r'etut-proje/projeler/$', EPProjectViews.return_projects, name='projeler'),
     url(r'etut-proje/proje-ekle/$', EPProjectViews.add_project, name='proje-ekle'),
     url(r'etut-proje/proje-duzenle/(?P<pk>\d+)$', EPProjectViews.edit_project, name='proje-duzenle'),
+    url(r'etut-proje/unvanlar/$', EPProjectViews.return_employeetitles, name='unvanlar'),
+    url(r'etut-proje/unvan/sil/(?P<pk>\d+)$', EPProjectViews.delete_employeetitle,
+        name='unvan-sil'),
+    url(r'etut-proje/unvan-duzenle/(?P<pk>\d+)$', EPProjectViews.edit_employeetitle,
+        name='unvan-duzenle'),
+    url(r'etut-proje/proje-personel-ekle/(?P<pk>\d+)$',
+        EPProjectViews.add_employee_to_project, name='proje-personel-ekle'),
+    url(r'etut-proje/proje-personel-sil/(?P<project_pk>\d+)/(?P<employee_pk>\d+)/$',
+        EPProjectViews.delete_employee_from_project,
+        name='proje-personel-kaldir'),
+    url(r'etut-proje/proje-ihtiyac-ekle/(?P<pk>\d+)$',
+        EPProjectViews.add_requirement_to_project, name='proje-ihtiyac-ekle'),
+    url(r'etut-proje/proje-ihtiyac-sil/(?P<project_pk>\d+)/(?P<employee_pk>\d+)/$',
+        EPProjectViews.delete_requirement_from_project,
+        name='proje-ihtiyac-kaldir'),
+    url(r'etut-proje/proje-asama-ekle/(?P<pk>\d+)$',
+        EPProjectViews.add_phase_to_project, name='proje-asama-ekle'),
+    url(r'etut-proje/proje-asama-sil/(?P<project_pk>\d+)/(?P<employee_pk>\d+)/$',
+        EPProjectViews.delete_phase_from_project,
+        name='proje-asama-kaldir'),
+    url(r'etut-proje/proje-oneri-ekle/(?P<pk>\d+)$',
+        EPProjectViews.add_offer_to_project, name='proje-oneri-ekle'),
+
+    url(r'personel/personeller/$', EmployeeViews.return_employees, name='personeller'),
+    url(r'personel/personel-ekle/$', EmployeeViews.add_employee, name='personel-ekle'),
+    url(r'personel/personel-duzenle/(?P<pk>\d+)$', EmployeeViews.edit_employee, name='personel-duzenle'),
+    url(r'personel/istanimi/$', EmployeeViews.return_workdefinitions, name='istanimlari'),
+    url(r'personel/istanimi/sil/(?P<pk>\d+)$', EmployeeViews.delete_workdefinition,
+        name='istanimi-sil'),
+    url(r'personel/istanimi-duzenle/(?P<pk>\d+)$', EmployeeViews.edit_workdefinition,
+        name='istanimi-duzenle'),
 
 ]
