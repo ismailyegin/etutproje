@@ -328,6 +328,7 @@ urlpatterns = [
     # ETÜT PROJE
 
     url(r'etut-proje/projeler/$', EPProjectViews.return_projects, name='projeler'),
+    url(r'etut-proje/projeler-il/(?P<pk>\d+)$', EPProjectViews.return_projects_city, name='projeler-il'),
     url(r'etut-proje/proje-ekle/$', EPProjectViews.add_project, name='proje-ekle'),
     url(r'etut-proje/proje-duzenle/(?P<pk>\d+)$', EPProjectViews.edit_project, name='proje-duzenle'),
     url(r'etut-proje/unvanlar/$', EPProjectViews.return_employeetitles, name='unvanlar'),

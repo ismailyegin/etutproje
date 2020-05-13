@@ -77,7 +77,7 @@
 
                             'csrfmiddlewaretoken': "{{  csrf_token  }}",
 
-                            'city': id.toString(),
+                            'city': iladi.toString(),
                         },
                         success: function (result) {
                             var position = $('#svg-turkiye-haritasi').position();
@@ -88,8 +88,7 @@
                                 left: e.pageX - position.left + 5 + 'px',
 
                             });
-
-                            $("#il-isimleri").html('<a href="/sbs/etut-proje/projeler/" style="color:#ffffff;font-weight:bold;">' + iladi + '<br>Proje Sayısı :' + result.totalprojects + '</a>');
+                            $("#il-isimleri").html('<a href="/etutproje/sbs/etut-proje/projeler-il/'+result.cityid+'" style="color:#ffffff;font-weight:bold;">' + iladi + '<br>Proje Sayısı :' + result.totalprojects + '</a>');
 
 
                         }

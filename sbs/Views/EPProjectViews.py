@@ -9,7 +9,7 @@ from django.shortcuts import redirect, render
 from oxiterp.settings.base import MEDIA_URL
 from sbs.Forms.CategoryItemForm import CategoryItemForm
 from sbs.Forms.EPProjectForm import EPProjectForm
-from sbs.models import EPProject, CategoryItem
+from sbs.models import EPProject, CategoryItem, City
 from sbs.models.Employee import Employee
 from sbs.services import general_methods
 from sbs.services.general_methods import getProfileImage
@@ -76,6 +76,19 @@ def return_projects(request):
     projects = EPProject.objects.all()
 
     return render(request, 'epproje/projeler.html', {'projects': projects})
+
+
+@login_required
+def return_projects_city(request, pk):
+    perm = general_methods.control_access(request)
+
+    if not perm:
+        logout(request)
+        return redirect('accounts:login')
+    city = City.objects.get(pk=pk)
+    projects = EPProject.objects.filter(city=city)
+
+    return render(request, 'epproje/projeler.html', {'projects': projects,'city':city})
 
 
 @login_required

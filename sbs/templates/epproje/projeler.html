@@ -141,7 +141,12 @@
 
                     <div class="box box-primary">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Projeler</h3>
+                            <h3 class="box-title">
+                                {% if city %}
+                                    {{ city.name }} İlindeki Projeler</h3>
+                                {% else %}
+                                    Projeler</h3>
+                                {% endif %}
                         </div>
 
                         <div class="box-header with-border">
@@ -169,7 +174,7 @@
                                 </thead>
                                 <tbody>
                                 {% if projects.all %}
-                                    {% for project in projects %}
+                                    {% for project in projects.all %}
                                         <tr>
                                             <td>{{ forloop.counter }} </td>
                                             <td>{{ project.name }} </td>
