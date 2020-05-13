@@ -558,6 +558,19 @@
                         <!-- /.box-header -->
                         <div class="box-body" style="display: none;">
 
+                            <div class="box-footer">
+                                <div class="input-group">
+                                    <input class="form-control" id="offer" placeholder="Mesaj Giriniz...">
+
+                                    <div class="input-group-btn">
+                                        <button type="button" class="btn btn-success"
+                                                onclick=addOffer({{ project.pk }})><i class="fa fa-plus"
+                                                                                      data-toggle="modal"
+                                        ></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="box-body chat" id="chat-box"
                                  style="overflow: auto; width: auto; height: 250px; ">
                                 {% if project.offers.all %}
@@ -581,18 +594,7 @@
 
                                 <!-- /.box-body -->
                             </div>
-                            <div class="box-footer">
-                                <div class="input-group">
-                                    <input class="form-control" id="offer" placeholder="Mesaj Giriniz...">
 
-                                    <div class="input-group-btn">
-                                        <button type="button" class="btn btn-success" onclick=addOffer({{ project.pk }})><i class="fa fa-plus"
-                                                                                         data-toggle="modal"
-                                                                                         ></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
                             <!-- /.box -->
                         </div>
 
