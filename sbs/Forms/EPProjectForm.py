@@ -8,20 +8,14 @@ class EPProjectForm(ModelForm):
     class Meta:
         model = EPProject
 
-        fields = ('name', 'butceCinsi', 'butceYili', 'projeCinsi', 'arsaAlani', 'insaatAlani', 'tahminiOdenekTutari',
-                  'yaklasikMaliyet', 'ihaleTarihi', 'sozlesmeBedeli', 'sozlesmeTarihi', 'isSUresi',
+        fields = ('name', 'butceCinsi', 'butceYili', 'projeCinsi', 'ihaleTarihi',  'sozlesmeTarihi', 'isSUresi',
                   'isBitimTarihi', 'city',)
         labels = {
             'name': 'Proje Tanımı',
             'butceCinsi': 'Bütçe Cinsi',
             'butceYili': 'Bütçe Yılı',
             'projeCinsi': 'Proje Cinsi',
-            'arsaAlani': 'Arsa Alanı (m2)',
-            'insaatAlani': 'İnşaat Alanı (m2)',
-            'tahminiOdenekTutari': 'Tahmini Ödenek Tutarı (₺)',
-            'yaklasikMaliyet': 'Yaklaşık Maliyet (₺)',
             'ihaleTarihi': 'İhale Tarihi',
-            'sozlesmeBedeli': 'Sözleşme Bedeli (₺)',
             'sozlesmeTarihi': 'Sözleşme Tarihi',
             'isSUresi': 'İşin Süresi (Gün)',
             'isBitimTarihi': 'İş Bitim Tarihi',
@@ -38,23 +32,17 @@ class EPProjectForm(ModelForm):
                        'onkeydown': 'return true'}),
             'projeCinsi': forms.Select(attrs={'class': 'form-control select2 select2-hidden-accessible',
                                               'style': 'width: 100%; '}),
-            'arsaAlani': forms.TextInput(
-                attrs={'class': 'form-control '}),
-            'insaatAlani': forms.TextInput(
-                attrs={'class': 'form-control '}),
-            'tahminiOdenekTutari': forms.TextInput(
-                attrs={'class': 'form-control '}),
-            'yaklasikMaliyet': forms.TextInput(
-                attrs={'class': 'form-control '}),
+
+            # 'pattern': '"^\$\d{1.3}(.\d{3})*(\,\d+)?$"', 'data-type': 'currency'
+            # 'insaatAlani': forms.TextInput(
+            #     attrs={'class': 'form-control ',}),
             'ihaleTarihi': forms.DateInput(
                 attrs={'class': 'form-control  pull-right', 'id': 'datemask7', 'autocomplete': 'on',
                        'onkeydown': 'return true'}),
-            'sozlesmeBedeli': forms.TextInput(
-                attrs={'class': 'form-control ', }),
             'sozlesmeTarihi': forms.DateInput(
                 attrs={'class': 'form-control  pull-right', 'id': 'datemask5', 'autocomplete': 'on',
                        'onkeydown': 'return true'}),
-            'isSUresi': forms.TextInput(attrs={'class': 'form-control ','id':'number'}),
+            'isSUresi': forms.TextInput(attrs={'class': 'form-control ', 'id': 'number'}),
             'isBitimTarihi': forms.DateInput(
                 attrs={'class': 'form-control  pull-right', 'id': 'datemask6', 'autocomplete': 'on',
                        'onkeydown': 'return true'}),

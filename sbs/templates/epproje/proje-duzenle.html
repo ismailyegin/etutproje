@@ -252,9 +252,13 @@
                                         </div>
                                         <div class="col-lg-3">
                                             <div class="form-group">
-                                                <label> {{ project_form.arsaAlani.label }}</label>
-                                                {{ project_form.arsaAlani }}
+                                                <label> Arsa Alanı (m2)</label>
+                                                <input type="text" name="arsa" value="{{ project.arsaAlani }}"
+                                                       class="form-control "
+                                                       id="arsa" pattern="^\$\d{1.}(.\d{3})*(\,\d+)?$"
+                                                       data-type="currency" >
                                             </div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -262,20 +266,31 @@
                                     <div class="row">
                                         <div class="col-lg-3">
                                             <div class="form-group">
-                                                <label> {{ project_form.insaatAlani.label }}</label>
-                                                {{ project_form.insaatAlani }}
+                                                <label> İnşaat Alanı (m2)</label>
+                                                <input type="text" name="insaat" value="{{ project.insaatAlani }}"
+                                                       class="form-control "
+                                                       id="insaat" pattern="^\$\d{1.}(.\d{3})*(\,\d+)?$"
+                                                       data-type="currency">
                                             </div>
                                         </div>
                                         <div class="col-lg-3">
                                             <div class="form-group">
-                                                <label> {{ project_form.tahminiOdenekTutari.label }}</label>
-                                                {{ project_form.tahminiOdenekTutari }}
+                                                <label> Tahmini Ödenek Tutarı (₺)</label>
+                                                <input type="text" name="tahmini"
+                                                       value="{{ project.tahminiOdenekTutari }}"
+                                                       class="form-control "
+                                                       id="tahmini" pattern="^\$\d{1.}(.\d{3})*(\,\d+)?$"
+                                                       data-type="currency">
                                             </div>
                                         </div>
                                         <div class="col-lg-3">
                                             <div class="form-group">
-                                                <label> {{ project_form.yaklasikMaliyet.label }}</label>
-                                                {{ project_form.yaklasikMaliyet }}
+                                                <label> Yaklaşık Maliyet (₺)</label>
+                                                <input type="text" name="yaklasik"
+                                                       value="{{ project.yaklasikMaliyet }}"
+                                                       class="form-control "
+                                                       id="yaklasik" pattern="^\$\d{1.}(.\d{3})*(\,\d+)?$"
+                                                       data-type="currency">
                                             </div>
                                         </div>
                                         <div class="col-lg-3">
@@ -290,8 +305,12 @@
                                     <div class="row">
                                         <div class="col-lg-3">
                                             <div class="form-group">
-                                                <label> {{ project_form.sozlesmeBedeli.label }}</label>
-                                                {{ project_form.sozlesmeBedeli }}
+                                                <label> Sözleşme Bedeli (₺)</label>
+                                                <input type="text" name="sozlesmebedeli"
+                                                       value="{{ project.sozlesmeBedeli }}"
+                                                       class="form-control "
+                                                       id="sozlesmebedeli" pattern="^\$\d{1.}(.\d{3})*(\,\d+)?$"
+                                                       data-type="currency">
                                             </div>
                                         </div>
                                         <div class="col-lg-3">
@@ -607,6 +626,8 @@
 
     </section>
     <script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+
+
     <script>
 
 

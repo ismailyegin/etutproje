@@ -1,3 +1,4 @@
+import re
 from datetime import datetime
 
 from django.contrib import messages
@@ -53,12 +54,40 @@ def edit_project(request, pk):
     titles = CategoryItem.objects.filter(forWhichClazz="EPPROJECT_EMPLOYEE_TITLE")
     employees = Employee.objects.all()
     if request.method == 'POST':
+
+        insaatAlani = request.POST.get('insaat')
+        insaatAlani = insaatAlani.replace(".", "")
+        insaatAlani = insaatAlani.replace(",", ".")
+
+        tahmini = request.POST.get('tahmini')
+        tahmini = tahmini.replace(".", "")
+        tahmini = tahmini.replace(",", ".")
+
+        yaklasik = request.POST.get('yaklasik')
+        yaklasik = yaklasik.replace(".", "")
+        yaklasik = yaklasik.replace(",", ".")
+
+        sozlesmebedeli = request.POST.get('sozlesmebedeli')
+        sozlesmebedeli = yaklasik.replace(".", "")
+        sozlesmebedeli = yaklasik.replace(",", ".")
+
+        arsa = request.POST.get('arsa')
+        arsa = arsa.replace(".", "")
+        arsa = arsa.replace(",", ".")
+
         if project_form.is_valid():
 
-            project_form.save()
+            project = project_form.save(commit=False)
+            project.insaatAlani = insaatAlani
+            project.tahminiOdenekTutari = tahmini
+            project.yaklasikMaliyet = yaklasik
+            project.sozlesmeBedeli = sozlesmebedeli
+            project.arsaAlani = arsa
+
+            project.save()
 
             messages.success(request, 'Proje Başarıyla Güncellendi')
-            return redirect('sbs:projeler')
+            return redirect('sbs:proje-duzenle', pk=project.pk)
         else:
             messages.warning(request, 'Alanları Kontrol Ediniz')
 
@@ -88,7 +117,7 @@ def return_projects_city(request, pk):
     city = City.objects.get(pk=pk)
     projects = EPProject.objects.filter(city=city)
 
-    return render(request, 'epproje/projeler.html', {'projects': projects,'city':city})
+    return render(request, 'epproje/projeler.html', {'projects': projects, 'city': city})
 
 
 @login_required
