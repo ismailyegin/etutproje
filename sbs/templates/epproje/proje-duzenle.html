@@ -571,7 +571,7 @@
                                                     <small class="text-muted pull-right"><i
                                                             class="fa fa-clock-o"></i> {{ item.creationDate | date:"d/m/Y H:i" }}
                                                     </small>
-                                                    {{ item.added_by.first_name }} {{ item.added_by.last_name  }}
+                                                    {{ item.added_by.first_name }} {{ item.added_by.last_name }}
                                                 </a>
                                                 {{ item.message }}
                                             </p>
@@ -586,9 +586,9 @@
                                     <input class="form-control" id="offer" placeholder="Mesaj Giriniz...">
 
                                     <div class="input-group-btn">
-                                        <button type="button" class="btn btn-success"><i class="fa fa-plus"
+                                        <button type="button" class="btn btn-success" onclick=addOffer({{ project.pk }})><i class="fa fa-plus"
                                                                                          data-toggle="modal"
-                                                                                         onclick=addOffer({{ project.pk }})></i>
+                                                                                         ></i>
                                         </button>
                                     </div>
                                 </div>
@@ -606,8 +606,6 @@
     </section>
     <script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
     <script>
-
-
 
 
         function addOffer(id) {
