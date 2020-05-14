@@ -420,7 +420,7 @@ def asama_list(request):
                 data = {
                     'pk': item.pk,
                     'say': say,
-                    'title':  item.phaseDate,
+                    'title':  item.phaseDate.strftime('%d/%m/%Y'),
                     'employee': item.definition,
                 }
                 beka.append(data)
