@@ -446,7 +446,8 @@ def town(request):
 
     try:
         if request.method == 'POST':
-            project = Town.objects.filter(city_id=request.POST.get('cmd'))
+            print(request.POST.get('cmd'))
+            project = Town.objects.filter(city__name=request.POST.get('cmd'))
             beka = []
             for item in project:
                 data = {
@@ -456,7 +457,7 @@ def town(request):
                 beka.append(data)
             return JsonResponse(
                 {
-                    'data': beka
+                    'data': beka,'msg': 'Valid is  request'
                 })
     except:
         return JsonResponse({'status': 'Fail', 'msg': 'Not a valid request'})

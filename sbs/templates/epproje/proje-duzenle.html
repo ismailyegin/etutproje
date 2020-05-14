@@ -657,13 +657,13 @@
 
 
             $("#sehir").change(function () {
-                var id = $(this).val();
+                var city = $(this).find('option:selected').text();
                 $.ajax({
                     url: "{% url "sbs:ilce-bilgi" %}",
                     type: "POST",
                     data: {
                         'csrfmiddlewaretoken': "{{  csrf_token  }}",
-                        "cmd": id,
+                        "cmd": city,
                     },
                     success: function (result) {
                         $("#town").empty();
