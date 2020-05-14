@@ -50,9 +50,9 @@ class EPProjectForm(ModelForm):
                 attrs={'class': 'form-control  pull-right', 'id': 'datemask6', 'autocomplete': 'on',
                        'onkeydown': 'return true'}),
             'city': forms.Select(attrs={'class': 'form-control select2 select2-hidden-accessible',
-                                        'style': 'width: 100%;', 'required': 'required'}),
+                                        'style': 'width: 100%;','id':'sehir', 'required': 'required'}),
             'town': forms.Select(attrs={'class': 'form-control select2 select2-hidden-accessible',
-                                        'style': 'width: 100%;', 'required': 'required'}),
+                                        'style': 'width: 100%;', 'required': 'required','id':'town'}),
             'sorumlu': forms.Select(attrs={'class': 'form-control select2 select2-hidden-accessible',
                                         'style': 'width: 100%;', 'required': 'required'}),
 

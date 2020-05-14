@@ -11,6 +11,7 @@ from oxiterp.settings.base import MEDIA_URL
 from sbs.Forms.CategoryItemForm import CategoryItemForm
 from sbs.Forms.EPProjectForm import EPProjectForm
 from sbs.models import EPProject, CategoryItem, City
+from sbs.models.Town import Town
 from sbs.models.Employee import Employee
 from sbs.services import general_methods
 from sbs.services.general_methods import getProfileImage
@@ -435,4 +436,29 @@ def asama_list(request):
         return JsonResponse({'status': 'Fail', 'msg': 'Not a valid request'})
 
     return redirect('sbs:proje-duzenle', pk=pk)
+
+@login_required
+def town(request):
+    perm = general_methods.control_access(request)
+    if not perm:
+        logout(request)
+        return redirect('accounts:login')
+
+    try:
+        if request.method == 'POST':
+            project = Town.objects.filter(city_id=request.POST.get('cmd'))
+            beka = []
+            for item in project:
+                data = {
+                    'pk': item.pk,
+                    'name': item.name,
+                }
+                beka.append(data)
+            return JsonResponse(
+                {
+                    'data': beka
+                })
+    except:
+        return JsonResponse({'status': 'Fail', 'msg': 'Not a valid request'})
+
 

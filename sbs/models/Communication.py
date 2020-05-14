@@ -16,3 +16,4 @@ class Communication(models.Model):
         default_permissions = ()
         db_table = 'communication'
         managed = False
+

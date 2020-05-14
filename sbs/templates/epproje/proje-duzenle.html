@@ -656,6 +656,28 @@
             asama({{ project.pk }});
 
 
+            $("#sehir").change(function () {
+                var id = $(this).val();
+                $.ajax({
+                    url: "{% url "sbs:ilce-bilgi" %}",
+                    type: "POST",
+                    data: {
+                        'csrfmiddlewaretoken': "{{  csrf_token  }}",
+                        "cmd": id,
+                    },
+                    success: function (result) {
+                        $("#town").empty();
+                        $("#town").append('<option value="">-----------</option>');
+                        for (var i = 0, l = Object.keys(result).length; i <= l; i++) {
+                            $("#town").append('<option value="' + result.data[i].pk + '">' + result.data[i].name + '</option>');
+                        }
+                    }
+                });
+
+
+            });
+
+
         });
 
 
@@ -671,7 +693,6 @@
                 'autoWidth': false,
                 "serverSide": true,
                 "processing": true,
-
                 'ajax': {
 
                     "url": "{% url "sbs:personel-bilgi" %}",
