@@ -445,7 +445,7 @@ def town(request):
         return redirect('accounts:login')
     if request.method == 'POST':
         print(request.POST.get('cmd'))
-        project = Town.objects.filter(city__name=request.POST.get('cmd'))
+        project = Town.objects.filter(cityId__name=request.POST.get('cmd'))
         beka = []
         for item in project:
             data = {

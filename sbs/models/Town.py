@@ -4,7 +4,7 @@ from sbs.models.City import City
 
 class Town(models.Model):
     name = models.TextField(blank=True, null=True, verbose_name='İlçe')
-    city = models.ForeignKey(City, on_delete=models.CASCADE, verbose_name='İl', db_column='city')
+    cityId = models.ForeignKey(City, on_delete=models.CASCADE, verbose_name='İl', db_column='city')
     kobilid = models.IntegerField(db_column='kobilId')
     creationDate = models.DateTimeField(auto_now_add=True)
     operationDate = models.DateTimeField(auto_now=True)
