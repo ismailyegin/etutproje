@@ -14,8 +14,8 @@ class EPEmployee(models.Model):
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE,null=False)
 
     def __str__(self):
-        return '%s %s %s %s' % (
-        self.projectEmployeeTitle.name, ' - ', self.employee.user.first_name, self.user.last_name)
+        return '%s ' % self.employee
+
 
     class Meta:
         ordering = ['pk']

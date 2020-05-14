@@ -59,6 +59,7 @@ class EPProject(models.Model):
     sozlesmeTarihi = models.DateTimeField(null=True, blank=True)
     isSUresi = models.IntegerField(null=True, blank=True)
     isBitimTarihi = models.DateTimeField(null=True, blank=True)
+    sorumlu=models.ForeignKey(EPEmployee, on_delete=models.CASCADE, verbose_name='Sorumlu',related_name='sorumlu')
 
     city = models.ForeignKey(City, on_delete=models.CASCADE, verbose_name='İl', db_column='city')
 

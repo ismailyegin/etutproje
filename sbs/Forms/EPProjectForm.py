@@ -9,7 +9,7 @@ class EPProjectForm(ModelForm):
         model = EPProject
 
         fields = ('name', 'butceCinsi', 'butceYili', 'projeCinsi', 'ihaleTarihi',  'sozlesmeTarihi', 'isSUresi',
-                  'isBitimTarihi', 'city',)
+                  'isBitimTarihi', 'city','sorumlu')
         labels = {
             'name': 'Proje Tanımı',
             'butceCinsi': 'Bütçe Cinsi',
@@ -20,6 +20,7 @@ class EPProjectForm(ModelForm):
             'isSUresi': 'İşin Süresi (Gün)',
             'isBitimTarihi': 'İş Bitim Tarihi',
             'city': 'İl',
+            'sorumlu':'Proje Sorumlusu'
 
         }
         widgets = {
@@ -47,6 +48,8 @@ class EPProjectForm(ModelForm):
                 attrs={'class': 'form-control  pull-right', 'id': 'datemask6', 'autocomplete': 'on',
                        'onkeydown': 'return true'}),
             'city': forms.Select(attrs={'class': 'form-control select2 select2-hidden-accessible',
+                                        'style': 'width: 100%;', 'required': 'required'}),
+            'sorumlu': forms.Select(attrs={'class': 'form-control select2 select2-hidden-accessible',
                                         'style': 'width: 100%;', 'required': 'required'}),
 
         }
