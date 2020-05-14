@@ -202,6 +202,7 @@ def add_employee_to_project(request, pk):
         project = EPProject.objects.get(pk=pk)
         project.employees.create(projectEmployeeTitle=title, employee=employee)
         messages.success(request, 'Personel Eklenmiştir')
+
     except:
         messages.warning(request, 'Yeniden deneyiniz.')
 
@@ -279,6 +280,7 @@ def add_phase_to_project(request, pk):
         project = EPProject.objects.get(pk=pk)
         project.phases.create(phaseDate=dates, definition=definition)
         messages.success(request, 'Aşama Eklenmiştir')
+
     except:
         messages.warning(request, 'Yeniden deneyiniz.')
 
@@ -326,3 +328,110 @@ def add_offer_to_project(request, pk):
         return JsonResponse({'status': 'Fail', 'msg': 'Not a valid request'})
 
     return redirect('sbs:proje-duzenle', pk=pk)
+
+
+
+
+
+
+
+
+@login_required
+def personel_list(request):
+    perm = general_methods.control_access(request)
+    if not perm:
+        logout(request)
+        return redirect('accounts:login')
+    try:
+        if request.method == 'GET':
+            datatables = request.GET
+            project = EPProject.objects.get(pk=request.GET.get('cmd'))
+            say = 1
+            beka = []
+            for item in project.employees.all():
+                data = {
+                    'pk':item.pk,
+                    'say': say,
+                    'title': item.projectEmployeeTitle.name,
+                    'employee': item.employee.user.first_name + ' ' + item.employee.user.last_name,
+                }
+                beka.append(data)
+                say += 1
+            total=project.employees.count()
+            response = {
+                'data': beka,
+                'recordsTotal': total,
+                'recordsFiltered': total,
+            }
+            return JsonResponse(response)
+
+    except:
+        return JsonResponse({'status': 'Fail', 'msg': 'Not a valid request'})
+
+    return redirect('sbs:proje-duzenle', pk=pk)
+
+
+@login_required
+def ihtiyac_list(request):
+    perm = general_methods.control_access(request)
+    if not perm:
+        logout(request)
+        return redirect('accounts:login')
+    try:
+        if request.method == 'GET':
+            datatables = request.GET
+            project = EPProject.objects.get(pk=request.GET.get('cmd'))
+            say = 1
+            beka = []
+            for item in project.requirements.all():
+                data = {
+                    'pk': item.pk,
+                    'say': say,
+                    'title': item.amount,
+                    'employee': item.definition,
+                }
+                beka.append(data)
+                say += 1
+            total = project.requirements.count()
+            response = {
+                'data': beka,
+                'recordsTotal': total,
+                'recordsFiltered': total,
+            }
+            return JsonResponse(response)
+
+    except:
+        return JsonResponse({'status': 'Fail', 'msg': 'Not a valid request'})
+
+    return redirect('sbs:proje-duzenle', pk=pk)
+@login_required
+def asama_list(request):
+    perm = general_methods.control_access(request)
+    if not perm:
+        logout(request)
+        return redirect('accounts:login')
+    try:
+        if request.method == 'POST':
+            datatables = request.GET
+            project = EPProject.objects.get(pk=request.POST.get('cmd'))
+            say = 1
+            beka = []
+            for item in project.phases.all():
+                data = {
+                    'pk': item.pk,
+                    'say': say,
+                    'title':  item.phaseDate,
+                    'employee': item.definition,
+                }
+                beka.append(data)
+                say += 1
+
+            return JsonResponse({
+                'data': beka
+            })
+
+    except:
+        return JsonResponse({'status': 'Fail', 'msg': 'Not a valid request'})
+
+    return redirect('sbs:proje-duzenle', pk=pk)
+

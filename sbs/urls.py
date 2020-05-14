@@ -353,6 +353,13 @@ urlpatterns = [
         name='proje-asama-kaldir'),
     url(r'etut-proje/proje-oneri-ekle/(?P<pk>\d+)$',
         EPProjectViews.add_offer_to_project, name='proje-oneri-ekle'),
+    # ajax ile personel ekleme
+    url(r'etut-proje/proje-personel-bilgi/$',
+        EPProjectViews.personel_list, name='personel-bilgi'),
+    url(r'etut-proje/proje-ihtiyac-bilgi/$',
+        EPProjectViews.ihtiyac_list, name='ihtiyac-bilgi'),
+    url(r'etut-proje/proje-asama-bilgi/$',
+        EPProjectViews.asama_list, name='asama-bilgi'),
 
     url(r'personel/personeller/$', EmployeeViews.return_employees, name='personeller'),
     url(r'personel/personel-ekle/$', EmployeeViews.add_employee, name='personel-ekle'),
