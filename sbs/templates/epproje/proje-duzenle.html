@@ -698,6 +698,7 @@
                     "url": "{% url "sbs:personel-bilgi" %}",
                     "methot": 'POST',
                     "data": {
+                        'csrfmiddlewaretoken': "{{  csrf_token  }}",
                         "cmd": id,
                     },
                 },
@@ -736,7 +737,7 @@
                 "processing": true,
 
                 'ajax': {
-
+                    'csrfmiddlewaretoken': "{{  csrf_token  }}",
                     "url": "{% url "sbs:ihtiyac-bilgi" %}",
                     "methot": 'POST',
                     "data": {
