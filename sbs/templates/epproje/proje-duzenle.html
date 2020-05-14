@@ -535,20 +535,20 @@
                             <div class="row">
                                 <div class="box-body chat" id="chat-box1"
                                      style="overflow: auto; width: auto; height: 250px; ">
-                                    <ul class="todo-list ui-sortable">
+                                    <ul class="todo-list ui-sortable" id="todo-list">
                                         {% if project.phases.all %}
                                             {% for item in project.phases.all %}
-                                                <li>
-                                                    <small style="font-size: 12px" class="label label-danger"><i
-                                                            class="fa fa-clock-o"></i>{{ item.phaseDate|date:"M d, Y" }}
-                                                    </small>
-                                                    <h4 class="text">{{ item.definition }}</h4>
-                                                    <div class="tools">
-                                                        <i class="fa fa-edit"></i>
-                                                        <i class="fa fa-trash-o"
-                                                           onclick=deletePhase({{ project.pk }},{{ item.pk }})></i>
-                                                    </div>
-                                                </li>
+                                                {#                                                <li>#}
+                                                {#                                                    <small style="font-size: 12px" class="label label-danger"><i#}
+                                                {#                                                            class="fa fa-clock-o"></i>{{ item.phaseDate|date:"M d, Y" }}#}
+                                                {#                                                    </small>#}
+                                                {#                                                    <h4 class="text">{{ item.definition }}</h4>#}
+                                                {#                                                    <div class="tools">#}
+                                                {#                                                        <i class="fa fa-edit"></i>#}
+                                                {#                                                        <i class="fa fa-trash-o"#}
+                                                {#                                                           onclick=deletePhase({{ project.pk }},{{ item.pk }})></i>#}
+                                                {#                                                    </div>#}
+                                                {#                                                </li>#}
                                             {% endfor %}
                                         {% endif %}
                                     </ul>
@@ -734,17 +734,22 @@
 
                 },
                 success: function (result) {
-
-                    console.log(result.data[0].pk);
-                    console.log( Object.keys(result).length);
+                    $("#todo-list").empty();
                     for (var i = 0, l = Object.keys(result).length; i <= l; i++) {
-                        console.log(result.data[i].pk);
-                        console.log(result.data[i].say);
-                        console.log(result.data[i].title);
-                        console.log(result.data[i].employee);
 
-}
 
+                        $("#todo-list").append(' <li><small style="font-size: 12px" class="label label-danger"><i  class="fa fa-clock-o"></i>' + result.data[i].title + '\n' +
+                            '                                                    </small>\n' +
+                            '                                                    <h4 class="text">' + result.data[i].employee + '</h4>\n' +
+                            '                                                    <div class="tools">\n' +
+                            '                                                        <i class="fa fa-edit"></i>\n' +
+                            '                                                        <i class="fa fa-trash-o"\n' +
+                            '                                                           onclick=deletePhase({{ project.pk }},' + result.data[i].pk + ')></i>\n' +
+                            '                                                    </div>\n' +
+                            '                                                </li>');
+
+
+                    }
 
 
                 }
@@ -980,7 +985,9 @@
                             $('#modal-success').on("shown.bs.modal", function (e) {
                                 $(".btn-ok").click(function () {
 
-                                    window.location.replace("{% url "sbs:proje-duzenle" project.pk %}");
+                                    $('#modal-warning').modal('hide');
+                                    $('.modal').modal('hide');
+                                    asama({{ project.pk }})
 
                                 });
 
@@ -1023,11 +1030,10 @@
                             $('#modal-success').on("shown.bs.modal", function (e) {
                                 $(".btn-ok").click(function () {
 
-                                    window.location.replace("{% url "sbs:proje-duzenle"  project.pk  %}");
 
                                     $('#modal-warning').modal('hide');
                                     $('.modal').modal('hide');
-                                    benden
+                                    asama({{ project.pk }})
 
                                 });
 
