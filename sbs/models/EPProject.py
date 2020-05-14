@@ -2,6 +2,7 @@ from django.core.validators import RegexValidator, DecimalValidator
 from django.db import models
 
 from sbs.models import City
+from sbs.models.Town import Town
 from sbs.models.EPEmployee import EPEmployee
 from sbs.models.EPRequirements import EPRequirements
 from sbs.models.EPPhase import EPPhase
@@ -61,7 +62,10 @@ class EPProject(models.Model):
     isBitimTarihi = models.DateTimeField(null=True, blank=True)
     sorumlu=models.ForeignKey(EPEmployee, on_delete=models.CASCADE, verbose_name='Sorumlu',related_name='sorumlu')
 
+    town = models.CharField(blank=True, null=True, max_length=120, verbose_name='ilçe')
     city = models.ForeignKey(City, on_delete=models.CASCADE, verbose_name='İl', db_column='city')
+
+
 
     def __str__(self):
         return '%s ' % self.name
