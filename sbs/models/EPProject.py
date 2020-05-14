@@ -42,7 +42,7 @@ class EPProject(models.Model):
     creationDate = models.DateTimeField(auto_now_add=True)
     operationDate = models.DateTimeField(auto_now=True)
 
-    employees = models.ManyToManyField(EPEmployee)
+    employees = models.ManyToManyField(EPEmployee,related_name='personel')
     requirements = models.ManyToManyField(EPRequirements)
     phases = models.ManyToManyField(EPPhase)
     offers = models.ManyToManyField(EPOffer)
