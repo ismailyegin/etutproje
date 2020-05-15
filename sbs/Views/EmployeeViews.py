@@ -33,6 +33,7 @@ from sbs.models.CategoryItem import CategoryItem
 from sbs.models.Employee import Employee
 from sbs.models.VisaSeminar import VisaSeminar
 from sbs.models.EnumFields import EnumFields
+from sbs.models.EPProject import EPProject
 from sbs.services import general_methods
 from datetime import date, datetime
 from django.utils import timezone
@@ -116,6 +117,7 @@ def edit_employee(request, pk):
     employee_form = EmployeeForm(request.POST or None, instance=employee)
     employee_form.fields['workDefinition'].queryset = CategoryItem.objects.filter(
         forWhichClazz="EMPLOYEE_WORKDEFINITION")
+    projects=EPProject.objects.filter(employees__employee__user=user).distinct()
 
 
     if request.method == 'POST':
@@ -143,7 +145,7 @@ def edit_employee(request, pk):
 
     return render(request, 'personel/personel-duzenle.html',
                   {'user_form': user_form, 'communication_form': communication_form,
-                   'person_form': person_form, 'employee_form': employee_form})
+                   'person_form': person_form, 'employee_form': employee_form,'projects':projects})
 
 @login_required
 def delete_employee(request, pk):
