@@ -443,23 +443,24 @@ def town(request):
     if not perm:
         logout(request)
         return redirect('accounts:login')
-    if request.method == 'POST':
-        print(request.POST.get('cmd'))
-        project = Town.objects.filter(cityId__name=request.POST.get('cmd'))
-        beka = []
-        for item in project:
-            data = {
-                'pk': item.pk,
-                'name': item.name,
-            }
-            beka.append(data)
-        return JsonResponse(
-            {
-                'data': beka, 'msg': 'Valid is  request'
-            })
+
 
     try:
-        print('hata kontrol ')
+        if request.method == 'POST':
+            print(request.POST.get('cmd'))
+            project = Town.objects.filter(cityId__name=request.POST.get('cmd'))
+            beka = []
+            for item in project:
+                data = {
+                    'pk': item.pk,
+                    'name': item.name,
+                }
+                beka.append(data)
+            return JsonResponse(
+                {
+                    'data': beka,
+                    'msg': 'Valid is  request'
+                })
 
     except:
         return JsonResponse({'status': 'Fail', 'msg': 'Not a valid request'})

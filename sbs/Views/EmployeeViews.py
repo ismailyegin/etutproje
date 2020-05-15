@@ -34,6 +34,7 @@ from sbs.models.Employee import Employee
 from sbs.models.VisaSeminar import VisaSeminar
 from sbs.models.EnumFields import EnumFields
 from sbs.models.EPProject import EPProject
+from sbs.models.Country import Country
 from sbs.services import general_methods
 from datetime import date, datetime
 from django.utils import timezone
@@ -48,7 +49,11 @@ def add_employee(request):
         return redirect('accounts:login')
     user_form = UserForm()
     person_form = PersonForm()
-    communication_form = CommunicationForm()
+
+    communication=Communication()
+    country=Country.objects.get(name='Türkiye')
+    communication.country=country
+    communication_form = CommunicationForm(instance=communication)
     employee_form = EmployeeForm()
     employee_form.fields['workDefinition'].queryset = CategoryItem.objects.filter(forWhichClazz="EMPLOYEE_WORKDEFINITION")
 
@@ -57,6 +62,7 @@ def add_employee(request):
         user_form = UserForm(request.POST)
         person_form = PersonForm(request.POST, request.FILES)
         communication_form = CommunicationForm(request.POST, request.FILES)
+
         sportClubUser_form = EmployeeForm(request.POST)
 
         if user_form.is_valid() and person_form.is_valid() and communication_form.is_valid() and sportClubUser_form.is_valid():

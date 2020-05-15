@@ -228,7 +228,7 @@
                                                     <div class="btn-group">
                                                         <a href="{% url "sbs:personel-duzenle" athlete.pk %}"
                                                            type="button" class="btn btn-warning"><i
-                                                                class="fa fa-edit"></i>İncele
+                                                                class="fa fa-edit"></i>
                                                         </a>
 
 
@@ -261,86 +261,7 @@
     <script>
         $(function () {
             $('#sporcular').DataTable({
-                dom: 'Bfrtip',
 
-                language: {
-                    buttons: {
-                        pageLength: {
-                            _: " %d  Tane Göster",
-                            '-1': "Hepsini Göster"
-                        }
-                    }
-                },
-
-                lengthMenu: [
-                    [10, 25, 50, 100, -1],
-                    ['10 tane', '25 tane ', '50 tane ', '100 Tane', 'Hepsini Getir']
-                ],
-
-                buttons: [
-                    {##}
-                    {##}
-                    {#'copy',#}
-                    {#'csv',#}
-
-                    {
-                        extend: "pageLength",
-                    },
-
-
-                    {
-                        extend: 'colvis',
-                        text: '<i class=" fa  fa-th-list"></i>',
-                        titleAttr: 'Ekle Çıkar'
-
-
-                    },
-                    {
-                        extend: 'print',
-                        title: 'Sbs Bilgi Sistemi',
-                        text: '<i class="fa  fa-print"></i>',
-                        exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5]
-                        },
-                        titleAttr: 'Yazdır'
-                    },
-                    {
-                        extend: 'pdfHtml5',
-                        download: 'open',
-                        text: '<i class="fa fa-file-pdf-o"></i>',
-                        exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5]
-                        },
-                        titleAttr: 'Pdf Kaydet'
-                    },
-
-                    {
-                        extend: 'excelHtml5',
-                        title: 'Sbs Bilgi Sistemi',
-                        text: '<i class="fa fa-file-excel-o"></i>',
-                        messageTop: 'Sbs Bilgi Sistemi ',
-                        {#footer: true,#}
-                        exportOptions: {
-                            {#     yer degisimi de yapilabilir.#}
-                            columns: [0, 2, 1, 3, 4, 5]
-
-                        },
-                        titleAttr: 'Excel Kaydet'
-                    },
-                    {
-                        text: '<i class="fa fa-file-text-o"></i>',
-                        action: function (e, dt, button, config) {
-                            var data = dt.buttons.exportData();
-
-                            $.fn.dataTable.fileSave(
-                                new Blob([JSON.stringify(data)]),
-                                'Sporcular.json'
-                            );
-                        }
-                    }
-
-
-                ],
                 'paging': true,
                 'lengthChange': true,
                 'searching': true,
