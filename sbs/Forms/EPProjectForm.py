@@ -9,10 +9,10 @@ class EPProjectForm(ModelForm):
         model = EPProject
 
         fields = ('name', 'butceCinsi', 'butceYili', 'projeCinsi', 'ihaleTarihi',  'sozlesmeTarihi', 'isSUresi',
-                  'isBitimTarihi', 'city','sorumlu','town')
+                  'isBitimTarihi', 'city','sorumlu','aistart','aifinish','karakteristik')
         labels = {
             'name': 'Proje Tanımı',
-            'butceCinsi': 'Bütçe Cinsi',
+            'butceCinsi': 'Yatırım Programı ',
             'butceYili': 'Bütçe Yılı',
             'projeCinsi': 'Proje Cinsi',
             'ihaleTarihi': 'İhale Tarihi',
@@ -21,7 +21,9 @@ class EPProjectForm(ModelForm):
             'isBitimTarihi': 'İş Bitim Tarihi',
             'city': 'İl',
             'sorumlu':'Proje Sorumlusu',
-            'town':'İlçe'
+            'aistart':'Alım İşinin Başlangıç Tarihi',
+            'aifinish':'Alım İşinin Bitiş Tarihi',
+            'karakteristik':'Karakteristik',
 
 
         }
@@ -34,6 +36,8 @@ class EPProjectForm(ModelForm):
                 attrs={'class': 'form-control  pull-right', 'id': 'datepicker5', 'autocomplete': 'on',
                        'onkeydown': 'return true'}),
             'projeCinsi': forms.Select(attrs={'class': 'form-control select2 select2-hidden-accessible',
+                                              'style': 'width: 100%; '}),
+            'karakteristik': forms.Select(attrs={'class': 'form-control select2 select2-hidden-accessible',
                                               'style': 'width: 100%; '}),
 
             # 'pattern': '"^\$\d{1.3}(.\d{3})*(\,\d+)?$"', 'data-type': 'currency'
@@ -51,9 +55,13 @@ class EPProjectForm(ModelForm):
                        'onkeydown': 'return true'}),
             'city': forms.Select(attrs={'class': 'form-control select2 select2-hidden-accessible',
                                         'style': 'width: 100%;','id':'sehir', 'required': 'required'}),
-            'town': forms.Select(attrs={'class': 'form-control select2 select2-hidden-accessible',
-                                        'style': 'width: 100%;', 'required': 'required','id':'town'}),
             'sorumlu': forms.Select(attrs={'class': 'form-control select2 select2-hidden-accessible',
                                         'style': 'width: 100%;', 'required': 'required'}),
+            'aistart': forms.DateInput(
+                attrs={'class': 'form-control  pull-right datemask', 'autocomplete': 'on',
+                       'onkeydown': 'return true'}),
+            'aifinish': forms.DateInput(
+                attrs={'class': 'form-control  pull-right datemask', 'autocomplete': 'on',
+                       'onkeydown': 'return true'}),
 
         }

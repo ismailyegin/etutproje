@@ -241,8 +241,12 @@
                                     </div>
                                     <div class="col-lg-3">
                                         <div class="form-group">
-                                            <label> {{ project_form.town.label }}</label>
-                                            {{ project_form.town }}
+                                            <label> ilçe</label>
+                                            <select name="town" class="form-control select2 select2-hidden-accessible"
+                                                    style="width: 100%;" id="town" maxlength="120" tabindex="-1"
+                                                    aria-hidden="true">
+                                                <option value="{{ project.town}}" selected>{{ project.town}}</option>
+                                            </select>
                                         </div>
                                     </div>
 
@@ -269,37 +273,17 @@
                                             </div>
                                             <div class="col-lg-3">
                                                 <div class="form-group">
-                                                    <label> Arsa Alanı (m2)</label>
-                                                    <input type="text" name="arsa" value="{{ project.arsaAlani }}"
-                                                           class="form-control "
-                                                           id="arsa" pattern="^\$\d{1.}(.\d{3})*(\,\d+)?$"
-                                                           data-type="currency">
+                                                    <label> {{ project_form.karakteristik.label }}</label>
+                                                    {{ project_form.karakteristik }}
                                                 </div>
-
                                             </div>
+
                                         </div>
                                     </div>
                                     <div class="col-lg-12">
                                         <div class="row">
-                                            <div class="col-lg-3">
-                                                <div class="form-group">
-                                                    <label> İnşaat Alanı (m2)</label>
-                                                    <input type="text" name="insaat" value="{{ project.insaatAlani }}"
-                                                           class="form-control "
-                                                           id="insaat" pattern="^\$\d{1.}(.\d{3})*(\,\d+)?$"
-                                                           data-type="currency">
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-3">
-                                                <div class="form-group">
-                                                    <label> Tahmini Ödenek Tutarı (₺)</label>
-                                                    <input type="text" name="tahmini"
-                                                           value="{{ project.tahminiOdenekTutari }}"
-                                                           class="form-control "
-                                                           id="tahmini" pattern="^\$\d{1.}(.\d{3})*(\,\d+)?$"
-                                                           data-type="currency">
-                                                </div>
-                                            </div>
+
+
                                             <div class="col-lg-3">
                                                 <div class="form-group">
                                                     <label> Yaklaşık Maliyet (₺)</label>
@@ -312,48 +296,23 @@
                                             </div>
                                             <div class="col-lg-3">
                                                 <div class="form-group">
-                                                    <label> {{ project_form.ihaleTarihi.label }}</label>
-                                                    {{ project_form.ihaleTarihi }}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12">
-                                        <div class="row">
-                                            <div class="col-lg-3">
-                                                <div class="form-group">
-                                                    <label> Sözleşme Bedeli (₺)</label>
-                                                    <input type="text" name="sozlesmebedeli"
-                                                           value="{{ project.sozlesmeBedeli }}"
-                                                           class="form-control "
-                                                           id="sozlesmebedeli" pattern="^\$\d{1.}(.\d{3})*(\,\d+)?$"
-                                                           data-type="currency">
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-3">
-                                                <div class="form-group">
-                                                    <label> {{ project_form.sozlesmeTarihi.label }}</label>
-                                                    {{ project_form.sozlesmeTarihi }}
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-3">
-                                                <div class="form-group">
-                                                    <label> {{ project_form.isSUresi.label }}</label>
-                                                    {{ project_form.isSUresi }}
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-3">
-                                                <div class="form-group">
                                                     <label> {{ project_form.isBitimTarihi.label }}</label>
                                                     {{ project_form.isBitimTarihi }}
                                                 </div>
                                             </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="row">
+
+
                                         </div>
                                     </div>
 
                                 </div>
                             </div>
-                            <div class="box-footer">
+                            <div class="box-footer text-right">
                                 <button class="btn btn-primary" type="submit">Kaydet</button>
                             </div>
                         </div>
@@ -365,8 +324,286 @@
             {% endif %}
 
             <div class="row">
+
+
+                {#                ------------------------------#}
+
+
                 <div class="col-md-6">
-                    <div class="box box-danger collapsed-box">
+                    <div class="box box-info collapsed-box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">iHALE BİLGİLERİ</h3>
+
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                        class="fa fa-plus"></i>
+                                </button>
+                            </div>
+                            <!-- /.box-tools -->
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body" style="display: none;">
+                            <div class="row" style="padding-bottom: 10px">
+
+
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label> {{ project_form.ihaleTarihi.label }}</label>
+                                        {{ project_form.ihaleTarihi }}
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label> {{ project_form.sozlesmeTarihi.label }}</label>
+                                        {{ project_form.sozlesmeTarihi }}
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label> {{ project_form.aistart.label }}</label>
+                                        {{ project_form.aistart }}
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label> {{ project_form.aifinish.label }}</label>
+                                        {{ project_form.aifinish }}
+                                    </div>
+                                </div>
+
+
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label> {{ project_form.isSUresi.label }}</label>
+                                        {{ project_form.isSUresi }}
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Kaç Gün Kaldı</label>
+
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="box-footer text-right">
+                                <button class="btn btn-primary " type="submit">Kaydet</button>
+
+
+                            </div>
+
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+                </div>
+
+
+                {#                ----------------------------------------#}
+
+
+                <div class="col-md-6">
+                    <div class="box box-info collapsed-box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">ARSA YAPIM ÖDENEK BİLGİLERİ</h3>
+
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                        class="fa fa-plus"></i>
+                                </button>
+                            </div>
+                            <!-- /.box-tools -->
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body" style="display: none;">
+                            <div class="row" style="padding-bottom: 10px">
+
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label> Arsa Alanı (m2)</label>
+                                        <input type="text" name="arsa" value="{{ project.arsaAlani }}"
+                                               class="form-control "
+                                               id="arsa" pattern="^\$\d{1.}(.\d{3})*(\,\d+)?$"
+                                               data-type="currency">
+                                    </div>
+
+
+                                </div>
+
+
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label> İnşaat Alanı (m2)</label>
+                                        <input type="text" name="insaat" value="{{ project.insaatAlani }}"
+                                               class="form-control "
+                                               id="insaat" pattern="^\$\d{1.}(.\d{3})*(\,\d+)?$"
+                                               data-type="currency">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label> Tahmini Ödenek Tutarı (₺)</label>
+                                        <input type="text" name="tahmini"
+                                               value="{{ project.tahminiOdenekTutari }}"
+                                               class="form-control "
+                                               id="tahmini" pattern="^\$\d{1.}(.\d{3})*(\,\d+)?$"
+                                               data-type="currency">
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="box-footer text-right">
+                                    <button class="btn btn-primary " type="submit">Kaydet</button>
+                                </div>
+
+
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+                </div>
+
+
+                {#                ----------------------------------------#}
+
+                <div class="col-md-6">
+                    <div class="box box-info collapsed-box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">HAKEDİŞ BİLGİLERİ</h3>
+
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                        class="fa fa-plus"></i>
+                                </button>
+                            </div>
+                            <!-- /.box-tools -->
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body" style="display: none;">
+                            <div class="row" style="padding-bottom: 10px">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label> Sözleşme Bedeli (₺)</label>
+                                        <input type="text" name="sozlesmebedeli"
+                                               value="{{ project.sozlesmeBedeli }}"
+                                               class="form-control "
+                                               id="sozlesmebedeli" pattern="^\$\d{1.}(.\d{3})*(\,\d+)?$"
+                                               data-type="currency">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label> Sözleşme Bedeli Kdv Dahil(₺)</label>
+                                        <input type="text" name="sozlesmebedeli"
+                                               value="{{ project.sozlesmeBedeli }}"
+                                               class="form-control "
+                                               id="sozlesmebedeli" pattern="^\$\d{1.}(.\d{3})*(\,\d+)?$"
+                                               data-type="currency">
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="box-footer text-right">
+                                    <button class="btn btn-primary " type="submit">Kaydet</button>
+                                </div>
+
+
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+                </div>
+
+
+                {#                ----------------------------------------#}
+
+
+                <div class="col-md-6">
+                    <div class="box box-info collapsed-box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">PROJE DÖKÜMANLARI</h3>
+
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                        class="fa fa-plus"></i>
+                                </button>
+                            </div>
+                            <!-- /.box-tools -->
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body" style="display: none;">
+                            <div class="row" style="padding-bottom: 10px">
+                                <div class="col-lg-12">
+                                    <div class="btn-group">
+                                        <a class="btn btn-success"
+                                           data-toggle="modal"
+                                           onclick=addEmployee({{ project.pk }})><i
+                                                class="fa fa-plus"></i> Proje Döküman Ekle</a>
+
+
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <table id="dokuman" class="table table-bordered table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Dosya</th>
+
+
+                                        </tr>
+                                        </thead>
+
+                                        <tbody>
+
+                                        {% if project.document.all %}
+                                            {% for item in project.document.all %}
+                                                <tr>
+                                                    <td>{{ forloop.counter }} </td>
+                                                    <td>{{ item.name }}</td>
+
+                                                    <td>
+                                                        <div class="btn-group">
+
+
+                                                            <a class="btn btn-danger"
+                                                               data-toggle="modal"
+                                                               onclick=deleteEmployee({{ project.pk }},{{ item.pk }})><i
+                                                                    class="fa fa-trash"></i></a>
+                                                        </div>
+                                                    </td>
+
+                                                </tr>
+
+                                            {% endfor %}
+                                        {% endif %}
+
+                                        </tbody>
+                                    </table>
+                                </div>
+
+
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+                </div>
+
+
+                {#                ----------------------------------------#}
+
+
+                <div class="col-md-6">
+                    <div class="box box-info collapsed-box">
                         <div class="box-header with-border">
                             <h3 class="box-title">PERSONEL BİLGİLERİ</h3>
 
@@ -442,7 +679,7 @@
                     <!-- /.box -->
                 </div>
                 <div class="col-md-6">
-                    <div class="box box-success collapsed-box">
+                    <div class="box box-info collapsed-box">
                         <div class="box-header with-border">
                             <h3 class="box-title">İHTİYAÇ LİSTESİ</h3>
 
@@ -552,7 +789,8 @@
                             </div>
                             <div class="row">
                                 <div class="box-body chat" id="chat-box1"
-                                     style="overflow: auto; width: auto; height: 250px; ">
+                                     style="">
+
                                     <ul class="todo-list ui-sortable" id="todo-list">
                                         {#                                        {% if project.phases.all %}#}
                                         {#                                            {% for item in project.phases.all %}#}
@@ -580,7 +818,7 @@
                     <!-- /.box -->
                 </div>
                 <div class="col-md-6">
-                    <div class="box box-comment collapsed-box">
+                    <div class="box box-info collapsed-box">
                         <div class="box-header with-border">
                             <h3 class="box-title">GÖRÜŞ VE ÖNERİLER</h3>
 
@@ -636,6 +874,8 @@
 
 
                     </div>
+                </div>
+            </div>
 
 
         </form>
@@ -654,33 +894,39 @@
             personel({{ project.pk }});
             ihtiyac({{ project.pk }});
             asama({{ project.pk }});
+            {#var city = $("#sehir").find('option:selected').text();#}
+            {#ilce(city);#}
 
 
             $("#sehir").change(function () {
                 var city = $(this).find('option:selected').text();
-                $.ajax({
-                    url: "{% url "sbs:ilce-bilgi" %}",
-                    type: "POST",
-                    data: {
-                        'csrfmiddlewaretoken': "{{  csrf_token  }}",
-                        "cmd": city,
-                    },
-                    success: function (result) {
-                        console.log(result)
-                        $("#town").empty();
-                        $("#town").append('<option value="">-----------</option>');
-                        {#for (var i = 0, l = Object.keys(result).length; i <= l; i++) {#}
-                        for (item in result.data) {
-                            $("#town").append('<option value="' +result.data[item].pk+ '">' + result.data[item].name + '</option>');
-                        }
-                    }
-                });
-
-
+                $("#town").empty();
+                ilce(city);
             });
 
-
         });
+
+
+        function ilce(city) {
+            $.ajax({
+                url: "{% url "sbs:ilce-bilgi" %}",
+                type: "POST",
+                data: {
+                    'csrfmiddlewaretoken': "{{  csrf_token  }}",
+                    "cmd": city,
+                },
+                success: function (result) {
+                    console.log(result)
+
+                    $("#town").append('<option value="">-----------</option>');
+                    {#for (var i = 0, l = Object.keys(result).length; i <= l; i++) {#}
+                    for (item in result.data) {
+                        $("#town").append('<option value="' + result.data[item].name + '">' + result.data[item].name + '</option>');
+                    }
+                }
+            });
+
+        };
 
 
         function personel(id) {
@@ -963,11 +1209,12 @@
 
         function addRequirement(id) {
 
+
             $("#requirement").on("shown.bs.modal", function (e) {
 
                 $("#btn-requirement-gonder").click(function () {
 
-                    console.log('buradan girdi', id)
+                    $('#requirement').modal('hide');
                     $.ajax({
                         url: "{% url "sbs:proje-ihtiyac-ekle" pk=212121223232323232  %}".replace(/212121223232323232/, id.toString()),
                         type: "POST",
@@ -981,17 +1228,9 @@
                         success: function (result) {
 
                             html = 'İhtiyaç Başarıyla Eklendi .';
+                            ihtiyac({{ project.pk }})
 
-                            $(".successModal").html(html);
-                            $('#modal-success').on("shown.bs.modal", function (e) {
-                                $(".btn-ok").click(function () {
-                                    $('#modal-warning').modal('hide');
-                                    $('.modal').modal('hide');
-                                    ihtiyac({{ project.pk }})
 
-                                });
-
-                            }).modal('show');
                         }
                     });
                 });

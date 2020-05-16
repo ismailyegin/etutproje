@@ -56,6 +56,7 @@ def edit_project(request, pk):
     employees = Employee.objects.all()
     if request.method == 'POST':
 
+
         insaatAlani = request.POST.get('insaat')
         insaatAlani = insaatAlani.replace(".", "")
         insaatAlani = insaatAlani.replace(",", ".")
@@ -72,9 +73,15 @@ def edit_project(request, pk):
         sozlesmebedeli = yaklasik.replace(".", "")
         sozlesmebedeli = yaklasik.replace(",", ".")
 
+        sozlesmebedeliKdv = request.POST.get('sozlesmebedeliKdv')
+        sozlesmebedeliKdv = yaklasik.replace(".", "")
+        sozlesmebedeliKdv = yaklasik.replace(",", ".")
+
         arsa = request.POST.get('arsa')
         arsa = arsa.replace(".", "")
         arsa = arsa.replace(",", ".")
+
+        town=request.POST.get('town')
 
         if project_form.is_valid():
 
@@ -84,6 +91,9 @@ def edit_project(request, pk):
             project.yaklasikMaliyet = yaklasik
             project.sozlesmeBedeli = sozlesmebedeli
             project.arsaAlani = arsa
+            project.sozlesmeBedeliKdv=sozlesmebedeliKdv
+            project.town=town
+
 
             project.save()
 
@@ -232,7 +242,6 @@ def delete_employee_from_project(request, project_pk, employee_pk):
 @login_required
 def add_requirement_to_project(request, pk):
     perm = general_methods.control_access(request)
-
     if not perm:
         logout(request)
         return redirect('accounts:login')
@@ -426,7 +435,7 @@ def asama_list(request):
                 }
                 beka.append(data)
                 say += 1
-            print(beka)
+
             return JsonResponse({
                 'data': beka
             })
@@ -447,7 +456,6 @@ def town(request):
 
     try:
         if request.method == 'POST':
-            print(request.POST.get('cmd'))
             project = Town.objects.filter(cityId__name=request.POST.get('cmd'))
             beka = []
             for item in project:

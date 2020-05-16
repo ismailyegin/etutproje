@@ -124,6 +124,11 @@ def edit_employee(request, pk):
     employee_form.fields['workDefinition'].queryset = CategoryItem.objects.filter(
         forWhichClazz="EMPLOYEE_WORKDEFINITION")
     projects=EPProject.objects.filter(employees__employee__user=user).distinct()
+    # for proje in projects:
+    #     for item in proje.employees.all():
+    #         if item.employee.user==user:
+    #             print(item.employee.workDefinition)
+
 
 
     if request.method == 'POST':
@@ -151,7 +156,7 @@ def edit_employee(request, pk):
 
     return render(request, 'personel/personel-duzenle.html',
                   {'user_form': user_form, 'communication_form': communication_form,
-                   'person_form': person_form, 'employee_form': employee_form,'projects':projects})
+                   'person_form': person_form, 'employee_form': employee_form,'projects':projects,'user':user})
 
 @login_required
 def delete_employee(request, pk):
