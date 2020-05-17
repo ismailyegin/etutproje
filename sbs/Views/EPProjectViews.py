@@ -29,11 +29,28 @@ def add_project(request):
 
     if request.method == 'POST':
         project_form = EPProjectForm(request.POST)
+
+        project = project_form.save()
+        project.town = request.POST.get('town')
+        project.save()
+
+        messages.success(request, 'Proje Kaydedilmiştir.')
+
+        return redirect('sbs:proje-duzenle', pk=project.pk)
+
+
+
+
+
+
         if project_form.is_valid():
-            p = project_form.save()
+            project = project_form.save(commit=False)
+            project.town=request.POST.get('town')
+            project.save()
+
             messages.success(request, 'Proje Kaydedilmiştir.')
 
-            return redirect('sbs:proje-duzenle', pk=p.pk)
+            return redirect('sbs:proje-duzenle', pk=project.pk)
 
         else:
 

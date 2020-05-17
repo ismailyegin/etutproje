@@ -69,7 +69,7 @@ class EPProject(models.Model):
         (DIGER, 'Diğer'),
     )
 
-    name = models.CharField(blank=True, null=True, max_length=120, verbose_name='Branş Adı')
+    name = models.CharField(blank=False, null=False, max_length=120, verbose_name='Branş Adı')
     creationDate = models.DateTimeField(auto_now_add=True)
     operationDate = models.DateTimeField(auto_now=True)
 
@@ -79,7 +79,7 @@ class EPProject(models.Model):
     offers = models.ManyToManyField(EPOffer)
 
     butceCinsi = models.CharField(max_length=128, verbose_name='Bütçe Cinsi', choices=BUTCE_CINSI, )
-    butceYili = models.IntegerField(blank=True, null=True, )
+    butceYili = models.IntegerField(blank=False, null=False, )
     projeCinsi = models.CharField(max_length=128, verbose_name='Bütçe Cinsi', choices=PROJE_CINSI, )
     arsaAlani = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
     insaatAlani = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
@@ -95,7 +95,7 @@ class EPProject(models.Model):
     sozlesmeTarihi = models.DateTimeField(null=True, blank=True)
     isSUresi = models.IntegerField(null=True, blank=True)
     isBitimTarihi = models.DateTimeField(null=True, blank=True)
-    sorumlu=models.ForeignKey(Employee, on_delete=models.CASCADE, verbose_name='Sorumlu',related_name='sorumlu')
+    sorumlu=models.ForeignKey(Employee, on_delete=models.CASCADE, verbose_name='Sorumlu',related_name='sorumlu',null=True, blank=True)
 
     town = models.CharField(blank=True, null=True, max_length=120, verbose_name='ilçe')
     city = models.ForeignKey(City, on_delete=models.CASCADE, verbose_name='İl', db_column='city')

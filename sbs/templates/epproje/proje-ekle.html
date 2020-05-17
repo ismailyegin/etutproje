@@ -75,10 +75,20 @@
                                         {{ project_form.name }}
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-3">
                                     <div class="form-group">
                                         <label> {{ project_form.city.label }}</label>
                                         {{ project_form.city }}
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label> ilçe</label>
+                                        <select name="town" class="form-control select2 select2-hidden-accessible"
+                                                style="width: 100%;" id="town" maxlength="120" tabindex="-1"
+                                                aria-hidden="true">
+                                            <option value="{{ project.town }}" selected>{{ project.town }}</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
@@ -101,70 +111,27 @@
                                                 {{ project_form.projeCinsi }}
                                             </div>
                                         </div>
-                                        <div class="col-lg-3">
-                                            <div class="form-group">
-                                                <label> {{ project_form.arsaAlani.label }}</label>
-                                                {{ project_form.arsaAlani }}
+                                            <div class="col-lg-3">
+                                                <div class="form-group">
+                                                    <label> {{ project_form.karakteristik.label }}</label>
+                                                    {{ project_form.karakteristik }}
+                                                </div>
                                             </div>
-                                        </div>
+
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="row">
                                         <div class="col-lg-3">
                                             <div class="form-group">
-                                                <label> {{ project_form.insaatAlani.label }}</label>
-                                                {{ project_form.insaatAlani }}
+                                                <label> {{ project_form.projectStatus.label }}</label>
+                                                {{ project_form.projectStatus }}
                                             </div>
                                         </div>
-                                        <div class="col-lg-3">
-                                            <div class="form-group">
-                                                <label> {{ project_form.tahminiOdenekTutari.label }}</label>
-                                                {{ project_form.tahminiOdenekTutari }}
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            <div class="form-group">
-                                                <label> {{ project_form.yaklasikMaliyet.label }}</label>
-                                                {{ project_form.yaklasikMaliyet}}
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            <div class="form-group">
-                                                <label> {{ project_form.ihaleTarihi.label }}</label>
-                                                {{ project_form.ihaleTarihi }}
-                                            </div>
-                                        </div>
+
                                     </div>
                                 </div>
-                                <div class="col-lg-12">
-                                    <div class="row">
-                                        <div class="col-lg-3">
-                                            <div class="form-group">
-                                                <label> {{ project_form.sozlesmeBedeli.label }}</label>
-                                                {{ project_form.sozlesmeBedeli }}
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            <div class="form-group">
-                                                <label> {{ project_form.sozlesmeTarihi.label }}</label>
-                                                {{ project_form.sozlesmeTarihi }}
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            <div class="form-group">
-                                                <label> {{ project_form.isSUresi.label }}</label>
-                                                {{ project_form.isSUresi }}
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            <div class="form-group">
-                                                <label> {{ project_form.isBitimTarihi.label }}</label>
-                                                {{ project_form.isBitimTarihi }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+
 
                             </div>
                         </div>
@@ -183,6 +150,48 @@
 
 
     </section>
+
+
+    <script>
+
+       $(function () {
+
+
+
+
+            $("#sehir").change(function () {
+                var city = $(this).find('option:selected').text();
+                $("#town").empty();
+                ilce(city);
+            });
+
+        });
+
+
+        function ilce(city) {
+            $.ajax({
+                url: "{% url "sbs:ilce-bilgi" %}",
+                type: "POST",
+                data: {
+                    'csrfmiddlewaretoken': "{{  csrf_token  }}",
+                    "cmd": city,
+                },
+                success: function (result) {
+                    console.log(result)
+
+                    $("#town").append('<option value="">-----------</option>');
+                    {#for (var i = 0, l = Object.keys(result).length; i <= l; i++) {#}
+                    for (item in result.data) {
+                        $("#town").append('<option value="' + result.data[item].name + '">' + result.data[item].name + '</option>');
+                    }
+                }
+            });
+
+        };
+
+
+
+    </script>
 
 {% endblock %}
 
