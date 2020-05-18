@@ -153,10 +153,10 @@
                             <div class="btn-group">
                                 {% if user.groups.all.0.name == 'Admin' %}
 
-                                <a href="{% url "sbs:proje-ekle" %}"
-                                   type="button" class="btn btn-success"><i
-                                        class="fa fa-edit"></i> Yeni Proje Ekle
-                                </a>
+                                    <a href="{% url "sbs:proje-ekle" %}"
+                                       type="button" class="btn btn-success"><i
+                                            class="fa fa-edit"></i> Yeni Proje Ekle
+                                    </a>
                                 {% endif %}
                             </div>
                         </div>
@@ -170,7 +170,7 @@
                                     <th>İli</th>
                                     <th>Bütçe Yılı</th>
                                     <th>Yatırım Programı</th>
-                                    <th>Proje Durumu </th>
+                                    <th>Proje Durumu</th>
                                     <th>Proje Cinsi</th>
                                     <th>İşlemler</th>
 
@@ -234,7 +234,11 @@
                 'ordering': true,
                 'info': true,
                 'autoWidth': true,
-                 'responsive': {
+                 "columnDefs": [
+                    {responsivePriority: 1, targets: 2},
+                    {responsivePriority: 2, targets: 7},
+                ],
+                'responsive': {
                     'details': {
 
 
@@ -246,7 +250,8 @@
                         }),
                         'renderer': $.fn.dataTable.Responsive.renderer.tableAll(),
                     }
-                 },
+                },
+
             })
 
         })
@@ -270,7 +275,7 @@
                         success: function (result) {
 
                             html = 'Proje Başarıyla Silindi';
-                        debugger;
+                            debugger;
                             $(".successModal").html(html);
                             $('#modal-success').on("shown.bs.modal", function (e) {
                                 $(".btn-ok").click(function () {
