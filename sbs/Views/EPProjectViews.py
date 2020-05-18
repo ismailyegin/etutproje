@@ -17,6 +17,9 @@ from sbs.services import general_methods
 from sbs.services.general_methods import getProfileImage
 from django.utils import timezone
 
+from sbs.models.EPDocument import EPDocument
+from sbs.Forms.EPDocumentForm import EPDocumentForm
+
 
 @login_required
 def add_project(request):
@@ -68,6 +71,7 @@ def edit_project(request, pk):
     if not perm:
         logout(request)
         return redirect('accounts:login')
+    document_form=EPDocumentForm()
     project = EPProject.objects.get(pk=pk)
     project_form = EPProjectForm(request.POST or None, instance=project)
     titles = CategoryItem.objects.filter(forWhichClazz="EPPROJECT_EMPLOYEE_TITLE")
@@ -80,9 +84,17 @@ def edit_project(request, pk):
 
 
 
+
     if request.method == 'POST':
-
-
+        try:
+            document_form = EPDocumentForm(request.POST, request.FILES)
+            document = request.FILES['name']
+            if document:
+                document = document_form.save()
+                project.documents.add(document)
+                project.save()
+        except:
+            print('hata var')
         insaatAlani = request.POST.get('insaat')
         insaatAlani = insaatAlani.replace(".", "")
         insaatAlani = insaatAlani.replace(",", ".")
@@ -129,7 +141,7 @@ def edit_project(request, pk):
             messages.warning(request, 'Alanları Kontrol Ediniz')
 
     return render(request, 'epproje/proje-duzenle.html',
-                  {'project_form': project_form, 'project': project, 'titles': titles, 'employees': employees,'days':days})
+                  {'project_form': project_form, 'project': project, 'titles': titles, 'employees': employees,'days':days,'document_form':document_form})
 
 
 @login_required
@@ -512,6 +524,26 @@ def deleteReferee(request, pk):
             obj.delete()
             return JsonResponse({'status': 'Success', 'messages': 'save successfully'})
         except Judge.DoesNotExist:
+            return JsonResponse({'status': 'Fail', 'msg': 'Object does not exist'})
+
+    else:
+        return JsonResponse({'status': 'Fail', 'msg': 'Not a valid request'})
+
+
+
+@login_required
+def delete_document_project(request, project_pk, employee_pk):
+    perm = general_methods.control_access(request)
+
+    if not perm:
+        logout(request)
+        return redirect('accounts:login')
+    if request.method == 'POST' and request.is_ajax():
+        try:
+            athlete = EPProject.objects.get(pk=project_pk)
+            athlete.documents.remove(employee_pk)
+            return JsonResponse({'status': 'Success', 'messages': 'save successfully'})
+        except EPProject.DoesNotExist:
             return JsonResponse({'status': 'Fail', 'msg': 'Object does not exist'})
 
     else:

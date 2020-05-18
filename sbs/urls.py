@@ -364,6 +364,10 @@ urlpatterns = [
         EPProjectViews.town, name='ilce-bilgi'),
     url(r'etut-proje/proje/delete/(?P<pk>\d+)$', EPProjectViews.deleteReferee,
         name='proje-delete'),
+    url(r'etut-proje/proje-dokuman-sil/(?P<project_pk>\d+)/(?P<employee_pk>\d+)/$',
+        EPProjectViews.delete_document_project,
+        name='proje-dokuman-kaldir'),
+
 
     url(r'personel/personeller/$', EmployeeViews.return_employees, name='personeller'),
     url(r'personel/personel-ekle/$', EmployeeViews.add_employee, name='personel-ekle'),
