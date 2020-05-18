@@ -87,11 +87,12 @@ def edit_project(request, pk):
 
     if request.method == 'POST':
         try:
-            document_form = EPDocumentForm(request.POST, request.FILES)
-            document = request.FILES['name']
+            document = request.FILES['files']
+            data=EPDocument()
+            data.name=document
+            data.save()
             if document:
-                document = document_form.save()
-                project.documents.add(document)
+                project.documents.add(data)
                 project.save()
         except:
             print('hata var')
@@ -141,7 +142,7 @@ def edit_project(request, pk):
             messages.warning(request, 'Alanları Kontrol Ediniz')
 
     return render(request, 'epproje/proje-duzenle.html',
-                  {'project_form': project_form, 'project': project, 'titles': titles, 'employees': employees,'days':days,'document_form':document_form})
+                  {'project_form': project_form, 'project': project, 'titles': titles, 'employees': employees,'days':days})
 
 
 @login_required
