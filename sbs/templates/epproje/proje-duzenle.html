@@ -375,13 +375,14 @@
                                     <div class="form-group">
                                         <label>Kaç Gün Kaldı</label>
 
-                                        <input type="text" name="days" value="{{ days }}" class="form-control pull-right" autocomplete="on" DISABLED>
+                                        <input type="text" name="days" value="{{ days }}"
+                                               class="form-control pull-right" autocomplete="on" DISABLED>
 
 
                                     </div>
                                 </div>
 
-                                 <div class="col-lg-12">
+                                <div class="col-lg-12">
                                     <div class="box-footer text-right">
                                         <button class="btn btn-primary " type="submit">Kaydet</button>
                                     </div>
@@ -516,7 +517,7 @@
                                                data-type="currency">
                                     </div>
                                 </div>
-                                 <div class="col-lg-12">
+                                <div class="col-lg-12">
                                     <div class="box-footer text-right">
                                         <button class="btn btn-primary " type="submit">Kaydet</button>
                                     </div>
@@ -928,10 +929,9 @@
                     "cmd": city,
                 },
                 success: function (result) {
-                    console.log(result)
 
                     $("#town").append('<option value="">-----------</option>');
-                    {#for (var i = 0, l = Object.keys(result).length; i <= l; i++) {#}
+
                     for (item in result.data) {
                         $("#town").append('<option value="' + result.data[item].name + '">' + result.data[item].name + '</option>');
                     }
@@ -1038,17 +1038,17 @@
 
                 },
                 success: function (result) {
+
                     $("#todo-list").empty();
-                    for (var i = 0, l = Object.keys(result).length; i <= l; i++) {
+                    for (item in result.data) {
 
-
-                        $("#todo-list").append(' <li><small style="font-size: 12px" class="label label-danger"><i  class="fa fa-clock-o"></i>' + result.data[i].title + '\n' +
+                        $("#todo-list").append(' <li><small style="font-size: 12px" class="label label-danger"><i  class="fa fa-clock-o"></i>' + result.data[item].title + '\n' +
                             '                                                    </small>\n' +
-                            '                                                    <h4 class="text">' + result.data[i].employee + '</h4>\n' +
+                            '                                                    <h4 class="text">' + result.data[item].employee + '</h4>\n' +
                             '                                                    <div class="tools">\n' +
                             '                                                        <i class="fa fa-edit"></i>\n' +
                             '                                                        <i class="fa fa-trash-o"\n' +
-                            '                                                           onclick=deletePhase({{ project.pk }},' + result.data[i].pk + ')></i>\n' +
+                            '                                                           onclick=deletePhase({{ project.pk }},' + result.data[item].pk + ')></i>\n' +
                             '                                                    </div>\n' +
                             '                                                </li>');
 
@@ -1076,7 +1076,6 @@
                 success: function (result) {
 
                     var currentTime = new Date();
-                    console.log(result.image);
                     $("#chat-box").prepend('<div class="item"><img src="' + result.image + '" alt="user image" class="offline">' +
                         '<p class="message"><a href="#" class="name"><small class="text-muted pull-right">' +
                         '<i class="fa fa-clock-o"></i>' + result.dates + '</small>' + result.username + '</a>' +
@@ -1092,10 +1091,11 @@
 
         function deleteEmployee(id, competitionId) {
 
-            console.log(id);
             var html = '';
             $("#modal-danger").on("shown.bs.modal", function (e) {
-                $("#btn-conf").click(function () {
+                $("#btn-conf").click(function (e) {
+                     if (e.handled !== true) { // This will prevent event triggering more then once
+                        e.handled = true;
                     $.ajax({
                         url: "{% url "sbs:proje-personel-kaldir" project_pk=212121223232323232 employee_pk=999999999999999 %}".replace(/212121223232323232/, id.toString()).replace(/999999999999999/, competitionId.toString()),
                         type: "POST",
@@ -1121,6 +1121,7 @@
                             console.log(result.status)
                         }
                     });
+                     }
                 });
             }).modal('show');
             $('#btn-close').click(function () {
@@ -1133,37 +1134,42 @@
 
             $("#reddetwhy").on("shown.bs.modal", function (e) {
 
-                $("#btn-gonder").click(function () {
+                console.log(e);
+                $("#btn-gonder").click(function (e) {
+                    if (e.handled !== true) { // This will prevent event triggering more then once
+                        e.handled = true;
 
-                    console.log('buradan girdi', id)
-                    $.ajax({
-                        url: "{% url "sbs:proje-personel-ekle" pk=212121223232323232  %}".replace(/212121223232323232/, id.toString()),
-                        type: "POST",
-                        data: {
-                            'csrfmiddlewaretoken': "{{  csrf_token  }}",
-                            title: $('#title').val(),
-                            employee: $('#employee').val(),
-                            isActive: 'False'
+                        $.ajax({
+                            url: "{% url "sbs:proje-personel-ekle" pk=212121223232323232  %}".replace(/212121223232323232/, id.toString()),
+                            type: "POST",
+                            data: {
+                                'csrfmiddlewaretoken': "{{  csrf_token  }}",
+                                title: $('#title').val(),
+                                employee: $('#employee').val(),
+                                isActive: 'False'
 
-                        },
-                        success: function (result) {
+                            },
+                            success: function (result) {
+                                console.log(result);
 
-                            html = 'Personel Başarıyla Eklendi .';
+                                html = 'Personel Başarıyla Eklendi .';
+                                $(".successModal").html(html);
+                                $('#modal-success').on("shown.bs.modal", function (e) {
+                                    $(".btn-ok").click(function () {
 
-                            $(".successModal").html(html);
-                            $('#modal-success').on("shown.bs.modal", function (e) {
-                                $(".btn-ok").click(function () {
-
-                                    $('#modal-warning').modal('hide');
-                                    $('.modal').modal('hide');
-                                    personel({{ project.pk }})
+                                        $('#modal-warning').modal('hide');
+                                        $('.modal').modal('hide');
+                                        personel({{ project.pk }})
 
 
-                                });
+                                    });
 
-                            }).modal('show');
-                        }
-                    });
+                                }).modal('show');
+                            }
+                        });
+                    }
+
+
                 });
 
 
@@ -1180,10 +1186,11 @@
 
         function deleteRequirement(id, competitionId) {
 
-            console.log(id);
             var html = '';
             $("#modal-danger").on("shown.bs.modal", function (e) {
-                $("#btn-conf").click(function () {
+                $("#btn-conf").click(function (e) {
+                     if (e.handled !== true) { // This will prevent event triggering more then once
+                        e.handled = true;
                     $.ajax({
                         url: "{% url "sbs:proje-ihtiyac-kaldir" project_pk=212121223232323232 employee_pk=999999999999999 %}".replace(/212121223232323232/, id.toString()).replace(/999999999999999/, competitionId.toString()),
                         type: "POST",
@@ -1211,6 +1218,7 @@
                             console.log(result.status)
                         }
                     });
+                     }
                 });
             }).modal('show');
             $('#btn-close').click(function () {
@@ -1225,8 +1233,8 @@
             $("#requirement").on("shown.bs.modal", function (e) {
 
                 $("#btn-requirement-gonder").click(function () {
-
-                    $('#requirement').modal('hide');
+                     if (e.handled !== true) { // This will prevent event triggering more then once
+                        e.handled = true;
                     $.ajax({
                         url: "{% url "sbs:proje-ihtiyac-ekle" pk=212121223232323232  %}".replace(/212121223232323232/, id.toString()),
                         type: "POST",
@@ -1245,6 +1253,7 @@
 
                         }
                     });
+                     }
                 });
 
 
@@ -1264,7 +1273,9 @@
             console.log(id);
             var html = '';
             $("#modal-danger").on("shown.bs.modal", function (e) {
-                $("#btn-conf").click(function () {
+                $("#btn-conf").click(function (e) {
+                     if (e.handled !== true) { // This will prevent event triggering more then once
+                        e.handled = true;
                     $.ajax({
                         url: "{% url "sbs:proje-asama-kaldir" project_pk=212121223232323232 employee_pk=999999999999999 %}".replace(/212121223232323232/, id.toString()).replace(/999999999999999/, competitionId.toString()),
                         type: "POST",
@@ -1291,6 +1302,7 @@
                             console.log(result.status)
                         }
                     });
+                     }
                 });
             }).modal('show');
             $('#btn-close').click(function () {
@@ -1303,9 +1315,9 @@
 
             $("#phase").on("shown.bs.modal", function (e) {
 
-                $("#btn-phase-gonder").click(function () {
-
-                    console.log('buradan girdi', id)
+                $("#btn-phase-gonder").click(function (e) {
+                        if (e.handled !== true) {
+                        e.handled = true;
                     $.ajax({
                         url: "{% url "sbs:proje-asama-ekle" pk=212121223232323232  %}".replace(/212121223232323232/, id.toString()),
                         type: "POST",
@@ -1334,6 +1346,7 @@
                             }).modal('show');
                         }
                     });
+                        }
                 });
 
 
