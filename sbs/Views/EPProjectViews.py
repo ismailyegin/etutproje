@@ -461,9 +461,6 @@ def asama_list(request):
                 }
                 beka.append(data)
                 say += 1
-
-                print(beka)
-
             return JsonResponse({
                 'data': beka
             })

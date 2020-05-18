@@ -1094,8 +1094,8 @@
             var html = '';
             $("#modal-danger").on("shown.bs.modal", function (e) {
                 $("#btn-conf").click(function (e) {
-                     if (e.handled !== true) { // This will prevent event triggering more then once
-                        e.handled = true;
+
+
                     $.ajax({
                         url: "{% url "sbs:proje-personel-kaldir" project_pk=212121223232323232 employee_pk=999999999999999 %}".replace(/212121223232323232/, id.toString()).replace(/999999999999999/, competitionId.toString()),
                         type: "POST",
@@ -1104,14 +1104,19 @@
                             isActive: 'False'
                         },
                         success: function (result) {
-
+                            personel({{ project.pk }});
                             html = 'Personel başarıyla kaldırıldı.';
                             $(".successModal").html(html);
-                            $('#modal-success').on("shown.bs.modal", function (e) {
+                            $('#modal-success').on("shown.bs.modal", function () {
+
                                 $(".btn-ok").click(function () {
 
-                                    personel({{ project.pk }});
-                                    $('#modal-success').modal('hide');
+
+
+
+                                                             console.log('işlem basari ile gerçekleşti');
+                                                             $('#modal-success').modal('hide');
+
 
                                 });
 
@@ -1121,7 +1126,7 @@
                             console.log(result.status)
                         }
                     });
-                     }
+
                 });
             }).modal('show');
             $('#btn-close').click(function () {
@@ -1150,7 +1155,7 @@
 
                             },
                             success: function (result) {
-                                console.log(result);
+                                                                 personel({{ project.pk }})
 
                                 html = 'Personel Başarıyla Eklendi .';
                                 $(".successModal").html(html);
@@ -1159,7 +1164,7 @@
 
                                         $('#modal-warning').modal('hide');
                                         $('.modal').modal('hide');
-                                        personel({{ project.pk }})
+
 
 
                                     });
@@ -1189,8 +1194,7 @@
             var html = '';
             $("#modal-danger").on("shown.bs.modal", function (e) {
                 $("#btn-conf").click(function (e) {
-                     if (e.handled !== true) { // This will prevent event triggering more then once
-                        e.handled = true;
+
                     $.ajax({
                         url: "{% url "sbs:proje-ihtiyac-kaldir" project_pk=212121223232323232 employee_pk=999999999999999 %}".replace(/212121223232323232/, id.toString()).replace(/999999999999999/, competitionId.toString()),
                         type: "POST",
@@ -1218,7 +1222,7 @@
                             console.log(result.status)
                         }
                     });
-                     }
+
                 });
             }).modal('show');
             $('#btn-close').click(function () {
@@ -1247,7 +1251,7 @@
                         },
                         success: function (result) {
 
-                            html = 'İhtiyaç Başarıyla Eklendi .';
+
                             ihtiyac({{ project.pk }})
 
 
@@ -1274,8 +1278,7 @@
             var html = '';
             $("#modal-danger").on("shown.bs.modal", function (e) {
                 $("#btn-conf").click(function (e) {
-                     if (e.handled !== true) { // This will prevent event triggering more then once
-                        e.handled = true;
+
                     $.ajax({
                         url: "{% url "sbs:proje-asama-kaldir" project_pk=212121223232323232 employee_pk=999999999999999 %}".replace(/212121223232323232/, id.toString()).replace(/999999999999999/, competitionId.toString()),
                         type: "POST",
@@ -1302,7 +1305,7 @@
                             console.log(result.status)
                         }
                     });
-                     }
+
                 });
             }).modal('show');
             $('#btn-close').click(function () {
@@ -1331,15 +1334,14 @@
                         success: function (result) {
 
                             html = 'Aşama Başarıyla Eklendi .';
+                             asama({{ project.pk }})
 
                             $(".successModal").html(html);
                             $('#modal-success').on("shown.bs.modal", function (e) {
                                 $(".btn-ok").click(function () {
-
-
                                     $('#modal-warning').modal('hide');
                                     $('.modal').modal('hide');
-                                    asama({{ project.pk }})
+
 
                                 });
 
