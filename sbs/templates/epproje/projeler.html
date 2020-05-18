@@ -151,10 +151,13 @@
 
                         <div class="box-header with-border">
                             <div class="btn-group">
+                                {% if user.groups.all.0.name == 'Admin' %}
+
                                 <a href="{% url "sbs:proje-ekle" %}"
                                    type="button" class="btn btn-success"><i
                                         class="fa fa-edit"></i> Yeni Proje Ekle
                                 </a>
+                                {% endif %}
                             </div>
                         </div>
 
@@ -166,7 +169,9 @@
                                     <th>Tanımı</th>
                                     <th>İli</th>
                                     <th>Bütçe Yılı</th>
-                                    <th>Bütçe Cinsi</th>
+                                    <th>Yatırım Programı</th>
+                                    <th>Proje Durumu </th>
+                                    <th>Proje Cinsi</th>
                                     <th>İşlemler</th>
 
 
@@ -181,6 +186,8 @@
                                             <td>{{ project.city }} </td>
                                             <td>{{ project.butceYili }} </td>
                                             <td>{{ project.butceCinsi }} </td>
+                                            <td>{{ project.projectStatus }}</td>
+                                            <td>{{ project.projeCinsi }}</td>
 
                                             <td>
                                                 <div class="btn-group">
@@ -242,7 +249,7 @@
             $("#modal-danger").on("shown.bs.modal", function (e) {
                 $("#btn-conf").click(function () {
                     $.ajax({
-                        url: "{% url "sbs:referee-delete" pk=212121223232323232 %}".replace(/212121223232323232/, id.toString()),
+                        url: "{% url "sbs:proje-delete" pk=212121223232323232 %}".replace(/212121223232323232/, id.toString()),
                         type: "POST",
                         data: {
                             'csrfmiddlewaretoken': "{{  csrf_token  }}",
@@ -250,13 +257,13 @@
                         },
                         success: function (result) {
 
-                            html = 'Hakem Başarıyla Silindi';
+                            html = 'Proje Başarıyla Silindi';
                         debugger;
                             $(".successModal").html(html);
                             $('#modal-success').on("shown.bs.modal", function (e) {
                                 $(".btn-ok").click(function () {
 
-                                    window.location.replace("{% url "sbs:hakemler" %}");
+                                    window.location.replace("{% url "sbs:projeler" %}");
 
                                 });
 

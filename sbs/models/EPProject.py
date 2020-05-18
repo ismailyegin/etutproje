@@ -81,15 +81,13 @@ class EPProject(models.Model):
     butceCinsi = models.CharField(max_length=128, verbose_name='Bütçe Cinsi', choices=BUTCE_CINSI, )
     butceYili = models.IntegerField(blank=False, null=False, )
     projeCinsi = models.CharField(max_length=128, verbose_name='Bütçe Cinsi', choices=PROJE_CINSI, )
-    arsaAlani = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
-    insaatAlani = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
-    tahminiOdenekTutari = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
-    yaklasikMaliyet = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
+    arsaAlani = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True,default=0)
+    insaatAlani = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True,default=0)
+    tahminiOdenekTutari = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True,default=0)
+    yaklasikMaliyet = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True,default=0)
     ihaleTarihi = models.DateTimeField(null=True, blank=True)
-
-    sozlesmeBedeli = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
-
-    sozlesmeBedeliKdv=models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
+    sozlesmeBedeli = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True,default=0)
+    sozlesmeBedeliKdv=models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True,default=0)
 
 
     sozlesmeTarihi = models.DateTimeField(null=True, blank=True)

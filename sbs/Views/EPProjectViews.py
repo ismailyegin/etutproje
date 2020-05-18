@@ -15,6 +15,7 @@ from sbs.models.Town import Town
 from sbs.models.Employee import Employee
 from sbs.services import general_methods
 from sbs.services.general_methods import getProfileImage
+from django.utils import timezone
 
 
 @login_required
@@ -71,6 +72,14 @@ def edit_project(request, pk):
     project_form = EPProjectForm(request.POST or None, instance=project)
     titles = CategoryItem.objects.filter(forWhichClazz="EPPROJECT_EMPLOYEE_TITLE")
     employees = Employee.objects.all()
+    days=None
+    if project.aifinish:
+        days= (project.aifinish-timezone.now()).days
+        if days<0:
+            days='Alim işinin zamani bitti.'
+
+
+
     if request.method == 'POST':
 
 
@@ -120,7 +129,7 @@ def edit_project(request, pk):
             messages.warning(request, 'Alanları Kontrol Ediniz')
 
     return render(request, 'epproje/proje-duzenle.html',
-                  {'project_form': project_form, 'project': project, 'titles': titles, 'employees': employees})
+                  {'project_form': project_form, 'project': project, 'titles': titles, 'employees': employees,'days':days})
 
 
 @login_required
@@ -491,3 +500,20 @@ def town(request):
         return JsonResponse({'status': 'Fail', 'msg': 'Not a valid request'})
 
 
+@login_required
+def deleteReferee(request, pk):
+    perm = general_methods.control_access(request)
+
+    if not perm:
+        logout(request)
+        return redirect('accounts:login')
+    if request.method == 'POST' and request.is_ajax():
+        try:
+            obj = EPProject.objects.get(pk=pk)
+            obj.delete()
+            return JsonResponse({'status': 'Success', 'messages': 'save successfully'})
+        except Judge.DoesNotExist:
+            return JsonResponse({'status': 'Fail', 'msg': 'Object does not exist'})
+
+    else:
+        return JsonResponse({'status': 'Fail', 'msg': 'Not a valid request'})

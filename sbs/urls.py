@@ -362,6 +362,8 @@ urlpatterns = [
         EPProjectViews.asama_list, name='asama-bilgi'),
     url(r'etut-proje/proje-town/$',
         EPProjectViews.town, name='ilce-bilgi'),
+    url(r'etut-proje/proje/delete/(?P<pk>\d+)$', EPProjectViews.deleteReferee,
+        name='proje-delete'),
 
     url(r'personel/personeller/$', EmployeeViews.return_employees, name='personeller'),
     url(r'personel/personel-ekle/$', EmployeeViews.add_employee, name='personel-ekle'),

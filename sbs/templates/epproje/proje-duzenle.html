@@ -210,7 +210,7 @@
         <form method="post" enctype="multipart/form-data" role="form">
             {% csrf_token %}
 
-            {% if user.pk == project.sorumlu.employee.user.pk or user.groups.all.0.name == 'Admin' %}
+            {% if user.pk == project.sorumlu.user.pk or user.groups.all.0.name == 'Admin' %}
                 <div class="row">
 
                     <div class="col-lg-12">
@@ -278,7 +278,7 @@
                                         <div class="row">
 
 
-                                                                                        <div class="col-lg-3">
+                                            <div class="col-lg-3">
                                                 <div class="form-group">
                                                     <label> {{ project_form.projectStatus.label }}</label>
                                                     {{ project_form.projectStatus }}
@@ -288,28 +288,11 @@
 
                                             <div class="col-lg-3">
                                                 <div class="form-group">
-                                                    <label> Yaklaşık Maliyet (₺)</label>
-                                                    <input type="text" name="yaklasik"
-                                                           value="{{ project.yaklasikMaliyet }}"
-                                                           class="form-control "
-                                                           id="yaklasik" pattern="^\$\d{1.}(.\d{3})*(\,\d+)?$"
-                                                           data-type="currency">
+                                                    <label> {{ project_form.sorumlu.label }}</label>
+                                                    {{ project_form.sorumlu }}
                                                 </div>
-                                            </div>
-                                            <div class="col-lg-3">
-                                                <div class="form-group">
-                                                    <label> {{ project_form.isBitimTarihi.label }}</label>
-                                                    {{ project_form.isBitimTarihi }}
-                                                </div>
-                                            </div>
 
-                                                                                <div class="col-lg-3">
-                                        <div class="form-group">
-                                            <label> {{ project_form.sorumlu.label }}</label>
-                                            {{ project_form.sorumlu }}
-                                        </div>
-
-                                    </div>
+                                            </div>
 
                                         </div>
                                     </div>
@@ -392,16 +375,22 @@
                                     <div class="form-group">
                                         <label>Kaç Gün Kaldı</label>
 
+                                        <input type="text" name="days" value="{{ days }}" class="form-control pull-right" autocomplete="on" DISABLED>
+
+
                                     </div>
+                                </div>
+
+                                 <div class="col-lg-12">
+                                    <div class="box-footer text-right">
+                                        <button class="btn btn-primary " type="submit">Kaydet</button>
+                                    </div>
+
                                 </div>
 
 
                             </div>
-                            <div class="box-footer text-right">
-                                <button class="btn btn-primary " type="submit">Kaydet</button>
 
-
-                            </div>
 
                         </div>
                         <!-- /.box-body -->
@@ -462,14 +451,27 @@
                                     </div>
                                 </div>
 
-                            </div>
-                            <div class="row">
-                                <div class="box-footer text-right">
-                                    <button class="btn btn-primary " type="submit">Kaydet</button>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label> Yaklaşık Maliyet (₺)</label>
+                                        <input type="text" name="yaklasik"
+                                               value="{{ project.yaklasikMaliyet }}"
+                                               class="form-control "
+                                               id="yaklasik" pattern="^\$\d{1.}(.\d{3})*(\,\d+)?$"
+                                               data-type="currency">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12">
+                                    <div class="box-footer text-right">
+                                        <button class="btn btn-primary " type="submit">Kaydet</button>
+                                    </div>
+
                                 </div>
 
 
                             </div>
+
                         </div>
                         <!-- /.box-body -->
                     </div>
@@ -514,15 +516,15 @@
                                                data-type="currency">
                                     </div>
                                 </div>
+                                 <div class="col-lg-12">
+                                    <div class="box-footer text-right">
+                                        <button class="btn btn-primary " type="submit">Kaydet</button>
+                                    </div>
 
-                            </div>
-                            <div class="row">
-                                <div class="box-footer text-right">
-                                    <button class="btn btn-primary " type="submit">Kaydet</button>
                                 </div>
 
-
                             </div>
+
                         </div>
                         <!-- /.box-body -->
                     </div>

@@ -123,11 +123,12 @@ def edit_employee(request, pk):
     employee_form = EmployeeForm(request.POST or None, instance=employee)
     employee_form.fields['workDefinition'].queryset = CategoryItem.objects.filter(
         forWhichClazz="EMPLOYEE_WORKDEFINITION")
-    projects=EPProject.objects.filter(employees__employee__user=user).distinct()
+    projects=EPProject.objects.filter(employees__employee__user=user ).distinct()
+    projects|=EPProject.objects.filter(sorumlu__user=user).distinct()
     # for proje in projects:
     #     for item in proje.employees.all():
     #         if item.employee.user==user:
-    #             print(item.employee.workDefinition)
+    #             print(item.employee.projectEmployeeTitle)
 
 
 

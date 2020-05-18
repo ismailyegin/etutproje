@@ -227,14 +227,6 @@
                             {% endif %}
                     </div>
 
-                    <div class="box-header with-border">
-                        <div class="btn-group">
-                            <a href="{% url "sbs:proje-ekle" %}"
-                               type="button" class="btn btn-success"><i
-                                    class="fa fa-edit"></i> Yeni Proje Ekle
-                            </a>
-                        </div>
-                    </div>
 
                     <div class="box-body table-responsive">
                         <table id="projects" class="table table-hover">
@@ -260,16 +252,17 @@
                                         <td>{{ project.name }} </td>
                                         <td>
 
+
                                             {% for item in project.employees.all %}
 
-
                                                 {% if item.employee.user.pk == user.pk %}
-                                                    {{ item.employee.workDefinition }} <br>
-
-
+                                                    {{ item.projectEmployeeTitle }} <br>
                                                 {% endif %}
 
                                             {% endfor %}
+                                            {% if project.sorumlu.user.pk == user.pk %}
+                                                Sorumlu<br>
+                                            {% endif %}
 
 
                                         </td>
