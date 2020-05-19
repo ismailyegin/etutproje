@@ -16,10 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.urls import path, re_path
-from django.conf.urls import url, include
+from django.conf.urls import url, include,handler404
 
 from django.conf import settings
 from django.contrib.staticfiles.urls import static
+from sbs.Views import UserViews
+
+handler404=UserViews.view_404
 
 urlpatterns = [
     path('admin/', admin.site.urls),

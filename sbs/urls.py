@@ -5,6 +5,7 @@ from sbs.Views import DashboardViews, AthleteViews, RefereeViews, ClubViews, Coa
 
 app_name = 'sbs'
 
+
 urlpatterns = [
 
     # Dashboard

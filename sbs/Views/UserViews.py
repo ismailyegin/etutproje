@@ -157,4 +157,5 @@ def send_information(request, pk):
         return JsonResponse({'status': 'Fail', 'msg': 'Not a valid request'})
 
 
-
+def view_404(request,exception):
+    return render(request,'404.html')
