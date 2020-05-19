@@ -158,6 +158,12 @@
                                         {{ user_form.email }}
                                     </div>
                                 </div>
+                                                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label> {{ user_form.workDefinition.label}}</label>
+                                        {{ user_form.workDefinition }}
+                                    </div>
+                                </div>
 
 
                             </div>
@@ -227,7 +233,7 @@
                                                 <td>
                                                     <div class="btn-group">
                                                         <a href="{% url "sbs:personel-duzenle" athlete.pk %}"
-                                                           type="button" class="btn btn-warning"><i
+                                                           type="button" class="btn btn-warning btn-lg"><i
                                                                 class="fa fa-edit"></i>
                                                         </a>
 

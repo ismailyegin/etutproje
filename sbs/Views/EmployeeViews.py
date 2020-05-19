@@ -25,6 +25,7 @@ from sbs.Forms.PersonForm import PersonForm
 from sbs.Forms.CoachSearchForm import CoachSearchForm
 from sbs.Forms.SearchClupForm import SearchClupForm
 
+
 from sbs.Forms.UserSearchForm import UserSearchForm
 from sbs.Forms.CompetitionForm import CompetitionForm
 from sbs.Forms.VisaSeminarForm import VisaSeminarForm
@@ -188,14 +189,19 @@ def return_employees(request):
 
     user_form = UserSearchForm()
     employees = Employee.objects.none()
+
+
+
     if request.method == 'POST':
         user_form = UserSearchForm(request.POST)
 
-        if user_form.is_valid():
+
+        if user_form.is_valid() :
             firstName = user_form.cleaned_data.get('first_name')
             lastName = user_form.cleaned_data.get('last_name')
             email = user_form.cleaned_data.get('email')
-            if not (firstName or lastName or email):
+            workDefinition=user_form.cleaned_data.get('workDefinition')
+            if not (firstName or lastName or email or workDefinition):
                 employees = Employee.objects.all()
             else:
                 query = Q()
@@ -205,10 +211,12 @@ def return_employees(request):
                     query &= Q(user__first_name__icontains=firstName)
                 if email:
                     query &= Q(user__email__icontains=email)
+                if workDefinition:
+                    query &= Q(workDefinition=workDefinition)
                 employees = Employee.objects.filter(query).distinct()
 
     return render(request, 'personel/personeller.html',
-                  {'employees': employees, 'user_form': user_form})
+                  {'employees': employees, 'user_form': user_form,})
 
 
 @login_required

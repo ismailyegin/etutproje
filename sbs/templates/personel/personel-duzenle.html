@@ -273,10 +273,10 @@
                                         <td>
                                             <div class="btn-group">
                                                 <a href="{% url "sbs:proje-duzenle" project.pk %}"
-                                                   type="button" class="btn btn-warning"><i
-                                                        class="fa fa-edit"></i>
+                                                   type="button" class="btn btn-warning btn-lg"><i
+                                                        class="fa fa-edit "></i>
                                                 </a>
-                                                <a class="btn btn-danger"
+                                                <a class="btn btn-danger  btn-lg"
                                                    data-toggle="modal" onclick=deleteReferee({{ project.pk }})><i
                                                         class="fa fa-trash"></i></a>
 
@@ -307,13 +307,26 @@
     <script>
         $(function () {
             $('#projects').DataTable({
-                'responsive': true,
+
                 'paging': true,
                 'lengthChange': true,
                 'searching': true,
                 'ordering': true,
                 'info': true,
-                'autoWidth': true
+                'autoWidth': true,
+                'responsive': {
+                    'details': {
+
+
+                        'display': $.fn.dataTable.Responsive.display.modal({
+                            'header': function (row) {
+                                var data = row.data();
+                                return data[1];
+                            }
+                        }),
+                        'renderer': $.fn.dataTable.Responsive.renderer.tableAll(),
+                    }
+                },
 
             })
 

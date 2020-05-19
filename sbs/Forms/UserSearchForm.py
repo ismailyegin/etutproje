@@ -1,10 +1,19 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.forms import ModelForm
+from sbs.models.CategoryItem import CategoryItem
 
 
 
 class UserSearchForm(ModelForm):
+    workDefinition = forms.ModelChoiceField(queryset=CategoryItem.objects.filter(forWhichClazz="EMPLOYEE_WORKDEFINITION"),
+        to_field_name='name',
+        empty_label="Seçiniz",
+        label="İş Tanimi",
+        required=False,
+        widget=forms.Select(
+            attrs={'class': 'form-control select2 select2-hidden-accessible',
+                   'style': 'width: 100%; '}))
 
     class Meta:
         model = User
