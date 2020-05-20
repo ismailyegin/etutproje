@@ -383,6 +383,7 @@
                                 </div>
                             </div>
 
+
                         </div>
                         <div class="box-footer text-right">
                             <button class="btn btn-primary " type="submit">Kaydet</button>
@@ -660,30 +661,29 @@
 
                                     <tbody>
 
-{#                                        {% if project.employees.all %}#}
-{#                                            {% for item in project.employees.all %}#}
-{#                                                <tr>#}
-{#                                                    <td>{{ forloop.counter }} </td>#}
-{#                                                    <td>{{ item.projectEmployeeTitle }}</td>#}
-{#                                                    <td>{{ item.employee }}</td>#}
-{#                                                    <td>#}
-{#                                                        <div class="btn-group">#}
-{##}
-{##}
-{#                                                            <a class="btn btn-danger"#}
-{#                                                               data-toggle="modal"#}
-{#                                                               onclick=deleteEmployee({{ project.pk }},{{ item.pk }})><i#}
-{#                                                                    class="fa fa-trash"></i></a>#}
-{#                                                        </div>#}
-{#                                                    </td>#}
-{##}
-{#                                                </tr>#}
-{##}
-{#                                            {% endfor %}#}
-{#                                        {% endif %}#}
+                                    {% if project.employees.all %}
+                                        {% for item in project.employees.all %}
+                                            <tr>
+                                                <td>{{ forloop.counter }} </td>
+                                                <td>{{ item.projectEmployeeTitle }}</td>
+                                                <td>{{ item.employee }}</td>
+                                                <td>
+                                                    <div class="btn-group">
 
 
-                                        </tbody>
+                                                        <a class="btn btn-danger"
+                                                           data-toggle="modal"
+                                                           onclick=deleteEmployee({{ project.pk }},{{ item.pk }})><i
+                                                                class="fa fa-trash"></i></a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                        {% endfor %}
+                                    {% endif %}
+
+
+                                    </tbody>
                                 </table>
                             </div>
 
@@ -737,30 +737,29 @@
                                     <tbody>
 
 
-{#                                        {% if project.requirements.all %}#}
-{#                                            {% for item in project.requirements.all %}#}
-{#                                                <tr>#}
-{#                                                    <td>{{ forloop.counter }} </td>#}
-{#                                                    <td>{{ item.amount }}</td>#}
-{#                                                    <td>{{ item.definition }}</td>#}
-{#                                                    <td>#}
-{#                                                        <div class="btn-group">#}
-{##}
-{##}
-{#                                                            <a class="btn btn-danger"#}
-{#                                                               data-toggle="modal"#}
-{#                                                               onclick=deleteRequirement({{ project.pk }},{{ item.pk }})><i#}
-{#                                                                    class="fa fa-trash"></i></a>#}
-{#                                                        </div>#}
-{#                                                    </td>#}
-{##}
-{#                                                </tr>#}
-{##}
-{#                                            {% endfor %}#}
-{#                                        {% endif %}#}
+                                    {% if project.requirements.all %}
+                                        {% for item in project.requirements.all %}
+                                            <tr>
+                                                <td>{{ forloop.counter }} </td>
+                                                <td>{{ item.amount }}</td>
+                                                <td>{{ item.definition }}</td>
+                                                <td>
+                                                    <div class="btn-group">
 
 
-                                        </tbody>
+                                                        <a class="btn btn-danger"
+                                                           data-toggle="modal"
+                                                           onclick=deleteRequirement({{ project.pk }},{{ item.pk }})><i
+                                                                class="fa fa-trash"></i></a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                        {% endfor %}
+                                    {% endif %}
+
+
+                                    </tbody>
                                 </table>
                             </div>
 
@@ -808,21 +807,21 @@
                                      style="">
 
                                     <ul class="todo-list ui-sortable" id="todo-list">
-                                        {#                                        {% if project.phases.all %}#}
-                                        {#                                            {% for item in project.phases.all %}#}
-                                        {#                                                <li>#}
-                                        {#                                                    <small style="font-size: 12px" class="label label-danger"><i#}
-                                        {#                                                            class="fa fa-clock-o"></i>{{ item.phaseDate|date:"M d, Y" }}#}
-                                        {#                                                    </small>#}
-                                        {#                                                    <h4 class="text">{{ item.definition }}</h4>#}
-                                        {#                                                    <div class="tools">#}
-                                        {#                                                        <i class="fa fa-edit"></i>#}
-                                        {#                                                        <i class="fa fa-trash-o"#}
-                                        {#                                                           onclick=deletePhase({{ project.pk }},{{ item.pk }})></i>#}
-                                        {#                                                    </div>#}
-                                        {#                                                </li>#}
-                                        {#                                            {% endfor %}#}
-                                        {#                                        {% endif %}#}
+                                        {% if project.phases.all %}
+                                            {% for item in project.phases.all %}
+                                                <li id='todo-list-li-{{ item.pk }}'>
+                                                    <small style="font-size: 12px" class="label label-danger"><i
+                                                            class="fa fa-clock-o"></i>{{ item.phaseDate|date:"M d, Y" }}
+                                                    </small>
+                                                    <h4 class="text">{{ item.definition }}</h4>
+                                                    <div class="tools">
+                                                        <i class="fa fa-edit"></i>
+                                                        <i class="fa fa-trash-o"
+                                                           onclick=deletePhase({{ project.pk }},{{ item.pk }})></i>
+                                                    </div>
+                                                </li>
+                                            {% endfor %}
+                                        {% endif %}
                                     </ul>
                                 </div>
 
@@ -898,7 +897,7 @@
 
 
     </section>
-    <script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+
 
 
     <script>
@@ -907,9 +906,9 @@
         $(function () {
 
 
-            personel({{ project.pk }});
-            ihtiyac({{ project.pk }});
-            asama({{ project.pk }});
+            {#personel({{ project.pk }});#}
+            {#ihtiyac({{ project.pk }});#}
+            {#asama({{ project.pk }});#}
             {#var city = $("#sehir").find('option:selected').text();#}
             {#ilce(city);#}
 
@@ -968,7 +967,7 @@
 
 
                 'columns': [
-                    {'data': 'say'},
+                    {'data': 'count'},
                     {'data': 'title'},
                     {'data': 'employee'},
                     {
@@ -1010,7 +1009,7 @@
 
 
                 'columns': [
-                    {'data': 'say'},
+                    {'data': 'count'},
                     {'data': 'title'},
                     {'data': 'employee'},
                     {
@@ -1107,24 +1106,14 @@
                             isActive: 'False'
                         },
                         success: function (result) {
-                            personel({{ project.pk }});
-                            html = 'Personel başarıyla kaldırıldı.';
-                            $(".successModal").html(html);
-                            $('#modal-success').on("shown.bs.modal", function () {
-
-                                $(".btn-ok").click(function () {
-
-
-                                    console.log('işlem basari ile gerçekleşti');
-                                    $('#modal-success').modal('hide');
-
-
-                                });
-
-                            }).modal('show');
-
-
-                            console.log(result.status)
+                            if (result.status == 'Success') {
+                                html = 'Personel başarıyla kaldırıldı.';
+                                personel({{ project.pk }})
+                                console.log(result.status)
+                            }
+                            else {
+                                console.log('error');
+                            }
                         }
                     });
 
@@ -1156,20 +1145,23 @@
 
                             },
                             success: function (result) {
-                                personel({{ project.pk }})
 
-                                html = 'Personel Başarıyla Eklendi .';
-                                $(".successModal").html(html);
-                                $('#modal-success').on("shown.bs.modal", function (e) {
-                                    $(".btn-ok").click(function () {
-
-                                        $('#modal-warning').modal('hide');
-                                        $('.modal').modal('hide');
+                                if (result.status == 'Success') {
 
 
-                                    });
+                                    html = 'Personel Başarıyla Eklendi .';
+                                    var p = $('#personelbilgi').DataTable();
+                                    var count=p.rows().count()+1;
+                                    p.row.add([
+                                        count.toString(),
+                                        $('#title option:selected').text(),
+                                        $('#employee option:selected').text(),
+                                        '<div class="btn-group"><a type="button" class="btn btn-danger" onclick=deleteEmployee({{ project.pk }},' + result.pk + ')>  <i class="fa fa-trash"></i></a></div>',
 
-                                }).modal('show');
+                                    ]).draw(true);
+                                } else {
+                                    Console.log('Error');
+                                }
                             }
                         });
                     }
@@ -1203,23 +1195,13 @@
                             isActive: 'False'
                         },
                         success: function (result) {
+                            if (result.status == 'Success') {
 
-                            html = 'İhtiyaç başarıyla kaldırıldı.';
-                            $(".successModal").html(html);
-                            $('#modal-success').on("shown.bs.modal", function (e) {
-                                $(".btn-ok").click(function () {
+                                html = 'İhtiyaç başarıyla kaldırıldı.';
+                                ihtiyac({{ project.pk }})
+                                console.log(result.status);
 
-
-                                    $('#modal-warning').modal('hide');
-                                    $('.modal').modal('hide');
-                                    ihtiyac({{ project.pk }})
-
-                                });
-
-                            }).modal('show');
-
-
-                            console.log(result.status)
+                            }
                         }
                     });
 
@@ -1250,9 +1232,19 @@
 
                             },
                             success: function (result) {
+                                if (result.status == 'Success') {
+                                    var p = $('#requirementtable').DataTable();
+                                     var count=p.rows().count()+1;
+                                    p.row.add([
+                                        count.toString(),
+                                        $('#amount').val(),
+                                        $('#definition').val(),
+                                        '<div class="btn-group"><a type="button" class="btn btn-danger" onclick=deleteRequirement(' + id + ',' + result.pk + ')><i class="fa fa-trash"></i></a></div>',
 
-
-                                ihtiyac({{ project.pk }})
+                                    ]).draw(true);
+                                } else {
+                                    Console.log('Error');
+                                }
 
 
                             }
@@ -1287,22 +1279,11 @@
                             isActive: 'False'
                         },
                         success: function (result) {
-
-                            html = 'Aşama başarıyla kaldırıldı.';
-                            $(".successModal").html(html);
-                            $('#modal-success').on("shown.bs.modal", function (e) {
-                                $(".btn-ok").click(function () {
-
-                                    $('#modal-warning').modal('hide');
-                                    $('.modal').modal('hide');
-                                    asama({{ project.pk }})
-
-                                });
-
-                            }).modal('show');
-
-
-                            console.log(result.status)
+                            if (result.status == 'Success') {
+                                html = 'Aşama başarıyla kaldırıldı.';
+                                console.log(result.status)
+                                asama({{ project.pk }})
+                            }
                         }
                     });
 
@@ -1334,18 +1315,22 @@
                             success: function (result) {
 
                                 html = 'Aşama Başarıyla Eklendi .';
-                                asama({{ project.pk }})
+                                if (result.status == 'Success') {
 
-                                $(".successModal").html(html);
-                                $('#modal-success').on("shown.bs.modal", function (e) {
-                                    $(".btn-ok").click(function () {
-                                        $('#modal-warning').modal('hide');
-                                        $('.modal').modal('hide');
+                                    $("#todo-list").append(' <li id=todo-list-li-' + result.pk + '><small style="font-size: 12px" class="label label-danger"><i  class="fa fa-clock-o"></i>' + $('#phaseDate').val() + '\n' +
+                                        '                                                    </small>\n' +
+                                        '                                                    <h4 class="text">' + $('#phaseDefinition').val() + '</h4>\n' +
+                                        '                                                    <div class="tools">\n' +
+                                        '                                                        <i class="fa fa-edit"></i>\n' +
+                                        '                                                        <i class="fa fa-trash-o"\n' +
+                                        '                                                           onclick=deletePhase({{ project.pk }},' + result.pk + ')></i>\n' +
+                                        '                                                    </div>\n' +
+                                        '                                                </li>');
 
 
-                                    });
+                                }
 
-                                }).modal('show');
+
                             }
                         });
                     }
@@ -1378,17 +1363,19 @@
                             isActive: 'False'
                         },
                         success: function (result) {
-                            personel({{ project.pk }});
                             html = 'Döküman başarıyla kaldırıldı.';
                             $(".successModal").html(html);
                             $('#modal-success').on("shown.bs.modal", function () {
 
                                 $(".btn-ok").click(function () {
+                                    if (e.handled !== true) { // This will prevent event triggering more then once
+                                        e.handled = true;
 
 
-                                    console.log('işlem basari ile gerçekleşti');
-                                    $('#modal-success').modal('hide');
-                                    window.location.replace("{% url 'sbs:proje-duzenle' project.pk %}");
+                                        console.log('işlem basari ile gerçekleşti');
+                                        $('#modal-success').modal('hide');
+                                        window.location.replace("{% url 'sbs:proje-duzenle' project.pk %}");
+                                    }
 
                                 });
 

@@ -1,5 +1,7 @@
 import re
+from builtins import print
 from datetime import datetime
+from itertools import count
 
 from django.contrib import messages
 from django.contrib.auth import logout
@@ -13,6 +15,7 @@ from sbs.Forms.EPProjectForm import EPProjectForm
 from sbs.models import EPProject, CategoryItem, City
 from sbs.models.Town import Town
 from sbs.models.Employee import Employee
+from sbs.models.EPPhase import EPPhase
 from sbs.services import general_methods
 from sbs.services.general_methods import getProfileImage
 from django.utils import timezone
@@ -250,10 +253,13 @@ def add_employee_to_project(request, pk):
         title = CategoryItem.objects.get(pk=request.POST.get('title'))
         employee = Employee.objects.get(pk=request.POST.get('employee'))
         project = EPProject.objects.get(pk=pk)
-        project.employees.create(projectEmployeeTitle=title, employee=employee)
-        messages.success(request, 'Personel Eklenmiştir')
+        employees=project.employees.create(projectEmployeeTitle=title, employee=employee)
+        project.save()
+        # messages.success(request, 'Personel Eklenmiştir')
+        return JsonResponse({'status': 'Success', 'messages': 'save successfully','pk':employees.pk})
 
     except:
+        return JsonResponse({'status': 'Fail', 'msg': 'Not a valid request'})
         messages.warning(request, 'Yeniden deneyiniz.')
 
     return redirect('sbs:proje-duzenle', pk=pk)
@@ -288,8 +294,9 @@ def add_requirement_to_project(request, pk):
         amount = request.POST.get('amount')
         definition = request.POST.get('definition')
         project = EPProject.objects.get(pk=pk)
-        project.requirements.create(amount=amount, definition=definition)
-        messages.success(request, 'İhtiyaç Eklenmiştir')
+        requirements=project.requirements.create(amount=amount, definition=definition)
+        # messages.success(request, 'İhtiyaç Eklenmiştir')
+        return JsonResponse({'status': 'Success', 'messages': 'save successfully','pk':requirements.pk})
     except:
         messages.warning(request, 'Yeniden deneyiniz.')
 
@@ -322,15 +329,23 @@ def add_phase_to_project(request, pk):
     if not perm:
         logout(request)
         return redirect('accounts:login')
+
+
     try:
         date = request.POST.get('phaseDate')
         dates = datetime.strptime(date, '%m/%d/%Y')
         definition = request.POST.get('phaseDefinition')
         project = EPProject.objects.get(pk=pk)
-        project.phases.create(phaseDate=dates, definition=definition)
+        asama = EPPhase()
+        asama.definition = definition
+        asama.phaseDate = dates
+        asama.save()
+        project.phases.add(asama)
         messages.success(request, 'Aşama Eklenmiştir')
+        return JsonResponse({'status': 'Success', 'messages': 'save successfully','pk':asama.pk})
 
     except:
+        return JsonResponse({'status': 'Fail', 'msg': 'Not a valid request'})
         messages.warning(request, 'Yeniden deneyiniz.')
 
     return redirect('sbs:proje-duzenle', pk=pk)
@@ -400,7 +415,7 @@ def personel_list(request):
             for item in project.employees.all():
                 data = {
                     'pk':item.pk,
-                    'say': say,
+                    'count': say,
                     'title': item.projectEmployeeTitle.name,
                     'employee': item.employee.user.first_name + ' ' + item.employee.user.last_name,
                 }
@@ -435,7 +450,7 @@ def ihtiyac_list(request):
             for item in project.requirements.all():
                 data = {
                     'pk': item.pk,
-                    'say': say,
+                    'count': say,
                     'title': item.amount,
                     'employee': item.definition,
                 }
