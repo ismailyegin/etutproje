@@ -6,6 +6,8 @@ from django.shortcuts import render, redirect
 from django.http import JsonResponse
 
 from sbs.models import SportClubUser, SportsClub, Coach, Level, License, Athlete, Person, Judge, EPProject, City
+from sbs.models.EPProject import EPProject
+from sbs.models.Employee import Employee
 from sbs.services import general_methods
 # from rest_framework.authtoken.models import Token
 
@@ -105,23 +107,16 @@ def return_admin_dashboard(request):
         logout(request)
         return redirect('accounts:login')
     # son eklenen 8 sporcuyu ekledik
-    last_athlete = Athlete.objects.order_by('-creationDate')[:8]
-    total_club = SportsClub.objects.all().count()
-    total_athlete = Athlete.objects.all().count()
-    total_athlete_gender_man = Athlete.objects.filter(person__gender=Person.MALE).count()
-    total_athlete_gender_woman = Athlete.objects.filter(person__gender=Person.FEMALE).count()
-    total_athlate_last_month = Athlete.objects.exclude(user__date_joined__month=datetime.now().month).count()
-    total_club_user = SportClubUser.objects.all().count()
-    total_coachs = Coach.objects.all().count()
+    last_employee = Employee.objects.order_by('-creationDate')[:4]
+    personel_count=Employee.objects.count()
+    proje_count=EPProject.objects.count()
+    proje_status_PT=EPProject.objects.filter(projectStatus=EPProject.PT).distinct().count()
+    proje_status_PDE=EPProject.objects.filter(projectStatus=EPProject.PDE).distinct().count()
+
 
     return render(request, 'anasayfa/admin.html',
-                  {'total_club_user': total_club_user, 'total_club': total_club,
-                   'total_athlete': total_athlete, 'total_coachs': total_coachs, 'last_athletes': last_athlete,
-                   'total_athlete_gender_man': total_athlete_gender_man,
-                   'total_athlete_gender_woman': total_athlete_gender_woman,
-                   'total_athlate_last_month': total_athlate_last_month,
-
-                   })
+                  {'employees': last_employee,'personel_count':personel_count,'proje_count':proje_count,
+                   'proje_status_PT':proje_status_PT,'proje_status_PDE':proje_status_PDE  })
 
 
 @login_required
