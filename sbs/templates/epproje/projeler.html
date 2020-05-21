@@ -131,6 +131,75 @@
 
 
         <div class="row">
+            <section class="col-lg-12 ">
+
+                <div class="box-body">
+
+
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Proje Filtrele</h3>
+                        </div>
+                        <form method="post" role="form">
+                            <div class="box-body">
+                                {% csrf_token %}
+
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label> {{ search_form.name.label }}</label>
+                                        {{ search_form.name }}
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label> {{ search_form.butceCinsi.label }}</label>
+                                        {{ search_form.butceCinsi }}
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label> {{ search_form.butceYili.label }}</label>
+                                        {{ search_form.butceYili }}
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label> {{ search_form.projeCinsi.label }}</label>
+                                        {{ search_form.projeCinsi }}
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label> {{ search_form.city.label }}</label>
+                                        {{ search_form.city }}
+                                    </div>
+                                </div>
+                                                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label> {{ search_form.projectStatus.label }}</label>
+                                        {{ search_form.projectStatus }}
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <!-- /.box-body -->
+
+                            <div class="box-footer">
+                                <button type="submit" class="btn btn-primary">Ara</button>
+                            </div>
+                        </form>
+
+
+                    </div>
+                    <!-- /.box -->
+
+
+                </div>
+            </section>
+        </div>
+
+        <div class="row">
 
 
             <section class="col-lg-12 ">
@@ -172,6 +241,7 @@
                                     <th>Yatırım Programı</th>
                                     <th>Proje Durumu</th>
                                     <th>Proje Cinsi</th>
+                                    <th>İs Bitim Tarihi</th>
                                     <th>İşlemler</th>
 
 
@@ -188,6 +258,8 @@
                                             <td>{{ project.butceCinsi }} </td>
                                             <td>{{ project.projectStatus }}</td>
                                             <td>{{ project.projeCinsi }}</td>
+
+                                            <td>{{ project.aifinish |date:"d/m/Y" }}</td>
 
                                             <td>
                                                 <div class="btn-group ">
@@ -234,7 +306,7 @@
                 'ordering': true,
                 'info': true,
                 'autoWidth': true,
-                 "columnDefs": [
+                "columnDefs": [
                     {responsivePriority: 1, targets: 1},
                     {responsivePriority: 2, targets: 7},
                 ],

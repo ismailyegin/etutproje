@@ -103,7 +103,7 @@ class EPProject(models.Model):
 
     # projenin durumu ve  karakteristik  genel bilgiler
     karakteristik=models.CharField(blank=True, null=True, max_length=120, verbose_name='Karakteristik', choices=CHARACTERİSTİC, default=ETUTPROJE)
-    projectStatus=models.CharField(max_length=128, verbose_name='Onay Durumu', choices=STATUS_CHOICES, default=IH)
+    projectStatus=models.CharField(max_length=128, verbose_name='Onay Durumu', choices=STATUS_CHOICES)
     # alim isinin=>Ai
     aistart = models.DateTimeField(null=True, blank=True)
     aifinish = models.DateTimeField(null=True, blank=True)

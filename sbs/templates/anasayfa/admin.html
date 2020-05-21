@@ -500,10 +500,11 @@
                                     <li class="item">
                                         <div class="product-info">
                                             <a href="{% url 'sbs:personel-duzenle' employee.pk %}"
-                                               class="product-title">{{ employee.workDefinition }}
-                                                <span class="label label-warning pull-right">{{ employee.creationDate }}</span></a>
+                                               class="product-title">{{ employee.user.get_full_name }}
+                                                <span class="label label-warning pull-right"> {{ employee.creationDate }}</span></a>
                                             <span class="product-description">
-                          {{ employee.user.get_full_name }}
+                                                 {{ employee.workDefinition }}
+
                         </span>
                                         </div>
                                     </li>

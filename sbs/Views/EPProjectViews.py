@@ -24,6 +24,10 @@ from sbs.models.EPDocument import EPDocument
 from sbs.Forms.EPDocumentForm import EPDocumentForm
 
 
+from sbs.Forms.EPProjectSearchForm import EPProjectSearchForm
+from django.db.models import Q
+
+
 @login_required
 def add_project(request):
     perm = general_methods.control_access(request)
@@ -155,9 +159,42 @@ def return_projects(request):
     if not perm:
         logout(request)
         return redirect('accounts:login')
-    projects = EPProject.objects.all()
 
-    return render(request, 'epproje/projeler.html', {'projects': projects})
+    search_form=EPProjectSearchForm()
+    projects=EPProject.objects.none()
+
+    if request.method == 'POST':
+        user_form = EPProjectSearchForm(request.POST)
+
+
+        if user_form.is_valid() :
+            name = user_form.cleaned_data.get('name')
+            butceYili = user_form.cleaned_data.get('butceYili')
+            butceCinsi = user_form.cleaned_data.get('butceCinsi')
+            projeCinsi=user_form.cleaned_data.get('projeCinsi')
+            city=user_form.cleaned_data.get('city')
+            projectStatus=user_form.cleaned_data.get('projectStatus')
+
+            if not (name or butceCinsi or butceYili or projeCinsi or projectStatus or city):
+                projects = EPProject.objects.all()
+
+            else:
+                query = Q()
+                if name:
+                    query &= Q(name__icontains=name)
+                if butceYili:
+                    query &= Q(butceYili=butceYili)
+                if butceCinsi:
+                    query &= Q(butceCinsi=butceCinsi)
+                if projeCinsi:
+                    query &= Q(projeCinsi=projeCinsi)
+                if city:
+                    query &= Q(city=city)
+                if projectStatus:
+                    query &= Q(projectStatus=projectStatus)
+                projects = EPProject.objects.filter(query).distinct()
+
+    return render(request, 'epproje/projeler.html', {'projects': projects,'search_form':search_form})
 
 
 @login_required
