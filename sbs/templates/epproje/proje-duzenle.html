@@ -60,9 +60,10 @@
                     <label for="title">Ünvan</label>
                     <select id="title" class="form-control" required>
                         <option value="" selected>Seçiniz...</option>
-                        {% for title in titles %}
+                                                {% for title in titles %}
                             <option value="{{ title.pk }}">{{ title.name }}</option>
                         {% endfor %}
+
                     </select>
                     <label for="employee">Personel</label>
                     <select id="employee" class="form-control" required>
@@ -587,7 +588,7 @@
                                                 <td>{{ forloop.counter }} </td>
                                                 <td>{{ item.name }}</td>
 
-                                                <td>
+                                                <td id="documents-{{ item.pk }}">
                                                     <div class="btn-group">
 
 
@@ -663,7 +664,7 @@
 
                                     {% if project.employees.all %}
                                         {% for item in project.employees.all %}
-                                            <tr>
+                                            <tr id="personel-{{ item.pk }}">
                                                 <td>{{ forloop.counter }} </td>
                                                 <td>{{ item.projectEmployeeTitle }}</td>
                                                 <td>{{ item.employee }}</td>
@@ -739,7 +740,7 @@
 
                                     {% if project.requirements.all %}
                                         {% for item in project.requirements.all %}
-                                            <tr>
+                                            <tr id="requi-{{ item.pk }}">
                                                 <td>{{ forloop.counter }} </td>
                                                 <td>{{ item.amount }}</td>
                                                 <td>{{ item.definition }}</td>
@@ -809,7 +810,7 @@
                                     <ul class="todo-list ui-sortable" id="todo-list">
                                         {% if project.phases.all %}
                                             {% for item in project.phases.all %}
-                                                <li id='todo-list-li-{{ item.pk }}'>
+                                                <li id='phases-{{ item.pk }}'>
                                                     <small style="font-size: 12px" class="label label-danger"><i
                                                             class="fa fa-clock-o"></i>{{ item.phaseDate|date:"M d, Y" }}
                                                     </small>
@@ -864,8 +865,8 @@
                                  style="overflow: auto; width: auto; height: 250px; ">
                                 {% if project.offers.all %}
                                     {% for item in project.offers.all|dictsortreversed:"creationDate" %}
-                                        <div class="item">
-                                            <img src="{{ MEDIA_URL }}/profile/user.png" alt="user image"
+                                        <div class="item" id="offset-{{ item.pk }}">
+                                          <img src="{{ MEDIA_URL }}/profile/user.png" alt="user image"
                                                  class="offline">
 
                                             <p class="message">
@@ -1108,7 +1109,7 @@
                         success: function (result) {
                             if (result.status == 'Success') {
                                 html = 'Personel başarıyla kaldırıldı.';
-                                personel({{ project.pk }})
+                                $('#personel-'+competitionId).hide();
                                 console.log(result.status)
                             }
                             else {
@@ -1158,7 +1159,8 @@
                                         $('#employee option:selected').text(),
                                         '<div class="btn-group"><a type="button" class="btn btn-danger" onclick=deleteEmployee({{ project.pk }},' + result.pk + ')>  <i class="fa fa-trash"></i></a></div>',
 
-                                    ]).draw(true);
+                                    ]).node().id = 'personel-'+result.pk;
+                                    p.draw(true);
                                 } else {
                                     Console.log('Error');
                                 }
@@ -1198,7 +1200,8 @@
                             if (result.status == 'Success') {
 
                                 html = 'İhtiyaç başarıyla kaldırıldı.';
-                                ihtiyac({{ project.pk }})
+                                $('#requi-'+competitionId).hide();
+
                                 console.log(result.status);
 
                             }
@@ -1240,8 +1243,8 @@
                                         $('#amount').val(),
                                         $('#definition').val(),
                                         '<div class="btn-group"><a type="button" class="btn btn-danger" onclick=deleteRequirement(' + id + ',' + result.pk + ')><i class="fa fa-trash"></i></a></div>',
-
-                                    ]).draw(true);
+                                    ]).node().id = 'requi-'+result.pk;
+                                    p.draw(true);
                                 } else {
                                     Console.log('Error');
                                 }
@@ -1281,8 +1284,10 @@
                         success: function (result) {
                             if (result.status == 'Success') {
                                 html = 'Aşama başarıyla kaldırıldı.';
-                                console.log(result.status)
-                                asama({{ project.pk }})
+                                $('#phases-'+competitionId).hide();
+                                console.log(result.status);
+
+
                             }
                         }
                     });
@@ -1317,7 +1322,7 @@
                                 html = 'Aşama Başarıyla Eklendi .';
                                 if (result.status == 'Success') {
 
-                                    $("#todo-list").append(' <li id=todo-list-li-' + result.pk + '><small style="font-size: 12px" class="label label-danger"><i  class="fa fa-clock-o"></i>' + $('#phaseDate').val() + '\n' +
+                                    $("#todo-list").append(' <li id=phases-' + result.pk +'><small style="font-size: 12px" class="label label-danger"><i  class="fa fa-clock-o"></i>' + $('#phaseDate').val() + '\n' +
                                         '                                                    </small>\n' +
                                         '                                                    <h4 class="text">' + $('#phaseDefinition').val() + '</h4>\n' +
                                         '                                                    <div class="tools">\n' +
