@@ -339,6 +339,15 @@ urlpatterns = [
         name='unvan-duzenle'),
     url(r'etut-proje/proje-personel-ekle/(?P<pk>\d+)$',
         EPProjectViews.add_employee_to_project, name='proje-personel-ekle'),
+
+
+
+    url(r'etut-proje/proje-personel-guncelle/(?P<pk>\d+)$',
+        EPProjectViews.update_employee_to_project, name='proje-personel-guncelle'),
+
+
+
+
     url(r'etut-proje/proje-personel-sil/(?P<project_pk>\d+)/(?P<employee_pk>\d+)/$',
         EPProjectViews.delete_employee_from_project,
         name='proje-personel-kaldir'),

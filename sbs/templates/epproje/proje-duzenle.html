@@ -1301,11 +1301,11 @@
                             },
                             success: function (result) {
 
-                                html = 'Aşama Başarıyla Eklendi .';
                                 if (result.status == 'Success') {
 
                                     $('#phases-'+competitionId+' h4').text($('#phaseDefinition').val());
                                     $('#phases-'+competitionId+' small').text($('#phaseDate').val());
+                                    console.log(result.status)
 
                                 }
 
@@ -1313,7 +1313,7 @@
                             }
                         });
 
-                          console.log('güncelle alani calisti ');
+
                       }
                 });
             }).modal('show');
@@ -1465,20 +1465,37 @@
          {# edit personel ve ihtiyac alinacak#}
          function editEmployee(id, competitionId) {
             $("#reddetwhy").on("shown.bs.modal", function (e) {
-                alert(competitionId);
+
+
+                $('#title option:selected').text($('#personel-'+competitionId+' td').eq(1).text());
+                $('#employee option:selected').text($('#personel-'+competitionId+' td').eq(2).text());
+
                 console.log(e);
                 $("#btn-gonder").click(function (e) {
                     if (e.handled !== true) { // This will prevent event triggering more then once
                         e.handled = true;
 
-                        {#Select ifadesi eklenecek#}
+                        $.ajax({
+                            url: "{% url "sbs:proje-personel-guncelle" pk=212121223232323232  %}".replace(/212121223232323232/, id.toString()),
+                            type: "POST",
+                            data: {
+                                'csrfmiddlewaretoken': "{{  csrf_token  }}",
+                                title: $('#title').val(),
+                                employee: $('#employee').val(),
+                                id:competitionId,
+                                isActive: 'False'
 
+                            },
+                            success: function (result) {
 
-
-
-
-
-
+                                if (result.status == 'Success') {
+                                    $('#personel-'+competitionId+' td').eq(1).text($('#title option:selected').text());
+                                    $('#personel-'+competitionId+' td').eq(2).text($('#employee option:selected').text());
+                                } else {
+                                    console.log('Error');
+                                }
+                            }
+                        });
                     }
 
 

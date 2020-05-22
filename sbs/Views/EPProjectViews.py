@@ -278,6 +278,40 @@ def edit_employeetitle(request, pk):
     return render(request, 'epproje/unvan-duzenle.html',
                   {'category_item_form': category_item_form})
 
+@login_required
+def update_employee_to_project(request, pk):
+    perm = general_methods.control_access(request)
+    print('ben geldim ')
+
+
+
+    if not perm:
+        logout(request)
+        return redirect('accounts:login')
+    try:
+        project = EPProject.objects.get(pk=pk)
+        id = request.POST.get('id')
+        employees = project.employees.get(pk=id)
+
+        if request.POST.get('title'):
+            title = CategoryItem.objects.get(pk=request.POST.get('title'))
+            employees.projectEmployeeTitle
+        if request.POST.get('employee'):
+            employee = Employee.objects.get(pk=request.POST.get('employee'))
+            employees.employee = employee
+        employees.save()
+        project.save()
+
+
+
+        return JsonResponse({'status': 'Success', 'messages': 'save successfully'})
+
+    except:
+        return JsonResponse({'status': 'Fail', 'msg': 'Not a valid request'})
+        messages.warning(request, 'Yeniden deneyiniz.')
+
+    return redirect('sbs:proje-duzenle', pk=pk)
+
 
 @login_required
 def add_employee_to_project(request, pk):
