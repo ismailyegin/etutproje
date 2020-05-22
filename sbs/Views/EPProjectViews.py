@@ -322,6 +322,33 @@ def delete_employee_from_project(request, project_pk, employee_pk):
 
 
 @login_required
+def update_requirement_to_project(request, pk):
+    perm = general_methods.control_access(request)
+    if not perm:
+        logout(request)
+        return redirect('accounts:login')
+    try:
+        amount = request.POST.get('amount')
+        definition = request.POST.get('definition')
+        id = request.POST.get('id')
+        project = EPProject.objects.get(pk=pk)
+        requirements=project.requirements.get(pk=id)
+        requirements.amount=amount
+        requirements.definition=definition
+        requirements.save()
+        project.save()
+
+        # messages.success(request, 'İhtiyaç Eklenmiştir')
+        return JsonResponse({'status': 'Success', 'messages': 'save successfully'})
+    except:
+        messages.warning(request, 'Yeniden deneyiniz.')
+
+    return redirect('sbs:proje-duzenle', pk=pk)
+
+
+
+
+@login_required
 def add_requirement_to_project(request, pk):
     perm = general_methods.control_access(request)
     if not perm:
@@ -357,6 +384,37 @@ def delete_requirement_from_project(request, project_pk, employee_pk):
 
     else:
         return JsonResponse({'status': 'Fail', 'msg': 'Not a valid request'})
+
+
+@login_required
+def update_phase_to_project(request, pk):
+    perm = general_methods.control_access(request)
+
+    if not perm:
+        logout(request)
+        return redirect('accounts:login')
+
+
+    try:
+        date = request.POST.get('phaseDate')
+        dates = datetime.strptime(date, '%m/%d/%Y')
+        definition = request.POST.get('phaseDefinition')
+        id = request.POST.get('id')
+        project = EPProject.objects.get(pk=pk)
+        asama=project.phases.get(pk=id)
+        asama.definition = definition
+        asama.phaseDate = dates
+        asama.save()
+        project.save()
+        return JsonResponse({'status': 'Success', 'messages': 'save successfully'})
+
+    except:
+        return JsonResponse({'status': 'Fail', 'msg': 'Not a valid request'})
+        messages.warning(request, 'Yeniden deneyiniz.')
+
+    return redirect('sbs:proje-duzenle', pk=pk)
+
+
 
 
 @login_required

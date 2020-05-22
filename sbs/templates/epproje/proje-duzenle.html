@@ -60,7 +60,7 @@
                     <label for="title">Ünvan</label>
                     <select id="title" class="form-control" required>
                         <option value="" selected>Seçiniz...</option>
-                                                {% for title in titles %}
+                        {% for title in titles %}
                             <option value="{{ title.pk }}">{{ title.name }}</option>
                         {% endfor %}
 
@@ -671,6 +671,11 @@
                                                 <td>
                                                     <div class="btn-group">
 
+                                                        <a class="btn btn-warning"
+                                                           data-toggle="modal"
+                                                           onclick=editEmployee({{ project.pk }},{{ item.pk }})><i
+                                                                class="fa fa-edit"></i></a>
+
 
                                                         <a class="btn btn-danger"
                                                            data-toggle="modal"
@@ -748,6 +753,12 @@
                                                     <div class="btn-group">
 
 
+                                                        <a class="btn btn-warning"
+                                                           data-toggle="modal"
+                                                           onclick=editRequirement({{ project.pk }},{{ item.pk }})><i
+                                                                class="fa fa-edit"></i></a>
+
+
                                                         <a class="btn btn-danger"
                                                            data-toggle="modal"
                                                            onclick=deleteRequirement({{ project.pk }},{{ item.pk }})><i
@@ -816,7 +827,8 @@
                                                     </small>
                                                     <h4 class="text">{{ item.definition }}</h4>
                                                     <div class="tools">
-                                                        <i class="fa fa-edit"></i>
+                                                        <i class="fa fa-edit"
+                                                           onclick=editPhase({{ project.pk }},{{ item.pk }})></i>
                                                         <i class="fa fa-trash-o"
                                                            onclick=deletePhase({{ project.pk }},{{ item.pk }})></i>
                                                     </div>
@@ -866,7 +878,7 @@
                                 {% if project.offers.all %}
                                     {% for item in project.offers.all|dictsortreversed:"creationDate" %}
                                         <div class="item" id="offset-{{ item.pk }}">
-                                          <img src="{{ MEDIA_URL }}/profile/user.png" alt="user image"
+                                            <img src="{{ MEDIA_URL }}/profile/user.png" alt="user image"
                                                  class="offline">
 
                                             <p class="message">
@@ -1109,10 +1121,9 @@
                         success: function (result) {
                             if (result.status == 'Success') {
                                 html = 'Personel başarıyla kaldırıldı.';
-                                $('#personel-'+competitionId).hide();
+                                $('#personel-' + competitionId).hide();
                                 console.log(result.status)
-                            }
-                            else {
+                            } else {
                                 console.log('error');
                             }
                         }
@@ -1152,14 +1163,14 @@
 
                                     html = 'Personel Başarıyla Eklendi .';
                                     var p = $('#personelbilgi').DataTable();
-                                    var count=p.rows().count()+1;
+                                    var count = p.rows().count() + 1;
                                     p.row.add([
                                         count.toString(),
                                         $('#title option:selected').text(),
                                         $('#employee option:selected').text(),
                                         '<div class="btn-group"><a type="button" class="btn btn-danger" onclick=deleteEmployee({{ project.pk }},' + result.pk + ')>  <i class="fa fa-trash"></i></a></div>',
 
-                                    ]).node().id = 'personel-'+result.pk;
+                                    ]).node().id = 'personel-' + result.pk;
                                     p.draw(true);
                                 } else {
                                     Console.log('Error');
@@ -1200,7 +1211,7 @@
                             if (result.status == 'Success') {
 
                                 html = 'İhtiyaç başarıyla kaldırıldı.';
-                                $('#requi-'+competitionId).hide();
+                                $('#requi-' + competitionId).hide();
 
                                 console.log(result.status);
 
@@ -1237,13 +1248,13 @@
                             success: function (result) {
                                 if (result.status == 'Success') {
                                     var p = $('#requirementtable').DataTable();
-                                     var count=p.rows().count()+1;
+                                    var count = p.rows().count() + 1;
                                     p.row.add([
                                         count.toString(),
                                         $('#amount').val(),
                                         $('#definition').val(),
                                         '<div class="btn-group"><a type="button" class="btn btn-danger" onclick=deleteRequirement(' + id + ',' + result.pk + ')><i class="fa fa-trash"></i></a></div>',
-                                    ]).node().id = 'requi-'+result.pk;
+                                    ]).node().id = 'requi-' + result.pk;
                                     p.draw(true);
                                 } else {
                                     Console.log('Error');
@@ -1267,6 +1278,57 @@
 
         }
 
+        function editPhase(id, competitionId) {
+            {#console.log(id);#}
+            {#console.log(competitionId);#}
+
+            $("#phase").on("shown.bs.modal", function (e) {
+                 $('#phaseDate').val($('#phases-'+competitionId+' small').text());
+                 $('#phaseDefinition').val($('#phases-'+competitionId+' h4').text());
+                $("#btn-phase-gonder").click(function (e) {
+                      if (e.handled !== true) {
+                          e.handled = true;
+                              $.ajax({
+                            url: "{% url "sbs:proje-asama-guncelle" pk=212121223232323232  %}".replace(/212121223232323232/, id.toString()),
+                            type: "POST",
+                            data: {
+                                'csrfmiddlewaretoken': "{{  csrf_token  }}",
+                                phaseDate: $('#phaseDate').val(),
+                                phaseDefinition: $('#phaseDefinition').val(),
+                                id:competitionId,
+                                isActive: 'False'
+
+                            },
+                            success: function (result) {
+
+                                html = 'Aşama Başarıyla Eklendi .';
+                                if (result.status == 'Success') {
+
+                                    $('#phases-'+competitionId+' h4').text($('#phaseDefinition').val());
+                                    $('#phases-'+competitionId+' small').text($('#phaseDate').val());
+
+                                }
+
+
+                            }
+                        });
+
+                          console.log('güncelle alani calisti ');
+                      }
+                });
+            }).modal('show');
+            $('#btn-phase-reddet').click(function () {
+
+
+                $('#modal-warning').modal('hide');
+                $('.modal').modal('hide');
+
+            });
+
+
+        }
+
+
         function deletePhase(id, competitionId) {
 
             console.log(id);
@@ -1284,7 +1346,7 @@
                         success: function (result) {
                             if (result.status == 'Success') {
                                 html = 'Aşama başarıyla kaldırıldı.';
-                                $('#phases-'+competitionId).hide();
+                                $('#phases-' + competitionId).hide();
                                 console.log(result.status);
 
 
@@ -1322,7 +1384,7 @@
                                 html = 'Aşama Başarıyla Eklendi .';
                                 if (result.status == 'Success') {
 
-                                    $("#todo-list").append(' <li id=phases-' + result.pk +'><small style="font-size: 12px" class="label label-danger"><i  class="fa fa-clock-o"></i>' + $('#phaseDate').val() + '\n' +
+                                    $("#todo-list").append(' <li id=phases-' + result.pk + '><small style="font-size: 12px" class="label label-danger"><i  class="fa fa-clock-o"></i>' + $('#phaseDate').val() + '\n' +
                                         '                                                    </small>\n' +
                                         '                                                    <h4 class="text">' + $('#phaseDefinition').val() + '</h4>\n' +
                                         '                                                    <div class="tools">\n' +
@@ -1396,6 +1458,100 @@
             $('#btn-close').click(function () {
                 $('#modal-danger').modal('hide');
             });
+
+        }
+
+
+         {# edit personel ve ihtiyac alinacak#}
+         function editEmployee(id, competitionId) {
+            $("#reddetwhy").on("shown.bs.modal", function (e) {
+                alert(competitionId);
+                console.log(e);
+                $("#btn-gonder").click(function (e) {
+                    if (e.handled !== true) { // This will prevent event triggering more then once
+                        e.handled = true;
+
+                        {#Select ifadesi eklenecek#}
+
+
+
+
+
+
+
+                    }
+
+
+                });
+
+
+            }).modal('show');
+            $('#btn-closereddet').click(function () {
+
+
+                $('#modal-warning').modal('hide');
+                $('.modal').modal('hide');
+
+            });
+
+
+        }
+         function editRequirement(id, competitionId) {
+            {#console.log(id);#}
+            {#console.log(competitionId);#}
+
+            $("#requirement").on("shown.bs.modal", function (e) {
+
+                 $('#amount').val($('#requi-'+competitionId+' td').eq(1).text());
+                 $('#definition').val($('#requi-'+competitionId+' td').eq(2).text());
+
+                $("#btn-requirement-gonder").click(function () {
+                    if (e.handled !== true) { // This will prevent event triggering more then once
+                        e.handled = true;
+                         $.ajax({
+                            url: "{% url "sbs:proje-ihtiyac-güncelle" pk=212121223232323232  %}".replace(/212121223232323232/, id.toString()),
+                            type: "POST",
+                            data: {
+                                'csrfmiddlewaretoken': "{{  csrf_token  }}",
+                                amount: $('#amount').val(),
+                                definition: $('#definition').val(),
+                                id:competitionId,
+                                isActive: 'False'
+
+                            },
+                            success: function (result) {
+                                if (result.status == 'Success') {
+                                    $('#requi-'+competitionId+' td').eq(2).text($('#definition').val());
+                                    $('#requi-'+competitionId+' td').eq(1).text($('#amount').val());
+                                   Console.log(result.status);
+                                } else {
+                                    Console.log('Error');
+                                }
+
+
+                            }
+                        });
+
+
+
+
+
+
+
+
+                    }
+                });
+
+
+            }).modal('show');
+            $('#btn-requirement-reddet').click(function () {
+
+
+                $('#modal-warning').modal('hide');
+                $('.modal').modal('hide');
+
+            });
+
 
         }
 

@@ -344,11 +344,21 @@ urlpatterns = [
         name='proje-personel-kaldir'),
     url(r'etut-proje/proje-ihtiyac-ekle/(?P<pk>\d+)$',
         EPProjectViews.add_requirement_to_project, name='proje-ihtiyac-ekle'),
+
+    url(r'etut-proje/proje-ihtiyac-guncelle/(?P<pk>\d+)$',
+        EPProjectViews.update_requirement_to_project, name='proje-ihtiyac-güncelle'),
+
     url(r'etut-proje/proje-ihtiyac-sil/(?P<project_pk>\d+)/(?P<employee_pk>\d+)/$',
         EPProjectViews.delete_requirement_from_project,
         name='proje-ihtiyac-kaldir'),
     url(r'etut-proje/proje-asama-ekle/(?P<pk>\d+)$',
         EPProjectViews.add_phase_to_project, name='proje-asama-ekle'),
+
+    url(r'etut-proje/proje-asama-guncelle/(?P<pk>\d+)$',
+        EPProjectViews.update_phase_to_project, name='proje-asama-guncelle'),
+
+
+
     url(r'etut-proje/proje-asama-sil/(?P<project_pk>\d+)/(?P<employee_pk>\d+)/$',
         EPProjectViews.delete_phase_from_project,
         name='proje-asama-kaldir'),
