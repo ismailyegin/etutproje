@@ -481,8 +481,6 @@
                             <!-- /.box-footer -->
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-4">
                     <div class="box box-primary">
                         <div class="box-header with-border">
                             <h3 class="box-title">Son Eklenen Personeller</h3>
@@ -522,57 +520,75 @@
                         </div>
                         <!-- /.box-footer -->
                     </div>
+                </div>
+                <div class="col-lg-4">
 
-                        <div class="box box-default">
-                            <div class="box-header with-border">
-                                <h3 class="box-title">Projelerin Dağılımı</h3>
 
-                                <div class="box-tools pull-right">
-                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
-                                            class="fa fa-minus"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i
-                                            class="fa fa-times"></i></button>
-                                </div>
+                    <div class="box box-default">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Projelerin Dağılımı</h3>
+
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                        class="fa fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i
+                                        class="fa fa-times"></i></button>
                             </div>
-                            <!-- /.box-header -->
-                            <div class="box-body">
-                                <div class="row">
-                                    <div class="col-md-8">
-                                        <div class="chart-responsive">
-                                            <canvas id="pieChart2" height="202" width="303"
-                                                    style="width: 243px; height: 162px;"></canvas>
-                                        </div>
-                                        <!-- ./chart-responsive -->
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="chart-responsive">
+                                        <canvas id="pieChart2" height="202" width="303"
+                                                style="width: 243px; height: 162px;"></canvas>
                                     </div>
-                                     <div class="col-md-4">
-                                        <ul class="chart-legend clearfix">
-
-                                            <li><i class="fa fa-circle-o text-green"></i> Erkek</li>
-                                            <li><i class="fa fa-circle-o text-red"></i> Kadın</li>
-
-                                        </ul>
-                                    </div>
-                                    <!-- /.col -->
-
-                                    <!-- /.col -->
+                                    <!-- ./chart-responsive -->
                                 </div>
-                                <!-- /.row -->
-                            </div>
-                            <!-- /.box-body -->
-                            <div class="box-footer no-padding">
-                                <ul class="nav nav-pills nav-stacked">
-                                    <li><a href="#">Kadın
-                                        <span class="pull-right text-red"><i
-                                                class="fa fa-angle-down"></i> 20</span></a>
-                                    </li>
-                                    <li><a href="#">Erkek <span class="pull-right text-green"><i
-                                            class="fa fa-angle-up"></i> 30</span></a>
-                                    </li>
 
-                                </ul>
                             </div>
-                            <!-- /.footer -->
+                            <!-- /.row -->
+                        </div>
+                        <!-- /.box-body -->
+                        <div class="box-footer no-padding">
+
+
+                            <ul class="nav nav-pills nav-stacked">
+                                <li><a href="#">Ceza İnfaz Kurumu
+                                    <small class="label label-primary  pull-right"> {{cezainfaz}}</small></a>
+                                </li>
+                                <li><a href="#">Adalet Binası <small class="label label-primary  pull-right"> {{adaletbinasi}}</small></a>
+                                </li>
+                                <li><a href="#">Adli Tıp
+                                    <small class="label label-primary  pull-right"> {{adlitip}}</small></a>
+                                </li>
+
+
+                                <li><a href="#">Bölge Adliye Mahkemesi
+                                    <small class="label label-primary  pull-right"> {{bolgeadliye}}</small></a>
+                                </li>
+                                <li><a href="#">Bölge İdare Mahkemesi <small class="label label-primary  pull-right">
+                                    {{bolgeidari}}</small></a>
+                                </li>
+
+                                <li><a href="#">Denetimli Serbestlik
+                                    <small class="label label-primary  pull-right"> {{denetimserbeslik}}</small></a>
+                                </li>
+                                <li><a href="#">Bakanlık Bİnası <small class="label label-primary  pull-right">
+                                    {{bakanlikbinasi}}</small></a>
+                                </li>
+
+                                <li><a href="#">Personel Eğitim Merkezi
+                                    <small class="label label-primary  pull-right"> {{ personelegitim }}</small></a>
+                                </li>
+                                 <li><a href="#">Diger <small class="label label-primary  pull-right"> {{diger}}</small></a>
+                                </li>
+
+
+                            </ul>
+                        </div>
+                        <!-- /.footer -->
 
                         <!-- /.box -->
 
@@ -589,67 +605,67 @@
 
 
 
-        <script>
+    <script>
         $(function () {
             {#pie log#}
             var pieChartCanvas = $('#pieChart2').get(0).getContext('2d');
             var pieChart = new Chart(pieChartCanvas);
             var PieData = [
-     {
-      value    : 600,
-      color    : '#f56954',
-      highlight: '#f56954',
-      label    : 'Adalet Binası'
-    },
-    {
-      value    : 500,
-      color    : '#00a65a',
-      highlight: '#00a65a',
-      label    : 'Ceza İnfaz Kurumu'
-    },
-    {
-      value    : 400,
-      color    : '#f39c12',
-      highlight: '#f39c12',
-      label    : 'Adli Tıp'
-    },
-    {
-      value    : 600,
-      color    : '#00c0ef',
-      highlight: '#00c0ef',
-      label    : 'Bölge Adliye Mahkemesi'
-    },
-    {
-      value    : 300,
-      color    : '#3c8dbc',
-      highlight: '#3c8dbc',
-      label    : 'Bölge İdare Mahkemesi'
-    },
-    {
-      value    : 100,
-      color    : '#d2d6de',
-      highlight: '#d2d6de',
-      label    : 'Denetimli Serbestlik'
-    },
+                {
+                    value: {{adaletbinasi}},
+                    color: '#f56954',
+                    highlight: '#f56954',
+                    label: 'Adalet Binası'
+                },
+                {
+                    value: {{cezainfaz}},
+                    color: '#00a65a',
+                    highlight: '#00a65a',
+                    label: 'Ceza İnfaz Kurumu'
+                },
+                {
+                    value: {{adlitip}},
+                    color: '#f39c12',
+                    highlight: '#f39c12',
+                    label: 'Adli Tıp'
+                },
+                {
+                    value: {{bolgeadliye}},
+                    color: '#00c0ef',
+                    highlight: '#00c0ef',
+                    label: 'Bölge Adliye Mahkemesi'
+                },
+                {
+                    value: {{bolgeidari}},
+                    color: '#3c8dbc',
+                    highlight: '#3c8dbc',
+                    label: 'Bölge İdare Mahkemesi'
+                },
+                {
+                    value: {{denetimserbeslik}},
+                    color: '#d2d6de',
+                    highlight: '#d2d6de',
+                    label: 'Denetimli Serbestlik'
+                },
 
-                    {
-      value    : 600,
-      color    : '#d0c0ef',
-      highlight: '#d0c0ef',
-      label    : 'Bakanlık Bİnası'
-    },
-                    {
-      value    : 600,
-      color    : '#a0c0ef',
-      highlight: '#a0c0ef',
-      label    : 'Personel Eğitim Merkezi'
-    },
-                                    {
-      value    : 600,
-      color    : '#000000',
-      highlight: '#000000',
-      label    : 'Diger'
-    },
+                {
+                    value: {{bakanlikbinasi}},
+                    color: '#d0c0ef',
+                    highlight: '#d0c0ef',
+                    label: 'Bakanlık Bİnası'
+                },
+                {
+                    value: {{personelegitim}},
+                    color: '#a0c0ef',
+                    highlight: '#a0c0ef',
+                    label: 'Personel Eğitim Merkezi'
+                },
+                {
+                    value: {{diger}},
+                    color: '#000000',
+                    highlight: '#000000',
+                    label: 'Diger'
+                },
 
             ];
             var pieOptions = {

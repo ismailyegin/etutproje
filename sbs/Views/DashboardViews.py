@@ -112,12 +112,31 @@ def return_admin_dashboard(request):
     proje_count=EPProject.objects.count()
     proje_status_PT=EPProject.objects.filter(projectStatus=EPProject.PT).distinct().count()
     proje_status_PDE=EPProject.objects.filter(projectStatus=EPProject.PDE).distinct().count()
-    project=EPProject.objects.all()
+
+    cezainfaz=EPProject.objects.filter(projeCinsi=EPProject.CIK).count()
+    adaletbinasi=EPProject.objects.filter(projeCinsi=EPProject.AB).count()
+    adlitip=EPProject.objects.filter(projeCinsi=EPProject.AT).count()
+    bolgeadliye=EPProject.objects.filter(projeCinsi=EPProject.BAM).count()
+    bolgeidari=EPProject.objects.filter(projeCinsi=EPProject.BIM).count()
+    denetimserbeslik=EPProject.objects.filter(projeCinsi=EPProject.DS).count()
+    personelegitim=EPProject.objects.filter(projeCinsi=EPProject.BB).count()
+    bakanlikbinasi=EPProject.objects.filter(projeCinsi=EPProject.PEM).count()
+    diger=EPProject.objects.filter(projeCinsi=EPProject.DIGER).count()
+
 
 
     return render(request, 'anasayfa/admin.html',
                   {'employees': last_employee,'personel_count':personel_count,'proje_count':proje_count,
-                   'proje_status_PT':proje_status_PT,'proje_status_PDE':proje_status_PDE,'project':project  })
+                   'proje_status_PT':proje_status_PT,'proje_status_PDE':proje_status_PDE,
+                   'cezainfaz':cezainfaz,
+                   'adaletbinasi':adaletbinasi,
+                   'adlitip':adlitip,
+                   'bolgeadliye':bolgeadliye,
+                   'bolgeidari':bolgeidari,
+                   'denetimserbeslik':denetimserbeslik,
+                   'personelegitim':personelegitim,
+                   'bakanlikbinasi':bakanlikbinasi,
+                   'diger':diger})
 
 
 @login_required
