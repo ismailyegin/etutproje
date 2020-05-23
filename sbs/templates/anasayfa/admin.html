@@ -115,14 +115,15 @@
                     <!-- small box -->
                     <div class="small-box bg-aqua">
                         <div class="inner">
-                            <h3>{{proje_count}}</h3>
+                            <h3>{{ proje_count }}</h3>
 
                             <p>Proje</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-bag"></i>
                         </div>
-                        <a href="{% url 'sbs:projeler' %}" class="small-box-footer">Daha Fazla <i class="fa fa-arrow-circle-right"></i></a>
+                        <a href="{% url 'sbs:projeler' %}" class="small-box-footer">Daha Fazla <i
+                                class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <!-- ./col -->
@@ -137,7 +138,8 @@
                         <div class="icon">
                             <i class="ion ion-stats-bars"></i>
                         </div>
-                        <a href="{% url 'sbs:projeler' %}" class="small-box-footer">Daha Fazla <i class="fa fa-arrow-circle-right"></i></a>
+                        <a href="{% url 'sbs:projeler' %}" class="small-box-footer">Daha Fazla <i
+                                class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <!-- ./col -->
@@ -152,7 +154,8 @@
                         <div class="icon">
                             <i class="ion ion-home"></i>
                         </div>
-                        <a href="{% url 'sbs:projeler' %}" class="small-box-footer">Daha Fazla <i class="fa fa-arrow-circle-right"></i></a>
+                        <a href="{% url 'sbs:projeler' %}" class="small-box-footer">Daha Fazla <i
+                                class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <!-- ./col -->
@@ -167,7 +170,8 @@
                         <div class="icon">
                             <i class="ion ion-pie-graph"></i>
                         </div>
-                        <a href="{% url 'sbs:personeller' %}" class="small-box-footer">Daha Fazla <i class="fa fa-arrow-circle-right"></i></a>
+                        <a href="{% url 'sbs:personeller' %}" class="small-box-footer">Daha Fazla <i
+                                class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <!-- ./col -->
@@ -518,61 +522,173 @@
                         </div>
                         <!-- /.box-footer -->
                     </div>
-                    <div class="info-box bg-yellow">
-                        <span class="info-box-icon"><i class="ion ion-ios-pricetag-outline"></i></span>
 
-                        <div class="info-box-content">
-                            <span class="info-box-text">Inventory</span>
-                            <span class="info-box-number">5,200</span>
+                        <div class="box box-default">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">Projelerin Dağılımı</h3>
 
-                            <div class="progress">
-                                <div class="progress-bar" style="width: 50%"></div>
+                                <div class="box-tools pull-right">
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                            class="fa fa-minus"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i
+                                            class="fa fa-times"></i></button>
+                                </div>
                             </div>
-                            <span class="progress-description">
-                    50% Increase in 30 Days
-                  </span>
-                        </div>
-                        <!-- /.info-box-content -->
-                    </div>
-                    <!-- /.info-box -->
-                    <div class="info-box bg-green">
-                        <span class="info-box-icon"><i class="ion ion-ios-heart-outline"></i></span>
+                            <!-- /.box-header -->
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <div class="chart-responsive">
+                                            <canvas id="pieChart2" height="202" width="303"
+                                                    style="width: 243px; height: 162px;"></canvas>
+                                        </div>
+                                        <!-- ./chart-responsive -->
+                                    </div>
+                                     <div class="col-md-4">
+                                        <ul class="chart-legend clearfix">
 
-                        <div class="info-box-content">
-                            <span class="info-box-text">Mentions</span>
-                            <span class="info-box-number">92,050</span>
+                                            <li><i class="fa fa-circle-o text-green"></i> Erkek</li>
+                                            <li><i class="fa fa-circle-o text-red"></i> Kadın</li>
 
-                            <div class="progress">
-                                <div class="progress-bar" style="width: 20%"></div>
+                                        </ul>
+                                    </div>
+                                    <!-- /.col -->
+
+                                    <!-- /.col -->
+                                </div>
+                                <!-- /.row -->
                             </div>
-                            <span class="progress-description">
-                    20% Increase in 30 Days
-                  </span>
-                        </div>
-                        <!-- /.info-box-content -->
-                    </div>
-                    <!-- /.info-box -->
-                    <div class="info-box bg-red">
-                        <span class="info-box-icon"><i class="ion ion-ios-cloud-download-outline"></i></span>
+                            <!-- /.box-body -->
+                            <div class="box-footer no-padding">
+                                <ul class="nav nav-pills nav-stacked">
+                                    <li><a href="#">Kadın
+                                        <span class="pull-right text-red"><i
+                                                class="fa fa-angle-down"></i> 20</span></a>
+                                    </li>
+                                    <li><a href="#">Erkek <span class="pull-right text-green"><i
+                                            class="fa fa-angle-up"></i> 30</span></a>
+                                    </li>
 
-                        <div class="info-box-content">
-                            <span class="info-box-text">Downloads</span>
-                            <span class="info-box-number">114,381</span>
-
-                            <div class="progress">
-                                <div class="progress-bar" style="width: 70%"></div>
+                                </ul>
                             </div>
-                            <span class="progress-description">
-                    70% Increase in 30 Days
-                  </span>
-                        </div>
-                        <!-- /.info-box-content -->
+                            <!-- /.footer -->
+
+                        <!-- /.box -->
+
+                        <!-- PRODUCT LIST -->
+
+
+                        <!-- /.box -->
                     </div>
                     <!-- /.box -->
                 </div>
             </div>
         </section>
     </section>
+
+
+
+        <script>
+        $(function () {
+            {#pie log#}
+            var pieChartCanvas = $('#pieChart2').get(0).getContext('2d');
+            var pieChart = new Chart(pieChartCanvas);
+            var PieData = [
+     {
+      value    : 600,
+      color    : '#f56954',
+      highlight: '#f56954',
+      label    : 'Adalet Binası'
+    },
+    {
+      value    : 500,
+      color    : '#00a65a',
+      highlight: '#00a65a',
+      label    : 'Ceza İnfaz Kurumu'
+    },
+    {
+      value    : 400,
+      color    : '#f39c12',
+      highlight: '#f39c12',
+      label    : 'Adli Tıp'
+    },
+    {
+      value    : 600,
+      color    : '#00c0ef',
+      highlight: '#00c0ef',
+      label    : 'Bölge Adliye Mahkemesi'
+    },
+    {
+      value    : 300,
+      color    : '#3c8dbc',
+      highlight: '#3c8dbc',
+      label    : 'Bölge İdare Mahkemesi'
+    },
+    {
+      value    : 100,
+      color    : '#d2d6de',
+      highlight: '#d2d6de',
+      label    : 'Denetimli Serbestlik'
+    },
+
+                    {
+      value    : 600,
+      color    : '#d0c0ef',
+      highlight: '#d0c0ef',
+      label    : 'Bakanlık Bİnası'
+    },
+                    {
+      value    : 600,
+      color    : '#a0c0ef',
+      highlight: '#a0c0ef',
+      label    : 'Personel Eğitim Merkezi'
+    },
+                                    {
+      value    : 600,
+      color    : '#000000',
+      highlight: '#000000',
+      label    : 'Diger'
+    },
+
+            ];
+            var pieOptions = {
+                // Boolean - Whether we should show a stroke on each segment
+                segmentShowStroke: true,
+                // String - The colour of each segment stroke
+                segmentStrokeColor: '#fff',
+                // Number - The width of each segment stroke
+                segmentStrokeWidth: 1,
+                // Number - The percentage of the chart that we cut out of the middle
+                percentageInnerCutout: 50, // This is 0 for Pie charts
+                // Number - Amount of animation steps
+                animationSteps: 100,
+                // String - Animation easing effect
+                animationEasing: 'easeOutBounce',
+                // Boolean - Whether we animate the rotation of the Doughnut
+                animateRotate: true,
+                // Boolean - Whether we animate scaling the Doughnut from the centre
+                animateScale: true,
+                // Boolean - whether to make the chart responsive to window resizing
+                responsive: true,
+                // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
+                maintainAspectRatio: false,
+                // String - A legend template
+                legendTemplate: '<ul class=\'<%=name.toLowerCase()%>-legend\'><br><% for (var i=0; i<segments.length; i++){ %><li><span style= \'background-color:<%=segments[i].fillColor%>\'></span><%if(segments[i].label){ %><%=segments[i].label%><%}%></li><%}%></ul>',
+                // String - A tooltip template
+                tooltipTemplate: '<%=value%>  Tane  <%=label%>'
+            };
+            // Create pie or douhnut chart
+            // You can switch between pie and douhnut using the method below.
+            pieChart.Doughnut(PieData, pieOptions);
+            // -----------------
+            // - END PIE CHART -
+
+
+        });
+
+
+    </script>
 
 
 {% endblock %}

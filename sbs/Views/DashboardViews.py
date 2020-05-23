@@ -112,11 +112,12 @@ def return_admin_dashboard(request):
     proje_count=EPProject.objects.count()
     proje_status_PT=EPProject.objects.filter(projectStatus=EPProject.PT).distinct().count()
     proje_status_PDE=EPProject.objects.filter(projectStatus=EPProject.PDE).distinct().count()
+    project=EPProject.objects.all()
 
 
     return render(request, 'anasayfa/admin.html',
                   {'employees': last_employee,'personel_count':personel_count,'proje_count':proje_count,
-                   'proje_status_PT':proje_status_PT,'proje_status_PDE':proje_status_PDE  })
+                   'proje_status_PT':proje_status_PT,'proje_status_PDE':proje_status_PDE,'project':project  })
 
 
 @login_required
