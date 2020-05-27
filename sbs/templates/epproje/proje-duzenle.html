@@ -582,20 +582,26 @@
 
                                     <tbody>
 
+
                                     {% if project.documents.all %}
                                         {% for item in project.documents.all %}
-                                            <tr>
+                                            <tr id="documents-{{ item.pk }}">
                                                 <td>{{ forloop.counter }} </td>
                                                 <td>{{ item.name }}</td>
 
-                                                <td id="documents-{{ item.pk }}">
+                                                <td>
                                                     <div class="btn-group">
+                                                         <a class="btn btn-success"
+                                                           data-toggle="modal"
+                                                           href="{{ MEDIA_URL }}{{ item.name }}" target="_blank"><i
+                                                                class="fa fa-download"></i></a>
 
 
                                                         <a class="btn btn-danger"
                                                            data-toggle="modal"
                                                            onclick=deletedocument({{ project.pk }},{{ item.pk }})><i
                                                                 class="fa fa-trash"></i></a>
+
                                                     </div>
                                                 </td>
 
@@ -1441,7 +1447,9 @@
 
                                         console.log('işlem basari ile gerçekleşti');
                                         $('#modal-success').modal('hide');
-                                        window.location.replace("{% url 'sbs:proje-duzenle' project.pk %}");
+
+                                          $('#documents-'+competitionId).hide();
+
                                     }
 
                                 });
