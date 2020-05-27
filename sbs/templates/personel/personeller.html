@@ -158,9 +158,9 @@
                                         {{ user_form.email }}
                                     </div>
                                 </div>
-                                                                <div class="col-md-3">
+                                <div class="col-md-3">
                                     <div class="form-group">
-                                        <label> {{ user_form.workDefinition.label}}</label>
+                                        <label> {{ user_form.workDefinition.label }}</label>
                                         {{ user_form.workDefinition }}
                                     </div>
                                 </div>
@@ -208,7 +208,7 @@
                                     </div>
                                 </div>
                             {% endif %}
-                            <table id="sporcular" class="table table-bordered table-hover">
+                            <table id="personel" class="table table-bordered table-hover">
                                 <thead>
                                 <tr>
                                     <th>#</th>
@@ -266,8 +266,76 @@
 
     <script>
         $(function () {
-            $('#sporcular').DataTable({
+            $('#personel').DataTable({
 
+
+                dom: 'Bfrtip',
+
+                language: {
+                    buttons: {
+                        pageLength: {
+                            _: " %d  Tane Göster",
+                            '-1': "Hepsini Göster"
+                        }
+                    }
+                },
+
+                lengthMenu: [
+                    [10, 25, 50, 100, -1],
+                    ['10 tane', '25 tane ', '50 tane ', '100 Tane', 'Hepsini Getir']
+                ],
+
+                buttons: [
+
+                    {
+                        extend: "pageLength",
+                    },
+
+
+                    {
+                        extend: 'colvis',
+                        text: '<i class=" fa  fa-th-list"></i>',
+                        titleAttr: 'Ekle Çıkar'
+
+
+                    },
+                    {
+                        extend: 'print',
+                        title: 'Personeller',
+                        text: '<i class="fa  fa-print"></i>',
+
+                        titleAttr: 'Yazdır'
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        download: 'open',
+                        text: '<i class="fa fa-file-pdf-o"></i>',
+
+                        titleAttr: 'Pdf Kaydet'
+                    },
+
+                    {
+                        extend: 'excelHtml5',
+                        title: 'Personeller',
+                        text: '<i class="fa fa-file-excel-o"></i>',
+                        messageTop: 'Sbs Bilgi Sistemi ',
+
+                        titleAttr: 'Excel Kaydet'
+                    },
+                    {
+                        text: '<i class="fa fa-file-text-o"></i>',
+                        action: function (e, dt, button, config) {
+                            var data = dt.buttons.exportData();
+
+                            $.fn.dataTable.fileSave(
+                                new Blob([JSON.stringify(data)]),
+                                'Personeller.json'
+                            );
+                        }
+                    }
+
+
+                ],
                 'paging': true,
                 'lengthChange': true,
                 'searching': true,
@@ -286,8 +354,7 @@
                         }),
                         'renderer': $.fn.dataTable.Responsive.renderer.tableAll(),
                     }
-                 },
-
+                },
 
 
             })
