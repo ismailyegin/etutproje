@@ -11,10 +11,10 @@ class PersonForm(ModelForm):
         fields = (
             'tc', 'profileImage', 'height', 'weight', 'birthDate', 'bloodType', 'gender', 'birthplace', 'motherName',
             'fatherName')
-        labels = {'tc': 'T.C.', 'gender': 'Cinsiyet'}
+        labels = {'tc': 'T.C.', 'gender': 'Cinsiyet','profileImage':'Profil Resmi'}
 
         widgets = {
-
+            'profileImage': forms.FileInput(),
 
             'tc': forms.TextInput(attrs={'class': 'form-control ', 'required': 'required'}),
 
