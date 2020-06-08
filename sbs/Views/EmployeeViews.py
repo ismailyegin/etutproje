@@ -55,13 +55,14 @@ def add_employee(request):
     country=Country.objects.get(name='Türkiye')
     communication.country=country
     communication_form = CommunicationForm(instance=communication)
+
     employee_form = EmployeeForm()
     employee_form.fields['workDefinition'].queryset = CategoryItem.objects.filter(forWhichClazz="EMPLOYEE_WORKDEFINITION")
 
     if request.method == 'POST':
 
         user_form = UserForm(request.POST)
-        person_form = PersonForm(request.POST, request.FILES)
+        person_form = PersonForm(request.POST , request.FILES or None)
         communication_form = CommunicationForm(request.POST, request.FILES)
 
         sportClubUser_form = EmployeeForm(request.POST)
@@ -118,7 +119,7 @@ def edit_employee(request, pk):
     person = Person.objects.get(pk=employee.person.pk)
     communication = Communication.objects.get(pk=employee.communication.pk)
     user_form = UserForm(request.POST or None, instance=user)
-    person_form = PersonForm(request.POST or None, instance=person)
+    person_form = PersonForm(request.POST or None, request.FILES or None, instance=person)
     communication_form = CommunicationForm(request.POST or None, instance=communication)
 
     employee_form = EmployeeForm(request.POST or None, instance=employee)
@@ -149,7 +150,7 @@ def edit_employee(request, pk):
 
             messages.success(request, 'Personel Başarıyla Güncellenmiştir.')
 
-            return redirect('sbs:personeller')
+            # return redirect('sbs:personeller')
 
         else:
 

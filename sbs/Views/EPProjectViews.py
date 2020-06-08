@@ -693,3 +693,35 @@ def delete_document_project(request, project_pk, employee_pk):
 
     else:
         return JsonResponse({'status': 'Fail', 'msg': 'Not a valid request'})
+
+
+
+@login_required
+def dokumanAdd(request):
+
+
+    perm = general_methods.control_access(request)
+    print('ben geldim')
+
+    if not perm:
+        logout(request)
+        return redirect('accounts:login')
+    if request.method == 'POST' and request.is_ajax():
+        project=EPProject.objects.get(pk=request.POST.get('pk'))
+        print(request.POST.get('file'))
+        document = request.FILES['file']
+        data = EPDocument()
+        data.name = document
+        data.save()
+        if document:
+            project.documents.add(data)
+            project.save()
+
+        try:
+
+            return JsonResponse({'status': 'Success', 'messages': 'save successfully'})
+        except EPProject.DoesNotExist:
+            return JsonResponse({'status': 'Fail', 'msg': 'Object does not exist'})
+
+    else:
+        return JsonResponse({'status': 'Fail', 'msg': 'Not a valid request'})

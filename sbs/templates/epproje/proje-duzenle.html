@@ -1,6 +1,25 @@
 {% extends 'base_layout.html' %}
 {% block content %}
 
+    <div class="modal fade" id="modal-progress" data-backdrop="static" data-keyboard="false"
+         xmlns="http://www.w3.org/1999/html">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Yükleniyor...</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" style="width: 0%;">0%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
     <!-- success modal -->
     <div class="modal modal-success modal-success-food fade in" id="modal-success" style="display: none;">
         <div class="modal-dialog">
@@ -554,12 +573,14 @@
 
                                 <div class="col-lg-6">
 
-                                    <label>Döküman</label>
-                                    <input type="file" name="files" multiple="" id="id_files">
+                                    <input type="file" name="files" id="files">
+
                                 </div>
 
                                 <div class="text-right" style="margin-top: 20px; margin-right:10px;">
-                                    <button class="btn btn-primary " type="submit">Kaydet</button>
+                                    <button class="btn btn-primary " type="button" onclick="documentSave()">Kaydet
+                                    </button>
+
                                 </div>
 
 
@@ -591,9 +612,9 @@
 
                                                 <td>
                                                     <div class="btn-group">
-                                                         <a class="btn btn-success"
+                                                        <a class="btn btn-success"
                                                            data-toggle="modal"
-                                                           href="{{ MEDIA_URL }}{{ item.name }}" target="_blank"><i
+                                                           href="{{ MEDIA_URL }}{{ item.name }}" download><i
                                                                 class="fa fa-download"></i></a>
 
 
@@ -1289,19 +1310,19 @@
             {#console.log(competitionId);#}
 
             $("#phase").on("shown.bs.modal", function (e) {
-                 $('#phaseDate').val($('#phases-'+competitionId+' small').text());
-                 $('#phaseDefinition').val($('#phases-'+competitionId+' h4').text());
+                $('#phaseDate').val($('#phases-' + competitionId + ' small').text());
+                $('#phaseDefinition').val($('#phases-' + competitionId + ' h4').text());
                 $("#btn-phase-gonder").click(function (e) {
-                      if (e.handled !== true) {
-                          e.handled = true;
-                              $.ajax({
+                    if (e.handled !== true) {
+                        e.handled = true;
+                        $.ajax({
                             url: "{% url "sbs:proje-asama-guncelle" pk=212121223232323232  %}".replace(/212121223232323232/, id.toString()),
                             type: "POST",
                             data: {
                                 'csrfmiddlewaretoken': "{{  csrf_token  }}",
                                 phaseDate: $('#phaseDate').val(),
                                 phaseDefinition: $('#phaseDefinition').val(),
-                                id:competitionId,
+                                id: competitionId,
                                 isActive: 'False'
 
                             },
@@ -1309,8 +1330,8 @@
 
                                 if (result.status == 'Success') {
 
-                                    $('#phases-'+competitionId+' h4').text($('#phaseDefinition').val());
-                                    $('#phases-'+competitionId+' small').text($('#phaseDate').val());
+                                    $('#phases-' + competitionId + ' h4').text($('#phaseDefinition').val());
+                                    $('#phases-' + competitionId + ' small').text($('#phaseDate').val());
                                     console.log(result.status)
 
                                 }
@@ -1320,7 +1341,7 @@
                         });
 
 
-                      }
+                    }
                 });
             }).modal('show');
             $('#btn-phase-reddet').click(function () {
@@ -1448,7 +1469,7 @@
                                         console.log('işlem basari ile gerçekleşti');
                                         $('#modal-success').modal('hide');
 
-                                          $('#documents-'+competitionId).hide();
+                                        $('#documents-' + competitionId).hide();
 
                                     }
 
@@ -1470,13 +1491,14 @@
         }
 
 
-         {# edit personel ve ihtiyac alinacak#}
-         function editEmployee(id, competitionId) {
+        {# edit personel ve ihtiyac alinacak#}
+
+        function editEmployee(id, competitionId) {
             $("#reddetwhy").on("shown.bs.modal", function (e) {
 
 
-                $('#title option:selected').text($('#personel-'+competitionId+' td').eq(1).text());
-                $('#employee option:selected').text($('#personel-'+competitionId+' td').eq(2).text());
+                $('#title option:selected').text($('#personel-' + competitionId + ' td').eq(1).text());
+                $('#employee option:selected').text($('#personel-' + competitionId + ' td').eq(2).text());
 
                 console.log(e);
                 $("#btn-gonder").click(function (e) {
@@ -1490,15 +1512,15 @@
                                 'csrfmiddlewaretoken': "{{  csrf_token  }}",
                                 title: $('#title').val(),
                                 employee: $('#employee').val(),
-                                id:competitionId,
+                                id: competitionId,
                                 isActive: 'False'
 
                             },
                             success: function (result) {
 
                                 if (result.status == 'Success') {
-                                    $('#personel-'+competitionId+' td').eq(1).text($('#title option:selected').text());
-                                    $('#personel-'+competitionId+' td').eq(2).text($('#employee option:selected').text());
+                                    $('#personel-' + competitionId + ' td').eq(1).text($('#title option:selected').text());
+                                    $('#personel-' + competitionId + ' td').eq(2).text($('#employee option:selected').text());
                                 } else {
                                     console.log('Error');
                                 }
@@ -1521,34 +1543,35 @@
 
 
         }
-         function editRequirement(id, competitionId) {
+
+        function editRequirement(id, competitionId) {
             {#console.log(id);#}
             {#console.log(competitionId);#}
 
             $("#requirement").on("shown.bs.modal", function (e) {
 
-                 $('#amount').val($('#requi-'+competitionId+' td').eq(1).text());
-                 $('#definition').val($('#requi-'+competitionId+' td').eq(2).text());
+                $('#amount').val($('#requi-' + competitionId + ' td').eq(1).text());
+                $('#definition').val($('#requi-' + competitionId + ' td').eq(2).text());
 
                 $("#btn-requirement-gonder").click(function () {
                     if (e.handled !== true) { // This will prevent event triggering more then once
                         e.handled = true;
-                         $.ajax({
+                        $.ajax({
                             url: "{% url "sbs:proje-ihtiyac-güncelle" pk=212121223232323232  %}".replace(/212121223232323232/, id.toString()),
                             type: "POST",
                             data: {
                                 'csrfmiddlewaretoken': "{{  csrf_token  }}",
                                 amount: $('#amount').val(),
                                 definition: $('#definition').val(),
-                                id:competitionId,
+                                id: competitionId,
                                 isActive: 'False'
 
                             },
                             success: function (result) {
                                 if (result.status == 'Success') {
-                                    $('#requi-'+competitionId+' td').eq(2).text($('#definition').val());
-                                    $('#requi-'+competitionId+' td').eq(1).text($('#amount').val());
-                                   Console.log(result.status);
+                                    $('#requi-' + competitionId + ' td').eq(2).text($('#definition').val());
+                                    $('#requi-' + competitionId + ' td').eq(1).text($('#amount').val());
+                                    Console.log(result.status);
                                 } else {
                                     Console.log('Error');
                                 }
@@ -1556,12 +1579,6 @@
 
                             }
                         });
-
-
-
-
-
-
 
 
                     }
@@ -1576,6 +1593,43 @@
                 $('.modal').modal('hide');
 
             });
+
+
+        }
+
+        function documentSave() {
+            var file = $('#files')[0];
+            {#var file = $('#files').val();#}
+            console.log(file);
+            formdata = new FormData();
+            formdata.append("file", file);
+            formdata.append("csrfmiddlewaretoken","{{  csrf_token  }}");
+            formdata.append("pk"," {{ project.pk }}");
+
+            if (file != null) {
+                alert();
+                $.ajax({
+                        url: "{% url "sbs:dokumanAdd"%}",
+                        type: "POST",
+                        data: {
+                            'csrfmiddlewaretoken': "{{  csrf_token  }}",
+                            pk:{{ project.pk }},
+                            file:'formdata',
+                            isActive: 'False',
+
+                        },
+                        success: function (result) {
+
+
+                        }
+                    }
+                );
+
+
+            } else {
+
+                alert('deger yok ')
+            }
 
 
         }
