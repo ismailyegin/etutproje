@@ -231,10 +231,10 @@ def edit_project_pdf(request,pk):
     c.drawString(300,590,'Arsa Yapım Ödenek Bilgileri')
     c.line(300, 580, 450, 580)
     c.setFont("Verdana", 10)
-    c.drawString(300, 560, "Arsa Alanı                   :%s" % project.ihaleTarihi.strftime('%m/%d/%Y'))
-    c.drawString(300, 540, "İnşaat alanı                 :%s" % project.ihaleTarihi.strftime('%m/%d/%Y'))
-    c.drawString(300, 520, "Tahmini Ödenek Tutari:%s" % project.ihaleTarihi.strftime('%m/%d/%Y'))
-    c.drawString(300, 500, "Yaklaşık Maliyet          :%s" % project.ihaleTarihi.strftime('%m/%d/%Y'))
+    c.drawString(300, 560, "Arsa Alanı                   :%s" % project.arsaAlani)
+    c.drawString(300, 540, "İnşaat alanı                 :%s" % project.insaatAlani)
+    c.drawString(300, 520, "Tahmini Ödenek Tutari:%s" % project.tahminiOdenekTutari)
+    c.drawString(300, 500, "Yaklaşık Maliyet          :%s" % project.yaklasikMaliyet)
 
 
 
