@@ -51,23 +51,19 @@ def login(request):
             # correct username and password login the user
             auth.login(request, user)
 
-            if user.groups.all()[0].name == 'Antrenor':
-                return redirect('sbs:antrenor')
 
-            elif user.groups.all()[0].name == 'Hakem':
-                return redirect('sbs:hakem')
 
-            elif user.groups.all()[0].name == 'Sporcu':
-                return redirect('sbs:sporcu')
-
-            elif user.groups.all()[0].name == 'Yonetim':
+            if user.groups.all()[0].name == 'Yonetim':
                 return redirect('sbs:federasyon')
 
             elif user.groups.all()[0].name == 'Admin':
                 return redirect('sbs:admin')
 
-            elif user.groups.all()[0].name == 'KulupUye':
-                return redirect('sbs:kulup-uyesi')
+            elif user.groups.all()[0].name == 'Personel':
+                return redirect('sbs:personel')
+
+
+
 
 
             else:
@@ -276,8 +272,8 @@ def forgot(request):
             html_content = html_content + '<p><strong>Kullanıcı Adınız :' + str(fdk.user.username) + '</strong></p>'
             # html_content = html_content + '<p> <strong>Site adresi:</strong> <a href="http://127.0.0.1:8000/newpassword?query=' + str(
             #     fdk.uuid) + '">http://127.0.0.1:8000/sbs/profil-guncelle/?query=' + str(fdk.uuid) + '</p></a>'
-            html_content = html_content + '<p> <strong>Site adresi:</strong> <a href="http://sbs.halter.gov.tr:81/newpassword?query=' + str(
-                fdk.uuid) + '">http://sbs.halter.gov.tr:81/sbs/profil-guncelle/?query=' + str(fdk.uuid) + '</p></a>'
+            html_content = html_content + '<p> <strong>Site adresi:</strong> <a href="http://sbs.halter.gov.tr/newpassword?query=' + str(
+                fdk.uuid) + '">http://sbs.halter.gov.tr/sbs/profil-guncelle/?query=' + str(fdk.uuid) + '</p></a>'
 
             msg = EmailMultiAlternatives(subject, '', from_email, [to])
             msg.attach_alternative(html_content, "text/html")
@@ -360,8 +356,8 @@ def newlogin(request, pk):
             html_content = html_content + '<p><strong>Kullanıcı Adınız :' + str(fdk.user.username) + '</strong></p>'
             # html_content = html_content + '<p> <strong>Site adresi:</strong> <a href="http://127.0.0.1:8000/newpassword?query=' + str(
             #     fdk.uuid) + '">http://127.0.0.1:8000/sbs/profil-guncelle/?query=' + str(fdk.uuid) + '</p></a>'
-            html_content = html_content + '<p> <strong>Site adresi:</strong> <a href="http://sbs.halter.gov.tr:81/newpassword?query=' + str(
-                fdk.uuid) + '">http://sbs.halter.gov.tr:81/sbs/profil-guncelle/?query=' + str(fdk.uuid) + '</p></a>'
+            html_content = html_content + '<p> <strong>Site adresi:</strong> <a href="http://sbs.halter.gov.tr/newpassword?query=' + str(
+                fdk.uuid) + '">http://sbs.halter.gov.tr/sbs/profil-guncelle/?query=' + str(fdk.uuid) + '</p></a>'
 
             msg = EmailMultiAlternatives(subject, '', from_email, [to])
             msg.attach_alternative(html_content, "text/html")

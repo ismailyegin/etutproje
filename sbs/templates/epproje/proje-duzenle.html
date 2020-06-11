@@ -578,7 +578,8 @@
                                 </div>
 
                                 <div class="text-right" style="margin-top: 20px; margin-right:10px;">
-                                    <button class="btn btn-primary " type="button" onclick="documentSave()">Kaydet
+                                    <button class="btn btn-primary " type="submit">Kaydet
+{#                                        onclick="documentSave()#}
                                     </button>
 
                                 </div>
@@ -1599,22 +1600,21 @@
 
         function documentSave() {
             var file = $('#files')[0];
-            {#var file = $('#files').val();#}
-            console.log(file);
-            formdata = new FormData();
-            formdata.append("file", file);
-            formdata.append("csrfmiddlewaretoken","{{  csrf_token  }}");
-            formdata.append("pk"," {{ project.pk }}");
+
+
 
             if (file != null) {
-                alert();
+
                 $.ajax({
+
+
+
                         url: "{% url "sbs:dokumanAdd"%}",
                         type: "POST",
                         data: {
                             'csrfmiddlewaretoken': "{{  csrf_token  }}",
                             pk:{{ project.pk }},
-                            file:'formdata',
+                            file:file,
                             isActive: 'False',
 
                         },

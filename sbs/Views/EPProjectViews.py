@@ -700,6 +700,8 @@ def delete_document_project(request, project_pk, employee_pk):
 def dokumanAdd(request):
 
 
+
+
     perm = general_methods.control_access(request)
     print('ben geldim')
 
@@ -708,7 +710,7 @@ def dokumanAdd(request):
         return redirect('accounts:login')
     if request.method == 'POST' and request.is_ajax():
         project=EPProject.objects.get(pk=request.POST.get('pk'))
-        print(request.POST.get('file'))
+
         document = request.FILES['file']
         data = EPDocument()
         data.name = document
@@ -725,3 +727,12 @@ def dokumanAdd(request):
 
     else:
         return JsonResponse({'status': 'Fail', 'msg': 'Not a valid request'})
+
+
+@login_required
+def return_personel_dashboard(request):
+    perm = general_methods.control_access_personel(request)
+    if not perm:
+        logout(request)
+        return redirect('accounts:login')
+    return render(request, 'anasayfa/personel.html')

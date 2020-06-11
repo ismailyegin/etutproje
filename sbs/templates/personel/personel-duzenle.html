@@ -76,10 +76,13 @@
                                         <label> {{ person_form.profileImage.label }}</label>
 
                                         <center>
-                                            <img
+
+                                            {% if person_form.instance.profileImage %}
+                                                <img
                                                     src="{{ MEDIA_URL }}{{ person_form.instance.profileImage }}"
                                                     class="img-responsive img-bordered " alt="Resim Yok"
                                             ><br>
+                                            {% endif %}
                                         </center>
 
                                         {{ person_form.profileImage }}

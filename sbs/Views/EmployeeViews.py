@@ -85,13 +85,13 @@ def add_employee(request):
             person.save()
             communication.save()
 
-            club_person = Employee(
+            personel = Employee(
                 user=user, person=person, communication=communication,
                 workDefinition=sportClubUser_form.cleaned_data['workDefinition'],
 
             )
 
-            club_person.save()
+            personel.save()
 
             messages.success(request, 'Personel Başarıyla Kayıt Edilmiştir.')
 
@@ -106,6 +106,16 @@ def add_employee(request):
                   {'user_form': user_form, 'person_form': person_form, 'communication_form': communication_form,
                    'employee_form': employee_form,
                    })
+
+
+
+
+
+
+
+
+
+
 
 @login_required
 def edit_employee(request, pk):
@@ -127,12 +137,6 @@ def edit_employee(request, pk):
         forWhichClazz="EMPLOYEE_WORKDEFINITION")
     projects=EPProject.objects.filter(employees__employee__user=user ).distinct()
     projects|=EPProject.objects.filter(sorumlu__user=user).distinct()
-    # for proje in projects:
-    #     for item in proje.employees.all():
-    #         if item.employee.user==user:
-    #             print(item.employee.projectEmployeeTitle)
-
-
 
     if request.method == 'POST':
 

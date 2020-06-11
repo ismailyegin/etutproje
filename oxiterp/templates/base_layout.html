@@ -295,54 +295,9 @@
 
 
 
+                {% elif  user.groups.all.0.name == 'Personel' %}
 
-                {% elif  user.groups.all.0.name == 'Hakem' %}
-
-                    {% for menu in refereemenus %}
-
-
-                        {% if menu.is_parent %}
-
-                            <li class="treeview ">
-                            <a href="#">
-                                <i class=" {{ menu.fa_icon }}"></i>
-                                <span>{{ menu.name }}</span>
-                                <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                            </a>
-                        {% endif %}
-
-
-                    <ul class="treeview-menu">
-
-                        {% for menusub in refereemenus %}
-
-
-
-                            {% if menusub.parent.id is menu.id %}
-
-                                <li>
-                                    <a href="{% url menusub.url %}"><i
-                                            class=" {{ menusub.fa_icon }}"></i> {{ menusub.name }}</a>
-                                </li>
-
-                            {% endif %}
-
-                        {% endfor %}
-
-                    </ul>
-                    </li>
-                    {% endfor %}
-
-
-
-
-
-
-                {% elif  user.groups.all.0.name == 'Antrenor' %}
-
-                    {% for menu in coachmenus %}
+                    {% for menu in personelmenus %}
 
 
                         {% if menu.is_parent %}
@@ -360,7 +315,7 @@
 
                     <ul class="treeview-menu">
 
-                        {% for menusub in coachmenus %}
+                        {% for menusub in personelmenus %}
 
 
 
@@ -378,113 +333,6 @@
                     </ul>
                     </li>
                     {% endfor %}
-
-
-
-
-
-                {% elif  user.groups.all.0.name == 'KulupUye' %}
-
-                    {% for menu in clubusermenus %}
-
-
-                        {% if menu.is_parent %}
-
-                            <li class="treeview ">
-                            <a href="#">
-                                <i class=" {{ menu.fa_icon }}"></i>
-                                <span>{{ menu.name }}</span>
-                                <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                            </a>
-                        {% endif %}
-
-
-                    <ul class="treeview-menu">
-
-                        {% for menusub in clubusermenus %}
-
-
-
-                            {% if menusub.parent.id is menu.id %}
-
-                                <li>
-                                    <a href="{% url menusub.url %}"><i
-                                            class=" {{ menusub.fa_icon }}"></i> {{ menusub.name }}</a>
-                                </li>
-
-                            {% endif %}
-
-                        {% endfor %}
-
-                    </ul>
-                    </li>
-                    {% endfor %}
-
-
-
-
-
-
-
-
-                {% elif  user.groups.all.0.name == 'Yonetim' %}
-
-                    {% for menu in directorymenus %}
-
-
-                        {% if menu.is_parent %}
-
-                            <li class="treeview ">
-                            <a href="#">
-                                <i class=" {{ menu.fa_icon }}"></i>
-                                <span>{{ menu.name }}</span>
-                                <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                            </a>
-                        {% endif %}
-
-
-                    <ul class="treeview-menu">
-
-                        {% for menusub in directorymenus %}
-
-
-
-                            {% if menusub.parent.id is menu.id %}
-
-                                <li>
-                                    <a href="{% url menusub.url %}"><i
-                                            class=" {{ menusub.fa_icon }}"></i> {{ menusub.name }}</a>
-                                </li>
-
-                            {% endif %}
-
-                        {% endfor %}
-
-                    </ul>
-                    </li>
-                    {% endfor %}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

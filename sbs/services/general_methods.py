@@ -4,9 +4,27 @@ from django.conf import settings
 from django.contrib.auth import logout
 from django.contrib.auth.models import Permission, User, Group
 from django.shortcuts import redirect
+from sbs.models.MenuPersonel import MenuPersonel
 
-from sbs.models import Menu, MenuAdmin, MenuAthlete, MenuReferee, MenuCoach, MenuDirectory, MenuClubUser, \
-    SportClubUser, Person, Athlete, Coach, Judge, DirectoryMember, SportsClub, Communication, City, Country, ClubRole
+from sbs.models.Menu import Menu
+from sbs.models.MenuAdmin import MenuAdmin
+from sbs.models.MenuAthlete import MenuAthlete
+from sbs.models.MenuReferee import MenuReferee
+from sbs.models.MenuCoach import MenuCoach
+from sbs.models.MenuDirectory import MenuDirectory
+from sbs.models.MenuClubUser import MenuClubUser
+from sbs.models.SportClubUser import SportClubUser
+from sbs.models.Person import Person
+from sbs.models.Athlete import Athlete
+from sbs.models.Coach import Coach
+from sbs.models.Judge import Judge
+from sbs.models.DirectoryMember import DirectoryMember
+from sbs.models.SportsClub import SportsClub
+from sbs.models.Communication import Communication
+from sbs.models.City import City
+from sbs.models.Country import Country
+from sbs.models.ClubRole import ClubRole
+
 
 
 def getMenu(request):
@@ -15,13 +33,28 @@ def getMenu(request):
 
 
 def getAdminMenu(request):
-    adminmenus = MenuAdmin.objects.all()
+    adminmenus = MenuAdmin.objects.all().order_by('count')
     return {'adminmenus': adminmenus}
+
+def getPersonelMenu(request):
+    personelmenus = MenuPersonel.objects.all()
+    return {'personelmenus': personelmenus}
+
+
+
+
+
+
+
+
+
+
 
 
 def getAthleteMenu(request):
     athletemenus = MenuAthlete.objects.all()
     return {'athletemenus': athletemenus}
+
 
 
 def getRefereeMenu(request):
@@ -37,6 +70,10 @@ def getCoachMenu(request):
 def getDirectoryMenu(request):
     directorymenus = MenuDirectory.objects.all()
     return {'directorymenus': directorymenus}
+
+
+
+
 
 
 def getClubUserMenu(request):
@@ -90,6 +127,26 @@ def control_access(request):
         is_exist = True
 
     return is_exist
+
+def control_access_personel(request):
+    group = request.user.groups.all()[0]
+
+    permissions = group.permissions.all()
+
+    is_exist = False
+
+    for perm in permissions:
+
+        if request.resolver_match.url_name == perm.name:
+            is_exist = True
+
+    if group.name == "Admin" or group.name=="Personel":
+        is_exist = True
+
+    return is_exist
+
+
+
 
 
 def control_access_klup(request):

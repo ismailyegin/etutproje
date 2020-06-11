@@ -1,10 +1,9 @@
 from django.conf.urls import url
 
 from sbs.Views import DashboardViews, AthleteViews, RefereeViews, ClubViews, CoachViews, DirectoryViews, UserViews, \
-    CompetitionViews, AdminViews, HelpViews, PageViews, PreRegistration, EPProjectViews, EmployeeViews
+    CompetitionViews, AdminViews, HelpViews, PageViews, PreRegistration, EPProjectViews, EmployeeViews,PdfView
 
 app_name = 'sbs'
-
 
 urlpatterns = [
 
@@ -343,6 +342,7 @@ urlpatterns = [
         name='unvan-duzenle'),
     url(r'etut-proje/proje-personel-ekle/(?P<pk>\d+)$',
         EPProjectViews.add_employee_to_project, name='proje-personel-ekle'),
+    url(r'etut-proje/personel/$', EPProjectViews.return_personel_dashboard, name='personel'),
 
 
 
@@ -401,5 +401,20 @@ urlpatterns = [
         name='istanimi-sil'),
     url(r'personel/istanimi-duzenle/(?P<pk>\d+)$', EmployeeViews.edit_workdefinition,
         name='istanimi-duzenle'),
+
+
+#     pdf test
+
+    url(r'pdf/$',PdfView.return_pdf, name='pdf'),
+    url(r'pdf2/$', PdfView.html_to_pdf_view, name='pdf2'),
+
+
+    url(r'excel/$',PdfView.return_excel, name='excel'),
+    url(r'excel2/$', PdfView.return_excel_row, name='excel2')
+
+
+
+
+
 
 ]
