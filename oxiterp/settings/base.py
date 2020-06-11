@@ -76,6 +76,8 @@ TEMPLATES = [
                 'django.template.context_processors.i18n',
                 'sbs.services.general_methods.getMenu',
                 'sbs.services.general_methods.getAdminMenu',
+                'sbs.services.general_methods.getPersonelMenu',
+
                 'sbs.services.general_methods.getAthleteMenu',
                 'sbs.services.general_methods.getRefereeMenu',
                 'sbs.services.general_methods.getCoachMenu',
