@@ -223,8 +223,10 @@
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i>Proje Düzenle</a></li>
 
+
         </ol>
     </section>
+
     <section class="content">
 
         <form method="post" enctype="multipart/form-data" role="form">
@@ -237,7 +239,25 @@
                         <div class="box box-primary">
                             <div class="box-header with-border">
                                 <h3 class="box-title">GENEL BİLGİLER</h3>
+
+
                             </div>
+                             <div class="box-header with-border">
+                            <div class="btn-group">
+
+
+                                    <a href="{% url "sbs:proje-pdf" project.pk %}"
+                                       type="button" class="btn btn-default"><i
+                                            class="fa fa-file-pdf-o"></i> Pdf
+                                    </a>
+
+                                      <a href="{% url "sbs:proje-excel" project.pk %}"
+                                       type="button" class="btn btn-default"><i
+                                            class="fa fa-file-excel-o"></i> Excel
+                                    </a>
+
+                            </div>
+                        </div>
                             <div class="box-body">
                                 <div class="row">
                                     <div class="col-lg-6">
