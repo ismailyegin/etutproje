@@ -27,7 +27,6 @@ from sbs.models import EPProject, CategoryItem, City
 from sbs.models.Town import Town
 from sbs.models.Employee import Employee
 from sbs.models.EPPhase import EPPhase
-from sbs.models.EPProject import EPProject
 from sbs.services import general_methods
 from sbs.services.general_methods import getProfileImage
 from django.utils import timezone
@@ -42,6 +41,24 @@ from django.db.models import Q
 from io import BytesIO
 from reportlab.pdfgen import canvas
 from django.http import HttpResponse
+
+import io
+from django.http import FileResponse
+from reportlab.pdfgen import canvas
+from reportlab.pdfbase import pdfmetrics
+from reportlab.pdfbase.ttfonts import TTFont
+
+
+import reportlab.rl_config
+reportlab.rl_config.warnOnMissingFontGlyphs = 0
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.rl_config import defaultPageSize
+from reportlab.lib.units import inch
+from reportlab.platypus import PageBreak
+
+
+
 
 # excel
 import csv
@@ -167,6 +184,7 @@ def return_excel(request):
 @login_required
 def edit_project_pdf(request,pk):
     project = EPProject.objects.get(pk=pk)
+
     kalan=102
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'inline; filename="ProjeTakip.pdf"'
