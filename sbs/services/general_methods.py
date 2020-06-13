@@ -22,6 +22,8 @@ from sbs.models.City import City
 from sbs.models.Country import Country
 from sbs.models.ClubRole import ClubRole
 
+from sbs.models.Employee import Employee
+
 
 
 def getMenu(request):
@@ -150,9 +152,12 @@ def getProfileImage(request):
             athlete = Coach.objects.get(user=current_user)
             person = Person.objects.get(id=athlete.person.id)
 
-        elif current_user.groups.filter(name='Hakem').exists():
-            athlete = Judge.objects.get(user=current_user)
-            person = Person.objects.get(id=athlete.person.id)
+        elif current_user.groups.filter(name='Personel').exists():
+            personel = Employee.objects.get(user=current_user)
+            person = Person.objects.get(id=personel.person.id)
+            return {'person': person}
+
+
 
         elif current_user.groups.filter(name='Yonetim').exists():
             athlete = DirectoryMember.objects.get(user=current_user)

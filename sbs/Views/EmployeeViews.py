@@ -295,7 +295,68 @@ def edit_workdefinition(request, pk):
 
 
 
+@login_required
+def updateRefereeProfile(request):
+    perm = general_methods.control_access_personel(request)
 
+    if not perm:
+        logout(request)
+        return redirect('accounts:login')
+
+    user = request.user
+    referee_user = Employee.objects.get(user=user)
+    person = Person.objects.get(pk=referee_user.person.pk)
+    communication = Communication.objects.get(pk=referee_user.communication.pk)
+    user_form = DisabledUserForm(request.POST or None, instance=user)
+    person_form = DisabledPersonForm(request.POST or None, request.FILES or None, instance=person)
+    communication_form = DisabledCommunicationForm(request.POST or None, instance=communication)
+    password_form = SetPasswordForm(request.user, request.POST)
+
+    if request.method == 'POST':
+        data = request.POST.copy()
+        data['bloodType'] = "AB Rh+"
+        data['gender'] = "Erkek"
+        person_form = DisabledPersonForm(data)
+
+        if person_form.is_valid() and password_form.is_valid():
+            if len(request.FILES)>0:
+                person.profileImage = request.FILES['profileImage']
+                person.save()
+                messages.success(request, 'Profil Fotoğrafı Başarıyla Güncellenmiştir.')
+
+            user.set_password(password_form.cleaned_data['new_password2'])
+            user.save()
+            update_session_auth_hash(request, user)
+            messages.success(request, 'Şifre Başarıyla Güncellenmiştir.')
+            return redirect('sbs:personel')
+
+
+
+        elif person_form.is_valid() and not password_form.is_valid():
+            if len(request.FILES)>0:
+                person.profileImage = request.FILES['profileImage']
+                person.save()
+                messages.success(request, 'Profil Fotoğrafı Başarıyla Güncellenmiştir.')
+            else:
+                messages.warning(request, 'Alanları Kontrol Ediniz')
+            return redirect('sbs:personel')
+
+
+        elif not person_form.is_valid() and password_form.is_valid():
+            user.set_password(password_form.cleaned_data['new_password2'])
+            user.save()
+            update_session_auth_hash(request, user)
+            messages.success(request, 'Şifre Başarıyla Güncellenmiştir.')
+            return redirect('sbs:personel')
+
+        else:
+            messages.warning(request, 'Alanları Kontrol Ediniz.')
+
+            return redirect('sbs:personel')
+
+    return render(request, 'personel/Personel-Profil-güncelle.html',
+                  {'user_form': user_form, 'communication_form': communication_form,
+                   'person_form': person_form, 'password_form': password_form})
 
 
 

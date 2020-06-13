@@ -126,15 +126,15 @@
                         <ul class="dropdown-menu">
                             <!-- User image -->
                             <li class="user-header">
-                                <img src="{{ MEDIA_URL }}{{ person.profileImage }}" class="img-circle" alt="KOBİLTEK">
+                                <img src="{{ MEDIA_URL }}{{ person.profileImage }}" class="img-circle" alt="">
 
                                 <p>
                                     {{ user.first_name }} {{ user.last_name }}
 
 
 
-                                    {% if user.groups.all.0.name == "Sporcu" %}
-                                        <small> Sporcu</small>
+                                    {% if user.groups.all.0.name == "Personel" %}
+                                        <small> Personel</small>
 
 
                                     {% elif user.groups.all.0.name == "Hakem" %}
@@ -198,8 +198,8 @@
                                         <a href="{% url "sbs:admin-profil-guncelle" %}"
                                            class="btn btn-default btn-flat">Profil Bilgisi</a>
 
-                                    {% elif user.groups.all.0.name == "Hakem" %}
-                                        <a href="{% url "sbs:hakem-profil-guncelle" %}"
+                                    {% elif user.groups.all.0.name == "Personel" %}
+                                        <a href="{% url "sbs:personel-profil-guncelle" %}"
                                            class="btn btn-default btn-flat">Profil Bilgisi</a>
 
 

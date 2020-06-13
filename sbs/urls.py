@@ -405,6 +405,8 @@ urlpatterns = [
         name='istanimi-sil'),
     url(r'personel/istanimi-duzenle/(?P<pk>\d+)$', EmployeeViews.edit_workdefinition,
         name='istanimi-duzenle'),
+    url(r'personel/personel-profil-guncelle/$', EmployeeViews.updateRefereeProfile,
+        name='personel-profil-guncelle'),
 
 
 #     pdf test
