@@ -313,31 +313,19 @@ def updateRefereeProfile(request):
     password_form = SetPasswordForm(request.user, request.POST)
 
     if request.method == 'POST':
-        if person_form.is_valid() and password_form.is_valid():
-            if len(request.FILES) > 0:
-                referee_user.person.profileImage = request.FILES['profileImage']
-                referee_user.save()
-                messages.success(request, 'Profil Fotoğrafı Başarıyla Güncellenmiştir.')
+        person_form = DisabledPersonForm(request.POST, request.FILES)
+        try:
+            if request.FILES['profileImage']:
+                print('deger var ')
+                person.profileImage = request.FILES['profileImage']
+                person.save()
+                messages.success(request, 'güncelleneme islemi gerçeklesti')
 
-            user.set_password(password_form.cleaned_data['new_password2'])
-            user.save()
-            update_session_auth_hash(request, user)
-            messages.success(request, 'Şifre Başarıyla Güncellenmiştir.')
-            return redirect('sbs:personel-profil-guncelle')
-
+        except:
+            print('hata' )
 
 
-        elif person_form.is_valid() and not password_form.is_valid():
-            if len(request.FILES) > 0:
-                referee_user.person.profileImage = request.FILES['profileImage']
-                referee_user.save()
-                messages.success(request, 'Profil Fotoğrafı Başarıyla Güncellenmiştir.')
-            else:
-                messages.warning(request, 'Alanları Kontrol Ediniz')
-            return redirect('sbs:personel-profil-guncelle')
-
-
-        elif not person_form.is_valid() and password_form.is_valid():
+        if password_form.is_valid():
             user.set_password(password_form.cleaned_data['new_password2'])
             user.save()
             update_session_auth_hash(request, user)
@@ -345,8 +333,6 @@ def updateRefereeProfile(request):
             return redirect('sbs:personel-profil-guncelle')
 
         else:
-            messages.warning(request, 'Alanları Kontrol Ediniz.')
-
             return redirect('sbs:personel-profil-guncelle')
 
     return render(request, 'personel/Personel-Profil-güncelle.html',
