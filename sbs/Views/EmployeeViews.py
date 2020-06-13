@@ -1,7 +1,7 @@
 import datetime
 from _socket import gaierror
 
-from django.contrib.auth import logout
+from django.contrib.auth import logout, authenticate, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import SetPasswordForm
 from django.contrib.auth.models import User, Group
@@ -313,33 +313,28 @@ def updateRefereeProfile(request):
     password_form = SetPasswordForm(request.user, request.POST)
 
     if request.method == 'POST':
-        data = request.POST.copy()
-        data['bloodType'] = "AB Rh+"
-        data['gender'] = "Erkek"
-        person_form = DisabledPersonForm(data)
-
         if person_form.is_valid() and password_form.is_valid():
-            if len(request.FILES)>0:
-                person.profileImage = request.FILES['profileImage']
-                person.save()
+            if len(request.FILES) > 0:
+                referee_user.person.profileImage = request.FILES['profileImage']
+                referee_user.save()
                 messages.success(request, 'Profil Fotoğrafı Başarıyla Güncellenmiştir.')
 
             user.set_password(password_form.cleaned_data['new_password2'])
             user.save()
             update_session_auth_hash(request, user)
             messages.success(request, 'Şifre Başarıyla Güncellenmiştir.')
-            return redirect('sbs:personel')
+            return redirect('sbs:personel-profil-guncelle')
 
 
 
         elif person_form.is_valid() and not password_form.is_valid():
-            if len(request.FILES)>0:
-                person.profileImage = request.FILES['profileImage']
-                person.save()
+            if len(request.FILES) > 0:
+                referee_user.person.profileImage = request.FILES['profileImage']
+                referee_user.save()
                 messages.success(request, 'Profil Fotoğrafı Başarıyla Güncellenmiştir.')
             else:
                 messages.warning(request, 'Alanları Kontrol Ediniz')
-            return redirect('sbs:personel')
+            return redirect('sbs:personel-profil-guncelle')
 
 
         elif not person_form.is_valid() and password_form.is_valid():
@@ -347,12 +342,12 @@ def updateRefereeProfile(request):
             user.save()
             update_session_auth_hash(request, user)
             messages.success(request, 'Şifre Başarıyla Güncellenmiştir.')
-            return redirect('sbs:personel')
+            return redirect('sbs:personel-profil-guncelle')
 
         else:
             messages.warning(request, 'Alanları Kontrol Ediniz.')
 
-            return redirect('sbs:personel')
+            return redirect('sbs:personel-profil-guncelle')
 
     return render(request, 'personel/Personel-Profil-güncelle.html',
                   {'user_form': user_form, 'communication_form': communication_form,

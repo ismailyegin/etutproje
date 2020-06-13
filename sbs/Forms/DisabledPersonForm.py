@@ -14,6 +14,7 @@ class DisabledPersonForm(ModelForm):
         labels = {'tc': 'T.C.', 'gender': 'Cinsiyet'}
 
         widgets = {
+            'profileImage': forms.FileInput(),
 
             'tc': forms.TextInput(attrs={'class': 'form-control ',  'readonly': 'readonly'}),
 

@@ -140,24 +140,9 @@ def getProfileImage(request):
     if (request.user.id):
         current_user = request.user
 
-        if current_user.groups.filter(name='KulupUye').exists():
-            athlete = SportClubUser.objects.get(user=current_user)
-            person = Person.objects.get(id=athlete.person.id)
-
-        elif current_user.groups.filter(name='Sporcu').exists():
-            athlete = Athlete.objects.get(user=current_user)
-            person = Person.objects.get(id=athlete.person.id)
-
-        elif current_user.groups.filter(name='Antrenor').exists():
-            athlete = Coach.objects.get(user=current_user)
-            person = Person.objects.get(id=athlete.person.id)
-
-        elif current_user.groups.filter(name='Personel').exists():
+        if current_user.groups.filter(name='Personel').exists():
             personel = Employee.objects.get(user=current_user)
             person = Person.objects.get(id=personel.person.id)
-            return {'person': person}
-
-
 
         elif current_user.groups.filter(name='Yonetim').exists():
             athlete = DirectoryMember.objects.get(user=current_user)
