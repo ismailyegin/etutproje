@@ -1,5 +1,80 @@
 {% extends 'base_layout.html' %}
 {% block content %}
-    <h1>Personel Anasayfa</h1>
 
+
+
+    <section class="content">
+        <!-- Content Header (Page header) -->
+
+
+        <!-- Main content -->
+        <section class="content">
+    <div class="row">
+                <div class="col-lg-3 col-xs-6">
+                    <!-- small box -->
+                    <div class="small-box bg-aqua">
+                        <div class="inner">
+                            <h3>{{ proje_count }}</h3>
+
+                            <p>Proje</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-bag"></i>
+                        </div>
+                        <a href="{% url 'sbs:projeler' %}" class="small-box-footer">Daha Fazla <i
+                                class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <!-- ./col -->
+                <div class="col-lg-3 col-xs-6">
+                    <!-- small box -->
+                    <div class="small-box bg-green">
+                        <div class="inner">
+                            <h3>{{ proje_status_PT }}<sup style="font-size: 20px"></sup></h3>
+
+                            <p>Tamamlanan Proje</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-stats-bars"></i>
+                        </div>
+                        <a href="{% url 'sbs:projeler' %}" class="small-box-footer">Daha Fazla <i
+                                class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <!-- ./col -->
+                <div class="col-lg-3 col-xs-6">
+                    <!-- small box -->
+                    <div class="small-box bg-yellow">
+                        <div class="inner">
+                            <h3>{{ proje_status_PDE }}</h3>
+
+                            <p>Açık Proje</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-home"></i>
+                        </div>
+                        <a href="{% url 'sbs:projeler' %}" class="small-box-footer">Daha Fazla <i
+                                class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <!-- ./col -->
+                <div class="col-lg-3 col-xs-6">
+                    <!-- small box -->
+                    <div class="small-box bg-red">
+                        <div class="inner">
+                            <h3>{{ personel_count }}</h3>
+
+                            <p>Personel</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-pie-graph"></i>
+                        </div>
+                        <a href="{% url 'sbs:personeller' %}" class="small-box-footer">Daha Fazla <i
+                                class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <!-- ./col -->
+            </div>
+        </section>
+    </section>
 {% endblock %}
