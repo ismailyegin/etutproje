@@ -20,11 +20,8 @@ from .DirectoryCommission import DirectoryCommission
 from .DirectoryMemberRole import DirectoryMemberRole
 from .DirectoryMember import DirectoryMember
 from .BeltExam import BeltExam
-from .MenuAthlete import MenuAthlete
-from .MenuCoach import MenuCoach
+from .MenuPersonel import MenuPersonel
 from .MenuDirectory import MenuDirectory
-from .MenuReferee import MenuReferee
-from .MenuClubUser import MenuClubUser
 from .SimpleCategory import SimpleCategory
 from .CompAthlete import CompAthlete
 from .CompCategory import CompCategory

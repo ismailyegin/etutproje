@@ -8,11 +8,8 @@ from sbs.models.MenuPersonel import MenuPersonel
 
 from sbs.models.Menu import Menu
 from sbs.models.MenuAdmin import MenuAdmin
-from sbs.models.MenuAthlete import MenuAthlete
-from sbs.models.MenuReferee import MenuReferee
-from sbs.models.MenuCoach import MenuCoach
+from sbs.models.MenuPersonel import MenuPersonel
 from sbs.models.MenuDirectory import MenuDirectory
-from sbs.models.MenuClubUser import MenuClubUser
 from sbs.models.SportClubUser import SportClubUser
 from sbs.models.Person import Person
 from sbs.models.Athlete import Athlete
@@ -43,42 +40,12 @@ def getPersonelMenu(request):
 
 
 
-
-
-
-
-
-
-
-
-def getAthleteMenu(request):
-    athletemenus = MenuAthlete.objects.all()
-    return {'athletemenus': athletemenus}
-
-
-
-def getRefereeMenu(request):
-    refereemenus = MenuReferee.objects.all()
-    return {'refereemenus': refereemenus}
-
-
-def getCoachMenu(request):
-    coachmenus = MenuCoach.objects.all()
-    return {'coachmenus': coachmenus}
-
-
 def getDirectoryMenu(request):
     directorymenus = MenuDirectory.objects.all()
     return {'directorymenus': directorymenus}
 
 
 
-
-
-
-def getClubUserMenu(request):
-    clubusermenus = MenuClubUser.objects.all()
-    return {'clubusermenus': clubusermenus}
 
 
 def show_urls(urllist, depth=0):
