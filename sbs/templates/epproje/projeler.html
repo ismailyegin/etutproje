@@ -263,13 +263,25 @@
 
                                             <td>
                                                 <div class="btn-group ">
+
+                                                     {% if user.groups.all.0.name == 'Admin' %}
                                                     <a href="{% url "sbs:proje-duzenle" project.pk %}"
                                                        type="button" class="btn btn-warning btn-lg"><i
                                                             class="fa fa-edit"></i>
                                                     </a>
+
                                                     <a class="btn btn-danger btn-lg"
                                                        data-toggle="modal" onclick=deleteReferee({{ project.pk }})><i
                                                             class="fa fa-trash"></i></a>
+
+                                                         {% else %}
+
+                                                         <a href="{% url "sbs:proje-incele-personel" project.pk %}"
+                                                       type="button" class="btn btn-warning btn-lg"><i
+                                                            class="fa fa-edit"></i>
+                                                    </a>
+
+                                                    {% endif %}
 
                                                 </div>
                                             </td>

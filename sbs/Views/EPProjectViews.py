@@ -22,6 +22,7 @@ from django.utils import timezone
 
 from sbs.models.EPDocument import EPDocument
 from sbs.Forms.EPDocumentForm import EPDocumentForm
+from sbs.Forms.DisableEPProjectForm import DisableEPProjectForm
 
 
 from sbs.Forms.EPProjectSearchForm import EPProjectSearchForm
@@ -69,6 +70,35 @@ def add_project(request):
 
     return render(request, 'epproje/proje-ekle.html',
                   {'project_form': project_form})
+
+@login_required
+def edit_project_personel(request, pk):
+    perm = general_methods.control_access_personel(request)
+    if not perm:
+        logout(request)
+        return redirect('accounts:login')
+
+
+
+
+
+    project = EPProject.objects.get(pk=pk)
+    project_form = DisableEPProjectForm(request.POST or None, instance=project)
+
+
+    days=None
+    if project.aifinish:
+        days= (project.aifinish-timezone.now()).days
+        if days<0:
+            days='Alim işinin zamani bitti.'
+
+    return render(request, 'epproje/Proje-incele-Personel.html',
+                  {'project': project,'project_form':project_form,
+                   'days': days})
+
+
+
+
 
 
 @login_required
@@ -154,7 +184,7 @@ def edit_project(request, pk):
 
 @login_required
 def return_projects(request):
-    perm = general_methods.control_access(request)
+    perm = general_methods.control_access_personel(request)
 
     if not perm:
         logout(request)
@@ -162,6 +192,8 @@ def return_projects(request):
 
     search_form=EPProjectSearchForm()
     projects=EPProject.objects.none()
+    user = request.user
+    projects = EPProject.objects.none()
 
     if request.method == 'POST':
         user_form = EPProjectSearchForm(request.POST)
@@ -176,7 +208,13 @@ def return_projects(request):
             projectStatus=user_form.cleaned_data.get('projectStatus')
 
             if not (name or butceCinsi or butceYili or projeCinsi or projectStatus or city):
-                projects = EPProject.objects.all()
+
+                if user.groups.filter(name='Personel'):
+                    projects = EPProject.objects.filter(employees__employee__user=user).distinct()
+
+
+                elif user.groups.filter(name__in=['Yonetim', 'Admin']):
+                    projects = EPProject.objects.all()
 
             else:
                 query = Q()
@@ -192,7 +230,13 @@ def return_projects(request):
                     query &= Q(city=city)
                 if projectStatus:
                     query &= Q(projectStatus=projectStatus)
-                projects = EPProject.objects.filter(query).distinct()
+
+                if user.groups.filter(name='Personel'):
+                    projects = EPProject.objects.filter(query).filter(employees__employee__user=user).distinct()
+
+
+                elif user.groups.filter(name__in=['Yonetim', 'Admin']):
+                    projects = EPProject.objects.filter(query).distinct()
 
     return render(request, 'epproje/projeler.html', {'projects': projects,'search_form':search_form})
 
