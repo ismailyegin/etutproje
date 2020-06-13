@@ -319,7 +319,7 @@ def updateRefereeProfile(request):
                 print('deger var ')
                 person.profileImage = request.FILES['profileImage']
                 person.save()
-                messages.success(request, 'güncelleneme islemi gerçeklesti')
+                messages.success(request, 'Resim güncellendi.')
 
         except:
             print('hata' )
