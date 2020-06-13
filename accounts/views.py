@@ -14,7 +14,7 @@ from sbs.Forms.PreRegidtrationForm import PreRegistrationForm
 from django.contrib import auth, messages
 
 from sbs import urls
-from sbs.models import MenuAthlete, MenuCoach, MenuReferee, MenuDirectory, MenuAdmin, MenuClubUser, SportsClub, \
+from sbs.models import MenuPersonel, MenuDirectory, MenuAdmin, SportsClub, \
     SportClubUser
 from sbs.models.PreRegistration import PreRegistration
 from sbs.services import general_methods
