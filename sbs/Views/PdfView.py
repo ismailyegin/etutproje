@@ -247,12 +247,12 @@ def edit_project_pdf(request,pk):
 
     c.setFont("Verdana", 8)
 
-    c.drawString(50, 800, "Tarih:" )
+    c.drawString(50, 800, " Rapor Tarih:" )
 
-    c.drawString(75, 800, "%s" % datetime.datetime.today().strftime('%d-%m-%Y %H:%M'))
+    c.drawString(105, 800, "%s" % datetime.datetime.today().strftime('%d-%m-%Y %H:%M'))
 
 
-    c.setFont("Verdana", 28)
+    c.setFont("Verdana", 20)
     # text = "Proje Takip Programi "
     # c.drawString(150, 750, text)
 
@@ -316,7 +316,7 @@ def edit_project_pdf(request,pk):
 
     c.setFont("Verdana", 15)
     c.drawString(50,390,'Personel Listesi:')
-    # c.line(50, 380, 200, 380)
+    c.line(50, 380, 200, 380)
     c.setFont("Verdana", 10)
 
     # c.setFillColorRGB(0, 0, 0.77)
@@ -334,7 +334,7 @@ def edit_project_pdf(request,pk):
     y=330
 
     for item in project.employees.all():
-        print(item.employee)
+
         if y>50:
             c.drawString(50, y, '%s'%item.employee)
             c.drawString(150, y, '%s' % item.projectEmployeeTitle)
@@ -364,12 +364,10 @@ def edit_project_pdf(request,pk):
     y=330
     for item in project.requirements.all():
         if y>50:
-            print(y)
             c.drawString(300, y, '%s'%item.definition)
             c.drawString(400, y, '%s'%item.amount)
             y-=20
         else:
-            print('ben geldim')
             page_num = c.getPageNumber()
             c.showPage()
             pdfmetrics.registerFont(TTFont('Verdana', 'Verdana.ttf'))
