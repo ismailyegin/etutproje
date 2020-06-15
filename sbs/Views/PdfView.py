@@ -17,6 +17,8 @@ from django.shortcuts import render, redirect
 
 
 
+
+
 from sbs.models import EPProject, CategoryItem, City
 from sbs.models.Town import Town
 from sbs.models.Employee import Employee
@@ -37,8 +39,8 @@ from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.platypus import PageBreak
 
 
-# resim
 
+# resim
 
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen.canvas import Canvas
@@ -57,6 +59,7 @@ from reportlab.lib.units import inch
 
 # zaman
 import datetime
+from django.utils import timezone
 
 # excel
 import csv
