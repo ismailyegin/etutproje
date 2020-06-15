@@ -78,11 +78,8 @@ def edit_project_personel(request, pk):
         logout(request)
         return redirect('accounts:login')
 
-
-
-
-
     project = EPProject.objects.get(pk=pk)
+    project.town=Town.objects.get(pk=project.pk).name
     project_form = DisableEPProjectForm(request.POST or None, instance=project)
 
 
@@ -545,7 +542,7 @@ def delete_phase_from_project(request, project_pk, employee_pk):
 
 @login_required
 def add_offer_to_project(request, pk):
-    perm = general_methods.control_access(request)
+    perm = general_methods.control_access_personel(request)
 
     if not perm:
         logout(request)
@@ -776,7 +773,13 @@ def dokumanAdd(request):
 @login_required
 def return_personel_dashboard(request):
     perm = general_methods.control_access_personel(request)
+    user=request.user
+    proje=EPProject.objects.filter(employees__employee__user=user).distinct()
+    proje_count=proje.count()
+    proje_status_PT=proje.filter(projectStatus=EPProject.PT).count()
+    proje_status_PDE=proje.filter(projectStatus=EPProject.PDE).count()
+    sorumlu_count=proje.filter(sorumlu__user=user).count()
     if not perm:
         logout(request)
         return redirect('accounts:login')
-    return render(request, 'anasayfa/personel.html')
+    return render(request, 'anasayfa/personel.html',{'proje_count':proje_count,'proje_status_PT':proje_status_PT,'sorumlu_count':sorumlu_count,'proje_status_PDE':proje_status_PDE})

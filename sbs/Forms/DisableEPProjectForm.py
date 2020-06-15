@@ -43,7 +43,7 @@ class DisableEPProjectForm(ModelForm):
                                               'style': 'width: 100%; ', 'required': 'required', 'readonly': 'readonly'}),
 
             'projectStatus': forms.TextInput(attrs={'class': 'form-control',
-                                                 'style': 'width: 100%; ', 'required': 'required', 'readonly': 'readonly'}),
+                                                 'style': 'width: 100%; ', 'readonly': 'readonly'}),
 
             # 'pattern': '"^\$\d{1.3}(.\d{3})*(\,\d+)?$"', 'data-type': 'currency'
             # 'insaatAlani': forms.TextInput(

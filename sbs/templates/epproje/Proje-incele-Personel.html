@@ -270,13 +270,15 @@
                                     <div class="col-lg-3">
                                         <div class="form-group">
                                             <label> {{ project_form.city.label }}</label>
-                                            {{ project_form.city }}
+                                            <input type="text" name="city" value="{{ project_form.instance.city }}" class="form-control " style="width: 100%;" id="sehir" required="" readonly="readonly">
                                         </div>
                                     </div>
                                     <div class="col-lg-3">
                                         <div class="form-group">
                                             <label>  {{ project_form.town.label }}</label>
-                                            {{ project_form.town }}
+                                             {{ project_form.town }}
+
+
                                         </div>
                                     </div>
 
@@ -325,7 +327,10 @@
                                             <div class="col-lg-3">
                                                 <div class="form-group">
                                                     <label> {{ project_form.sorumlu.label }}</label>
-                                                    {{ project_form.sorumlu }}
+                                                    <input type="text" name="sorumlu" value="{{ project_form.instance.sorumlu }}" class="form-control" style="width: 100%;" readonly="readonly" id="id_sorumlu">
+
+
+
                                                 </div>
 
                                             </div>

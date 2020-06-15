@@ -188,6 +188,7 @@ def delete_employee(request, pk):
 def return_employees(request):
     perm = general_methods.control_access(request)
 
+
     if not perm:
         logout(request)
         return redirect('accounts:login')
