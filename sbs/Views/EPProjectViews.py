@@ -77,21 +77,28 @@ def edit_project_personel(request, pk):
     if not perm:
         logout(request)
         return redirect('accounts:login')
-
+    user=request.user
     project = EPProject.objects.get(pk=pk)
-    project.town=Town.objects.get(pk=project.pk).name
-    project_form = DisableEPProjectForm(request.POST or None, instance=project)
 
 
-    days=None
-    if project.aifinish:
-        days= (project.aifinish-timezone.now()).days
-        if days<0:
-            days='Alim işinin zamani bitti.'
+    if project.sorumlu.user==user:
+        print('Sorumlu')
+        return redirect('sbs:proje-duzenle', pk=project.pk)
 
-    return render(request, 'epproje/Proje-incele-Personel.html',
-                  {'project': project,'project_form':project_form,
-                   'days': days})
+
+    else:
+        project.town = Town.objects.get(pk=project.pk).name
+        project_form = DisableEPProjectForm(request.POST or None, instance=project)
+        days = None
+        if project.aifinish:
+            days = (project.aifinish - timezone.now()).days
+            if days < 0:
+                days = 'Alim işinin zamani bitti.'
+
+        return render(request, 'epproje/Proje-incele-Personel.html',
+                      {'project': project, 'project_form': project_form,
+                       'days': days})
+
 
 
 
@@ -100,13 +107,26 @@ def edit_project_personel(request, pk):
 
 @login_required
 def edit_project(request, pk):
-    perm = general_methods.control_access(request)
+    perm = general_methods.control_access_personel(request)
 
     if not perm:
         logout(request)
         return redirect('accounts:login')
     document_form=EPDocumentForm()
     project = EPProject.objects.get(pk=pk)
+    user=request.user
+
+
+    # güvenlik icin sorgu yapıldı
+
+    if project.sorumlu.user !=user:
+        perm = general_methods.control_access(request)
+        if not perm:
+            logout(request)
+            return redirect('accounts:login')
+
+
+
     project_form = EPProjectForm(request.POST or None, instance=project)
     titles = CategoryItem.objects.filter(forWhichClazz="EPPROJECT_EMPLOYEE_TITLE")
     employees = Employee.objects.all()
@@ -115,9 +135,6 @@ def edit_project(request, pk):
         days= (project.aifinish-timezone.now()).days
         if days<0:
             days='Alim işinin zamani bitti.'
-
-
-
 
     if request.method == 'POST':
         try:
@@ -321,7 +338,7 @@ def edit_employeetitle(request, pk):
 
 @login_required
 def update_employee_to_project(request, pk):
-    perm = general_methods.control_access(request)
+    perm = general_methods.control_access_personel(request)
     print('ben geldim ')
 
 
@@ -356,7 +373,7 @@ def update_employee_to_project(request, pk):
 
 @login_required
 def add_employee_to_project(request, pk):
-    perm = general_methods.control_access(request)
+    perm = general_methods.control_access_personel(request)
 
     if not perm:
         logout(request)
@@ -379,7 +396,7 @@ def add_employee_to_project(request, pk):
 
 @login_required
 def delete_employee_from_project(request, project_pk, employee_pk):
-    perm = general_methods.control_access(request)
+    perm = general_methods.control_access_personel(request)
 
     if not perm:
         logout(request)
@@ -398,7 +415,7 @@ def delete_employee_from_project(request, project_pk, employee_pk):
 
 @login_required
 def update_requirement_to_project(request, pk):
-    perm = general_methods.control_access(request)
+    perm = general_methods.control_access_personel(request)
     if not perm:
         logout(request)
         return redirect('accounts:login')
@@ -425,7 +442,7 @@ def update_requirement_to_project(request, pk):
 
 @login_required
 def add_requirement_to_project(request, pk):
-    perm = general_methods.control_access(request)
+    perm = general_methods.control_access_personel(request)
     if not perm:
         logout(request)
         return redirect('accounts:login')
@@ -444,7 +461,7 @@ def add_requirement_to_project(request, pk):
 
 @login_required
 def delete_requirement_from_project(request, project_pk, employee_pk):
-    perm = general_methods.control_access(request)
+    perm = general_methods.control_access_personel(request)
 
     if not perm:
         logout(request)
@@ -463,7 +480,7 @@ def delete_requirement_from_project(request, project_pk, employee_pk):
 
 @login_required
 def update_phase_to_project(request, pk):
-    perm = general_methods.control_access(request)
+    perm = general_methods.control_access_personel(request)
 
     if not perm:
         logout(request)
@@ -494,7 +511,7 @@ def update_phase_to_project(request, pk):
 
 @login_required
 def add_phase_to_project(request, pk):
-    perm = general_methods.control_access(request)
+    perm = general_methods.control_access_personel(request)
 
     if not perm:
         logout(request)
@@ -523,7 +540,7 @@ def add_phase_to_project(request, pk):
 
 @login_required
 def delete_phase_from_project(request, project_pk, employee_pk):
-    perm = general_methods.control_access(request)
+    perm = general_methods.control_access_personel(request)
 
     if not perm:
         logout(request)
@@ -572,7 +589,7 @@ def add_offer_to_project(request, pk):
 
 @login_required
 def personel_list(request):
-    perm = general_methods.control_access(request)
+    perm = general_methods.control_access_personel(request)
     if not perm:
         logout(request)
         return redirect('accounts:login')
@@ -607,7 +624,7 @@ def personel_list(request):
 
 @login_required
 def ihtiyac_list(request):
-    perm = general_methods.control_access(request)
+    perm = general_methods.control_access_personel(request)
     if not perm:
         logout(request)
         return redirect('accounts:login')
@@ -640,7 +657,7 @@ def ihtiyac_list(request):
     return redirect('sbs:proje-duzenle', pk=pk)
 @login_required
 def asama_list(request):
-    perm = general_methods.control_access(request)
+    perm = general_methods.control_access_personel(request)
     if not perm:
         logout(request)
         return redirect('accounts:login')
@@ -671,7 +688,7 @@ def asama_list(request):
 
 @login_required
 def town(request):
-    perm = general_methods.control_access(request)
+    perm = general_methods.control_access_personel(request)
     if not perm:
         logout(request)
         return redirect('accounts:login')
@@ -719,7 +736,7 @@ def deleteReferee(request, pk):
 
 @login_required
 def delete_document_project(request, project_pk, employee_pk):
-    perm = general_methods.control_access(request)
+    perm = general_methods.control_access_personel(request)
 
     if not perm:
         logout(request)
@@ -743,7 +760,7 @@ def dokumanAdd(request):
 
 
 
-    perm = general_methods.control_access(request)
+    perm = general_methods.control_access_personel(request)
     print('ben geldim')
 
     if not perm:

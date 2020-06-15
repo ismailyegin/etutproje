@@ -232,7 +232,7 @@
         <form method="post" enctype="multipart/form-data" role="form">
             {% csrf_token %}
 
-            {% if user.pk == project.sorumlu.user.pk or user.groups.all.0.name == 'Admin' %}
+
                 <div class="row">
 
                     <div class="col-lg-12">
@@ -355,7 +355,7 @@
 
 
                 </div>
-            {% endif %}
+
 
             <div class="row">
 
