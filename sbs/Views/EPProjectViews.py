@@ -119,14 +119,16 @@ def edit_project(request, pk):
 
     # güvenlik icin sorgu yapıldı
 
-    if project.sorumlu.user !=user:
-        perm = general_methods.control_access(request)
-        if not perm:
-            logout(request)
-            return redirect('accounts:login')
+    try:
 
-
-
+        if project.sorumlu.user != user:
+            perm = general_methods.control_access(request)
+            if not perm:
+                logout(request)
+                messages.warning(request, 'Bu alana girmeye yetkiniz yok.')
+                return redirect('accounts:login')
+    except:
+        print('hata')
     project_form = EPProjectForm(request.POST or None, instance=project)
     titles = CategoryItem.objects.filter(forWhichClazz="EPPROJECT_EMPLOYEE_TITLE")
     employees = Employee.objects.all()

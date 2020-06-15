@@ -413,6 +413,10 @@ urlpatterns = [
 
     url(r'pdf/$',PdfView.return_pdf, name='pdf'),
     url(r'pdf2/$', PdfView.html_to_pdf_view, name='pdf2'),
+    url(r'pdf3/$', PdfView.return_pdf2, name='pdf3'),
+
+
+
 
 
     url(r'excel/$',PdfView.return_excel, name='excel'),
