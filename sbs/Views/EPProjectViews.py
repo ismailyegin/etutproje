@@ -266,8 +266,10 @@ def return_projects_city(request, pk):
         return redirect('accounts:login')
     city = City.objects.get(pk=pk)
     projects = EPProject.objects.filter(city=city)
+    search_form=EPProjectSearchForm()
 
-    return render(request, 'epproje/projeler.html', {'projects': projects, 'city': city})
+
+    return render(request, 'epproje/projeler.html', {'projects': projects, 'city': city,'search_form':search_form})
 
 
 @login_required

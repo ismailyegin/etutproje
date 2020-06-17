@@ -163,7 +163,7 @@ def edit_employee(request, pk):
 
     return render(request, 'personel/personel-duzenle.html',
                   {'user_form': user_form, 'communication_form': communication_form,
-                   'person_form': person_form, 'employee_form': employee_form,'projects':projects,'user':user})
+                   'person_form': person_form, 'employee_form': employee_form,'projects':projects,'personel':user})
 
 @login_required
 def delete_employee(request, pk):

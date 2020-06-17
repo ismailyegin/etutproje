@@ -273,12 +273,12 @@
 
                                             {% for item in project.employees.all %}
 
-                                                {% if item.employee.user.pk == user.pk %}
+                                                {% if item.employee.user.pk == personel.pk %}
                                                     {{ item.projectEmployeeTitle }} <br>
                                                 {% endif %}
 
                                             {% endfor %}
-                                            {% if project.sorumlu.user.pk == user.pk %}
+                                            {% if project.sorumlu.user.pk == personel.pk %}
                                                 Sorumlu<br>
                                             {% endif %}
 
