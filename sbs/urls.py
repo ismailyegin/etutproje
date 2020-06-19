@@ -338,10 +338,10 @@ urlpatterns = [
 
 
 
-    url(r'etut-proje/unvanlar/$', EPProjectViews.return_employeetitles, name='unvanlar'),
-    url(r'etut-proje/unvan/sil/(?P<pk>\d+)$', EPProjectViews.delete_employeetitle,
+    url(r'etut-proje/görevListesi/$', EPProjectViews.return_employeetitles, name='unvanlar'),
+    url(r'etut-proje/görevListesi/sil/(?P<pk>\d+)$', EPProjectViews.delete_employeetitle,
         name='unvan-sil'),
-    url(r'etut-proje/unvan-duzenle/(?P<pk>\d+)$', EPProjectViews.edit_employeetitle,
+    url(r'etut-proje/görev-duzenle/(?P<pk>\d+)$', EPProjectViews.edit_employeetitle,
         name='unvan-duzenle'),
     url(r'etut-proje/proje-personel-ekle/(?P<pk>\d+)$',
         EPProjectViews.add_employee_to_project, name='proje-personel-ekle'),
@@ -399,10 +399,10 @@ urlpatterns = [
     url(r'personel/personeller/$', EmployeeViews.return_employees, name='personeller'),
     url(r'personel/personel-ekle/$', EmployeeViews.add_employee, name='personel-ekle'),
     url(r'personel/personel-duzenle/(?P<pk>\d+)$', EmployeeViews.edit_employee, name='personel-duzenle'),
-    url(r'personel/istanimi/$', EmployeeViews.return_workdefinitions, name='istanimlari'),
-    url(r'personel/istanimi/sil/(?P<pk>\d+)$', EmployeeViews.delete_workdefinition,
+    url(r'personel/unvanListesi/$', EmployeeViews.return_workdefinitions, name='istanimlari'),
+    url(r'personel/unvan/sil/(?P<pk>\d+)$', EmployeeViews.delete_workdefinition,
         name='istanimi-sil'),
-    url(r'personel/istanimi-duzenle/(?P<pk>\d+)$', EmployeeViews.edit_workdefinition,
+    url(r'personel/unvan-duzenle/(?P<pk>\d+)$', EmployeeViews.edit_workdefinition,
         name='istanimi-duzenle'),
     url(r'personel/personel-profil-guncelle/$', EmployeeViews.updateRefereeProfile,
         name='personel-profil-guncelle'),
