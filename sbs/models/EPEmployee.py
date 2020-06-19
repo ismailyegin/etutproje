@@ -11,7 +11,7 @@ class EPEmployee(models.Model):
     creationDate = models.DateTimeField(auto_now_add=True)
     operationDate = models.DateTimeField(auto_now=True)
     projectEmployeeTitle = models.ForeignKey(CategoryItem, on_delete=models.CASCADE,null=False)
-    employee = models.ForeignKey(Employee, on_delete=models.CASCADE,null=False)
+    employee = models.ForeignKey(Employee, on_delete=models.DO_NOTHING,null=False)
 
     def __str__(self):
         return '%s ' % self.employee

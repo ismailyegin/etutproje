@@ -16,7 +16,7 @@ class Employee(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, db_column='user')
     creationDate = models.DateTimeField(auto_now_add=True)
     operationDate = models.DateTimeField(auto_now=True)
-    workDefinition = models.ForeignKey(CategoryItem, on_delete=models.CASCADE)
+    workDefinition = models.ForeignKey(CategoryItem, on_delete=models.DO_NOTHING)
 
     def __str__(self):
         return '%s %s' % (self.user.first_name, self.user.last_name)

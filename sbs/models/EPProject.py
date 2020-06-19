@@ -12,6 +12,8 @@ from sbs.models.EPDocument import EPDocument
 
 class EPProject(models.Model):
 
+
+
     INSAAT = 'İNŞAAT'
     ETUTPROJE = 'ETÜT-PROJE'
 
@@ -23,17 +25,17 @@ class EPProject(models.Model):
     PDE = 'Proje devam ediyor'
     PT = 'Proje tamamlandı'
     DYRY = 'Deprem Yön. revizyonu yapılıyor'
-    IH = 'İhale sürecinde'
+    IH='İhale sürecinde'
     PD = 'Proje Durduruldu'
-    PIE = 'Proje İptal Edildi'
+    PIE='Proje İptal Edildi'
 
     STATUS_CHOICES = (
         (PDE, 'Proje devam ediyor'),
         (PT, 'Proje tamamlandı'),
         (DYRY, 'Deprem Yön. revizyonu yapılıyor'),
-        (IH ,'İhale sürecinde'),
-        (PIE , 'Proje İptal Edildi'),
-        (PD , 'Proje Durduruldu'),
+        (IH,'İhale sürecinde'),
+        (PIE,'Proje İptal Edildi'),
+        (PD,'Proje Durduruldu'),
     )
 
 
