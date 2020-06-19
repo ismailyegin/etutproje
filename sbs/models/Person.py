@@ -11,8 +11,8 @@ class Person(models.Model):
     A2 = 'A Rh-'
     B1 = 'B Rh+'
     B2 = 'B Rh-'
-    O1 = 'AB Rh+'
-    O2 = 'AB Rh+'
+    O1 = '0 Rh+'
+    O2 = '0 Rh-'
 
     GENDER_CHOICES = (
         (MALE, 'Erkek'),

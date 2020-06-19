@@ -127,6 +127,7 @@ def edit_employee(request, pk):
     employee = Employee.objects.get(pk=pk)
     user = User.objects.get(pk=employee.user.pk)
     person = Person.objects.get(pk=employee.person.pk)
+
     communication = Communication.objects.get(pk=employee.communication.pk)
     user_form = UserForm(request.POST or None, instance=user)
     person_form = PersonForm(request.POST or None, request.FILES or None, instance=person)

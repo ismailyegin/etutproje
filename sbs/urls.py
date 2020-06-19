@@ -324,7 +324,6 @@ urlpatterns = [
     #     Yardım ve destek
 
     url(r'yardim$', HelpViews.help, name='help'),
-
     # ETÜT PROJE
 
     url(r'etut-proje/projeler/$', EPProjectViews.return_projects, name='projeler'),
