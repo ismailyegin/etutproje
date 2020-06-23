@@ -42,10 +42,13 @@ class EPProject(models.Model):
 
     GENEL = 'Genel'
     ISYURTLARI = 'İş Yurtları'
+    BIRIMDISI='Birim Dışı'
 
     BUTCE_CINSI = (
         (GENEL, 'Genel'),
         (ISYURTLARI, 'İş Yurtları'),
+        (BIRIMDISI,'Birim Dışı'),
+
     )
 
     CIK = 'Ceza İnfaz Kurumu'
@@ -56,6 +59,7 @@ class EPProject(models.Model):
     DS = 'Denetimli Serbestlik'
     PEM = 'Personel Eğitim Merkezi'
     BB = 'Bakanlık Bİnası'
+    LOJMAN='Lojman'
     DIGER = 'Diğer'
 
     PROJE_CINSI = (
@@ -67,7 +71,9 @@ class EPProject(models.Model):
         (DS, 'Denetimli Serbestlik'),
         (BB, 'Bakanlık Bİnası'),
         (PEM, 'Personel Eğitim Merkezi'),
+        (LOJMAN, 'Lojman')
         (DIGER, 'Diğer'),
+
     )
 
     name = models.CharField(blank=False, null=False, max_length=120, verbose_name='Branş Adı')
