@@ -122,6 +122,7 @@ def return_admin_dashboard(request):
     personelegitim=EPProject.objects.filter(projeCinsi=EPProject.BB).count()
     bakanlikbinasi=EPProject.objects.filter(projeCinsi=EPProject.PEM).count()
     diger=EPProject.objects.filter(projeCinsi=EPProject.DIGER).count()
+    lojman=EPProject.objects.filter(projeCinsi=EPProject.LOJMAN).count()
 
 
 
@@ -136,7 +137,7 @@ def return_admin_dashboard(request):
                    'denetimserbeslik':denetimserbeslik,
                    'personelegitim':personelegitim,
                    'bakanlikbinasi':bakanlikbinasi,
-                   'diger':diger})
+                   'diger':diger,'lojman':lojman})
 
 
 @login_required
