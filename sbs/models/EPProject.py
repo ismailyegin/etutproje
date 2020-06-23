@@ -71,7 +71,7 @@ class EPProject(models.Model):
         (DS, 'Denetimli Serbestlik'),
         (BB, 'Bakanlık Bİnası'),
         (PEM, 'Personel Eğitim Merkezi'),
-        (LOJMAN, 'Lojman')
+        (LOJMAN, 'Lojman'),
         (DIGER, 'Diğer'),
 
     )
