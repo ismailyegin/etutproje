@@ -119,8 +119,8 @@ def return_admin_dashboard(request):
     bolgeadliye=EPProject.objects.filter(projeCinsi=EPProject.BAM).count()
     bolgeidari=EPProject.objects.filter(projeCinsi=EPProject.BIM).count()
     denetimserbeslik=EPProject.objects.filter(projeCinsi=EPProject.DS).count()
-    personelegitim=EPProject.objects.filter(projeCinsi=EPProject.BB).count()
-    bakanlikbinasi=EPProject.objects.filter(projeCinsi=EPProject.PEM).count()
+    personelegitim=EPProject.objects.filter(projeCinsi=EPProject.PEM).count()
+    bakanlikbinasi=EPProject.objects.filter(projeCinsi=EPProject.BB).count()
     diger=EPProject.objects.filter(projeCinsi=EPProject.DIGER).count()
     lojman=EPProject.objects.filter(projeCinsi=EPProject.LOJMAN).count()
 

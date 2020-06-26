@@ -215,12 +215,7 @@ def edit_project_pdf(request,pk):
     if project.aifinish:
         days = (project.aifinish - timezone.now()).days
         if days < 0:
-            days = 'Alim işinin zamani bitti.'
-
-
-
-
-
+            days = 'Zamanı bitti.'
 
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'inline; filename="ProjeTakip.pdf"'
@@ -252,28 +247,34 @@ def edit_project_pdf(request,pk):
     c.drawString(105, 800, "%s" % datetime.datetime.today().strftime('%d-%m-%Y %H:%M'))
 
 
-    c.setFont("Verdana", 20)
-    # text = "Proje Takip Programi "
-    # c.drawString(150, 750, text)
+    c.setFont("Verdana", 15)
 
-    c.drawString(50,730,"%s" %project.name)
-    c.line(50, 720, 550, 720)
+
+    c.drawString(50,740,"%s" %project.name)
+    # c.line(50, 720, 550, 720)
+
+    c.setFont("Verdana", 15)
+    c.drawString(50,700,'Genel Bilgiler')
+    c.line(50, 690, 470, 690)
+
+
+
     c.setFont("Verdana", 10)
-    c.drawString(50,680,"İl                       :%s" %project.city)
+    c.drawString(50,670,"İl                       :%s" %project.city)
     if project.town:
-        c.drawString(50,660,"İlçe                    :%s" %project.town)
+        c.drawString(50,650,"İlçe                    :%s" %project.town)
     else:
-        c.drawString(50, 660, "İlçe                    :%s" % project.town)
-    c.drawString(50,640,"Yatırım Programı :%s" %project.butceCinsi)
-    c.drawString(50,620,"Bütçe yılı            :%s" %project.butceYili)
-    c.drawString(300,680,"Projenin Cinci          :%s" %project.projeCinsi)
-    c.drawString(300,660,"Karakteristik           :%s" %project.karakteristik)
-    c.drawString(300,640,"Projenin Durumu     :%s" %project.projectStatus)
+        c.drawString(50, 650, "İlçe                    :%s" % project.town)
+    c.drawString(50,630,"Yatırım Programı :%s" %project.butceCinsi)
+    c.drawString(50,610,"Bütçe yılı            :%s" %project.butceYili)
+    c.drawString(300,670,"Projenin Cinsi          :%s" %project.projeCinsi)
+    c.drawString(300,650,"Karakteristik           :%s" %project.karakteristik)
+    c.drawString(300,630,"Projenin Durumu     :%s" %project.projectStatus)
 
     if project.sorumlu:
-        c.drawString(300,620,"Projenin Sorumlusu :%s" %project.sorumlu  )
+        c.drawString(300,610,"Projenin Sorumlusu :%s" %project.sorumlu  )
     else:
-        c.drawString(300, 620, "Projenin Sorumlusu:")
+        c.drawString(300, 610, "Projenin Sorumlusu:")
 
 
     c.setFont("Verdana", 15)
@@ -296,6 +297,39 @@ def edit_project_pdf(request,pk):
     c.drawString(300, 520, "Tahmini Ödenek Tutari:%s" % (project.tahminiOdenekTutari if project.tahminiOdenekTutari else  '-' ))
     c.drawString(300, 500, "Yaklaşık Maliyet          :%s" % (project.yaklasikMaliyet if project.yaklasikMaliyet else  '-' ))
 
+    c.setFont("Verdana", 15)
+    c.drawString(300, 480, 'Personel Listesi:')
+    c.line(300, 470, 450, 470)
+    c.setFont("Verdana", 10)
+
+    # c.setFillColorRGB(0, 0, 0.77)
+
+    c.drawString(300, 450, 'İsim-Soyisim')
+    c.line(300, 440, 350, 440)
+
+    c.drawString(400, 450, 'Unvan')
+    c.line(400, 440, 450, 440)
+
+    # c.setFillColorRGB(0, 0, 0)
+
+    y = 420
+
+    for item in project.employees.all():
+
+        if y > 50:
+            c.drawString(300, y, '%s' % item.employee)
+            c.drawString(400, y, '%s' % item.projectEmployeeTitle)
+            y -= 20
+        else:
+            page_num = c.getPageNumber()
+            c.showPage()
+            pdfmetrics.registerFont(TTFont('Verdana', 'Verdana.ttf'))
+            c.drawString(50, 25, 'http:/www.kobiltek.com/')
+            c.drawString(450, 25, 'Proje Takip Sistemi')
+            page_num = c.getPageNumber()
+            c.drawString(280, 25, '%s.Sayfa' % page_num)
+            y = 750
+
     page_num = c.getPageNumber()
 
     c.drawString(50, 25, 'http:/www.kobiltek.com/')
@@ -306,66 +340,32 @@ def edit_project_pdf(request,pk):
 
 
     c.setFont("Verdana", 15)
-    c.drawString(300,470,'Hakediş Bilgileri')
-    c.line(300, 460, 450, 460)
+    c.drawString(50,440,'Hakediş Bilgileri')
+    c.line(50, 430, 200, 430)
     c.setFont("Verdana", 10)
-    c.drawString(300, 440, "Sözleşme bedeli               :%s" % (project.sozlesmeBedeli if project.sozlesmeBedeli else  '-' ))
-    c.drawString(300, 420, "Sözleşme bedeli kdv dahil:%s" % (project.sozlesmeBedeliKdv if project.sozlesmeBedeliKdv else  '-' ))
+    c.drawString(50, 410, "Sözleşme bedeli               :%s" % (project.sozlesmeBedeli if project.sozlesmeBedeli else  '-' ))
+    c.drawString(50, 390, "Sözleşme bedeli kdv dahil:%s" % (project.sozlesmeBedeliKdv if project.sozlesmeBedeliKdv else  '-' ))
+
 
 
 
     c.setFont("Verdana", 15)
-    c.drawString(50,390,'Personel Listesi:')
-    c.line(50, 380, 200, 380)
+    c.drawString(50,370,'İhtiyaç Listesi ')
+    c.line(50, 360, 200, 360)
     c.setFont("Verdana", 10)
 
-    # c.setFillColorRGB(0, 0, 0.77)
+    c.drawString(50, 340, 'Tanımı ')
+    c.line(50, 330, 100, 330)
+
+    c.drawString(150, 340, 'Adet')
+    c.line(150, 330, 200, 330)
 
 
-
-    c.drawString(50, 360, 'İsim-Soyisim')
-    c.line(50, 355, 100, 355)
-
-    c.drawString(150, 360, 'Unvan')
-    c.line(150, 355, 200, 355)
-
-    # c.setFillColorRGB(0, 0, 0)
-
-    y=330
-
-    for item in project.employees.all():
-
-        if y>50:
-            c.drawString(50, y, '%s'%item.employee)
-            c.drawString(150, y, '%s' % item.projectEmployeeTitle)
-            y-=20
-        else:
-            page_num = c.getPageNumber()
-            c.showPage()
-            pdfmetrics.registerFont(TTFont('Verdana', 'Verdana.ttf'))
-            c.drawString(50, 25, 'http:/www.kobiltek.com/')
-            c.drawString(450, 25, 'Proje Takip Sistemi')
-            page_num = c.getPageNumber()
-            c.drawString(280, 25, '%s.Sayfa' % page_num)
-            y=750
-
-    c.setFont("Verdana", 15)
-    c.drawString(300,390,'İhtiyaç Listesi ')
-    c.line(300, 380, 450, 380)
-    c.setFont("Verdana", 10)
-
-    c.drawString(300, 360, 'Tanımı ')
-    c.line(300, 355, 350, 355)
-
-    c.drawString(400, 360, 'Adet')
-    c.line(400, 355, 450, 355)
-
-
-    y=330
+    y=310
     for item in project.requirements.all():
         if y>50:
-            c.drawString(300, y, '%s'%item.definition)
-            c.drawString(400, y, '%s'%item.amount)
+            c.drawString(50, y, '%s'%item.definition)
+            c.drawString(150, y, '%s'%item.amount)
             y-=20
         else:
             page_num = c.getPageNumber()
