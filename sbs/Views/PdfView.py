@@ -252,8 +252,6 @@ def edit_project_pdf(request,pk):
     count=1
     control=True
     kelime=''
-    fdk=list(project.name)
-    print(len(fdk))
     for item  in project.name:
         kelime+=item
         print(name,count)
