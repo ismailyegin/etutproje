@@ -242,8 +242,8 @@
 
 
                             </div>
-                             <div class="box-header with-border">
-                            <div class="btn-group">
+                            <div class="box-header with-border">
+                                <div class="btn-group">
 
 
                                     <a href="{% url "sbs:proje-pdf" project.pk %}"
@@ -251,13 +251,13 @@
                                             class="fa fa-file-pdf-o"></i> Pdf
                                     </a>
 
-                                      <a href="{% url "sbs:proje-excel" project.pk %}"
+                                    <a href="{% url "sbs:proje-excel" project.pk %}"
                                        type="button" class="btn btn-default"><i
                                             class="fa fa-file-excel-o"></i> Excel
                                     </a>
 
+                                </div>
                             </div>
-                        </div>
                             <div class="box-body">
                                 <div class="row">
                                     <div class="col-lg-6">
@@ -497,6 +497,7 @@
                                            class="form-control "
                                            id="yaklasik" pattern="^\$\d{1.}(.\d{3})*(\,\d+)?$"
                                            data-type="currency">
+
                                 </div>
                             </div>
 
@@ -542,15 +543,16 @@
                                            class="form-control "
                                            id="sozlesmebedeli" pattern="^\$\d{1.}(.\d{3})*(\,\d+)?$"
                                            data-type="currency">
+
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <label> Sözleşme Bedeli Kdv Dahil(₺)</label>
-                                    <input type="text" name="sozlesmebedeli"
-                                           value="{{ project.sozlesmeBedeli }}"
+                                    <input type="text" name="sozlesmebedeliKdv"
+                                           value="{{ project.sozlesmeBedeliKdv }}"
                                            class="form-control "
-                                           id="sozlesmebedeli" pattern="^\$\d{1.}(.\d{3})*(\,\d+)?$"
+                                           id="sozlesmebedeliKdv" pattern="^\$\d{1.}(.\d{3})*(\,\d+)?$"
                                            data-type="currency">
                                 </div>
                             </div>
@@ -599,7 +601,7 @@
 
                                 <div class="text-right" style="margin-top: 20px; margin-right:10px;">
                                     <button class="btn btn-primary " type="submit">Kaydet
-{#                                        onclick="documentSave()#}
+                                        {#                                        onclick="documentSave()#}
                                     </button>
 
                                 </div>
@@ -964,14 +966,24 @@
     <script>
 
 
-        $(function () {
+        {#    $(document).ready(function(){#}
+        {##}
+        {##}
+        {#        alert('');#}
+        {##}
+        {##}
+        {# });#}
 
 
-            {#personel({{ project.pk }});#}
-            {#ihtiyac({{ project.pk }});#}
-            {#asama({{ project.pk }});#}
-            {#var city = $("#sehir").find('option:selected').text();#}
-            {#ilce(city);#}
+        $(document).ready(function () {
+            formatCurrency($('#yaklasik'), "blur");
+            formatCurrency($('#insaat'), "blur");
+            formatCurrency($('#tahmini'), "blur");
+            formatCurrency($('#sozlesmebedeli'), "blur");
+            formatCurrency($('#sozlesmebedeliKdv'), "blur");
+            formatCurrency($('#arsa'), "blur");
+            formatCurrency($('#yaklasik'), "blur");
+
 
 
             $("#sehir").change(function () {
@@ -979,6 +991,7 @@
                 $("#town").empty();
                 ilce(city);
             });
+
 
         });
 
@@ -1622,11 +1635,9 @@
             var file = $('#files')[0];
 
 
-
             if (file != null) {
 
                 $.ajax({
-
 
 
                         url: "{% url "sbs:dokumanAdd"%}",
@@ -1634,7 +1645,7 @@
                         data: {
                             'csrfmiddlewaretoken': "{{  csrf_token  }}",
                             pk:{{ project.pk }},
-                            file:file,
+                            file: file,
                             isActive: 'False',
 
                         },

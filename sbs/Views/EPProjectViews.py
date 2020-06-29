@@ -162,12 +162,12 @@ def edit_project(request, pk):
         yaklasik = yaklasik.replace(",", ".")
 
         sozlesmebedeli = request.POST.get('sozlesmebedeli')
-        sozlesmebedeli = yaklasik.replace(".", "")
-        sozlesmebedeli = yaklasik.replace(",", ".")
+        sozlesmebedeli = sozlesmebedeli.replace(".", "")
+        sozlesmebedeli = sozlesmebedeli.replace(",", ".")
 
         sozlesmebedeliKdv = request.POST.get('sozlesmebedeliKdv')
-        sozlesmebedeliKdv = yaklasik.replace(".", "")
-        sozlesmebedeliKdv = yaklasik.replace(",", ".")
+        sozlesmebedeliKdv = sozlesmebedeliKdv.replace(".", "")
+        sozlesmebedeliKdv = sozlesmebedeliKdv.replace(",", ".")
 
         arsa = request.POST.get('arsa')
         arsa = arsa.replace(".", "")
