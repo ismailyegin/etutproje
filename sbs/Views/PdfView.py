@@ -253,21 +253,29 @@ def edit_project_pdf(request,pk):
     control=True
     kelime=''
     for item  in project.name:
-        kelime+=item
         print(name,count)
+        kelime+=item
+
+        if count==48:
+            c.drawString(50, 770, "%s" % name)
+            name = ''
+        elif count==96:
+            c.drawString(50, 750, "%s" % name)
+            name = ''
+            control=False
+
         if item ==' ':
             name+=' '
             name+=kelime
             kelime=''
-        if count==51:
-            c.drawString(50, 770, "%s" % name)
-            name = ''
-        if count==100:
-            c.drawString(50, 750, "%s" % name)
-            name = ''
-            control=False
+
+
+        if len(project.name)==count:
+            name+=' '
+            name+=kelime
         count=count+1
     if control:
+        name
         c.drawString(50, 750, "%s" % name)
     else:
         c.drawString(50, 730, "%s" % name)
