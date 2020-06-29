@@ -247,10 +247,21 @@ def edit_project_pdf(request,pk):
     c.drawString(105, 800, "%s" % datetime.datetime.today().strftime('%d-%m-%Y %H:%M'))
 
 
-    c.setFont("Verdana", 15)
+    c.setFont("Verdana", 16)
+    name=''
+    count=1
+    control=True
+    for item  in project.name:
+        name+=item
+        print(name,count)
+        if count > 44 and item==' ' and control==True:
+            c.drawString(50, 750, "%s" % name)
+            name = ''
+            control=False
 
+        count=count+1
+    c.drawString(50, 730, "%s" % name)
 
-    c.drawString(50,740,"%s" %project.name)
     # c.line(50, 720, 550, 720)
 
     c.setFont("Verdana", 15)
