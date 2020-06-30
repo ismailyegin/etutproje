@@ -735,11 +735,12 @@
     $("input[data-type='currency']").on({
         keyup: function () {
             formatCurrency($(this));
+
         },
         blur: function () {
             formatCurrency($(this), "blur");
         }
-    });
+     });
 
 
     function formatNumber(n) {
@@ -749,6 +750,7 @@
 
 
     function formatCurrency(input, blur) {
+
         // appends $ to value, validates decimal side
         // and puts cursor back in right position.
 
