@@ -269,7 +269,7 @@
 
             {% if user.pk == project.sorumlu.user.pk or user.groups.all.0.name == 'Admin' %}
                 <div class="row">
-
+                   {#genel bilgiler #}
                     <div class="col-lg-12">
                         <div class="box box-primary">
                             <div class="box-header with-border">
@@ -392,9 +392,9 @@
             {% endif %}
 
             <div class="row">
+                {% if user.pk == project.sorumlu.user.pk or user.groups.all.0.name == 'Admin' %}
 
-
-                {#                ------------------------------#}
+                {#    ihale bilgileri           ------------------------------#}
 
 
                 <div class="col-md-6">
@@ -440,6 +440,29 @@
                                 </div>
 
 
+                                 <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label> Sözleşme Bedeli (₺)</label>
+                                    <input type="text" name="sozlesmebedeli"
+                                           value="{{ project.sozlesmeBedeli }}"
+                                           class="form-control "
+                                           id="sozlesmebedeli" pattern="^\$\d{1.}(.\d{3})*(\,\d+)?$"
+                                           data-type="currency">
+
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label> Sözleşme Bedeli Kdv Dahil(₺)</label>
+                                    <input type="text" name="sozlesmebedeliKdv"
+                                           value="{{ project.sozlesmeBedeliKdv }}"
+                                           class="form-control "
+                                           id="sozlesmebedeliKdv" pattern="^\$\d{1.}(.\d{3})*(\,\d+)?$"
+                                           data-type="currency">
+                                </div>
+                            </div>
+
+
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label> {{ project_form.isSUresi.label }}</label>
@@ -459,6 +482,8 @@
                             </div>
 
 
+
+
                         </div>
                         <div class="box-footer text-right">
                             <button class="btn btn-primary " type="submit">Kaydet</button>
@@ -472,7 +497,7 @@
             </div>
 
 
-            {#                ----------------------------------------#}
+            {#    arsa yapım ödenek             ----------------------------------------#}
 
 
             <div class="col-md-6">
@@ -553,7 +578,7 @@
             </div>
 
 
-            {#                ----------------------------------------#}
+            {#         hak ediş bilgileri        ----------------------------------------#}
 
             <div class="col-md-6">
                 <div class="box box-info collapsed-box">
@@ -638,39 +663,6 @@
                         </div>
 
 
-                        <div class="row">
-
-                                             <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label> Sözleşme Bedeli (₺)</label>
-                                    <input type="text" name="sozlesmebedeli"
-                                           value="{{ project.sozlesmeBedeli }}"
-                                           class="form-control "
-                                           id="sozlesmebedeli" pattern="^\$\d{1.}(.\d{3})*(\,\d+)?$"
-                                           data-type="currency">
-
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label> Sözleşme Bedeli Kdv Dahil(₺)</label>
-                                    <input type="text" name="sozlesmebedeliKdv"
-                                           value="{{ project.sozlesmeBedeliKdv }}"
-                                           class="form-control "
-                                           id="sozlesmebedeliKdv" pattern="^\$\d{1.}(.\d{3})*(\,\d+)?$"
-                                           data-type="currency">
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="box-footer text-right">
-                                    <button class="btn btn-primary " type="submit">Kaydet</button>
-                                </div>
-
-                            </div>
-
-
-
-                        </div>
 
 
 
@@ -683,8 +675,8 @@
                 <!-- /.box -->
             </div>
 
-
-            {#                ----------------------------------------#}
+             {% endif %}
+            {#     proje dökümanlari           ----------------------------------------#}
 
 
             <div class="col-md-6">
@@ -779,7 +771,7 @@
             </div>
 
 
-            {#                ----------------------------------------#}
+            {#         personel bilgileri        ----------------------------------------#}
 
 
             <div class="col-md-6">
@@ -862,6 +854,9 @@
                 </div>
                 <!-- /.box -->
             </div>
+
+
+             {#     ihtiyac listesi -----------------------------------------   #}
             <div class="col-md-6">
                 <div class="box box-info collapsed-box">
                     <div class="box-header with-border">
@@ -949,6 +944,9 @@
             </div>
 
             <div class="row">
+
+
+{#            proje asamalari #}
                 <div class="col-md-6">
                     <div class="box box-info collapsed-box">
                         <div class="box-header with-border">
@@ -1007,6 +1005,8 @@
                     </div>
                     <!-- /.box -->
                 </div>
+
+{#            görüs ve öneriler#}
                 <div class="col-md-6">
                     <div class="box box-info collapsed-box">
                         <div class="box-header with-border">

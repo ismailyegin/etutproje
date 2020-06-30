@@ -256,6 +256,7 @@
                                 <th>İli</th>
                                 <th>Bütçe Yılı</th>
                                 <th>Bütçe Cinsi</th>
+                                <th>Projenin Durumu</th>
 
                                 <th>İşlemler</th>
 
@@ -265,8 +266,15 @@
                             <tbody>
                             {% if projects.all %}
                                 {% for project in projects.all %}
-                                    <tr>
-                                        <td>{{ forloop.counter }} </td>
+
+
+
+                                 {% if project.projectStatus == 'Proje tamamlandı' %}
+                                    <tr style="background-color:#E1d7d7" >
+                                        {% else %}
+                                     <tr>
+
+                                        {% endif %}<td>{{ forloop.counter }} </td>
                                         <td>{{ project.name }} </td>
                                         <td>
 
@@ -287,6 +295,7 @@
                                         <td>{{ project.city }} </td>
                                         <td>{{ project.butceYili }} </td>
                                         <td>{{ project.butceCinsi }} </td>
+                                        <td>{{ project.projectStatus }} </td>
 
                                         <td>
                                             <div class="btn-group">
