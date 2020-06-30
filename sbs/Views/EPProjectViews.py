@@ -16,6 +16,7 @@ from sbs.models import EPProject, CategoryItem, City
 from sbs.models.Town import Town
 from sbs.models.Employee import Employee
 from sbs.models.EPPhase import EPPhase
+from sbs.models.EPVest import EPVest
 from sbs.services import general_methods
 from sbs.services.general_methods import getProfileImage
 from django.utils import timezone
@@ -342,6 +343,14 @@ def edit_employeetitle(request, pk):
     return render(request, 'epproje/unvan-duzenle.html',
                   {'category_item_form': category_item_form})
 
+
+
+
+
+
+
+
+
 @login_required
 def update_employee_to_project(request, pk):
     perm = general_methods.control_access_personel(request)
@@ -542,6 +551,9 @@ def add_phase_to_project(request, pk):
         messages.warning(request, 'Yeniden deneyiniz.')
 
     return redirect('sbs:proje-duzenle', pk=pk)
+
+
+
 
 
 @login_required
@@ -806,3 +818,74 @@ def return_personel_dashboard(request):
         logout(request)
         return redirect('accounts:login')
     return render(request, 'anasayfa/personel.html',{'proje_count':proje_count,'proje_status_PT':proje_status_PT,'sorumlu_count':sorumlu_count,'proje_status_PDE':proje_status_PDE})
+
+
+
+
+
+@login_required
+def add_vest_to_project(request, pk):
+    perm = general_methods.control_access_personel(request)
+    if not perm:
+        logout(request)
+        return redirect('accounts:login')
+
+    vest = request.POST.get('vest')
+    date = request.POST.get('vestdate')
+    dates = datetime.strptime(date, '%d/%m/%Y')
+
+    project = EPProject.objects.get(pk=pk)
+    vest = project.vest.create(vest=vest, vestDate=dates)
+    return JsonResponse({'status': 'Success', 'messages': 'save successfully', 'pk': vest.pk})
+
+
+
+@login_required
+def delete_vest_from_project(request, project_pk, employee_pk):
+    perm = general_methods.control_access_personel(request)
+
+    if not perm:
+        logout(request)
+        return redirect('accounts:login')
+    if request.method == 'POST' and request.is_ajax():
+        try:
+            athlete = EPProject.objects.get(pk=project_pk)
+            athlete.vest.remove(employee_pk)
+            return JsonResponse({'status': 'Success', 'messages': 'save successfully'})
+        except EPProject.DoesNotExist:
+            return JsonResponse({'status': 'Fail', 'msg': 'Object does not exist'})
+
+    else:
+        return JsonResponse({'status': 'Fail', 'msg': 'Not a valid request'})
+
+@login_required
+def update_vest_to_project(request, pk):
+
+    perm = general_methods.control_access_personel(request)
+    if not perm:
+        logout(request)
+        return redirect('accounts:login')
+
+
+
+    vest = request.POST.get('vest')
+    date = request.POST.get('vestdate')
+    dates = datetime.strptime(date, '%d/%m/%Y')
+
+    hak=EPVest.objects.get(pk=pk)
+
+    hak.vest=str(vest)
+    hak.vestDate=dates
+    hak.save()
+    return JsonResponse({'status': 'Success', 'messages': 'save successfully'})
+
+    try:
+        print('')
+
+
+
+    except:
+        return JsonResponse({'status': 'Fail', 'msg': 'Not a valid request'})
+        messages.warning(request, 'Yeniden deneyiniz.')
+
+    return redirect('sbs:proje-duzenle', pk=pk)

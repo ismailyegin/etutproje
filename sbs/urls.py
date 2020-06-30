@@ -352,6 +352,8 @@ urlpatterns = [
     url(r'etut-proje/proje-personel-guncelle/(?P<pk>\d+)$',
         EPProjectViews.update_employee_to_project, name='proje-personel-guncelle'),
 
+    url(r'etut-proje/proje-hakedis-guncelle/(?P<pk>\d+)$',
+        EPProjectViews.update_vest_to_project, name='proje-hakedis-guncelle'),
 
 
 
@@ -360,6 +362,8 @@ urlpatterns = [
         name='proje-personel-kaldir'),
     url(r'etut-proje/proje-ihtiyac-ekle/(?P<pk>\d+)$',
         EPProjectViews.add_requirement_to_project, name='proje-ihtiyac-ekle'),
+    url(r'etut-proje/proje-hakedis-ekle/(?P<pk>\d+)$',
+        EPProjectViews.add_vest_to_project, name='proje-hakedis-ekle'),
 
     url(r'etut-proje/proje-ihtiyac-guncelle/(?P<pk>\d+)$',
         EPProjectViews.update_requirement_to_project, name='proje-ihtiyac-güncelle'),
@@ -378,6 +382,10 @@ urlpatterns = [
     url(r'etut-proje/proje-asama-sil/(?P<project_pk>\d+)/(?P<employee_pk>\d+)/$',
         EPProjectViews.delete_phase_from_project,
         name='proje-asama-kaldir'),
+
+    url(r'etut-proje/proje-hakedis-sil/(?P<project_pk>\d+)/(?P<employee_pk>\d+)/$',
+        EPProjectViews.delete_vest_from_project,
+        name='proje-hakedis-kaldir'),
     url(r'etut-proje/proje-oneri-ekle/(?P<pk>\d+)$',
         EPProjectViews.add_offer_to_project, name='proje-oneri-ekle'),
     # ajax ile personel ekleme

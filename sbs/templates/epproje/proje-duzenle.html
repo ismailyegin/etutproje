@@ -107,6 +107,41 @@
         <!-- /.modal-dialog -->
     </div>
 
+
+    <div class="modal modal-warning fade in deneme23" tabindex="-1" role="dialog" id="vestmodal"
+         aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title">Bilgileri Giriniz</h4>
+                </div>
+                <div class="modal-body">
+                    <label for="title">Hakediş Tarihi</label>
+                    <input type="text" id="vestdate" name="vestdate" class="form-control"
+                           data-inputmask="'alias': 'dd/mm/yyyy'"
+                           data-mask="">
+
+                    <label for="employee">Hakediş Miktarı</label>
+                    <input type="number" name="vest" id="vest" class="form-control" required>
+
+
+                </div>
+
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline pull-left btn-ok" id="btn-vest"
+                            data-dismiss="modal">Kaydet
+                    </button>
+                    <button type="button" class="btn btn-outline" id="btn-hakreddet">Geri Dön</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
     <div class="modal modal-warning fade in deneme23" tabindex="-1" role="dialog" id="requirement"
          aria-hidden="true" style="display: none;">
         <div class="modal-dialog">
@@ -534,8 +569,78 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body" style="display: none;">
+
                         <div class="row" style="padding-bottom: 10px">
-                            <div class="col-lg-6">
+
+
+                            <div class="col-lg-12">
+                                <div class="btn-group">
+                                    <a class="btn btn-success"
+                                       data-toggle="modal"
+                                       onclick=addvest({{ project.pk }})><i
+                                            class="fa fa-plus"></i> Hakediş Ekle</a>
+
+
+                                </div>
+                            </div>
+
+
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <table id="hakedistablo" class="table table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Tarihi</th>
+                                        <th>Miktari</th>
+                                        <th>İşlemler</th>
+
+                                    </tr>
+                                    </thead>
+
+                                    <tbody>
+
+                                    {% if project.vest.all %}
+                                        {% for item in project.vest.all %}
+                                            <tr id="hakedis-{{ item.pk }}">
+                                                <td>{{ forloop.counter }} </td>
+                                                <td>{{ item.vestDate }}</td>
+                                                <td>{{ item.vest }}</td>
+                                                <td>
+                                                    <div class="btn-group">
+
+                                                        <a class="btn btn-warning"
+                                                           data-toggle="modal"
+                                                           onclick=editVest({{ project.pk }},{{ item.pk }})><i
+                                                                class="fa fa-edit"></i></a>
+
+
+                                                        <a class="btn btn-danger"
+                                                           data-toggle="modal"
+                                                           onclick=deleteVest({{ project.pk }},{{ item.pk }})><i
+                                                                class="fa fa-trash"></i></a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                        {% endfor %}
+                                    {% endif %}
+
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+
+                        </div>
+
+
+                        <div class="row">
+
+                                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <label> Sözleşme Bedeli (₺)</label>
                                     <input type="text" name="sozlesmebedeli"
@@ -563,7 +668,14 @@
 
                             </div>
 
+
+
                         </div>
+
+
+
+
+
 
                     </div>
                     <!-- /.box-body -->
@@ -983,7 +1095,6 @@
             formatCurrency($('#sozlesmebedeliKdv'), "blur");
             formatCurrency($('#arsa'), "blur");
             formatCurrency($('#yaklasik'), "blur");
-
 
 
             $("#sehir").change(function () {
@@ -1666,6 +1777,146 @@
         }
 
 
+        function addvest(id) {
+
+
+            $("#vestmodal").on("shown.bs.modal", function (e) {
+
+
+                $('#vest').val('');
+                $('#vestdate').val('');
+
+
+                $("#btn-vest").click(function () {
+                    if (e.handled !== true) { // This will prevent event triggering more then once
+                        e.handled = true;
+
+                        $.ajax({
+                            url: "{% url "sbs:proje-hakedis-ekle" pk=212121223232323232  %}".replace(/212121223232323232/, id.toString()),
+                            type: "POST",
+                            data: {
+                                'csrfmiddlewaretoken': "{{  csrf_token  }}",
+                                vest: $('#vest').val(),
+                                vestdate: $('#vestdate').val(),
+                                isActive: 'False'
+
+                            },
+                            success: function (result) {
+                                if (result.status == 'Success') {
+                                    var p = $('#hakedistablo').DataTable();
+                                    var count = p.rows().count() + 1;
+                                    p.row.add([
+                                        count.toString(),
+                                        $('#vestdate').val(),
+                                        $('#vest').val(),
+                                        '<div class="btn-group"><a type="button" class="btn btn-danger" onclick=deleteVest(' + id + ',' + result.pk + ')><i class="fa fa-trash"></i></a></div>',
+                                    ]).node().id = 'hakedis-' + result.pk;
+                                    p.draw(true);
+                                } else {
+                                    Console.log('Error');
+                                }
+
+
+                            }
+                        });
+                    }
+                });
+
+
+            }).modal('show');
+            $('#btn-requirement-reddet').click(function () {
+
+
+                $('#modal-warning').modal('hide');
+                $('.modal').modal('hide');
+
+            });
+
+        }
+
+
+        function deleteVest(id, competitionId) {
+
+            console.log(id);
+            var html = '';
+            $("#modal-danger").on("shown.bs.modal", function (e) {
+                $("#btn-conf").click(function (e) {
+
+
+                    $.ajax({
+                        url: "{% url "sbs:proje-hakedis-kaldir" project_pk=212121223232323232 employee_pk=999999999999999 %}".replace(/212121223232323232/, id.toString()).replace(/999999999999999/, competitionId.toString()),
+                        type: "POST",
+                        data: {
+                            'csrfmiddlewaretoken': "{{  csrf_token  }}",
+                            isActive: 'False'
+                        },
+                        success: function (result) {
+                            if (result.status == 'Success') {
+                                html = 'Aşama başarıyla kaldırıldı.';
+                                $('#hakedis-' + competitionId).hide();
+                                console.log(result.status);
+
+
+                            }
+                        }
+                    });
+
+                });
+            }).modal('show');
+            $('#btn-close').click(function () {
+                $('#modal-danger').modal('hide');
+            });
+
+        }
+
+        function editVest(id, competitionId) {
+            $("#vestmodal").on("shown.bs.modal", function (e) {
+                $('#vest').val($('#hakedis-' + competitionId + ' td').eq(2).text());
+                $('#vestdate').val($('#hakedis-' + competitionId + ' td').eq(1).text());
+
+                console.log(e);
+                $("#btn-vest").click(function (e) {
+                    if (e.handled !== true) { // This will prevent event triggering more then once
+                        e.handled = true;
+
+                        $.ajax({
+                            url: "{% url "sbs:proje-hakedis-guncelle" pk=212121223232323232  %}".replace(/212121223232323232/, competitionId.toString()),
+                            type: "POST",
+                            data: {
+                                'csrfmiddlewaretoken': "{{  csrf_token  }}",
+                                vest: $('#vest').val(),
+                                vestdate: $('#vestdate').val(),
+                                id: competitionId,
+                                isActive: 'False'
+
+                            },
+                            success: function (result) {
+
+                                if (result.status == 'Success') {
+                                    $('#hakedis-' + competitionId + ' td').eq(2).text($('#vest').val());
+                                    $('#hakedis-' + competitionId + ' td').eq(1).text($('#vestdate').val());
+                                } else {
+                                    console.log('Error');
+                                }
+                            }
+                        });
+                    }
+
+
+                });
+
+
+            }).modal('show');
+            $('#btn-closereddet').click(function () {
+
+
+                $('#modal-warning').modal('hide');
+                $('.modal').modal('hide');
+
+            });
+
+
+        }
     </script>
 
 {% endblock %}

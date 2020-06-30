@@ -9,7 +9,7 @@ from sbs.models.EPRequirements import EPRequirements
 from sbs.models.EPPhase import EPPhase
 from sbs.models.EPOffer import EPOffer
 from sbs.models.EPDocument import EPDocument
-
+from sbs.models.EPVest import EPVest
 class EPProject(models.Model):
 
 
@@ -84,10 +84,11 @@ class EPProject(models.Model):
     requirements = models.ManyToManyField(EPRequirements)
     phases = models.ManyToManyField(EPPhase)
     offers = models.ManyToManyField(EPOffer)
+    vest = models.ManyToManyField(EPVest)
 
     butceCinsi = models.CharField(max_length=128, verbose_name='Bütçe Cinsi', choices=BUTCE_CINSI, )
     butceYili = models.IntegerField(blank=False, null=False, )
-    projeCinsi = models.CharField(max_length=128, verbose_name='Bütçe Cinsi', choices=PROJE_CINSI, )
+    projeCinsi = models.CharField(max_length=128, verbose_name='Proje Cinsi', choices=PROJE_CINSI, )
     arsaAlani = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True,default=0)
     insaatAlani = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True,default=0)
     tahminiOdenekTutari = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True,default=0)
