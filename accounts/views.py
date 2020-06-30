@@ -5,7 +5,7 @@ from django.contrib.auth.forms import PasswordChangeForm, SetPasswordForm
 from django.core.mail import EmailMultiAlternatives
 from django.db.models import Q
 from django.http import HttpResponseRedirect, JsonResponse
-from django.shortcuts import render, redirect, render_to_response
+from django.shortcuts import render, redirect
 from accounts.forms import LoginForm, PermForm
 from accounts.models import Forgot
 
