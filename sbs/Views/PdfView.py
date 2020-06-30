@@ -253,7 +253,6 @@ def edit_project_pdf(request,pk):
     control=True
     kelime=''
     for item  in project.name:
-        print(name,count)
         kelime+=item
 
         if count==48:
@@ -324,10 +323,17 @@ def edit_project_pdf(request,pk):
     c.drawString(300,590,'Arsa Yapım Ödenek Bilgileri')
     c.line(300, 580, 450, 580)
     c.setFont("Verdana", 10)
-    c.drawString(300, 560, "Arsa Alanı                   :%s" % (project.arsaAlani if project.arsaAlani else  '-' ))
-    c.drawString(300, 540, "İnşaat alanı                 :%s" % (project.insaatAlani if project.insaatAlani else  '-' ))
-    c.drawString(300, 520, "Tahmini Ödenek Tutari:%s" % (project.tahminiOdenekTutari if project.tahminiOdenekTutari else  '-' ))
-    c.drawString(300, 500, "Yaklaşık Maliyet          :%s" % (project.yaklasikMaliyet if project.yaklasikMaliyet else  '-' ))
+
+
+
+
+    c.drawString(300, 560, "Arsa Alanı                    :%s" % ("{0:,.2f}".format(project.arsaAlani) if project.arsaAlani else  '-' ))
+
+    print()
+
+    c.drawString(300, 540, "İnşaat alanı                 :%s" % ( "{0:,.2f}".format(project.insaatAlani) if project.insaatAlani else  '-' ))
+    c.drawString(300, 520, "Tahmini Ödenek Tutari :%s" % ("{0:,.2f}".format(project.tahminiOdenekTutari) if project.tahminiOdenekTutari else  '-' ))
+    c.drawString(300, 500, "Yaklaşık Maliyet           :%s" % ("{0:,.2f}".format(project.yaklasikMaliyet) if project.yaklasikMaliyet else  '-' ))
 
     c.setFont("Verdana", 15)
     c.drawString(300, 480, 'Personel Listesi:')
@@ -375,8 +381,8 @@ def edit_project_pdf(request,pk):
     c.drawString(50,440,'Hakediş Bilgileri')
     c.line(50, 430, 200, 430)
     c.setFont("Verdana", 10)
-    c.drawString(50, 410, "Sözleşme bedeli               :%s" % (project.sozlesmeBedeli if project.sozlesmeBedeli else  '-' ))
-    c.drawString(50, 390, "Sözleşme bedeli kdv dahil:%s" % (project.sozlesmeBedeliKdv if project.sozlesmeBedeliKdv else  '-' ))
+    c.drawString(50, 410, "Sözleşme bedeli               :%s" % ( "{:,.2f}".format(project.sozlesmeBedeli) if project.sozlesmeBedeli else  '-' ))
+    c.drawString(50, 390, "Sözleşme bedeli kdv dahil:%s" % ("{:,.2f}".format(project.sozlesmeBedeliKdv) if project.sozlesmeBedeliKdv else  '-' ))
 
 
 
