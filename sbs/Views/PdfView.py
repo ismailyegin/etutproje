@@ -329,7 +329,7 @@ def edit_project_pdf(request,pk):
 
     c.drawString(300, 560, "Arsa Alanı                    :%s" % ("{0:,.2f}".format(project.arsaAlani) if project.arsaAlani else  '-' ))
 
-    print()
+
 
     c.drawString(300, 540, "İnşaat alanı                 :%s" % ( "{0:,.2f}".format(project.insaatAlani) if project.insaatAlani else  '-' ))
     c.drawString(300, 520, "Tahmini Ödenek Tutari :%s" % ("{0:,.2f}".format(project.tahminiOdenekTutari) if project.tahminiOdenekTutari else  '-' ))
@@ -381,8 +381,10 @@ def edit_project_pdf(request,pk):
     c.drawString(50,440,'Hakediş Bilgileri')
     c.line(50, 430, 200, 430)
     c.setFont("Verdana", 10)
-    c.drawString(50, 410, "Sözleşme bedeli               :%s" % ( "{:,.2f}".format(project.sozlesmeBedeli) if project.sozlesmeBedeli else  '-' ))
-    c.drawString(50, 390, "Sözleşme bedeli kdv dahil:%s" % ("{:,.2f}".format(project.sozlesmeBedeliKdv) if project.sozlesmeBedeliKdv else  '-' ))
+
+
+    c.drawString(50, 410, "Sözleşme bedeli               :%s" % ( "{:,}".format(project.sozlesmeBedeli) if project.sozlesmeBedeli else  '-' ))
+    c.drawString(50, 390, "Sözleşme bedeli kdv dahil:%s" % ("{:,}".format(project.sozlesmeBedeliKdv) if project.sozlesmeBedeliKdv else  '-' ))
 
 
 
@@ -468,3 +470,5 @@ def edit_project_excel(request,pk):
     wb.save(response)
     return response
 
+def control(say1,say2):
+    return say1+say2

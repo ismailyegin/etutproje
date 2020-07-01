@@ -80,10 +80,6 @@ def edit_project_personel(request, pk):
         return redirect('accounts:login')
     user=request.user
 
-
-
-
-
     if EPProject.objects.filter(employees__employee__user=user or project.sorumlu.user==user):
         print('projede var ')
     else:
@@ -823,11 +819,14 @@ def dokumanAdd(request):
 def return_personel_dashboard(request):
     perm = general_methods.control_access_personel(request)
     user=request.user
-    proje=EPProject.objects.filter(employees__employee__user=user).distinct()
+
+    proje=EPProject.objects.filter(employees__employee__user=user ).distinct()
+    proje|=EPProject.objects.filter(sorumlu__user=user).distinct()
     proje_count=proje.count()
     proje_status_PT=proje.filter(projectStatus=EPProject.PT).count()
     proje_status_PDE=proje.filter(projectStatus=EPProject.PDE).count()
-    sorumlu_count=proje.filter(sorumlu__user=user).count()
+    sorumlu_count=EPProject.objects.filter(sorumlu__user=user).count()
+
     if not perm:
         logout(request)
         return redirect('accounts:login')
