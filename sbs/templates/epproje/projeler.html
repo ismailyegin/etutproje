@@ -174,7 +174,7 @@
                                         {{ search_form.city }}
                                     </div>
                                 </div>
-                                                                <div class="col-md-2">
+                                <div class="col-md-2">
                                     <div class="form-group">
                                         <label> {{ search_form.projectStatus.label }}</label>
                                         {{ search_form.projectStatus }}
@@ -264,22 +264,23 @@
                                             <td>
                                                 <div class="btn-group ">
 
-                                                     {% if user.groups.all.0.name == 'Admin' %}
-                                                    <a href="{% url "sbs:proje-duzenle" project.pk %}"
-                                                       type="button" class="btn btn-warning btn-lg"><i
-                                                            class="fa fa-edit"></i>
-                                                    </a>
+                                                    {% if user.groups.all.0.name == 'Admin' %}
+                                                        <a href="{% url "sbs:proje-duzenle" project.pk %}"
+                                                           type="button" class="btn btn-warning btn-lg"><i
+                                                                class="fa fa-edit"></i>
+                                                        </a>
 
-                                                    <a class="btn btn-danger btn-lg"
-                                                       data-toggle="modal" onclick=deleteReferee({{ project.pk }})><i
-                                                            class="fa fa-trash"></i></a>
+                                                        <a class="btn btn-danger btn-lg"
+                                                           data-toggle="modal"
+                                                           onclick=deleteReferee({{ project.pk }})><i
+                                                                class="fa fa-trash"></i></a>
 
-                                                         {% else %}
+                                                    {% else %}
 
-                                                         <a href="{% url "sbs:proje-incele-personel" project.pk %}"
-                                                       type="button" class="btn btn-warning btn-lg"><i
-                                                            class="fa fa-edit"></i>
-                                                    </a>
+                                                        <a href="{% url "sbs:proje-incele-personel" project.pk %}"
+                                                           type="button" class="btn btn-warning btn-lg"><i
+                                                                class="fa fa-edit"></i>
+                                                        </a>
 
                                                     {% endif %}
 
