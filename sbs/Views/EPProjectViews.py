@@ -79,11 +79,24 @@ def edit_project_personel(request, pk):
         logout(request)
         return redirect('accounts:login')
     user=request.user
+
+
+
+
+
+    if EPProject.objects.filter(employees__employee__user=user or project.sorumlu.user==user):
+        print('projede var ')
+    else:
+        print('projede yok ')
+
+
+
+
     project = EPProject.objects.get(pk=pk)
 
 
+
     if project.sorumlu.user==user:
-        print('Sorumlu')
         return redirect('sbs:proje-duzenle', pk=project.pk)
 
 
@@ -228,6 +241,7 @@ def return_projects(request):
 
                 if user.groups.filter(name='Personel'):
                     projects = EPProject.objects.filter(employees__employee__user=user).distinct()
+                    projects |= EPProject.objects.filter(sorumlu__user=user).distinct()
 
 
                 elif user.groups.filter(name__in=['Yonetim', 'Admin']):
