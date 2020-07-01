@@ -208,7 +208,30 @@ def return_projects(request):
     search_form=EPProjectSearchForm()
     projects=EPProject.objects.none()
     user = request.user
-    projects = EPProject.objects.none()
+
+    if user.groups.filter(name__in=['Yonetim', 'Admin']):
+        get = request.GET.get('get')
+        if get:
+            if get == 'Projeler':
+                projects = EPProject.objects.all()
+            else:
+                if get == 'TamamlananProje':
+                    projects = EPProject.objects.filter(projectStatus=EPProject.PT)
+                elif get == 'AçıkProje':
+                    projects = EPProject.objects.filter(projectStatus=EPProject.PDE)
+
+    elif user.groups.filter(name='Personel'):
+        get = request.GET.get('get')
+        if get:
+            if get == 'Projeler':
+                projects = EPProject.objects.filter(employees__employee__user=user).distinct()
+                projects |= EPProject.objects.filter(sorumlu__user=user).distinct()
+            elif get == 'TamamlananProje':
+                projects = EPProject.objects.filter(projectStatus=EPProject.PT, employees__employee__user=user)
+            elif get == 'AçıkProje':
+                projects = EPProject.objects.filter(projectStatus=EPProject.PDE, employees__employee__user=user)
+            elif get == 'sorumlu':
+                projects = EPProject.objects.filter(sorumlu__user=user).distinct()
 
     if request.method == 'POST':
         user_form = EPProjectSearchForm(request.POST)
@@ -807,6 +830,10 @@ def dokumanAdd(request):
 def return_personel_dashboard(request):
     perm = general_methods.control_access_personel(request)
     user=request.user
+
+
+
+
 
     proje=EPProject.objects.filter(employees__employee__user=user ).distinct()
     proje|=EPProject.objects.filter(sorumlu__user=user).distinct()
