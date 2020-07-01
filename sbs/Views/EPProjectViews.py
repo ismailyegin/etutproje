@@ -105,27 +105,6 @@ def edit_project_personel(request, pk):
     else:
         return redirect('sbs:personel')
 
-
-
-
-
-
-
-
-
-
-    project = EPProject.objects.get(pk=pk)
-
-
-
-
-
-
-
-
-
-
-
 @login_required
 def edit_project(request, pk):
     perm = general_methods.control_access_personel(request)
@@ -242,9 +221,9 @@ def return_projects(request):
             butceCinsi = user_form.cleaned_data.get('butceCinsi')
             projeCinsi=user_form.cleaned_data.get('projeCinsi')
             city=user_form.cleaned_data.get('city')
-            projectStatus=user_form.cleaned_data.get('projectStatus')
+            Status=user_form.cleaned_data.get('projectStatus')
 
-            if not (name or butceCinsi or butceYili or projeCinsi or projectStatus or city):
+            if not (name or butceCinsi or butceYili or projeCinsi or Status or city):
 
                 if user.groups.filter(name='Personel'):
                     projects = EPProject.objects.filter(employees__employee__user=user).distinct()
@@ -266,12 +245,11 @@ def return_projects(request):
                     query &= Q(projeCinsi=projeCinsi)
                 if city:
                     query &= Q(city=city)
-                if projectStatus:
-                    query &= Q(projectStatus=projectStatus)
+                if Status:
+                    query &= Q(projectStatus=Status)
 
                 if user.groups.filter(name='Personel'):
                     projects = EPProject.objects.filter(query).filter(employees__employee__user=user).distinct()
-
 
                 elif user.groups.filter(name__in=['Yonetim', 'Admin']):
                     projects = EPProject.objects.filter(query).distinct()
