@@ -227,9 +227,11 @@ def return_projects(request):
                 projects = EPProject.objects.filter(employees__employee__user=user).distinct()
                 projects |= EPProject.objects.filter(sorumlu__user=user).distinct()
             elif get == 'TamamlananProje':
-                projects = EPProject.objects.filter(projectStatus=EPProject.PT, employees__employee__user=user)
+                projects = EPProject.objects.filter(projectStatus=EPProject.PT, employees__employee__user=user).distinct()
+                projects |= EPProject.objects.filter(projectStatus=EPProject.PT, sorumlu__user=user).distinct()
             elif get == 'AçıkProje':
-                projects = EPProject.objects.filter(projectStatus=EPProject.PDE, employees__employee__user=user)
+                projects = EPProject.objects.filter(projectStatus=EPProject.PDE, employees__employee__user=user).distinct()
+                projects |= EPProject.objects.filter(projectStatus=EPProject.PDE,sorumlu__user=user).distinct()
             elif get == 'sorumlu':
                 projects = EPProject.objects.filter(sorumlu__user=user).distinct()
 
@@ -272,6 +274,7 @@ def return_projects(request):
 
                 if user.groups.filter(name='Personel'):
                     projects = EPProject.objects.filter(query).filter(employees__employee__user=user).distinct()
+                    projects |= EPProject.objects.filter(query).filter(sorumlu__user=user).distinct()
 
                 elif user.groups.filter(name__in=['Yonetim', 'Admin']):
                     projects = EPProject.objects.filter(query).distinct()
