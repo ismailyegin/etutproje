@@ -79,11 +79,37 @@ def edit_project_personel(request, pk):
         logout(request)
         return redirect('accounts:login')
     user=request.user
+    project = EPProject.objects.get(pk=pk)
+    projects = project.employees.filter(employee__user=user)
 
-    if EPProject.objects.filter(employees__employee__user=user or project.sorumlu.user==user):
-        print('projede var ')
+    if project.sorumlu.user==user or projects:
+        if project.sorumlu.user == user:
+            return redirect('sbs:proje-duzenle', pk=project.pk)
+
+
+        else:
+            project.town = Town.objects.get(pk=project.pk).name
+            project_form = DisableEPProjectForm(request.POST or None, instance=project)
+            days = None
+            if project.aifinish:
+                days = (project.aifinish - timezone.now()).days
+                if days < 0:
+                    days = 'Zaman bitti.'
+
+            return render(request, 'epproje/Proje-incele-Personel.html',
+                          {'project': project, 'project_form': project_form,
+                           'days': days})
+
+
+
     else:
-        print('projede yok ')
+        return redirect('sbs:personel')
+
+
+
+
+
+
 
 
 
@@ -92,22 +118,7 @@ def edit_project_personel(request, pk):
 
 
 
-    if project.sorumlu.user==user:
-        return redirect('sbs:proje-duzenle', pk=project.pk)
 
-
-    else:
-        project.town = Town.objects.get(pk=project.pk).name
-        project_form = DisableEPProjectForm(request.POST or None, instance=project)
-        days = None
-        if project.aifinish:
-            days = (project.aifinish - timezone.now()).days
-            if days < 0:
-                days = 'Alim işinin zamani bitti.'
-
-        return render(request, 'epproje/Proje-incele-Personel.html',
-                      {'project': project, 'project_form': project_form,
-                       'days': days})
 
 
 
