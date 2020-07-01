@@ -61,7 +61,7 @@ class DisableEPProjectForm(ModelForm):
             'city': forms.TextInput(attrs={'class': 'form-control ',
                                         'style': 'width: 100%;','id':'sehir', 'required': 'required', 'readonly': 'readonly'}),
             'town': forms.TextInput(attrs={'class': 'form-control ',
-                                           'style': 'width: 100%;', 'id': 'sehir', 'required': 'required',
+                                           'style': 'width: 100%;', 'id': 'ilce', 'required': 'required',
                                            'readonly': 'readonly'}),
 
             'sorumlu': forms.TextInput(attrs={'class': 'form-control',

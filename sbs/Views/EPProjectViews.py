@@ -88,7 +88,6 @@ def edit_project_personel(request, pk):
 
 
         else:
-            project.town = Town.objects.get(pk=project.pk).name
             project_form = DisableEPProjectForm(request.POST or None, instance=project)
             days = None
             if project.aifinish:
