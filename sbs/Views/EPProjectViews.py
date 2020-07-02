@@ -181,8 +181,6 @@ def edit_project(request, pk):
         arsa = arsa.replace(",", ".")
 
         town = request.POST.get('town')
-        print(project_form)
-
 
         if project_form.is_valid():
 
@@ -387,7 +385,6 @@ def edit_employeetitle(request, pk):
 @login_required
 def update_employee_to_project(request, pk):
     perm = general_methods.control_access_personel(request)
-    print('ben geldim ')
 
     if not perm:
         logout(request)
@@ -789,7 +786,6 @@ def delete_document_project(request, project_pk, employee_pk):
 @login_required
 def dokumanAdd(request):
     perm = general_methods.control_access_personel(request)
-    print('ben geldim')
 
     if not perm:
         logout(request)
