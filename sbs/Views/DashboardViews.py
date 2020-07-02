@@ -152,9 +152,11 @@ def City_athlete_cout(request):
             login_user = request.user
             user = User.objects.get(pk=login_user.pk)
             projects = EPProject.objects.none()
+            city = City.objects.get(name__icontains=request.POST.get('city'))
 
 
             if user.groups.filter(name__in=['Yonetim', 'Admin']):
+
                 projects = EPProject.objects.filter(city=city)
 
 
@@ -165,7 +167,7 @@ def City_athlete_cout(request):
 
 
             totalprojects = projects.filter(city__name__icontains=request.POST.get('city')).count()
-            city = City.objects.get(name__icontains=request.POST.get('city'))
+
             data = {
                 'totalprojects': totalprojects,
                 'cityid': city.pk
