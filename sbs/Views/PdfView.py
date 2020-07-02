@@ -378,31 +378,59 @@ def edit_project_pdf(request,pk):
 
 
 
-    # c.setFont("Verdana", 15)
-    # c.drawString(50,440,'Hakediş Bilgileri')
-    # c.line(50, 430, 200, 430)
+
     c.setFont("Verdana", 10)
 
 
     c.drawString(50, 440, "Sözleşme Bedeli                :%s" % ( "{:,}".format(project.sozlesmeBedeli) if project.sozlesmeBedeli else  '-' ))
     c.drawString(50, 420, "Sözleşme Bedeli Kdv Dahil  :%s" % ("{:,}".format(project.sozlesmeBedeliKdv) if project.sozlesmeBedeliKdv else  '-' ))
 
-
-
-
     c.setFont("Verdana", 15)
-    c.drawString(50,370,'İhtiyaç Listesi ')
-    c.line(50, 360, 200, 360)
+    c.drawString(50,370,'Hakediş Bilgileri')
+
     c.setFont("Verdana", 10)
 
-    c.drawString(50, 340, 'Tanımı ')
+    c.line(50, 360, 200, 360)
+    c.drawString(50, 340, 'Tarihi  ')
     c.line(50, 330, 100, 330)
 
-    c.drawString(150, 340, 'Adet')
+    c.drawString(150, 340, 'Miktarı')
     c.line(150, 330, 200, 330)
 
 
+
     y=310
+    for item in project.vest.all():
+        if y>50:
+            c.drawString(50, y, '%s'%item.vestDate.strftime('%m/%d/%Y') if item.vestDate else '-')
+            c.drawString(150, y, '%s'%("{0:,.2f}".format(item.vest) if item.vest else  '-' ))
+            y-=20
+        else:
+            page_num = c.getPageNumber()
+            c.showPage()
+            pdfmetrics.registerFont(TTFont('Verdana', 'Verdana.ttf'))
+            c.drawString(50, 25, 'http:/www.kobiltek.com/')
+            c.drawString(450, 25, 'Proje Takip Sistemi')
+            page_num = c.getPageNumber()
+            c.drawString(280, 25, '%s.Sayfa' % page_num)
+
+            y=750
+
+    y=y-20
+    c.setFont("Verdana", 15)
+    c.drawString(50,y,'İhtiyaç Listesi ')
+    y=y-10
+    c.line(50, y, 200, y)
+    c.setFont("Verdana", 10)
+    y=y-20
+    c.drawString(50, y, 'Tanımı ')
+    c.drawString(150, y, 'Adet')
+    y=y-10
+    c.line(50, y, 100, y)
+    c.line(150, y, 200, y)
+
+
+    y=y-20
     for item in project.requirements.all():
         if y>50:
             c.drawString(50, y, '%s'%item.definition)
@@ -657,6 +685,12 @@ def edit_project_pdf_personel(request,pk):
     # c.drawString(50, 390, "Sözleşme bedeli kdv dahil:%s" % ("{:,}".format(project.sozlesmeBedeliKdv) if project.sozlesmeBedeliKdv else  '-' ))
     #
     #
+
+    c.setFont("Verdana", 15)
+    c.drawString(50,440,'Hakediş Bilgileri')
+    c.line(50, 430, 200, 430)
+
+
 
 
     c.setFont("Verdana", 15)
