@@ -27,6 +27,7 @@ from django.utils import timezone
 from sbs.models.EPDocument import EPDocument
 from sbs.Forms.EPDocumentForm import EPDocumentForm
 from sbs.Forms.DisableEPProjectForm import DisableEPProjectForm
+from sbs.Forms.EPProjectSorumluForm import EPProjectSorumluForm
 
 from sbs.Forms.EPProjectSearchForm import EPProjectSearchForm
 from django.db.models import Q
@@ -117,7 +118,6 @@ def edit_project(request, pk):
     # güvenlik icin sorgu yapıldı
 
     try:
-
         if project.sorumlu.user != user:
             perm = general_methods.control_access(request)
             if not perm:
@@ -126,24 +126,34 @@ def edit_project(request, pk):
                 return redirect('accounts:login')
     except:
         print('hata')
-    project_form = EPProjectForm(request.POST or None, instance=project)
+
+
+
+    if user.groups.filter(name='Personel'):
+        project_form=EPProjectSorumluForm(request.POST or None, instance=project)
+    elif user.groups.filter(name__in=['Yonetim', 'Admin']):
+        project_form = EPProjectForm(request.POST or None, instance=project)
+    else:
+        project_form = EPProjectForm()
+
     titles = CategoryItem.objects.filter(forWhichClazz="EPPROJECT_EMPLOYEE_TITLE")
     employees = Employee.objects.all()
     days = None
     if project.aifinish:
         days = (project.aifinish - timezone.now()).days
         if days < 0:
-            days = 'Alim işinin zamani bitti.'
+            days = 'Zamanı bitti.'
 
     if request.method == 'POST':
         try:
-            document = request.FILES['files']
-            data = EPDocument()
-            data.name = document
-            data.save()
-            if document:
+            if request.FILES['files']:
+                document = request.FILES['files']
+                data = EPDocument()
+                data.name = document
+                data.save()
                 project.documents.add(data)
                 project.save()
+
         except:
             print('hata var')
         insaatAlani = request.POST.get('insaat')
@@ -171,6 +181,8 @@ def edit_project(request, pk):
         arsa = arsa.replace(",", ".")
 
         town = request.POST.get('town')
+        print(project_form)
+
 
         if project_form.is_valid():
 
@@ -812,9 +824,9 @@ def return_personel_dashboard(request):
     proje |= EPProject.objects.filter(sorumlu__user=user).distinct()
 
     proje_count = proje.count()
-    proje_status_PT = proje.filter(projectStatus=EPProject.PT,employees__employee__user=user).count()
-    proje_status_PDE = proje.filter(projectStatus=EPProject.PDE,employees__employee__user=user).count()
-    sorumlu_count = EPProject.objects.filter(sorumlu__user=user,employees__employee__user=user).count()
+    proje_status_PT = proje.filter(projectStatus=EPProject.PT).count()
+    proje_status_PDE = proje.filter(projectStatus=EPProject.PDE).count()
+    sorumlu_count = EPProject.objects.filter(sorumlu__user=user).count()
 
 
 
