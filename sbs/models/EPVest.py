@@ -10,7 +10,7 @@ class EPVest(models.Model):
     creationDate = models.DateTimeField(auto_now_add=True)
     operationDate = models.DateTimeField(auto_now=True)
     vestDate = models.DateField(blank=False, null=False)
-    vest = models.CharField(blank=False, null=False, max_length=1000)
+    vest = models.DecimalField(max_digits=12, decimal_places=2,default=0)
 
 
 
