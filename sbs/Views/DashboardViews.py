@@ -113,6 +113,8 @@ def return_admin_dashboard(request):
     last_employee = Employee.objects.order_by('-creationDate')[:4]
     personel_count=Employee.objects.count()
     proje_count=EPProject.objects.count()
+
+
     proje_status_PT=EPProject.objects.filter(projectStatus=EPProject.PT).distinct().count()
     proje_status_PDE=EPProject.objects.filter(projectStatus=EPProject.PDE).distinct().count()
 
@@ -147,7 +149,22 @@ def return_admin_dashboard(request):
 def City_athlete_cout(request):
     if request.method == 'POST' and request.is_ajax():
         try:
-            totalprojects = EPProject.objects.filter(city__name__icontains=request.POST.get('city')).count()
+            login_user = request.user
+            user = User.objects.get(pk=login_user.pk)
+            projects = EPProject.objects.none()
+
+
+            if user.groups.filter(name__in=['Yonetim', 'Admin']):
+                projects = EPProject.objects.filter(city=city)
+
+
+            elif user.groups.filter(name='Personel'):
+                projects = EPProject.objects.filter(employees__employee__user=user).distinct()
+                projects |= EPProject.objects.filter(sorumlu__user=user).distinct()
+
+
+
+            totalprojects = projects.filter(city__name__icontains=request.POST.get('city')).count()
             city = City.objects.get(name__icontains=request.POST.get('city'))
             data = {
                 'totalprojects': totalprojects,

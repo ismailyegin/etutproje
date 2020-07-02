@@ -6,8 +6,11 @@ from itertools import count
 from django.contrib import messages
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
+
+
 
 from oxiterp.settings.base import MEDIA_URL
 from sbs.Forms.CategoryItemForm import CategoryItemForm
@@ -24,7 +27,6 @@ from django.utils import timezone
 from sbs.models.EPDocument import EPDocument
 from sbs.Forms.EPDocumentForm import EPDocumentForm
 from sbs.Forms.DisableEPProjectForm import DisableEPProjectForm
-
 
 from sbs.Forms.EPProjectSearchForm import EPProjectSearchForm
 from django.db.models import Q
@@ -51,14 +53,9 @@ def add_project(request):
 
         return redirect('sbs:proje-duzenle', pk=project.pk)
 
-
-
-
-
-
         if project_form.is_valid():
             project = project_form.save(commit=False)
-            project.town=request.POST.get('town')
+            project.town = request.POST.get('town')
             project.save()
 
             messages.success(request, 'Proje Kaydedilmiştir.')
@@ -72,17 +69,18 @@ def add_project(request):
     return render(request, 'epproje/proje-ekle.html',
                   {'project_form': project_form})
 
+
 @login_required
 def edit_project_personel(request, pk):
     perm = general_methods.control_access_personel(request)
     if not perm:
         logout(request)
         return redirect('accounts:login')
-    user=request.user
+    user = request.user
     project = EPProject.objects.get(pk=pk)
     projects = project.employees.filter(employee__user=user)
 
-    if project.sorumlu.user==user or projects:
+    if project.sorumlu.user == user or projects:
         if project.sorumlu.user == user:
             return redirect('sbs:proje-duzenle', pk=project.pk)
 
@@ -104,6 +102,7 @@ def edit_project_personel(request, pk):
     else:
         return redirect('sbs:personel')
 
+
 @login_required
 def edit_project(request, pk):
     perm = general_methods.control_access_personel(request)
@@ -111,10 +110,9 @@ def edit_project(request, pk):
     if not perm:
         logout(request)
         return redirect('accounts:login')
-    document_form=EPDocumentForm()
+    document_form = EPDocumentForm()
     project = EPProject.objects.get(pk=pk)
-    user=request.user
-
+    user = request.user
 
     # güvenlik icin sorgu yapıldı
 
@@ -131,17 +129,17 @@ def edit_project(request, pk):
     project_form = EPProjectForm(request.POST or None, instance=project)
     titles = CategoryItem.objects.filter(forWhichClazz="EPPROJECT_EMPLOYEE_TITLE")
     employees = Employee.objects.all()
-    days=None
+    days = None
     if project.aifinish:
-        days= (project.aifinish-timezone.now()).days
-        if days<0:
-            days='Alim işinin zamani bitti.'
+        days = (project.aifinish - timezone.now()).days
+        if days < 0:
+            days = 'Alim işinin zamani bitti.'
 
     if request.method == 'POST':
         try:
             document = request.FILES['files']
-            data=EPDocument()
-            data.name=document
+            data = EPDocument()
+            data.name = document
             data.save()
             if document:
                 project.documents.add(data)
@@ -172,7 +170,7 @@ def edit_project(request, pk):
         arsa = arsa.replace(".", "")
         arsa = arsa.replace(",", ".")
 
-        town=request.POST.get('town')
+        town = request.POST.get('town')
 
         if project_form.is_valid():
 
@@ -182,9 +180,8 @@ def edit_project(request, pk):
             project.yaklasikMaliyet = yaklasik
             project.sozlesmeBedeli = sozlesmebedeli
             project.arsaAlani = arsa
-            project.sozlesmeBedeliKdv=sozlesmebedeliKdv
-            project.town=town
-
+            project.sozlesmeBedeliKdv = sozlesmebedeliKdv
+            project.town = town
 
             project.save()
 
@@ -194,7 +191,8 @@ def edit_project(request, pk):
             messages.warning(request, 'Alanları Kontrol Ediniz')
 
     return render(request, 'epproje/proje-duzenle.html',
-                  {'project_form': project_form, 'project': project, 'titles': titles, 'employees': employees,'days':days})
+                  {'project_form': project_form, 'project': project, 'titles': titles, 'employees': employees,
+                   'days': days})
 
 
 @login_required
@@ -205,8 +203,8 @@ def return_projects(request):
         logout(request)
         return redirect('accounts:login')
 
-    search_form=EPProjectSearchForm()
-    projects=EPProject.objects.none()
+    search_form = EPProjectSearchForm()
+    projects = EPProject.objects.none()
     user = request.user
 
     if user.groups.filter(name__in=['Yonetim', 'Admin']):
@@ -227,25 +225,26 @@ def return_projects(request):
                 projects = EPProject.objects.filter(employees__employee__user=user).distinct()
                 projects |= EPProject.objects.filter(sorumlu__user=user).distinct()
             elif get == 'TamamlananProje':
-                projects = EPProject.objects.filter(projectStatus=EPProject.PT, employees__employee__user=user).distinct()
+                projects = EPProject.objects.filter(projectStatus=EPProject.PT,
+                                                    employees__employee__user=user).distinct()
                 projects |= EPProject.objects.filter(projectStatus=EPProject.PT, sorumlu__user=user).distinct()
             elif get == 'AçıkProje':
-                projects = EPProject.objects.filter(projectStatus=EPProject.PDE, employees__employee__user=user).distinct()
-                projects |= EPProject.objects.filter(projectStatus=EPProject.PDE,sorumlu__user=user).distinct()
+                projects = EPProject.objects.filter(projectStatus=EPProject.PDE,
+                                                    employees__employee__user=user).distinct()
+                projects |= EPProject.objects.filter(projectStatus=EPProject.PDE, sorumlu__user=user).distinct()
             elif get == 'sorumlu':
                 projects = EPProject.objects.filter(sorumlu__user=user).distinct()
 
     if request.method == 'POST':
         user_form = EPProjectSearchForm(request.POST)
 
-
-        if user_form.is_valid() :
+        if user_form.is_valid():
             name = user_form.cleaned_data.get('name')
             butceYili = user_form.cleaned_data.get('butceYili')
             butceCinsi = user_form.cleaned_data.get('butceCinsi')
-            projeCinsi=user_form.cleaned_data.get('projeCinsi')
-            city=user_form.cleaned_data.get('city')
-            Status=user_form.cleaned_data.get('projectStatus')
+            projeCinsi = user_form.cleaned_data.get('projeCinsi')
+            city = user_form.cleaned_data.get('city')
+            Status = user_form.cleaned_data.get('projectStatus')
 
             if not (name or butceCinsi or butceYili or projeCinsi or Status or city):
 
@@ -279,22 +278,27 @@ def return_projects(request):
                 elif user.groups.filter(name__in=['Yonetim', 'Admin']):
                     projects = EPProject.objects.filter(query).distinct()
 
-    return render(request, 'epproje/projeler.html', {'projects': projects,'search_form':search_form})
+    return render(request, 'epproje/projeler.html', {'projects': projects, 'search_form': search_form})
 
 
 @login_required
 def return_projects_city(request, pk):
-    perm = general_methods.control_access(request)
-
+    perm = general_methods.control_access_personel(request)
     if not perm:
         logout(request)
         return redirect('accounts:login')
     city = City.objects.get(pk=pk)
-    projects = EPProject.objects.filter(city=city)
+    login_user = request.user
+    user = User.objects.get(pk=login_user.pk)
+
+    if user.groups.filter(name__in=['Yonetim', 'Admin']):
+        projects = EPProject.objects.filter(city=city)
 
 
-
-
+    elif user.groups.filter(name='Personel'):
+        projects = EPProject.objects.filter(employees__employee__user=user).distinct()
+        projects |= EPProject.objects.filter(sorumlu__user=user).distinct()
+        projects = projects.filter(city=city)
 
     return render(request, 'epproje/proje-il.html', {'projects': projects, 'city': city})
 
@@ -368,19 +372,10 @@ def edit_employeetitle(request, pk):
                   {'category_item_form': category_item_form})
 
 
-
-
-
-
-
-
-
 @login_required
 def update_employee_to_project(request, pk):
     perm = general_methods.control_access_personel(request)
     print('ben geldim ')
-
-
 
     if not perm:
         logout(request)
@@ -398,8 +393,6 @@ def update_employee_to_project(request, pk):
             employees.employee = employee
         employees.save()
         project.save()
-
-
 
         return JsonResponse({'status': 'Success', 'messages': 'save successfully'})
 
@@ -421,10 +414,10 @@ def add_employee_to_project(request, pk):
         title = CategoryItem.objects.get(pk=request.POST.get('title'))
         employee = Employee.objects.get(pk=request.POST.get('employee'))
         project = EPProject.objects.get(pk=pk)
-        employees=project.employees.create(projectEmployeeTitle=title, employee=employee)
+        employees = project.employees.create(projectEmployeeTitle=title, employee=employee)
         project.save()
         # messages.success(request, 'Personel Eklenmiştir')
-        return JsonResponse({'status': 'Success', 'messages': 'save successfully','pk':employees.pk})
+        return JsonResponse({'status': 'Success', 'messages': 'save successfully', 'pk': employees.pk})
 
     except:
         return JsonResponse({'status': 'Fail', 'msg': 'Not a valid request'})
@@ -463,9 +456,9 @@ def update_requirement_to_project(request, pk):
         definition = request.POST.get('definition')
         id = request.POST.get('id')
         project = EPProject.objects.get(pk=pk)
-        requirements=project.requirements.get(pk=id)
-        requirements.amount=amount
-        requirements.definition=definition
+        requirements = project.requirements.get(pk=id)
+        requirements.amount = amount
+        requirements.definition = definition
         requirements.save()
         project.save()
 
@@ -475,8 +468,6 @@ def update_requirement_to_project(request, pk):
         messages.warning(request, 'Yeniden deneyiniz.')
 
     return redirect('sbs:proje-duzenle', pk=pk)
-
-
 
 
 @login_required
@@ -489,9 +480,9 @@ def add_requirement_to_project(request, pk):
         amount = request.POST.get('amount')
         definition = request.POST.get('definition')
         project = EPProject.objects.get(pk=pk)
-        requirements=project.requirements.create(amount=amount, definition=definition)
+        requirements = project.requirements.create(amount=amount, definition=definition)
         # messages.success(request, 'İhtiyaç Eklenmiştir')
-        return JsonResponse({'status': 'Success', 'messages': 'save successfully','pk':requirements.pk})
+        return JsonResponse({'status': 'Success', 'messages': 'save successfully', 'pk': requirements.pk})
     except:
         messages.warning(request, 'Yeniden deneyiniz.')
 
@@ -525,14 +516,13 @@ def update_phase_to_project(request, pk):
         logout(request)
         return redirect('accounts:login')
 
-
     try:
         date = request.POST.get('phaseDate')
         dates = datetime.strptime(date, '%m/%d/%Y')
         definition = request.POST.get('phaseDefinition')
         id = request.POST.get('id')
         project = EPProject.objects.get(pk=pk)
-        asama=project.phases.get(pk=id)
+        asama = project.phases.get(pk=id)
         asama.definition = definition
         asama.phaseDate = dates
         asama.save()
@@ -546,8 +536,6 @@ def update_phase_to_project(request, pk):
     return redirect('sbs:proje-duzenle', pk=pk)
 
 
-
-
 @login_required
 def add_phase_to_project(request, pk):
     perm = general_methods.control_access_personel(request)
@@ -555,7 +543,6 @@ def add_phase_to_project(request, pk):
     if not perm:
         logout(request)
         return redirect('accounts:login')
-
 
     try:
         date = request.POST.get('phaseDate')
@@ -568,16 +555,13 @@ def add_phase_to_project(request, pk):
         asama.save()
         project.phases.add(asama)
         messages.success(request, 'Aşama Eklenmiştir')
-        return JsonResponse({'status': 'Success', 'messages': 'save successfully','pk':asama.pk})
+        return JsonResponse({'status': 'Success', 'messages': 'save successfully', 'pk': asama.pk})
 
     except:
         return JsonResponse({'status': 'Fail', 'msg': 'Not a valid request'})
         messages.warning(request, 'Yeniden deneyiniz.')
 
     return redirect('sbs:proje-duzenle', pk=pk)
-
-
-
 
 
 @login_required
@@ -623,12 +607,6 @@ def add_offer_to_project(request, pk):
     return redirect('sbs:proje-duzenle', pk=pk)
 
 
-
-
-
-
-
-
 @login_required
 def personel_list(request):
     perm = general_methods.control_access_personel(request)
@@ -643,14 +621,14 @@ def personel_list(request):
             beka = []
             for item in project.employees.all():
                 data = {
-                    'pk':item.pk,
+                    'pk': item.pk,
                     'count': say,
                     'title': item.projectEmployeeTitle.name,
                     'employee': item.employee.user.first_name + ' ' + item.employee.user.last_name,
                 }
                 beka.append(data)
                 say += 1
-            total=project.employees.count()
+            total = project.employees.count()
             response = {
                 'data': beka,
                 'recordsTotal': total,
@@ -697,6 +675,8 @@ def ihtiyac_list(request):
         return JsonResponse({'status': 'Fail', 'msg': 'Not a valid request'})
 
     return redirect('sbs:proje-duzenle', pk=pk)
+
+
 @login_required
 def asama_list(request):
     perm = general_methods.control_access_personel(request)
@@ -713,7 +693,7 @@ def asama_list(request):
                 data = {
                     'pk': item.pk,
                     'say': say,
-                    'title':  item.phaseDate.strftime('%d/%m/%Y'),
+                    'title': item.phaseDate.strftime('%d/%m/%Y'),
                     'employee': item.definition,
                 }
                 beka.append(data)
@@ -728,13 +708,13 @@ def asama_list(request):
 
     return redirect('sbs:proje-duzenle', pk=pk)
 
+
 @login_required
 def town(request):
     perm = general_methods.control_access_personel(request)
     if not perm:
         logout(request)
         return redirect('accounts:login')
-
 
     try:
         if request.method == 'POST':
@@ -775,7 +755,6 @@ def deleteReferee(request, pk):
         return JsonResponse({'status': 'Fail', 'msg': 'Not a valid request'})
 
 
-
 @login_required
 def delete_document_project(request, project_pk, employee_pk):
     perm = general_methods.control_access_personel(request)
@@ -795,13 +774,8 @@ def delete_document_project(request, project_pk, employee_pk):
         return JsonResponse({'status': 'Fail', 'msg': 'Not a valid request'})
 
 
-
 @login_required
 def dokumanAdd(request):
-
-
-
-
     perm = general_methods.control_access_personel(request)
     print('ben geldim')
 
@@ -809,7 +783,7 @@ def dokumanAdd(request):
         logout(request)
         return redirect('accounts:login')
     if request.method == 'POST' and request.is_ajax():
-        project=EPProject.objects.get(pk=request.POST.get('pk'))
+        project = EPProject.objects.get(pk=request.POST.get('pk'))
 
         document = request.FILES['file']
         data = EPDocument()
@@ -832,28 +806,49 @@ def dokumanAdd(request):
 @login_required
 def return_personel_dashboard(request):
     perm = general_methods.control_access_personel(request)
-    user=request.user
+    user = request.user
+
+    proje = EPProject.objects.filter(employees__employee__user=user).distinct()
+    proje |= EPProject.objects.filter(sorumlu__user=user).distinct()
+
+    proje_count = proje.count()
+    proje_status_PT = proje.filter(projectStatus=EPProject.PT,employees__employee__user=user).count()
+    proje_status_PDE = proje.filter(projectStatus=EPProject.PDE,employees__employee__user=user).count()
+    sorumlu_count = EPProject.objects.filter(sorumlu__user=user,employees__employee__user=user).count()
 
 
 
 
-
-    proje=EPProject.objects.filter(employees__employee__user=user ).distinct()
-    proje|=EPProject.objects.filter(sorumlu__user=user).distinct()
-    proje_count=proje.count()
-    proje_status_PT=proje.filter(projectStatus=EPProject.PT).count()
-    proje_status_PDE=proje.filter(projectStatus=EPProject.PDE).count()
-    sorumlu_count=EPProject.objects.filter(sorumlu__user=user).count()
+    cezainfaz = proje.filter(projeCinsi=EPProject.CIK).count()
+    adaletbinasi = proje.filter(projeCinsi=EPProject.AB).count()
+    adlitip = proje.filter(projeCinsi=EPProject.AT).count()
+    bolgeadliye = proje.filter(projeCinsi=EPProject.BAM).count()
+    bolgeidari = proje.filter(projeCinsi=EPProject.BIM).count()
+    denetimserbeslik = proje.filter(projeCinsi=EPProject.DS).count()
+    personelegitim = proje.filter(projeCinsi=EPProject.PEM).count()
+    bakanlikbinasi = proje.filter(projeCinsi=EPProject.BB).count()
+    diger = proje.filter(projeCinsi=EPProject.DIGER).count()
+    lojman = proje.filter(projeCinsi=EPProject.LOJMAN).count()
 
     if not perm:
         logout(request)
         return redirect('accounts:login')
-    return render(request, 'anasayfa/personel.html',{'proje_count':proje_count,'proje_status_PT':proje_status_PT,'sorumlu_count':sorumlu_count,'proje_status_PDE':proje_status_PDE})
-
-
-
-
-
+    return render(request, 'anasayfa/personel.html', {'proje_count': proje_count,
+                                                      'proje_status_PT': proje_status_PT,
+                                                      'sorumlu_count': sorumlu_count,
+                                                      'proje_status_PDE': proje_status_PDE,
+                                                      'proje_status_PT': proje_status_PT,
+                                                      'proje_status_PDE': proje_status_PDE,
+                                                      'cezainfaz': cezainfaz,
+                                                      'adaletbinasi': adaletbinasi,
+                                                      'adlitip': adlitip,
+                                                      'bolgeadliye': bolgeadliye,
+                                                      'bolgeidari': bolgeidari,
+                                                      'denetimserbeslik': denetimserbeslik,
+                                                      'personelegitim': personelegitim,
+                                                      'bakanlikbinasi': bakanlikbinasi,
+                                                      'diger': diger,
+                                                      'lojman': lojman})
 @login_required
 def add_vest_to_project(request, pk):
     perm = general_methods.control_access_personel(request)
@@ -868,7 +863,6 @@ def add_vest_to_project(request, pk):
     project = EPProject.objects.get(pk=pk)
     vest = project.vest.create(vest=vest, vestDate=dates)
     return JsonResponse({'status': 'Success', 'messages': 'save successfully', 'pk': vest.pk})
-
 
 
 @login_required
@@ -889,24 +883,22 @@ def delete_vest_from_project(request, project_pk, employee_pk):
     else:
         return JsonResponse({'status': 'Fail', 'msg': 'Not a valid request'})
 
+
 @login_required
 def update_vest_to_project(request, pk):
-
     perm = general_methods.control_access_personel(request)
     if not perm:
         logout(request)
         return redirect('accounts:login')
 
-
-
     vest = request.POST.get('vest')
     date = request.POST.get('vestdate')
     dates = datetime.strptime(date, '%d/%m/%Y')
 
-    hak=EPVest.objects.get(pk=pk)
+    hak = EPVest.objects.get(pk=pk)
 
-    hak.vest=str(vest)
-    hak.vestDate=dates
+    hak.vest = str(vest)
+    hak.vestDate = dates
     hak.save()
     return JsonResponse({'status': 'Success', 'messages': 'save successfully'})
 
