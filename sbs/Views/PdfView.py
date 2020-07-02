@@ -298,7 +298,7 @@ def edit_project_pdf(request,pk):
     else:
         c.drawString(50, 650, "İlçe                    :%s" % project.town)
     c.drawString(50,630,"Yatırım Programı :%s" %project.butceCinsi)
-    c.drawString(50,610,"Bütçe yılı            :%s" %project.butceYili)
+    c.drawString(50,610,"Bütçe Yılı            :%s" %project.butceYili)
     c.drawString(300,670,"Projenin Cinsi          :%s" %project.projeCinsi)
     c.drawString(300,650,"Karakteristik           :%s" %project.karakteristik)
     c.drawString(300,630,"Projenin Durumu     :%s" %project.projectStatus)
@@ -314,12 +314,12 @@ def edit_project_pdf(request,pk):
     c.line(50, 580, 200, 580)
     c.setFont("Verdana", 10)
 
-    c.drawString(50, 560, "İhale tarihi                         :%s" % (project.ihaleTarihi.strftime('%m/%d/%Y') if project.ihaleTarihi else  '-'))
-    c.drawString(50, 540, "Sözleşme tarihi                  :%s" %(project.sozlesmeTarihi.strftime('%m/%d/%Y')  if project.sozlesmeTarihi else  '-' ))
-    c.drawString(50, 520, "Alım İşinin Başlangıç tarihi  :%s" %(project.aistart.strftime('%m/%d/%Y')  if project.aistart else  '-' ))
-    c.drawString(50, 500, "Alım İşinin Bitiş tarihi         :%s"%(project.aifinish.strftime('%m/%d/%Y')  if project.aifinish else  '-' ))
+    c.drawString(50, 560, "İhale Tarihi                         :%s" % (project.ihaleTarihi.strftime('%m/%d/%Y') if project.ihaleTarihi else  '-'))
+    c.drawString(50, 540, "Sözleşme Tarihi                  :%s" %(project.sozlesmeTarihi.strftime('%m/%d/%Y')  if project.sozlesmeTarihi else  '-' ))
+    c.drawString(50, 520, "Alım İşinin Başlangıç Tarihi  :%s" %(project.aistart.strftime('%m/%d/%Y')  if project.aistart else  '-' ))
+    c.drawString(50, 500, "Alım İşinin Bitiş Tarihi         :%s"%(project.aifinish.strftime('%m/%d/%Y')  if project.aifinish else  '-' ))
     c.drawString(50, 480, "İşin Süresi                         :%s" % (project.isSUresi if project.isSUresi else  '-' ))
-    c.drawString(50, 460, "Kaç Gün kaldi                    :%s" % (days if days else  '-' ))
+    c.drawString(50, 460, "Kaç Gün Kaldi                    :%s" % (days if days else  '-' ))
     c.setFont("Verdana", 15)
     c.drawString(300,590,'Arsa Yapım Ödenek Bilgileri')
     c.line(300, 580, 450, 580)
@@ -332,7 +332,7 @@ def edit_project_pdf(request,pk):
 
 
 
-    c.drawString(300, 540, "İnşaat alanı                 :%s" % ( "{0:,.2f}".format(project.insaatAlani) if project.insaatAlani else  '-' ))
+    c.drawString(300, 540, "İnşaat Alanı                 :%s" % ( "{0:,.2f}".format(project.insaatAlani) if project.insaatAlani else  '-' ))
     c.drawString(300, 520, "Tahmini Ödenek Tutari :%s" % ("{0:,.2f}".format(project.tahminiOdenekTutari) if project.tahminiOdenekTutari else  '-' ))
     c.drawString(300, 500, "Yaklaşık Maliyet           :%s" % ("{0:,.2f}".format(project.yaklasikMaliyet) if project.yaklasikMaliyet else  '-' ))
 
@@ -384,8 +384,8 @@ def edit_project_pdf(request,pk):
     c.setFont("Verdana", 10)
 
 
-    c.drawString(50, 440, "Sözleşme bedeli                :%s" % ( "{:,}".format(project.sozlesmeBedeli) if project.sozlesmeBedeli else  '-' ))
-    c.drawString(50, 420, "Sözleşme bedeli kdv dahil  :%s" % ("{:,}".format(project.sozlesmeBedeliKdv) if project.sozlesmeBedeliKdv else  '-' ))
+    c.drawString(50, 440, "Sözleşme Bedeli                :%s" % ( "{:,}".format(project.sozlesmeBedeli) if project.sozlesmeBedeli else  '-' ))
+    c.drawString(50, 420, "Sözleşme Bedeli Kdv Dahil  :%s" % ("{:,}".format(project.sozlesmeBedeliKdv) if project.sozlesmeBedeliKdv else  '-' ))
 
 
 
