@@ -378,14 +378,14 @@ def edit_project_pdf(request,pk):
 
 
 
-    c.setFont("Verdana", 15)
-    c.drawString(50,440,'Hakediş Bilgileri')
-    c.line(50, 430, 200, 430)
+    # c.setFont("Verdana", 15)
+    # c.drawString(50,440,'Hakediş Bilgileri')
+    # c.line(50, 430, 200, 430)
     c.setFont("Verdana", 10)
 
 
-    c.drawString(50, 410, "Sözleşme bedeli               :%s" % ( "{:,}".format(project.sozlesmeBedeli) if project.sozlesmeBedeli else  '-' ))
-    c.drawString(50, 390, "Sözleşme bedeli kdv dahil:%s" % ("{:,}".format(project.sozlesmeBedeliKdv) if project.sozlesmeBedeliKdv else  '-' ))
+    c.drawString(50, 440, "Sözleşme bedeli                :%s" % ( "{:,}".format(project.sozlesmeBedeli) if project.sozlesmeBedeli else  '-' ))
+    c.drawString(50, 420, "Sözleşme bedeli kdv dahil  :%s" % ("{:,}".format(project.sozlesmeBedeliKdv) if project.sozlesmeBedeliKdv else  '-' ))
 
 
 
