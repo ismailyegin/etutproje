@@ -157,7 +157,7 @@ def City_athlete_cout(request):
 
             if user.groups.filter(name__in=['Yonetim', 'Admin']):
 
-                projects = EPProject.objects.filter(city=city)
+                projects = EPProject.objects.filter(city__name__icontains=city)
 
 
             elif user.groups.filter(name='Personel'):
