@@ -131,6 +131,75 @@
 
 
         <div class="row">
+            <section class="col-lg-12 ">
+
+                <div class="box-body">
+
+
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Proje Filtrele</h3>
+                        </div>
+                        <form method="post" role="form">
+                            <div class="box-body">
+                                {% csrf_token %}
+
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label> {{ search_form.name.label }}</label>
+                                        {{ search_form.name }}
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label> {{ search_form.butceCinsi.label }}</label>
+                                        {{ search_form.butceCinsi }}
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label> {{ search_form.butceYili.label }}</label>
+                                        {{ search_form.butceYili }}
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label> {{ search_form.projeCinsi.label }}</label>
+                                        {{ search_form.projeCinsi }}
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label> {{ search_form.city.label }}</label>
+                                        {{ search_form.city }}
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label> {{ search_form.projectStatus.label }}</label>
+                                        {{ search_form.projectStatus }}
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <!-- /.box-body -->
+
+                            <div class="box-footer">
+                                <button type="submit" class="btn btn-primary">Ara</button>
+                            </div>
+                        </form>
+
+
+                    </div>
+                    <!-- /.box -->
+
+
+                </div>
+            </section>
+        </div>
+
+        <div class="row">
 
 
             <section class="col-lg-12 ">
@@ -142,22 +211,22 @@
                     <div class="box box-primary">
                         <div class="box-header with-border">
                             <h3 class="box-title">
-                                {% if city %}
-                                    {{ city.name }} İlindeki Projeler</h3>
-                                {% else %}
-                                    Projeler</h3>
-                                {% endif %}
+{#                                {% if city %}#}
+{#                                    {{ city.name }} İlindeki Projeler</h3>#}
+{#                                {% else %}#}
+{#                                    Projeler</h3>#}
+{#                                {% endif %}#}
                         </div>
 
                         <div class="box-header with-border">
                             <div class="btn-group">
-                                {% if user.groups.all.0.name == 'Admin' %}
-
-                                    <a href="{% url "sbs:proje-ekle" %}"
-                                       type="button" class="btn btn-success"><i
-                                            class="fa fa-edit"></i> Yeni Proje Ekle
-                                    </a>
-                                {% endif %}
+{#                                {% if user.groups.all.0.name == 'Admin' %}#}
+{##}
+{#                                    <a href="{% url "sbs:proje-ekle" %}"#}
+{#                                       type="button" class="btn btn-success"><i#}
+{#                                            class="fa fa-edit"></i> Yeni Proje Ekle#}
+{#                                    </a>#}
+{#                                {% endif %}#}
                             </div>
                         </div>
 
@@ -206,24 +275,12 @@
                                                            onclick=deleteReferee({{ project.pk }})><i
                                                                 class="fa fa-trash"></i></a>
 
+                                                    {% else %}
 
-
-
-
-                                                    {% elif user.groups.all.0.name == 'Teknik' %}
                                                         <a href="{% url "sbs:proje-incele-teknik" project.pk %}"
                                                            type="button" class="btn btn-warning btn-lg"><i
                                                                 class="fa fa-edit"></i>
                                                         </a>
-
-
-                                                    {% else %}
-
-                                                        <a href="{% url "sbs:proje-incele-personel" project.pk %}"
-                                                           type="button" class="btn btn-warning btn-lg"><i
-                                                                class="fa fa-edit"></i>
-                                                        </a>
-
 
                                                     {% endif %}
 

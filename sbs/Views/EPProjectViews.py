@@ -301,7 +301,7 @@ def return_projects_city(request, pk):
     login_user = request.user
     user = User.objects.get(pk=login_user.pk)
 
-    if user.groups.filter(name__in=['Yonetim', 'Admin']):
+    if user.groups.filter(name__in=['Teknik', 'Admin']):
         projects = EPProject.objects.filter(city=city)
 
 
@@ -809,6 +809,11 @@ def dokumanAdd(request):
 
     else:
         return JsonResponse({'status': 'Fail', 'msg': 'Not a valid request'})
+
+
+
+
+
 
 
 @login_required

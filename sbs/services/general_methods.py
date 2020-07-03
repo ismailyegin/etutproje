@@ -21,7 +21,7 @@ from sbs.models.Communication import Communication
 from sbs.models.City import City
 from sbs.models.Country import Country
 from sbs.models.ClubRole import ClubRole
-
+from sbs.models.MenuTeknik import MenuTeknik
 from sbs.models.Employee import Employee
 
 
@@ -39,6 +39,11 @@ def getPersonelMenu(request):
     personelmenus = MenuPersonel.objects.all()
     return {'personelmenus': personelmenus}
 
+
+
+def getTeknikMenu(request):
+    teknikmenus = MenuTeknik.objects.all().order_by('count')
+    return {'teknikmenus': teknikmenus}
 
 
 
@@ -109,12 +114,27 @@ def control_access_personel(request):
         if request.resolver_match.url_name == perm.name:
             is_exist = True
 
-    if group.name == "Admin" or group.name=="Personel":
+    if group.name == "Admin" or group.name=="Personel" or group.name=="Teknik" :
         is_exist = True
 
     return is_exist
 
+def control_access_technical(request):
+    group = request.user.groups.all()[0]
 
+    permissions = group.permissions.all()
+
+    is_exist = False
+
+    for perm in permissions:
+
+        if request.resolver_match.url_name == perm.name:
+            is_exist = True
+
+    if group.name == "Admin" or group.name=="Teknik":
+        is_exist = True
+
+    return is_exist
 
 
 
@@ -141,6 +161,11 @@ def getProfileImage(request):
         current_user = request.user
 
         if current_user.groups.filter(name='Personel').exists():
+            personel = Employee.objects.get(user=current_user)
+            person = Person.objects.get(id=personel.person.id)
+
+
+        elif current_user.groups.filter(name='Teknik').exists():
             personel = Employee.objects.get(user=current_user)
             person = Person.objects.get(id=personel.person.id)
 
@@ -222,5 +247,3 @@ def import_csv():
             sportClubUser.role =ClubRole.objects.get(name__icontains=row[9].strip())
 
             sportClubUser.save()
-
-            print(row)

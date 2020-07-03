@@ -1,7 +1,7 @@
 from django.conf.urls import url
 
 from sbs.Views import DashboardViews, AthleteViews, RefereeViews, ClubViews, CoachViews, DirectoryViews, UserViews, \
-    CompetitionViews, AdminViews, HelpViews, PageViews, PreRegistration, EPProjectViews, EmployeeViews,PdfView
+    CompetitionViews, AdminViews, HelpViews, PageViews, PreRegistration, EPProjectViews, EmployeeViews,PdfView,TechnicalViews
 
 app_name = 'sbs'
 
@@ -428,7 +428,17 @@ urlpatterns = [
 
 
     url(r'excel/$',PdfView.return_excel, name='excel'),
-    url(r'excel2/$', PdfView.return_excel_row, name='excel2')
+    url(r'excel2/$', PdfView.return_excel_row, name='excel2'),
+
+
+
+     # technical
+    url(r'etut-proje/teknik/$', TechnicalViews.return_technical_dashboard, name='anasayfa-teknik'),
+    url(r'etut-proje/projeler/teknik$', TechnicalViews.return_projects, name='projeler-teknik'),
+    url(r'etut-proje/proje-duzenle/teknik/(?P<pk>\d+)$', TechnicalViews.edit_project_personel,
+        name='proje-incele-teknik'),
+
+
 
 
 
