@@ -62,6 +62,9 @@ def login(request):
             elif user.groups.all()[0].name == 'Personel':
                 return redirect('sbs:personel')
 
+            elif user.groups.all()[0].name == 'Teknik':
+                return redirect('sbs:anasayfa-teknik')
+
 
 
 

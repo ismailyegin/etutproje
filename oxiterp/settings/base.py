@@ -76,11 +76,11 @@ TEMPLATES = [
                 'django.template.context_processors.i18n',
                 'sbs.services.general_methods.getMenu',
                 'sbs.services.general_methods.getAdminMenu',
-                'sbs.services.general_methods.getAthleteMenu',
-                'sbs.services.general_methods.getRefereeMenu',
-                'sbs.services.general_methods.getCoachMenu',
+
+                'sbs.services.general_methods.getTeknikMenu',
+
+                'sbs.services.general_methods.getPersonelMenu',
                 'sbs.services.general_methods.getDirectoryMenu',
-                'sbs.services.general_methods.getClubUserMenu',
                 'sbs.services.general_methods.getProfileImage',
                 'django.template.context_processors.media', # set this explicitly
 
@@ -144,7 +144,7 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 DATE_INPUT_FORMATS = ('%d-%m-%Y', '%Y-%m-%d')
 

@@ -141,6 +141,11 @@
                                         <small> Hakem</small>
 
 
+                                         {% elif user.groups.all.0.name == "Teknik" %}
+                                        <small> Teknik Personel</small>
+
+
+
 
                                     {% elif user.groups.all.0.name == "Admin" %}
                                         <small> Admin</small>
@@ -202,6 +207,10 @@
                                         <a href="{% url "sbs:personel-profil-guncelle" %}"
                                            class="btn btn-default btn-flat">Profil Bilgisi</a>
 
+                                        {% elif user.groups.all.0.name == "Teknik" %}
+                                        <a href="#"
+                                           class="btn btn-default btn-flat">Profil Bilgisi</a>
+
 
 
                                     {% elif user.groups.all.0.name == "Admin" %}
@@ -252,9 +261,10 @@
             <ul class="sidebar-menu" data-widget="tree">
 
 
-                {% if  user.groups.all.0.name == 'Sporcu' %}
 
-                    {% for menu in athletemenus %}
+                {% if  user.groups.all.0.name == 'Admin' %}
+
+                    {% for menu in adminmenus %}
 
 
                         {% if menu.is_parent %}
@@ -293,9 +303,7 @@
 
 
 
-
-
-                {% elif  user.groups.all.0.name == "Personel"%}
+                {% elif user.groups.all.0.name == "Personel"%}
 
                     {% for menu in personelmenus %}
 
@@ -316,6 +324,47 @@
                     <ul class="treeview-menu">
 
                         {% for menusub in personelmenus %}
+
+
+
+                            {% if menusub.parent.id is menu.id %}
+
+                                <li>
+                                    <a href="{% url menusub.url %}"><i
+                                            class=" {{ menusub.fa_icon }}"></i> {{ menusub.name }}</a>
+                                </li>
+
+                            {% endif %}
+
+                        {% endfor %}
+
+                    </ul>
+                    </li>
+                    {% endfor %}
+
+
+
+                {% elif  user.groups.all.0.name == "Teknik"%}
+
+                    {% for menu in teknikmenus %}
+
+
+                        {% if menu.is_parent %}
+
+                            <li class="treeview ">
+                            <a href="#">
+                                <i class=" {{ menu.fa_icon }}"></i>
+                                <span>{{ menu.name }}</span>
+                                <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                            </a>
+                        {% endif %}
+
+
+                    <ul class="treeview-menu">
+
+                        {% for menusub in teknikmenus %}
 
 
 
