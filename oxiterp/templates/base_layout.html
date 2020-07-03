@@ -100,8 +100,10 @@
             <!-- mini logo for sidebar mini 50x50 pixels -->
             <span class="logo-mini"><b>T.C.</b></span>
             <!-- logo for regular state and mobile devices -->
-            <span class="logo-lg"><img src="{% static 'images/base-logo.png' %}" alt="User Image"
-                                       style="margin-bottom: 5px;"> </span>
+
+            <span class="logo-lg"><img src="http://kobiltek.com:81/etutproje/static/images/base-logo.png" alt="User Image" style="margin-bottom: 5px;"> </span>
+            {#            <span class="logo-lg"><img src="{% static 'images/base-logo.png' %}" alt="User Image" style="margin-bottom: 5px;"> </span>#}
+
         </a>
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top">
@@ -135,6 +137,7 @@
 
                                     {% if user.groups.all.0.name == "Personel" %}
                                         <small> Personel</small>
+
 
 
                                     {% elif user.groups.all.0.name == "Hakem" %}
@@ -262,7 +265,7 @@
 
 
 
-                {% if  user.groups.all.0.name == 'Admin' %}
+                {% if  user.groups.all.0.name == 'Sporcu ' %}
 
                     {% for menu in adminmenus %}
 
