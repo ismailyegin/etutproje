@@ -215,8 +215,7 @@ def edit_project_pdf(request,pk):
     days = None
     if project.aifinish:
         days = (project.aifinish - timezone.now()).days
-        if days < 0:
-            days = 'Zamanı bitti.'
+
 
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'inline; filename="ProjeTakip.pdf"'
@@ -314,12 +313,14 @@ def edit_project_pdf(request,pk):
     c.line(50, 580, 200, 580)
     c.setFont("Verdana", 10)
 
-    c.drawString(50, 560, "İhale Tarihi                         :%s" % (project.ihaleTarihi.strftime('%m/%d/%Y') if project.ihaleTarihi else  '-'))
-    c.drawString(50, 540, "Sözleşme Tarihi                  :%s" %(project.sozlesmeTarihi.strftime('%m/%d/%Y')  if project.sozlesmeTarihi else  '-' ))
-    c.drawString(50, 520, "Alım İşinin Başlangıç Tarihi  :%s" %(project.aistart.strftime('%m/%d/%Y')  if project.aistart else  '-' ))
-    c.drawString(50, 500, "Alım İşinin Bitiş Tarihi         :%s"%(project.aifinish.strftime('%m/%d/%Y')  if project.aifinish else  '-' ))
-    c.drawString(50, 480, "İşin Süresi                         :%s" % (project.isSUresi if project.isSUresi else  '-' ))
-    c.drawString(50, 460, "Kaç Gün Kaldi                    :%s" % (days if days else  '-' ))
+    c.drawString(50, 560, "İhale Tarihi                         :%s" % (project.ihaleTarihi.strftime('%m/%d/%Y') if project.ihaleTarihi else  ' '))
+    c.drawString(50, 540, "Sözleşme Tarihi                  :%s" %(project.sozlesmeTarihi.strftime('%m/%d/%Y')  if project.sozlesmeTarihi else  ' ' ))
+    c.drawString(50, 520, "Alım İşinin Başlangıç Tarihi  :%s" %(project.aistart.strftime('%m/%d/%Y')  if project.aistart else  ' ' ))
+    c.drawString(50, 500, "Alım İşinin Bitiş Tarihi         :%s"%(project.aifinish.strftime('%m/%d/%Y')  if project.aifinish else  ' ' ))
+    c.drawString(50, 480, "İşin Süresi                         :%s (Gün)" % (project.isSUresi if project.isSUresi else  ' ' ))
+
+
+    c.drawString(50, 460, "Kaç Gün Kaldi                    :%s (Gün)" % (days if  days else  ' ' ))
     c.setFont("Verdana", 15)
     c.drawString(300,590,'Arsa Yapım Ödenek Bilgileri')
     c.line(300, 580, 450, 580)
@@ -328,13 +329,13 @@ def edit_project_pdf(request,pk):
 
 
 
-    c.drawString(300, 560, "Arsa Alanı                    :%s" % ("{0:,.2f}".format(project.arsaAlani) if project.arsaAlani else  '-' ))
+    c.drawString(300, 560, "Arsa Alanı                    :%s m²" % ("{0:,.2f}".format(project.arsaAlani) if project.arsaAlani else  ' ' ))
 
 
 
-    c.drawString(300, 540, "İnşaat Alanı                 :%s" % ( "{0:,.2f}".format(project.insaatAlani) if project.insaatAlani else  '-' ))
-    c.drawString(300, 520, "Tahmini Ödenek Tutari :%s" % ("{0:,.2f}".format(project.tahminiOdenekTutari) if project.tahminiOdenekTutari else  '-' ))
-    c.drawString(300, 500, "Yaklaşık Maliyet           :%s" % ("{0:,.2f}".format(project.yaklasikMaliyet) if project.yaklasikMaliyet else  '-' ))
+    c.drawString(300, 540, "İnşaat Alanı                 :%s m² " % ( "{0:,.2f}".format(project.insaatAlani) if project.insaatAlani else  ' ' ))
+    c.drawString(300, 520, "Tahmini Ödenek Tutari :%s ₺" % ("{0:,.2f}".format(project.tahminiOdenekTutari) if project.tahminiOdenekTutari else  ' ' ))
+    # c.drawString(300, 500, "Yaklaşık Maliyet           :%s " % ("{0:,.2f}".format(project.yaklasikMaliyet) if project.yaklasikMaliyet else  ' ' ))
 
     c.setFont("Verdana", 15)
     c.drawString(300, 480, 'Personel Listesi:')
@@ -363,17 +364,17 @@ def edit_project_pdf(request,pk):
             page_num = c.getPageNumber()
             c.showPage()
             pdfmetrics.registerFont(TTFont('Verdana', 'Verdana.ttf'))
-            c.drawString(50, 25, 'http:/www.kobiltek.com/')
-            c.drawString(450, 25, 'Proje Takip Sistemi')
+            # c.drawString(50, 25, 'http:/www.kobiltek.com/')
+            # c.drawString(450, 25, 'Proje Takip Sistemi')
             page_num = c.getPageNumber()
-            c.drawString(280, 25, '%s.Sayfa' % page_num)
+            c.drawString(280, 25, '%s' % page_num)
             y = 750
 
     page_num = c.getPageNumber()
-
-    c.drawString(50, 25, 'http:/www.kobiltek.com/')
-    c.drawString(280, 25, '%s.Sayfa'%page_num)
-    c.drawString(450, 25, 'Proje Takip Sistemi')
+    #
+    # c.drawString(50, 25, 'http:/www.kobiltek.com/')
+    c.drawString(280, 25, '%s'%page_num)
+    # c.drawString(450, 25, 'Proje Takip Sistemi')
 
 
 
@@ -382,8 +383,8 @@ def edit_project_pdf(request,pk):
     c.setFont("Verdana", 10)
 
 
-    c.drawString(50, 440, "Sözleşme Bedeli                :%s" % ( "{:,}".format(project.sozlesmeBedeli) if project.sozlesmeBedeli else  '-' ))
-    c.drawString(50, 420, "Sözleşme Bedeli Kdv Dahil  :%s" % ("{:,}".format(project.sozlesmeBedeliKdv) if project.sozlesmeBedeliKdv else  '-' ))
+    c.drawString(50, 440, "Sözleşme Bedeli                :%s  ₺" % ( "{:,}".format(project.sozlesmeBedeli) if project.sozlesmeBedeli else  '  ' ))
+    c.drawString(50, 420, "Sözleşme Bedeli Kdv Dahil  :%s ₺" % ("{:,}".format(project.sozlesmeBedeliKdv) if project.sozlesmeBedeliKdv else  '  ' ))
 
     c.setFont("Verdana", 15)
     c.drawString(50,370,'Hakediş Bilgileri')
@@ -402,15 +403,14 @@ def edit_project_pdf(request,pk):
     y=310
     for item in project.vest.all():
         if y>50:
-            c.drawString(50, y, '%s'%item.vestDate.strftime('%m/%d/%Y') if item.vestDate else '-')
-            c.drawString(150, y, '%s'%("{0:,.2f}".format(int(item.vest)) if int(item.vest) else  '-' ))
+            c.drawString(50, y, '%s'%item.vestDate.strftime('%m/%d/%Y') if item.vestDate else '  ')
+            c.drawString(150, y, '%s ₺ '%("{0:,.2f}".format(int(item.vest)) if int(item.vest) else  '  ' ))
             y-=20
         else:
             page_num = c.getPageNumber()
             c.showPage()
             pdfmetrics.registerFont(TTFont('Verdana', 'Verdana.ttf'))
-            c.drawString(50, 25, 'http:/www.kobiltek.com/')
-            c.drawString(450, 25, 'Proje Takip Sistemi')
+
             page_num = c.getPageNumber()
             c.drawString(280, 25, '%s.Sayfa' % page_num)
 
@@ -440,8 +440,8 @@ def edit_project_pdf(request,pk):
             page_num = c.getPageNumber()
             c.showPage()
             pdfmetrics.registerFont(TTFont('Verdana', 'Verdana.ttf'))
-            c.drawString(50, 25, 'http:/www.kobiltek.com/')
-            c.drawString(450, 25, 'Proje Takip Sistemi')
+            # c.drawString(50, 25, 'http:/www.kobiltek.com/')
+            # c.drawString(450, 25, 'Proje Takip Sistemi')
             page_num = c.getPageNumber()
             c.drawString(280, 25, '%s.Sayfa' % page_num)
 
@@ -512,14 +512,12 @@ def edit_project_pdf_personel(request,pk):
     days = None
     if project.aifinish:
         days = (project.aifinish - timezone.now()).days
-        if days < 0:
-            days = 'Zamanı bitti.'
 
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'inline; filename="ProjeTakip.pdf"'
     buffer = BytesIO()
     c = canvas.Canvas(buffer)
-    c.setTitle('Kobiltek Bilişim')
+    c.setTitle('Etüt Proje ')
 
     logo = ImageReader('http://kobiltek.com:81/etutproje/'+MEDIA_URL + "profile/logo.png")
     c.drawImage(logo, 460, 730, width=80, height=80, mask='auto')
@@ -660,17 +658,17 @@ def edit_project_pdf_personel(request,pk):
             page_num = c.getPageNumber()
             c.showPage()
             pdfmetrics.registerFont(TTFont('Verdana', 'Verdana.ttf'))
-            c.drawString(50, 25, 'http:/www.kobiltek.com/')
-            c.drawString(450, 25, 'Proje Takip Sistemi')
+            # c.drawString(50, 25, 'http:/www.kobiltek.com/')
+            # c.drawString(450, 25, 'Proje Takip Sistemi')
             page_num = c.getPageNumber()
             c.drawString(280, 25, '%s.Sayfa' % page_num)
             y = 750
 
     page_num = c.getPageNumber()
 
-    c.drawString(50, 25, 'http:/www.kobiltek.com/')
+    # c.drawString(50, 25, 'http:/www.kobiltek.com/')
     c.drawString(280, 25, '%s.Sayfa'%page_num)
-    c.drawString(450, 25, 'Proje Takip Sistemi')
+    # c.drawString(450, 25, 'Proje Takip Sistemi')
 
 
 
@@ -715,8 +713,8 @@ def edit_project_pdf_personel(request,pk):
             page_num = c.getPageNumber()
             c.showPage()
             pdfmetrics.registerFont(TTFont('Verdana', 'Verdana.ttf'))
-            c.drawString(50, 25, 'http:/www.kobiltek.com/')
-            c.drawString(450, 25, 'Proje Takip Sistemi')
+            # c.drawString(50, 25, 'http:/www.kobiltek.com/')
+            # c.drawString(450, 25, 'Proje Takip Sistemi')
             page_num = c.getPageNumber()
             c.drawString(280, 25, '%s.Sayfa' % page_num)
 
