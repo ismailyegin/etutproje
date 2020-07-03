@@ -403,7 +403,7 @@ def edit_project_pdf(request,pk):
     for item in project.vest.all():
         if y>50:
             c.drawString(50, y, '%s'%item.vestDate.strftime('%m/%d/%Y') if item.vestDate else '-')
-            c.drawString(150, y, '%s'%("{0:,.2f}".format(item.vest) if item.vest else  '-' ))
+            c.drawString(150, y, '%s'%("{0:,.2f}".format(int(item.vest)) if int(item.vest) else  '-' ))
             y-=20
         else:
             page_num = c.getPageNumber()
@@ -686,9 +686,9 @@ def edit_project_pdf_personel(request,pk):
     #
     #
 
-    c.setFont("Verdana", 15)
-    c.drawString(50,440,'Hakediş Bilgileri')
-    c.line(50, 430, 200, 430)
+    # c.setFont("Verdana", 15)
+    # c.drawString(50,440,'Hakediş Bilgileri')
+    # c.line(50, 430, 200, 430)
 
 
 
