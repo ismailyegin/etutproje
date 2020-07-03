@@ -211,7 +211,7 @@
                                            class="btn btn-default btn-flat">Profil Bilgisi</a>
 
                                         {% elif user.groups.all.0.name == "Teknik" %}
-                                        <a href="#"
+                                        <a href="{% url "sbs:teknik-profil-guncelle" %}"
                                            class="btn btn-default btn-flat">Profil Bilgisi</a>
 
 

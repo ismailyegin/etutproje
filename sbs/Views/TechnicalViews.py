@@ -185,3 +185,46 @@ def edit_project_personel(request, pk):
                   {'project': project, 'project_form': project_form,
                    'days': days})
 
+@login_required
+def updateRefereeProfile(request):
+    perm = general_methods.control_access_personel(request)
+
+    if not perm:
+        logout(request)
+        return redirect('accounts:login')
+
+    user = request.user
+    referee_user = Employee.objects.get(user=user)
+    person = Person.objects.get(pk=referee_user.person.pk)
+    communication = Communication.objects.get(pk=referee_user.communication.pk)
+    user_form = DisabledUserForm(request.POST or None, instance=user)
+    person_form = DisabledPersonForm(request.POST or None, request.FILES or None, instance=person)
+    communication_form = DisabledCommunicationForm(request.POST or None, instance=communication)
+    password_form = SetPasswordForm(request.user, request.POST)
+
+    if request.method == 'POST':
+        person_form = DisabledPersonForm(request.POST, request.FILES)
+        try:
+            if request.FILES['profileImage']:
+                print('deger var ')
+                person.profileImage = request.FILES['profileImage']
+                person.save()
+                messages.success(request, 'Resim güncellendi.')
+
+        except:
+            print('hata' )
+
+
+        if password_form.is_valid():
+            user.set_password(password_form.cleaned_data['new_password2'])
+            user.save()
+            update_session_auth_hash(request, user)
+            messages.success(request, 'Şifre Başarıyla Güncellenmiştir.')
+            return redirect('sbs:personel-profil-guncelle')
+
+        else:
+            return redirect('sbs:personel-profil-guncelle')
+
+    return render(request, 'personel/Personel-Profil-güncelle.html',
+                  {'user_form': user_form, 'communication_form': communication_form,
+                   'person_form': person_form, 'password_form': password_form})

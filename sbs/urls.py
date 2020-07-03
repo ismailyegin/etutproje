@@ -437,6 +437,8 @@ urlpatterns = [
     url(r'etut-proje/projeler/teknik$', TechnicalViews.return_projects, name='projeler-teknik'),
     url(r'etut-proje/proje-duzenle/teknik/(?P<pk>\d+)$', TechnicalViews.edit_project_personel,
         name='proje-incele-teknik'),
+    url(r'etut-proje/personel-profil-guncelle/$', TechnicalViews.updateRefereeProfile,
+        name='teknik-profil-guncelle'),
 
 
 
