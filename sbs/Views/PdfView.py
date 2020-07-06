@@ -593,6 +593,8 @@ def edit_project_pdf_personel(request,pk):
         c.drawString(50, 650, "İlçe                    :%s" % project.town)
     c.drawString(50,630,"Yatırım Programı :%s" %project.butceCinsi)
     c.drawString(50,610,"Bütçe yılı            :%s" %project.butceYili)
+
+    c.drawString(50, 590, "Projenin aşamasi :%s" % project.phases.all().order_by('phaseDate').last() if project.phases.all().order_by('phaseDate').last() else  ' ' )
     c.drawString(300,670,"Projenin Cinsi          :%s" %project.projeCinsi)
     c.drawString(300,650,"Karakteristik           :%s" %project.karakteristik)
     c.drawString(300,630,"Projenin Durumu     :%s" %project.projectStatus)
@@ -686,6 +688,16 @@ def edit_project_pdf_personel(request,pk):
     # c.setFont("Verdana", 15)
     # c.drawString(50,440,'Hakediş Bilgileri')
     # c.line(50, 430, 200, 430)
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -836,6 +848,8 @@ def edit_project_pdf_teknik(request,pk):
     else:
         c.drawString(300, 610, "Projenin Sorumlusu:")
 
+    c.drawString(50, 590, "Projenin aşamasi :%s" % project.phases.all().order_by('phaseDate').last() if project.phases.all().order_by('phaseDate').last() else  ' ' )
+
 
     # c.setFont("Verdana", 15)
     # c.drawString(50,590,'İhale Bilgileri')
@@ -853,21 +867,20 @@ def edit_project_pdf_teknik(request,pk):
 
 
     c.setFont("Verdana", 15)
-    c.drawString(50, 590, 'Personel Listesi:')
-    c.line(50, 580, 300, 580)
+    c.drawString(50, 570, 'Personel Listesi:')
+    c.line(50, 560, 300, 560)
     c.setFont("Verdana", 10)
 
     # c.setFillColorRGB(0, 0, 0.77)
 
-    c.drawString(50, 560, 'İsim-Soyisim')
-    c.line(50, 550, 300, 550)
+    c.drawString(50, 550, 'İsim-Soyisim')
+    c.line(50, 540, 150, 540)
 
-    c.drawString(200, 560, 'Unvan')
-    c.line(50, 550, 300, 550)
+    c.drawString(200, 550, 'Unvan')
+    c.line(200, 540, 300, 540)
 
-    # c.setFillColorRGB(0, 0, 0)
 
-    y = 530
+    y = 520
 
     for item in project.employees.all():
 
@@ -890,12 +903,6 @@ def edit_project_pdf_teknik(request,pk):
     # c.drawString(50, 25, 'http:/www.kobiltek.com/')
     c.drawString(280, 25, '%s'%page_num)
     # c.drawString(450, 25, 'Proje Takip Sistemi')
-
-
-
-
-
-
 
 
     c.showPage()

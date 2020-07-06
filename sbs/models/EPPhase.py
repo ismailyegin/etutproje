@@ -19,6 +19,8 @@ class EPPhase(models.Model):
     def save_model(self, request, obj, form, change):
         obj.added_by = request.user
         super().save_model(request, obj, form, change)
+    def __str__(self):
+        return '%s ' % self.definition
 
     class Meta:
         ordering = ['pk']
