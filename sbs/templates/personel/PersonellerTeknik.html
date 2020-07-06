@@ -200,12 +200,12 @@
                         <div class="box-body">
                             {% if user.groups.all.0.name == 'Yonetim' or user.groups.all.0.name == 'Admin' %}
                                 <div class="box-header with-border">
-                                    <div class="btn-group">
-                                        <a href="{% url "sbs:personel-ekle-teknik" %}"
-                                           type="button" class="btn btn-success"><i
-                                                class="fa fa-edit"></i> Personel Ekle
-                                        </a>
-                                    </div>
+{#                                    <div class="btn-group">#}
+{#                                        <a href="{% url "sbs:personel-ekle-teknik" %}"#}
+{#                                           type="button" class="btn btn-success"><i#}
+{#                                                class="fa fa-edit"></i> Personel Ekle#}
+{#                                        </a>#}
+{#                                    </div>#}
                                 </div>
                             {% endif %}
                             <table id="personel" class="table table-bordered table-hover">
