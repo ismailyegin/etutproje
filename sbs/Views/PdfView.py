@@ -206,7 +206,6 @@ def return_excel(request):
 
 
 
-
 @login_required
 def edit_project_pdf(request,pk):
     project = EPProject.objects.get(pk=pk)
@@ -719,6 +718,182 @@ def edit_project_pdf_personel(request,pk):
             c.drawString(280, 25, '%s.Sayfa' % page_num)
 
             y=750
+
+
+
+
+    c.showPage()
+
+    c.save()
+    pdf = buffer.getvalue()
+    buffer.close()
+    response.write(pdf)
+
+    return response
+
+
+# --------------------------------------------
+
+
+
+@login_required
+def edit_project_pdf_teknik(request,pk):
+    project = EPProject.objects.get(pk=pk)
+
+
+    days = None
+    if project.aifinish:
+        days = (project.aifinish - timezone.now()).days
+
+
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'inline; filename="ProjeTakip.pdf"'
+    buffer = BytesIO()
+    c = canvas.Canvas(buffer)
+    c.setTitle('Kobiltek Bilişim')
+
+    logo = ImageReader('http://kobiltek.com:81/etutproje/'+MEDIA_URL + "profile/logo.png")
+    c.drawImage(logo, 460, 730, width=80, height=80, mask='auto')
+    # for i in range(5):
+    #     page_num = c.getPageNumber()
+    #     # text = "Proje Takip Programi %s" % page_num
+
+    # data = "ğçİöşü"
+    # p = Paragraph(data.decode('utf-8'), style=styNormal)
+
+    # c.setFont("Times-Roman", 32)
+
+
+
+
+
+    pdfmetrics.registerFont(TTFont('Verdana', 'Verdana.ttf'))
+
+    c.setFont("Verdana", 8)
+
+    c.drawString(50, 800, " Rapor Tarih:" )
+
+    c.drawString(105, 800, "%s" % datetime.datetime.today().strftime('%d-%m-%Y %H:%M'))
+
+
+    c.setFont("Verdana", 15)
+    name=''
+    count=1
+    control=True
+    kelime=''
+    for item  in project.name:
+        kelime+=item
+
+        if count==48:
+            c.drawString(50, 770, "%s" % name)
+            name = ''
+        elif count==96:
+            c.drawString(50, 750, "%s" % name)
+            name = ''
+            control=False
+
+        if item ==' ':
+            name+=' '
+            name+=kelime
+            kelime=''
+
+
+        if len(project.name)==count:
+            name+=' '
+            name+=kelime
+        count=count+1
+    if control:
+        name
+        c.drawString(50, 750, "%s" % name)
+    else:
+        c.drawString(50, 730, "%s" % name)
+
+
+
+
+    # c.line(50, 720, 550, 720)
+
+    c.setFont("Verdana", 15)
+    c.drawString(50,700,'Genel Bilgiler')
+    c.line(50, 690, 470, 690)
+
+
+
+    c.setFont("Verdana", 10)
+    c.drawString(50,670,"İl                       :%s" %project.city)
+    if project.town:
+        c.drawString(50,650,"İlçe                    :%s" %project.town)
+    else:
+        c.drawString(50, 650, "İlçe                    :%s" % project.town)
+    c.drawString(50,630,"Yatırım Programı :%s" %project.butceCinsi)
+    c.drawString(50,610,"Bütçe Yılı            :%s" %project.butceYili)
+    c.drawString(300,670,"Projenin Cinsi          :%s" %project.projeCinsi)
+    c.drawString(300,650,"Karakteristik           :%s" %project.karakteristik)
+    c.drawString(300,630,"Projenin Durumu     :%s" %project.projectStatus)
+
+    if project.sorumlu:
+        c.drawString(300,610,"Projenin Sorumlusu :%s" %project.sorumlu  )
+    else:
+        c.drawString(300, 610, "Projenin Sorumlusu:")
+
+
+    # c.setFont("Verdana", 15)
+    # c.drawString(50,590,'İhale Bilgileri')
+    # c.line(50, 580, 200, 580)
+    # c.setFont("Verdana", 10)
+    #
+    # c.drawString(50, 560, "İhale Tarihi                         :%s" % (project.ihaleTarihi.strftime('%m/%d/%Y') if project.ihaleTarihi else  ' '))
+    # c.drawString(50, 540, "Sözleşme Tarihi                  :%s" %(project.sozlesmeTarihi.strftime('%m/%d/%Y')  if project.sozlesmeTarihi else  ' ' ))
+    # c.drawString(50, 520, "Alım İşinin Başlangıç Tarihi  :%s" %(project.aistart.strftime('%m/%d/%Y')  if project.aistart else  ' ' ))
+    # c.drawString(50, 500, "Alım İşinin Bitiş Tarihi         :%s"%(project.aifinish.strftime('%m/%d/%Y')  if project.aifinish else  ' ' ))
+    # c.drawString(50, 480, "İşin Süresi                         :%s (Gün)" % (project.isSUresi if project.isSUresi else  ' ' ))
+    #
+    #
+    # c.drawString(50, 460, "Kaç Gün Kaldi                    :%s (Gün)" % (days if  days else  ' ' ))
+
+
+    c.setFont("Verdana", 15)
+    c.drawString(50, 590, 'Personel Listesi:')
+    c.line(50, 580, 300, 580)
+    c.setFont("Verdana", 10)
+
+    # c.setFillColorRGB(0, 0, 0.77)
+
+    c.drawString(50, 560, 'İsim-Soyisim')
+    c.line(50, 550, 300, 550)
+
+    c.drawString(200, 560, 'Unvan')
+    c.line(50, 550, 300, 550)
+
+    # c.setFillColorRGB(0, 0, 0)
+
+    y = 530
+
+    for item in project.employees.all():
+
+        if y > 50:
+            c.drawString(50, y, '%s' % item.employee)
+            c.drawString(200, y, '%s' % item.projectEmployeeTitle)
+            y -= 20
+        else:
+            page_num = c.getPageNumber()
+            c.showPage()
+            pdfmetrics.registerFont(TTFont('Verdana', 'Verdana.ttf'))
+            # c.drawString(50, 25, 'http:/www.kobiltek.com/')
+            # c.drawString(450, 25, 'Proje Takip Sistemi')
+            page_num = c.getPageNumber()
+            c.drawString(280, 25, '%s' % page_num)
+            y = 750
+
+    page_num = c.getPageNumber()
+    #
+    # c.drawString(50, 25, 'http:/www.kobiltek.com/')
+    c.drawString(280, 25, '%s'%page_num)
+    # c.drawString(450, 25, 'Proje Takip Sistemi')
+
+
+
+
 
 
 

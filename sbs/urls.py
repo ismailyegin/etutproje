@@ -334,6 +334,8 @@ urlpatterns = [
     url(r'etut-proje/projeler/dokumanekle$', EPProjectViews.dokumanAdd, name='dokumanAdd'),
 
     url(r'etut-proje/proje-pdf/(?P<pk>\d+)$', PdfView.edit_project_pdf, name='proje-pdf'),
+
+    url(r'etut-proje/proje-pdf/teknik/(?P<pk>\d+)$', PdfView.edit_project_pdf_teknik, name='proje-pdf-teknik'),
     url(r'etut-proje/proje-pdf/personel/(?P<pk>\d+)$', PdfView.edit_project_pdf_personel, name='proje-pdf-personel'),
     url(r'etut-proje/proje-excel/(?P<pk>\d+)$', PdfView.edit_project_excel, name='proje-excel'),
 
