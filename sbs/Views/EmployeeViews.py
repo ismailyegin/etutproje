@@ -73,7 +73,7 @@ def add_employee(request):
             user.first_name = user_form.cleaned_data['first_name']
             user.last_name = user_form.cleaned_data['last_name']
             user.email = user_form.cleaned_data['email']
-            group = Group.objects.get(name='Personel')
+            group = Group.objects.get(name=request.POST.get('group'))
             password = User.objects.make_random_password()
             user.set_password(password)
             user.save()
@@ -209,7 +209,7 @@ def return_employees(request):
             email = user_form.cleaned_data.get('email')
             workDefinition=user_form.cleaned_data.get('workDefinition')
             if not (firstName or lastName or email or workDefinition):
-                employees = Employee.objects.filter(user__groups__name="Personel")
+                employees = Employee.objects.all()
             else:
                 query = Q()
                 if lastName:
@@ -220,7 +220,7 @@ def return_employees(request):
                     query &= Q(user__email__icontains=email)
                 if workDefinition:
                     query &= Q(workDefinition=workDefinition)
-                employees = Employee.objects.filter(query).filter(user__groups__name="Personel").distinct()
+                employees = Employee.objects.filter(query).distinct()
 
     return render(request, 'personel/personeller.html',
                   {'employees': employees, 'user_form': user_form,})
