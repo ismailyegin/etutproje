@@ -115,7 +115,22 @@ def return_projects(request):
                 elif get == 'AçıkProje':
                     projects = EPProject.objects.filter(projectStatus=EPProject.PDE)
 
-
+    elif user.groups.filter(name='Personel'):
+        get = request.GET.get('get')
+        if get:
+            if get == 'Projeler':
+                projects = EPProject.objects.filter(employees__employee__user=user).distinct()
+                projects |= EPProject.objects.filter(sorumlu__user=user).distinct()
+            elif get == 'TamamlananProje':
+                projects = EPProject.objects.filter(projectStatus=EPProject.PT,
+                                                    employees__employee__user=user).distinct()
+                projects |= EPProject.objects.filter(projectStatus=EPProject.PT, sorumlu__user=user).distinct()
+            elif get == 'AçıkProje':
+                projects = EPProject.objects.filter(projectStatus=EPProject.PDE,
+                                                    employees__employee__user=user).distinct()
+                projects |= EPProject.objects.filter(projectStatus=EPProject.PDE, sorumlu__user=user).distinct()
+            elif get == 'sorumlu':
+                projects = EPProject.objects.filter(sorumlu__user=user).distinct()
 
     if request.method == 'POST':
         user_form = EPProjectSearchForm(request.POST)
@@ -220,11 +235,120 @@ def updateRefereeProfile(request):
             user.save()
             update_session_auth_hash(request, user)
             messages.success(request, 'Şifre Başarıyla Güncellenmiştir.')
-            return redirect('sbs:personel-profil-guncelle')
+            return redirect('sbs:teknik-profil-guncelle')
 
         else:
-            return redirect('sbs:personel-profil-guncelle')
+            return redirect('sbs:teknik-profil-guncelle')
 
     return render(request, 'personel/Personel-Profil-güncelle.html',
                   {'user_form': user_form, 'communication_form': communication_form,
                    'person_form': person_form, 'password_form': password_form})
+
+
+
+@login_required
+def return_employees(request):
+    perm = general_methods.control_access(request)
+
+
+    if not perm:
+        logout(request)
+        return redirect('accounts:login')
+
+    user_form = UserSearchForm()
+    employees = Employee.objects.none()
+
+
+
+    if request.method == 'POST':
+        user_form = UserSearchForm(request.POST)
+
+
+        if user_form.is_valid() :
+            firstName = user_form.cleaned_data.get('first_name')
+            lastName = user_form.cleaned_data.get('last_name')
+            email = user_form.cleaned_data.get('email')
+            workDefinition=user_form.cleaned_data.get('workDefinition')
+            if not (firstName or lastName or email or workDefinition):
+                employees = Employee.objects.filter(user__groups__name="Teknik")
+            else:
+                query = Q()
+                if lastName:
+                    query &= Q(user__last_name__icontains=lastName)
+                if firstName:
+                    query &= Q(user__first_name__icontains=firstName)
+                if email:
+                    query &= Q(user__email__icontains=email)
+                if workDefinition:
+                    query &= Q(workDefinition=workDefinition)
+                employees = Employee.objects.filter(query).filter(user__groups__name="Teknik").distinct()
+
+    return render(request, 'personel/PersonellerTeknik.html',
+                  {'employees': employees, 'user_form': user_form,})
+
+
+@login_required
+def add_employee(request):
+    perm = general_methods.control_access(request)
+
+    if not perm:
+        logout(request)
+        return redirect('accounts:login')
+    user_form = UserForm()
+    person_form = PersonForm()
+
+    communication=Communication()
+    country=Country.objects.get(name='Türkiye')
+    communication.country=country
+    communication_form = CommunicationForm(instance=communication)
+
+    employee_form = EmployeeForm()
+    employee_form.fields['workDefinition'].queryset = CategoryItem.objects.filter(forWhichClazz="EMPLOYEE_WORKDEFINITION")
+
+    if request.method == 'POST':
+
+        user_form = UserForm(request.POST)
+        person_form = PersonForm(request.POST , request.FILES or None)
+        communication_form = CommunicationForm(request.POST, request.FILES)
+
+        sportClubUser_form = EmployeeForm(request.POST)
+
+        if user_form.is_valid() and person_form.is_valid() and communication_form.is_valid() and sportClubUser_form.is_valid():
+            user = User()
+            user.username = user_form.cleaned_data['email']
+            user.first_name = user_form.cleaned_data['first_name']
+            user.last_name = user_form.cleaned_data['last_name']
+            user.email = user_form.cleaned_data['email']
+            group = Group.objects.get(name='Teknik')
+            password = User.objects.make_random_password()
+            user.set_password(password)
+            user.save()
+            user.groups.add(group)
+            user.save()
+
+            person = person_form.save(commit=False)
+            communication = communication_form.save(commit=False)
+            person.save()
+            communication.save()
+
+            personel = Employee(
+                user=user, person=person, communication=communication,
+                workDefinition=sportClubUser_form.cleaned_data['workDefinition'],
+
+            )
+
+            personel.save()
+
+            messages.success(request, 'Personel Başarıyla Kayıt Edilmiştir.')
+
+            return redirect('sbs:personeller-teknik')
+
+        else:
+
+            for x in user_form.errors.as_data():
+                messages.warning(request, user_form.errors[x][0])
+
+    return render(request, 'personel/personel-ekle.html',
+                  {'user_form': user_form, 'person_form': person_form, 'communication_form': communication_form,
+                   'employee_form': employee_form,
+                   })

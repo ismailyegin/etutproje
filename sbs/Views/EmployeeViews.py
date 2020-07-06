@@ -209,6 +209,45 @@ def return_employees(request):
             email = user_form.cleaned_data.get('email')
             workDefinition=user_form.cleaned_data.get('workDefinition')
             if not (firstName or lastName or email or workDefinition):
+                employees = Employee.objects.filter(user__groups__name="Personel")
+            else:
+                query = Q()
+                if lastName:
+                    query &= Q(user__last_name__icontains=lastName)
+                if firstName:
+                    query &= Q(user__first_name__icontains=firstName)
+                if email:
+                    query &= Q(user__email__icontains=email)
+                if workDefinition:
+                    query &= Q(workDefinition=workDefinition)
+                employees = Employee.objects.filter(query).filter(user__groups__name="Personel").distinct()
+
+    return render(request, 'personel/personeller.html',
+                  {'employees': employees, 'user_form': user_form,})
+@login_required
+def return_employees_all(request):
+    perm = general_methods.control_access(request)
+
+
+    if not perm:
+        logout(request)
+        return redirect('accounts:login')
+
+    user_form = UserSearchForm()
+    employees = employees = Employee.objects.all()
+
+
+
+    if request.method == 'POST':
+        user_form = UserSearchForm(request.POST)
+
+
+        if user_form.is_valid() :
+            firstName = user_form.cleaned_data.get('first_name')
+            lastName = user_form.cleaned_data.get('last_name')
+            email = user_form.cleaned_data.get('email')
+            workDefinition=user_form.cleaned_data.get('workDefinition')
+            if not (firstName or lastName or email or workDefinition):
                 employees = Employee.objects.all()
             else:
                 query = Q()

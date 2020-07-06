@@ -406,6 +406,7 @@ urlpatterns = [
 
 
     url(r'personel/personeller/$', EmployeeViews.return_employees, name='personeller'),
+    url(r'personel/personeller/hepsi$', EmployeeViews.return_employees_all, name='personeller-all'),
     url(r'personel/personel-ekle/$', EmployeeViews.add_employee, name='personel-ekle'),
     url(r'personel/personel-duzenle/(?P<pk>\d+)$', EmployeeViews.edit_employee, name='personel-duzenle'),
     url(r'personel/unvanListesi/$', EmployeeViews.return_workdefinitions, name='istanimlari'),
@@ -439,6 +440,9 @@ urlpatterns = [
         name='proje-incele-teknik'),
     url(r'etut-proje/personel-profil-guncelle/$', TechnicalViews.updateRefereeProfile,
         name='teknik-profil-guncelle'),
+    url(r'teknik/personeller/$', TechnicalViews.return_employees, name='personeller-teknik'),
+    url(r'teknik/personel-ekle/$', TechnicalViews.add_employee, name='personel-ekle-teknik'),
+
 
 
 
