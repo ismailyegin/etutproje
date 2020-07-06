@@ -9,7 +9,7 @@ class UserSearchForm(ModelForm):
     workDefinition = forms.ModelChoiceField(queryset=CategoryItem.objects.filter(forWhichClazz="EMPLOYEE_WORKDEFINITION"),
         to_field_name='name',
         empty_label="Seçiniz",
-        label="İş Tanimi",
+        label="Unvan",
         required=False,
         widget=forms.Select(
             attrs={'class': 'form-control select2 select2-hidden-accessible',

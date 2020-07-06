@@ -208,8 +208,10 @@ def return_employees(request):
             lastName = user_form.cleaned_data.get('last_name')
             email = user_form.cleaned_data.get('email')
             workDefinition=user_form.cleaned_data.get('workDefinition')
-            if not (firstName or lastName or email or workDefinition):
+            group=request.POST.get('group')
+            if not (firstName or lastName or email or workDefinition or group):
                 employees = Employee.objects.all()
+
             else:
                 query = Q()
                 if lastName:
@@ -220,6 +222,8 @@ def return_employees(request):
                     query &= Q(user__email__icontains=email)
                 if workDefinition:
                     query &= Q(workDefinition=workDefinition)
+                if group:
+                    query &=Q(user__groups__name=group)
                 employees = Employee.objects.filter(query).distinct()
 
     return render(request, 'personel/personeller.html',
