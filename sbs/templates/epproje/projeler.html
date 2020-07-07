@@ -250,44 +250,51 @@
                                 <tbody>
                                 {% if projects.all %}
                                     {% for project in projects.all %}
-                                        <tr>
-                                            <td>{{ forloop.counter }} </td>
-                                            <td>{{ project.name }} </td>
-                                            <td>{{ project.city }} </td>
-                                            <td>{{ project.butceYili }} </td>
-                                            <td>{{ project.butceCinsi }} </td>
-                                            <td>{{ project.projectStatus }}</td>
-                                            <td>{{ project.projeCinsi }}</td>
+                                        {% if project.projectStatus  ==  'Proje tamamlandı' %}
+                                            <tr style="background-color:#E1d7d7">
 
-                                            <td>{{ project.aifinish |date:"d/m/Y" }}</td>
+                                                {% else %}
+                                            <tr>
 
-                                            <td>
-                                                <div class="btn-group ">
 
-                                                    {% if user.groups.all.0.name == 'Admin' %}
-                                                        <a href="{% url "sbs:proje-duzenle" project.pk %}"
-                                                           type="button" class="btn btn-warning btn-lg"><i
-                                                                class="fa fa-edit"></i>
-                                                        </a>
+                                        {% endif %}
+                                    <td>{{ forloop.counter }} </td>
+                                    <td>{{ project.name }} </td>
+                                    <td>{{ project.city }} </td>
+                                    <td>{{ project.butceYili }} </td>
+                                    <td>{{ project.butceCinsi }} </td>
+                                    <td>{{ project.projectStatus }}</td>
+                                    <td>{{ project.projeCinsi }}</td>
 
-                                                        <a class="btn btn-danger btn-lg"
-                                                           data-toggle="modal"
-                                                           onclick=deleteReferee({{ project.pk }})><i
-                                                                class="fa fa-trash"></i></a>
+                                    <td>{{ project.aifinish |date:"d/m/Y" }}</td>
 
-                                                    {% else %}
+                                    <td>
+                                        <div class="btn-group ">
 
-                                                        <a href="{% url "sbs:proje-incele-personel" project.pk %}"
-                                                           type="button" class="btn btn-warning btn-lg"><i
-                                                                class="fa fa-edit"></i>
-                                                        </a>
+                                            {% if user.groups.all.0.name == 'Admin' %}
+                                                <a href="{% url "sbs:proje-duzenle" project.pk %}"
+                                                   type="button" class="btn btn-warning btn-lg"><i
+                                                        class="fa fa-edit"></i>
+                                                </a>
 
-                                                    {% endif %}
+                                                <a class="btn btn-danger btn-lg"
+                                                   data-toggle="modal"
+                                                   onclick=deleteReferee({{ project.pk }})><i
+                                                        class="fa fa-trash"></i></a>
 
-                                                </div>
-                                            </td>
+                                            {% else %}
 
-                                        </tr>
+                                                <a href="{% url "sbs:proje-incele-personel" project.pk %}"
+                                                   type="button" class="btn btn-warning btn-lg"><i
+                                                        class="fa fa-edit"></i>
+                                                </a>
+
+                                            {% endif %}
+
+                                        </div>
+                                    </td>
+
+                                    </tr>
 
                                     {% endfor %}
                                 {% endif %}

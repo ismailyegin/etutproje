@@ -765,7 +765,7 @@ def edit_project_pdf_teknik(request,pk):
     c.setTitle('Kobiltek Bilişim')
 
     logo = ImageReader('http://kobiltek.com:81/etutproje/'+MEDIA_URL + "profile/logo.png")
-    c.drawImage(logo, 460, 730, width=80, height=80, mask='auto')
+    c.drawImage(logo, 460, 740, width=80, height=80, mask='auto')
     # for i in range(5):
     #     page_num = c.getPageNumber()
     #     # text = "Proje Takip Programi %s" % page_num
@@ -788,6 +788,17 @@ def edit_project_pdf_teknik(request,pk):
     c.drawString(105, 800, "%s" % datetime.datetime.today().strftime('%d-%m-%Y %H:%M'))
 
 
+
+
+    c.setFont("Verdana", 16)
+    c.drawString(100,770,'DESTEK HİZMETLERİ DAİRE BAŞKANLIĞI ')
+    c.drawString(120, 745, ' ETÜT PROJE ŞUBE MÜDÜRLÜĞÜ')
+
+
+
+
+
+
     c.setFont("Verdana", 15)
     name=''
     count=1
@@ -796,11 +807,11 @@ def edit_project_pdf_teknik(request,pk):
     for item  in project.name:
         kelime+=item
 
-        if count==48:
-            c.drawString(50, 770, "%s" % name)
+        if count==58:
+            c.drawString(50, 720, "%s" % name)
             name = ''
-        elif count==96:
-            c.drawString(50, 750, "%s" % name)
+        elif count==116:
+            c.drawString(50, 700, "%s" % name)
             name = ''
             control=False
 
@@ -816,9 +827,9 @@ def edit_project_pdf_teknik(request,pk):
         count=count+1
     if control:
         name
-        c.drawString(50, 750, "%s" % name)
+        c.drawString(50, 700, "%s" % name)
     else:
-        c.drawString(50, 730, "%s" % name)
+        c.drawString(50, 680, "%s" % name)
 
 
 
@@ -826,29 +837,34 @@ def edit_project_pdf_teknik(request,pk):
     # c.line(50, 720, 550, 720)
 
     c.setFont("Verdana", 15)
-    c.drawString(50,700,'Genel Bilgiler')
-    c.line(50, 690, 470, 690)
+    c.drawString(50,650,'Genel Bilgiler')
+    c.line(50, 640, 470, 640)
 
 
 
     c.setFont("Verdana", 10)
-    c.drawString(50,670,"İl                       :%s" %project.city)
+    c.drawString(50,620,"İl                       :%s" %project.city)
     if project.town:
-        c.drawString(50,650,"İlçe                    :%s" %project.town)
+        c.drawString(50,600,"İlçe                    :%s" %project.town)
     else:
-        c.drawString(50, 650, "İlçe                    :%s" % project.town)
-    c.drawString(50,630,"Yatırım Programı :%s" %project.butceCinsi)
-    c.drawString(50,610,"Bütçe Yılı            :%s" %project.butceYili)
-    c.drawString(300,670,"Projenin Cinsi          :%s" %project.projeCinsi)
-    c.drawString(300,650,"Karakteristik           :%s" %project.karakteristik)
-    c.drawString(300,630,"Projenin Durumu     :%s" %project.projectStatus)
+        c.drawString(50, 600, "İlçe                    :%s" % project.town)
+    c.drawString(50,580,"Yatırım Programı :%s" %project.butceCinsi)
+    c.drawString(50,560,"Bütçe Yılı            :%s" %project.butceYili)
+    c.drawString(50, 540, "Projenin aşamasi :%s" % project.phases.all().order_by(
+        'phaseDate').last() if project.phases.all().order_by('phaseDate').last() else ' ')
+
+
+
+    c.drawString(300,620,"Projenin Cinsi          :%s" %project.projeCinsi)
+    c.drawString(300,600,"Karakteristik           :%s" %project.karakteristik)
+    c.drawString(300,580,"Projenin Durumu     :%s" %project.projectStatus)
 
     if project.sorumlu:
-        c.drawString(300,610,"Projenin Sorumlusu :%s" %project.sorumlu  )
+        c.drawString(300,560,"Projenin Sorumlusu :%s" %project.sorumlu  )
     else:
-        c.drawString(300, 610, "Projenin Sorumlusu:")
+        c.drawString(300, 560, "Projenin Sorumlusu:")
 
-    c.drawString(50, 590, "Projenin aşamasi :%s" % project.phases.all().order_by('phaseDate').last() if project.phases.all().order_by('phaseDate').last() else  ' ' )
+
 
 
     # c.setFont("Verdana", 15)
@@ -867,20 +883,20 @@ def edit_project_pdf_teknik(request,pk):
 
 
     c.setFont("Verdana", 15)
-    c.drawString(50, 570, 'Personel Listesi:')
-    c.line(50, 560, 300, 560)
+    c.drawString(50, 520, 'Personel Listesi:')
+    c.line(50, 510, 300, 510)
     c.setFont("Verdana", 10)
 
     # c.setFillColorRGB(0, 0, 0.77)
 
-    c.drawString(50, 550, 'İsim-Soyisim')
-    c.line(50, 540, 150, 540)
+    c.drawString(50, 500, 'İsim-Soyisim')
+    c.line(50, 490, 150, 490)
 
-    c.drawString(200, 550, 'Unvan')
-    c.line(200, 540, 300, 540)
+    c.drawString(200, 500, 'Unvan')
+    c.line(200, 490, 300, 490)
 
 
-    y = 520
+    y = 470
 
     for item in project.employees.all():
 

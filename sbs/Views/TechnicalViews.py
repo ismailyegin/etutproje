@@ -189,8 +189,11 @@ def edit_project_personel(request, pk):
     user = request.user
     project = EPProject.objects.get(pk=pk)
     projects = project.employees.all()
+    print(project.city)
+
 
     project_form = DisableProjectFormTeknik(request.POST or None, instance=project)
+
     days = None
     if project.aifinish:
         days = (project.aifinish - timezone.now()).days
