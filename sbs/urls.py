@@ -448,9 +448,4 @@ urlpatterns = [
 
 
 
-
-
-
-
-
 ]
