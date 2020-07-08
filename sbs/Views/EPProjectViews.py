@@ -91,8 +91,7 @@ def edit_project_personel(request, pk):
             days = None
             if project.aifinish:
                 days = (project.aifinish - timezone.now()).days
-                if days < 0:
-                    days = 'Zaman bitti.'
+
 
             return render(request, 'epproje/Proje-incele-Personel.html',
                           {'project': project, 'project_form': project_form,
@@ -141,8 +140,8 @@ def edit_project(request, pk):
     days = None
     if project.aifinish:
         days = (project.aifinish - timezone.now()).days
-        if days < 0:
-            days = 'Zamanı bitti.'
+        # if days < 0:
+        #     days = 'Zamanı bitti.'
 
     if request.method == 'POST':
         try:
