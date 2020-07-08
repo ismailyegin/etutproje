@@ -525,9 +525,8 @@ def edit_project_pdf_personel(request,pk):
 
 
 
-
+    text=""
     text=request.GET.get('get')
-    print(text)
     project = EPProject.objects.get(pk=pk)
 
     days = None
@@ -755,10 +754,10 @@ def edit_project_pdf_personel(request,pk):
     # c.line(50, 430, 200, 430)
     c.setFont("Verdana", 10)
 
-    if text:
-        c.drawString(300, 150, 'Sayın  %s bilgilerinize arz olunur.'   %text)
+    if text and text is not None:
+        c.drawString(300, 150, 'Sayın  %s bilgilerinize arz olunur.'%text)
     else:
-        c.drawString(300, 150, 'Sayın %s ............. bilgilerinize arz olunur.' % text)
+        c.drawString(300, 150, 'Sayın ............. bilgilerinize arz olunur.')
 
 
 
