@@ -978,69 +978,33 @@
                 $("#btn-pdf-gonder").click(function (e) {
 
 
-                    if (e.handled !== true) {
-                        e.handled = true;
+                        if (e.handled !== true) {
+                            e.handled = true;
 
-                        if ($("#pdfselect").val() != "") {
+                            if ($("#pdfselect").val() != "") {
 
-                            var text = $("#pdfselect").val();
-
-
-                        } else {
-
-                            if ($("#pdftext").val() != "") {
+                                var text = $("#pdfselect").val();
 
 
-                                var text = $("#pdftext").val();
+                            } else {
+
+                                if ($("#pdftext").val() != "") {
+
+
+                                    var text = $("#pdftext").val();
+                                } else {
+
+                                    var text = "";
+
+
+                                }
                             }
-                            else {
-
-                                var text = "";
-
-
-                            }
+                            window.location.replace("{% url "sbs:proje-pdf-personel" project.pk %}?get=" + text + "");
                         }
-                       alert(text);
 
-                         window.location.replace("{% url "sbs:proje-pdf-personel" project.pk %}");
+
                     }
-
-
-
-
-
-                {#if (e.handled !== true) {#}
-                {#    e.handled = true;#}
-                {#    $.ajax({#}
-                {#        url: "{% url "sbs:proje-asama-guncelle" pk=212121223232323232  %}".replace(/212121223232323232/, id.toString()),#}
-                {#        type: "POST",#}
-                {#        data: {#}
-                {#            'csrfmiddlewaretoken': "{{  csrf_token  }}",#}
-                {#            phaseDate: $('#phaseDate').val(),#}
-                {#            phaseDefinition: $('#phaseDefinition').val(),#}
-                {#            id: competitionId,#}
-                {#            isActive: 'False'#}
-                {##}
-                {#        },#}
-                {#        success: function (result) {#}
-                {##}
-                {#            if (result.status == 'Success') {#}
-                {##}
-                {#                $('#phases-' + competitionId + ' h4').text($('#phaseDefinition').val());#}
-                {#                $('#phases-' + competitionId + ' small').text($('#phaseDate').val());#}
-                {#                console.log(result.status)#}
-                {##}
-                {#            }#}
-                {##}
-                {##}
-                {#        }#}
-                {#    });#}
-                {##}
-                {##}
-                {# }#}
-                }
-            )
-                ;
+                );
             }).modal('show');
             $('#btn-phase-reddet').click(function () {
 
