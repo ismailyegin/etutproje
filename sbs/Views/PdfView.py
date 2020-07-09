@@ -476,7 +476,7 @@ def edit_project_pdf(request,pk):
                 pdfmetrics.registerFont(TTFont('Verdana', 'Verdana.ttf'))
 
                 page_num = c.getPageNumber()
-                c.drawString(280, 25, '%s.Sayfa' % page_num)
+                # c.drawString(280, 25, '%s.Sayfa' % page_num)
 
                 y = 750
 
@@ -507,7 +507,7 @@ def edit_project_pdf(request,pk):
                 # c.drawString(50, 25, 'http:/www.kobiltek.com/')
                 # c.drawString(450, 25, 'Proje Takip Sistemi')
                 page_num = c.getPageNumber()
-                c.drawString(280, 25, '%s.Sayfa' % page_num)
+                # c.drawString(280, 25, '%s.Sayfa' % page_num)
 
                 y = 750
 
@@ -795,7 +795,7 @@ def edit_project_pdf_personel(request,pk):
         page_num = c.getPageNumber()
 
         # c.drawString(50, 25, 'http:/www.kobiltek.com/')
-        c.drawString(280, 25, '%s.Sayfa' % page_num)
+        # c.drawString(280, 25, '%s.Sayfa' % page_num)
         # c.drawString(450, 25, 'Proje Takip Sistemi')
 
     # c.setFont("Verdana", 15)
