@@ -432,6 +432,7 @@ urlpatterns = [
 
     url(r'excel/$',PdfView.return_excel, name='excel'),
     url(r'excel2/$', PdfView.return_excel_row, name='excel2'),
+    url(r'excel/personeller$', PdfView.return_excel_row_personel, name='excel-personel'),
 
 
 

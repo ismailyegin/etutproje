@@ -265,7 +265,7 @@ def return_employees_all(request):
                     query &= Q(workDefinition=workDefinition)
                 employees = Employee.objects.filter(query).distinct()
 
-    return render(request, 'personel/personeller.html',
+    return render(request, 'personel/personeller-detay.html',
                   {'employees': employees, 'user_form': user_form,})
 
 
