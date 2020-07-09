@@ -1005,7 +1005,7 @@ def edit_project_pdf_teknik(request,pk):
                 # c.drawString(50, 25, 'http:/www.kobiltek.com/')
                 # c.drawString(450, 25, 'Proje Takip Sistemi')
                 page_num = c.getPageNumber()
-                c.drawString(280, 25, '%s' % page_num)
+                # c.drawString(280, 25, '%s' % page_num)
                 y = 750
 
 
