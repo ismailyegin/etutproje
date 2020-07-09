@@ -469,11 +469,11 @@ def edit_project_pdf(request,pk):
     c.setFont("Verdana", 12)
 
     if text and text is not None:
-        c.drawString(300, 150, 'Sayın: %s '%text)
+        c.drawString(300, 150, 'Sayın (%s):'%text)
         c.drawString(300,130,'Bilgilerinize arz olunur.')
     else:
-        c.drawString(300, 150, 'Sayın:.............')
-        c.drawString(300, 130, 'Bilgilerinize arz olunur.')
+        # c.drawString(300, 150, 'Sayın:.............')
+        # c.drawString(300, 130, 'Bilgilerinize arz olunur.')
 
 
     c.showPage()
@@ -766,11 +766,11 @@ def edit_project_pdf_personel(request,pk):
     c.setFont("Verdana", 12)
 
     if text and text is not None:
-        c.drawString(300, 150, 'Sayın: %s '%text)
+        c.drawString(300, 150, 'Sayın (%s):'%text)
         c.drawString(300,130,'Bilgilerinize arz olunur.')
     else:
-        c.drawString(300, 150, 'Sayın:.............')
-        c.drawString(300, 130, 'Bilgilerinize arz olunur.')
+        # c.drawString(300, 150, 'Sayın:.............')
+        # c.drawString(300, 130, 'Bilgilerinize arz olunur.')
 
 
 
@@ -970,11 +970,11 @@ def edit_project_pdf_teknik(request,pk):
     c.setFont("Verdana", 12)
 
     if text and text is not None:
-        c.drawString(300, 150, 'Sayın: %s '%text)
+        c.drawString(300, 150, 'Sayın (%s):'%text)
         c.drawString(300,130,'Bilgilerinize arz olunur.')
     else:
-        c.drawString(300, 150, 'Sayın:.............')
-        c.drawString(300, 130, 'Bilgilerinize arz olunur.')
+        # c.drawString(300, 150, 'Sayın:.............')
+        # c.drawString(300, 130, 'Bilgilerinize arz olunur.')
 
 
     c.showPage()
