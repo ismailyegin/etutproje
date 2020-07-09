@@ -20,6 +20,7 @@ from django.shortcuts import render, redirect
 
 
 from sbs.models import EPProject, CategoryItem, City
+from sbs.models.CategoryItem import  CategoryItem
 from sbs.models.Town import Town
 from sbs.models.Employee import Employee
 
@@ -55,6 +56,8 @@ from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.rl_config import defaultPageSize
 from reportlab.lib.units import inch
+
+
 
 
 # zaman
@@ -166,7 +169,7 @@ def return_excel_row_personel(request):
     font_style = xlwt.XFStyle()
     font_style.font.bold = True
 
-    columns = ['Tc', 'İsim', 'Ünvan', 'Email address', ]
+    columns = ['Tc', 'İsim', 'Ünvan', 'Email']
 
     for col_num in range(len(columns)):
         ws.write(row_num, col_num, columns[col_num], font_style)
@@ -174,12 +177,20 @@ def return_excel_row_personel(request):
     # Sheet body, remaining rows
     font_style = xlwt.XFStyle()
 
-    rows = Employee.objects.all().values_list('person.tc', 'user.first_name', 'user.last_name', 'user.email')
+    employee = Employee.objects.all().distinct()
 
-    for row in rows:
-        row_num += 1
-        for col_num in range(len(row)):
-            ws.write(row_num, col_num, row[col_num], font_style)
+
+
+    row=1
+    for item in employee:
+         ws.write(row, 0, item.person.tc, font_style)
+         ws.write(row, 1, item.user.get_full_name(), font_style)
+         ws.write(row, 2, item.workDefinition.name, font_style)
+         ws.write(row, 3, item.user.email, font_style)
+
+         row=row+1
+
+
 
     wb.save(response)
     return response
