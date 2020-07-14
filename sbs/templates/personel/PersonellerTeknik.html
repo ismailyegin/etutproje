@@ -200,12 +200,12 @@
                         <div class="box-body">
                             {% if user.groups.all.0.name == 'Yonetim' or user.groups.all.0.name == 'Admin' %}
                                 <div class="box-header with-border">
-{#                                    <div class="btn-group">#}
-{#                                        <a href="{% url "sbs:personel-ekle-teknik" %}"#}
-{#                                           type="button" class="btn btn-success"><i#}
-{#                                                class="fa fa-edit"></i> Personel Ekle#}
-{#                                        </a>#}
-{#                                    </div>#}
+                                    {#                                    <div class="btn-group">#}
+                                    {#                                        <a href="{% url "sbs:personel-ekle-teknik" %}"#}
+                                    {#                                           type="button" class="btn btn-success"><i#}
+                                    {#                                                class="fa fa-edit"></i> Personel Ekle#}
+                                    {#                                        </a>#}
+                                    {#                                    </div>#}
                                 </div>
                             {% endif %}
                             <table id="personel" class="table table-bordered table-hover">
@@ -303,6 +303,9 @@
                         extend: 'print',
                         title: 'Personeller',
                         text: '<i class="fa  fa-print"></i>',
+                        exportOptions: {
+                            columns: [0, 1, ':visible']
+                        },
 
                         titleAttr: 'Yazdır'
                     },
@@ -310,6 +313,9 @@
                         extend: 'pdfHtml5',
                         download: 'open',
                         text: '<i class="fa fa-file-pdf-o"></i>',
+                        exportOptions: {
+                            columns: [0, 1, ':visible']
+                        },
 
                         titleAttr: 'Pdf Kaydet'
                     },
@@ -319,6 +325,9 @@
                         title: 'Personeller',
                         text: '<i class="fa fa-file-excel-o"></i>',
                         messageTop: 'Personeller ',
+                        exportOptions: {
+                            columns: [0, 1, ':visible']
+                        },
 
                         titleAttr: 'Excel Kaydet'
                     },
