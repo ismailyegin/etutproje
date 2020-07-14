@@ -385,6 +385,9 @@ urlpatterns = [
     url(r'etut-proje/proje-asama-sil/(?P<project_pk>\d+)/(?P<employee_pk>\d+)/$',
         EPProjectViews.delete_phase_from_project,
         name='proje-asama-kaldir'),
+    url(r'etut-proje/proje-gorus-sil/(?P<project_pk>\d+)/(?P<employee_pk>\d+)/$',
+        EPProjectViews.delete_ofters_from_project,
+        name='proje-gorus-kaldir'),
 
     url(r'etut-proje/proje-hakedis-sil/(?P<project_pk>\d+)/(?P<employee_pk>\d+)/$',
         EPProjectViews.delete_vest_from_project,
