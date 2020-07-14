@@ -400,21 +400,23 @@ def edit_project_pdf(request,pk):
     c.drawString(300, 490, "İnşaat Alanı                 :%s m² " % ( "{0:,.2f}".format(project.insaatAlani) if project.insaatAlani else  ' ' ))
     c.drawString(300, 470, "Tahmini Ödenek Tutari :%s ₺" % ("{0:,.2f}".format(project.tahminiOdenekTutari) if project.tahminiOdenekTutari else  ' ' ))
     # c.drawString(300, 500, "Yaklaşık Maliyet           :%s " % ("{0:,.2f}".format(project.yaklasikMaliyet) if project.yaklasikMaliyet else  ' ' ))
-
+    y=450
     if project.offers.all():
         c.setFont("Verdana", 15)
-        c.drawString(300, 450, 'Görüş ve Öneriler:')
-        c.line(300, 440, 450, 440)
+        c.drawString(300, y, 'Görüş ve Öneriler:')
+        y-=10
+        c.line(300, y, 450, y)
         c.setFont("Verdana", 10)
 
         # c.setFillColorRGB(0, 0, 0.77)
+        #   y440
+        y-=20
+        c.drawString(300, y, 'İsim-Soyisim')
+        c.line(300, y-10, 350, y-10)
 
-        c.drawString(300, 420, 'İsim-Soyisim')
-        c.line(300, 410, 350, 410)
-
-        c.drawString(400, 420, 'Görüş ')
-        c.line(400, 410, 450, 410)
-        y=390
+        c.drawString(400, y, 'Görüş ')
+        c.line(400, y-10, 450, y-10)
+        y-=20
         for item in project.offers.all().order_by('creationDate')[:3]:
             if y > 150:
                 c.drawString(300, y, '%s' % item.added_by)
@@ -431,18 +433,6 @@ def edit_project_pdf(request,pk):
                 y = 750
 
         page_num = c.getPageNumber()
-
-
-
-
-
-
-
-
-
-
-
-
 
     if  project.employees.all():
         c.setFont("Verdana", 15)
