@@ -401,11 +401,9 @@ def edit_project_pdf(request,pk):
     c.drawString(300, 470, "Tahmini Ödenek Tutari :%s ₺" % ("{0:,.2f}".format(project.tahminiOdenekTutari) if project.tahminiOdenekTutari else  ' ' ))
     # c.drawString(300, 500, "Yaklaşık Maliyet           :%s " % ("{0:,.2f}".format(project.yaklasikMaliyet) if project.yaklasikMaliyet else  ' ' ))
 
-
-
-    if project.employees.all():
+    if project.offers.all():
         c.setFont("Verdana", 15)
-        c.drawString(300, 450, 'Personel Listesi:')
+        c.drawString(300, 450, 'Görüş ve Öneriler:')
         c.line(300, 440, 450, 440)
         c.setFont("Verdana", 10)
 
@@ -414,12 +412,58 @@ def edit_project_pdf(request,pk):
         c.drawString(300, 420, 'İsim-Soyisim')
         c.line(300, 410, 350, 410)
 
-        c.drawString(400, 420, 'Unvan')
+        c.drawString(400, 420, 'Görüş ')
         c.line(400, 410, 450, 410)
+        y=390
+        for item in project.offers.all().order_by('creationDate')[:3]:
+            if y > 150:
+                c.drawString(300, y, '%s' % item.added_by)
+                c.drawString(400, y, '%s' % item.message)
+                y -= 20
+            else:
+                page_num = c.getPageNumber()
+                c.showPage()
+                pdfmetrics.registerFont(TTFont('Verdana', 'Verdana.ttf'))
+                # c.drawString(50, 25, 'http:/www.kobiltek.com/')
+                # c.drawString(450, 25, 'Proje Takip Sistemi')
+                page_num = c.getPageNumber()
+                # c.drawString(280, 25, '%s' % page_num)
+                y = 750
+
+        page_num = c.getPageNumber()
+
+
+
+
+
+
+
+
+
+
+
+
+
+    if  project.employees.all():
+        c.setFont("Verdana", 15)
+        c.drawString(300, y, 'Personel Listesi:')
+        y-=10
+        c.line(300, y, 450, y)
+        c.setFont("Verdana", 10)
+
+        # c.setFillColorRGB(0, 0, 0.77)
+        y-=20
+
+        c.drawString(300, y, 'İsim-Soyisim')
+
+        c.line(300, y-10, 350, y-10)
+
+        c.drawString(400, y, 'Unvan')
+        c.line(400, y-10, 450, y-10)
 
         # c.setFillColorRGB(0, 0, 0)
 
-        y = 390
+        y -=20
 
         for item in project.employees.all():
 
