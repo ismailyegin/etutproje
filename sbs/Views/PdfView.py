@@ -792,23 +792,63 @@ def edit_project_pdf_personel(request,pk):
     # c.drawString(300, 540, "İnşaat alanı                 :%s" % ( "{0:,.2f}".format(project.insaatAlani) if project.insaatAlani else  '-' ))
     # c.drawString(300, 520, "Tahmini Ödenek Tutari :%s" % ("{0:,.2f}".format(project.tahminiOdenekTutari) if project.tahminiOdenekTutari else  '-' ))
     # c.drawString(300, 500, "Yaklaşık Maliyet           :%s" % ("{0:,.2f}".format(project.yaklasikMaliyet) if project.yaklasikMaliyet else  '-' ))
-    if project.employees.all():
+
+
+
+    y=540
+    if project.offers.all():
         c.setFont("Verdana", 15)
-        c.drawString(300, 540, 'Personel Listesi:')
-        c.line(300, 530, 450, 530)
+        c.drawString(300, y, 'Görüş ve Öneriler:')
+        y-=10
+        c.line(300, y, 450, y)
         c.setFont("Verdana", 10)
 
         # c.setFillColorRGB(0, 0, 0.77)
+        #   y440
+        y-=20
+        c.drawString(300, y, 'İsim-Soyisim')
+        c.line(300, y-10, 350, y-10)
 
-        c.drawString(300, 520, 'İsim-Soyisim')
-        c.line(300, 510, 350, 510)
+        c.drawString(400, y, 'Görüş ')
+        c.line(400, y-10, 450, y-10)
+        y-=20
+        for item in project.offers.all().order_by('creationDate')[:3]:
+            if y > 150:
+                c.drawString(300, y, '%s' % item.added_by)
+                c.drawString(400, y, '%s' % item.message)
+                y -= 20
+            else:
+                page_num = c.getPageNumber()
+                c.showPage()
+                pdfmetrics.registerFont(TTFont('Verdana', 'Verdana.ttf'))
+                # c.drawString(50, 25, 'http:/www.kobiltek.com/')
+                # c.drawString(450, 25, 'Proje Takip Sistemi')
+                page_num = c.getPageNumber()
+                # c.drawString(280, 25, '%s' % page_num)
+                y = 750
 
-        c.drawString(400, 520, 'Unvan')
-        c.line(400, 510, 450, 510)
+        page_num = c.getPageNumber()
+
+    if  project.employees.all():
+        c.setFont("Verdana", 15)
+        c.drawString(300, y, 'Personel Listesi:')
+        y-=10
+        c.line(300, y, 450, y)
+        c.setFont("Verdana", 10)
+
+        # c.setFillColorRGB(0, 0, 0.77)
+        y-=20
+
+        c.drawString(300, y, 'İsim-Soyisim')
+
+        c.line(300, y-10, 350, y-10)
+
+        c.drawString(400, y, 'Unvan')
+        c.line(400, y-10, 450, y-10)
 
         # c.setFillColorRGB(0, 0, 0)
 
-        y = 490
+        y -=20
 
         for item in project.employees.all():
 
@@ -822,14 +862,14 @@ def edit_project_pdf_personel(request,pk):
                 pdfmetrics.registerFont(TTFont('Verdana', 'Verdana.ttf'))
                 # c.drawString(50, 25, 'http:/www.kobiltek.com/')
                 # c.drawString(450, 25, 'Proje Takip Sistemi')
-                # page_num = c.getPageNumber()
-                # c.drawString(280, 25, '%s.Sayfa' % page_num)
+                page_num = c.getPageNumber()
+                # c.drawString(280, 25, '%s' % page_num)
                 y = 750
 
         page_num = c.getPageNumber()
-
+        #
         # c.drawString(50, 25, 'http:/www.kobiltek.com/')
-        # c.drawString(280, 25, '%s.Sayfa' % page_num)
+        # c.drawString(280, 25, '%s' % page_num)
         # c.drawString(450, 25, 'Proje Takip Sistemi')
 
     # c.setFont("Verdana", 15)
@@ -993,6 +1033,40 @@ def edit_project_pdf_teknik(request,pk):
     else:
         c.drawString(300, 560, "Projenin Sorumlusu:")
 
+    y = 540
+    if project.offers.all():
+        c.setFont("Verdana", 15)
+        c.drawString(300, y, 'Görüş ve Öneriler:')
+        y -= 10
+        c.line(300, y, 450, y)
+        c.setFont("Verdana", 10)
+
+        # c.setFillColorRGB(0, 0, 0.77)
+        #   y440
+        y -= 20
+        c.drawString(300, y, 'İsim-Soyisim')
+        c.line(300, y - 10, 350, y - 10)
+
+        c.drawString(400, y, 'Görüş ')
+        c.line(400, y - 10, 450, y - 10)
+        y -= 20
+        for item in project.offers.all().order_by('creationDate')[:3]:
+            if y > 150:
+                c.drawString(300, y, '%s' % item.added_by)
+                c.drawString(400, y, '%s' % item.message)
+                y -= 20
+            else:
+                page_num = c.getPageNumber()
+                c.showPage()
+                pdfmetrics.registerFont(TTFont('Verdana', 'Verdana.ttf'))
+                # c.drawString(50, 25, 'http:/www.kobiltek.com/')
+                # c.drawString(450, 25, 'Proje Takip Sistemi')
+                page_num = c.getPageNumber()
+                # c.drawString(280, 25, '%s' % page_num)
+                y = 750
+
+        page_num = c.getPageNumber()
+
 
 
 
@@ -1013,16 +1087,16 @@ def edit_project_pdf_teknik(request,pk):
     if project.employees.all():
         c.setFont("Verdana", 15)
         c.drawString(50, 520, 'Personel Listesi:')
-        c.line(50, 510, 300, 510)
+        c.line(50, 510, 200, 510)
         c.setFont("Verdana", 10)
 
         # c.setFillColorRGB(0, 0, 0.77)
 
-        c.drawString(50, 500, 'İsim-Soyisim')
-        c.line(50, 490, 150, 490)
+        c.drawString(50, 490, 'İsim-Soyisim')
+        c.line(50, 480, 150, 480)
 
-        c.drawString(200, 500, 'Unvan')
-        c.line(200, 490, 300, 490)
+        c.drawString(200, 490, 'Unvan')
+        c.line(200, 480, 250, 480)
 
         y = 470
 

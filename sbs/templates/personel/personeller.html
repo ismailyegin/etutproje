@@ -227,6 +227,10 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Ad Soyad</th>
+                                    <th> Tc</th>
+                                 <th> Email </th>
+
+
 
                                     <th>Unvan</th>
                                     {% if user.groups.all.0.name == 'Yonetim' or user.groups.all.0.name == 'Admin' %}
@@ -240,6 +244,8 @@
                                         <tr>
                                             <td>{{ forloop.counter }} </td>
                                             <td>{{ athlete.user.first_name }} {{ athlete.user.last_name }} </td>
+                                            <td>{{ athlete.person.tc }}</td>
+                                            <td>{{ athlete.user.email }}</td>
 
 
                                             <td>{{ athlete.workDefinition }} </td>
@@ -317,6 +323,9 @@
                         extend: 'print',
                         title: 'Personeller',
                         text: '<i class="fa  fa-print"></i>',
+                                                exportOptions: {
+                            columns: [0,1,':visible']
+                        },
 
                         titleAttr: 'Yazdır'
                     },
@@ -324,6 +333,9 @@
                         extend: 'pdfHtml5',
                         download: 'open',
                         text: '<i class="fa fa-file-pdf-o"></i>',
+                                                exportOptions: {
+                            columns: [0,1,':visible']
+                        },
 
                         titleAttr: 'Pdf Kaydet'
                     },
@@ -333,6 +345,9 @@
                         title: 'Personeller',
                         text: '<i class="fa fa-file-excel-o"></i>',
                         messageTop: 'Personeller ',
+                                                exportOptions: {
+                            columns: [0,1,':visible']
+                        },
 
                         titleAttr: 'Excel Kaydet'
                     },

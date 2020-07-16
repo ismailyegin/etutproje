@@ -326,14 +326,18 @@
                         extend: 'print',
                         title: 'Personeller',
                         text: '<i class="fa  fa-print"></i>',
-
+                        exportOptions: {
+                            columns: [0,2,':visible']
+                        },
                         titleAttr: 'Yazdır'
                     },
                     {
                         extend: 'pdfHtml5',
                         download: 'open',
                         text: '<i class="fa fa-file-pdf-o"></i>',
-
+                        exportOptions: {
+                            columns: [0,2,':visible']
+                        },
                         titleAttr: 'Pdf Kaydet'
                     },
 
@@ -342,6 +346,9 @@
                         title: 'Personeller',
                         text: '<i class="fa fa-file-excel-o"></i>',
                         messageTop: 'Personeller ',
+                        exportOptions: {
+                            columns: [0,2,':visible']
+                        },
 
                         titleAttr: 'Excel Kaydet'
                     },

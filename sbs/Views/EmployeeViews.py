@@ -196,6 +196,10 @@ def return_employees(request):
 
     user_form = UserSearchForm()
     employees = Employee.objects.none()
+    get = request.GET.get('get')
+    if get:
+        if get == 'hepsi':
+            employees = Employee.objects.all()
 
 
 
