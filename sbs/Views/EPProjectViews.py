@@ -254,8 +254,9 @@ def return_projects(request):
             projeCinsi = user_form.cleaned_data.get('projeCinsi')
             city = user_form.cleaned_data.get('city')
             Status = user_form.cleaned_data.get('projectStatus')
+            karakteristik=user_form.cleaned_data.get('karakteristik')
 
-            if not (name or butceCinsi or butceYili or projeCinsi or Status or city):
+            if not (name or butceCinsi or butceYili or projeCinsi or Status or city or karakteristik):
 
                 if user.groups.filter(name='Personel'):
                     projects = EPProject.objects.filter(employees__employee__user=user).distinct()
@@ -279,6 +280,8 @@ def return_projects(request):
                     query &= Q(city=city)
                 if Status:
                     query &= Q(projectStatus=Status)
+                if karakteristik:
+                    query &= Q(karakteristik=karakteristik)
 
                 if user.groups.filter(name='Personel'):
                     projects = EPProject.objects.filter(query).filter(employees__employee__user=user).distinct()

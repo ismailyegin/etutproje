@@ -144,7 +144,7 @@
                             <div class="box-body">
                                 {% csrf_token %}
 
-                                <div class="col-md-2">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label> {{ search_form.name.label }}</label>
                                         {{ search_form.name }}
@@ -178,6 +178,13 @@
                                     <div class="form-group">
                                         <label> {{ search_form.projectStatus.label }}</label>
                                         {{ search_form.projectStatus }}
+                                    </div>
+                                </div>
+
+                                 <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label> {{ search_form.karakteristik.label }}</label>
+                                        {{ search_form.karakteristik }}
                                     </div>
                                 </div>
 
@@ -322,6 +329,10 @@
             $('#projects').DataTable({
 
                 dom: 'Bfrtip',
+                {#orderFixed: [[6, 'asc']],#}
+                {#rowGroup: {#}
+                {#    dataSrc: 6#}
+                {# },#}
 
                 language: {
                     buttons: {
@@ -338,7 +349,6 @@
                 ],
 
                 buttons: [
-
 
 
                     {
@@ -358,8 +368,8 @@
                         extend: 'print',
                         title: 'Projeler',
                         text: '<i class="fa  fa-print"></i>',
-                             exportOptions: {
-                            columns: [0,1,':visible']
+                        exportOptions: {
+                            columns: [0, 1, ':visible']
                         },
 
                         titleAttr: 'Yazdır'
@@ -369,7 +379,7 @@
                         download: 'open',
                         text: '<i class="fa fa-file-pdf-o"></i>',
                         exportOptions: {
-                            columns: [0,1,':visible']
+                            columns: [0, 1, ':visible']
                         },
 
                         titleAttr: 'Pdf Kaydet'
@@ -381,7 +391,7 @@
                         text: '<i class="fa fa-file-excel-o"></i>',
                         messageTop: 'Etüt Bilgi Sistemi ',
                         exportOptions: {
-                            columns: [0,1,':visible']
+                            columns: [0, 1, ':visible']
                         },
 
                         titleAttr: 'Excel Kaydet'
@@ -424,7 +434,16 @@
                     }
                 },
 
-            })
+            });
+            // Change the fixed ordering when the data source is updated
+
+
+table.on( 'responsive-display', function ( e, datatable, row, showHide, update ) {
+    console.log( 'Details for row '+row.index()+' '+(showHide ? 'shown' : 'hidden') );
+} );
+
+
+
 
         })
     </script>

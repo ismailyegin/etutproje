@@ -9,7 +9,7 @@ class EPProjectSearchForm(ModelForm):
     class Meta:
         model = EPProject
 
-        fields = ( 'butceCinsi', 'butceYili', 'projeCinsi', 'city','projectStatus','name')
+        fields = ( 'butceCinsi', 'butceYili', 'projeCinsi', 'city','projectStatus','name','karakteristik')
         labels = {
             'name': 'Proje Tanımı',
             'butceCinsi': 'Yatırım Programı ',
@@ -19,13 +19,16 @@ class EPProjectSearchForm(ModelForm):
             'city': 'İl',
 
             'projectStatus':'Projenin Durumu',
+            'karakteristik':'karakteristik',
 
 
         }
         widgets = {
+
             'name': forms.TextInput(attrs={'class': 'form-control '}),
 
-
+            'karakteristik': forms.Select(attrs={'class': 'form-control select2 select2-hidden-accessible',
+                                              'style': 'width: 100%; '}),
             'butceCinsi': forms.Select(attrs={'class': 'form-control select2 select2-hidden-accessible',
                                               'style': 'width: 100%; '}),
             'butceYili': forms.DateInput(
@@ -50,3 +53,4 @@ class EPProjectSearchForm(ModelForm):
             self.fields['projectStatus'].required = False
             self.fields['city'].required = False
             self.fields['name'].required = False
+            self.fields['karakteristik'].required = False
