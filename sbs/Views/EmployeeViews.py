@@ -39,7 +39,7 @@ from sbs.models.Country import Country
 from sbs.services import general_methods
 from datetime import date, datetime
 from django.utils import timezone
-
+from django.db.models import Sum
 
 @login_required
 def add_employee(request):
@@ -139,6 +139,27 @@ def edit_employee(request, pk):
     projects=EPProject.objects.filter(employees__employee__user=user ).distinct()
     projects|=EPProject.objects.filter(sorumlu__user=user).distinct()
 
+    cezainfaz = int(EPProject.objects.filter(projeCinsi=EPProject.CIK).distinct().aggregate(Sum('insaatAlani'))['insaatAlani__sum'] or 0)
+    adaletbinasi =int(EPProject.objects.filter(projeCinsi=EPProject.AB).aggregate(Sum('insaatAlani'))['insaatAlani__sum'] or 0)
+    adlitip = int(EPProject.objects.filter(projeCinsi=EPProject.AT).aggregate(Sum('insaatAlani'))['insaatAlani__sum'] or 0)
+    bolgeadliye = int(EPProject.objects.filter(projeCinsi=EPProject.BAM).aggregate(Sum('insaatAlani'))['insaatAlani__sum'] or 0)
+    bolgeidari = int(EPProject.objects.filter(projeCinsi=EPProject.BIM).aggregate(Sum('insaatAlani'))['insaatAlani__sum'] or 0)
+    denetimserbeslik = int(EPProject.objects.filter(projeCinsi=EPProject.DS).aggregate(Sum('insaatAlani'))['insaatAlani__sum'] or 0)
+    personelegitim = int(EPProject.objects.filter(projeCinsi=EPProject.PEM).aggregate(Sum('insaatAlani'))['insaatAlani__sum'] or 0)
+    bakanlikbinasi = int(EPProject.objects.filter(projeCinsi=EPProject.BB).aggregate(Sum('insaatAlani'))['insaatAlani__sum'] or 0)
+    diger = int(EPProject.objects.filter(projeCinsi=EPProject.DIGER).aggregate(Sum('insaatAlani'))['insaatAlani__sum'] or 0)
+    lojman = int(EPProject.objects.filter(projeCinsi=EPProject.LOJMAN).aggregate(Sum('insaatAlani'))['insaatAlani__sum'] or 0)
+
+
+    print(cezainfaz)
+
+
+
+
+
+
+
+
     if request.method == 'POST':
 
         if user_form.is_valid() and communication_form.is_valid() and person_form.is_valid() and employee_form.is_valid():
@@ -164,7 +185,18 @@ def edit_employee(request, pk):
 
     return render(request, 'personel/personel-duzenle.html',
                   {'user_form': user_form, 'communication_form': communication_form,
-                   'person_form': person_form, 'employee_form': employee_form,'projects':projects,'personel':user})
+                   'person_form': person_form, 'employee_form': employee_form,'projects':projects,'personel':user,
+                   'cezainfaz': cezainfaz,
+                   'adaletbinasi': adaletbinasi,
+                   'adlitip': adlitip,
+                   'bolgeadliye': bolgeadliye,
+                   'bolgeidari': bolgeidari,
+                   'denetimserbeslik': denetimserbeslik,
+                   'personelegitim': personelegitim,
+                   'bakanlikbinasi': bakanlikbinasi,
+                   'diger': diger,
+                   'lojman': lojman,
+                   })
 
 @login_required
 def delete_employee(request, pk):

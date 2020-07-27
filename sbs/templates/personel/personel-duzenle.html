@@ -153,8 +153,7 @@
                                         <label> {{ employee_form.workDefinition.label }}</label>
                                         {{ employee_form.workDefinition }}
                                     </div>
-                                    <div class="form-group"
-                                    "="">
+                                    <div class="form-group">
                                     <label>Grubu</label>
 
                                     <input type="text" name="days"
@@ -227,8 +226,92 @@
 
 
                 </div>
+                 <div class="box box-primary">
+
+                      <div class="box box-default">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Toplam İnşaat Alanlari</h3>
+
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                        class="fa fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i
+                                        class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="chart-responsive">
+                                        <canvas id="pieChart2" height="202" width="303"
+                                                style="width: 243px; height: 162px;"></canvas>
+                                    </div>
+                                    <!-- ./chart-responsive -->
+                                </div>
+
+                            </div>
+                            <!-- /.row -->
+                        </div>
+                        <!-- /.box-body -->
+                        <div class="box-footer no-padding">
+
+
+                            <ul class="nav nav-pills nav-stacked">
+                                <li><a href="#">Ceza İnfaz Kurumu
+                                    <small class="label label-primary  pull-right"> {{cezainfaz}} m² </small></a>
+                                </li>
+                                <li><a href="#">Adalet Binası <small class="label label-primary  pull-right"> {{adaletbinasi}} m² </small></a>
+                                </li>
+                                <li><a href="#">Adli Tıp
+                                    <small class="label label-primary  pull-right"> {{adlitip}} m² </small></a>
+                                </li>
+
+
+                                <li><a href="#">Bölge Adliye Mahkemesi
+                                    <small class="label label-primary  pull-right"> {{bolgeadliye}} m² </small></a>
+                                </li>
+                                <li><a href="#">Bölge İdare Mahkemesi <small class="label label-primary  pull-right">
+                                    {{bolgeidari}} m² </small></a>
+                                </li>
+
+                                <li><a href="#">Denetimli Serbestlik
+                                    <small class="label label-primary  pull-right"> {{denetimserbeslik}}  m² </small></a>
+                                </li>
+                                <li><a href="#">Bakanlık Bİnası <small class="label label-primary  pull-right">
+                                    {{bakanlikbinasi}}  m² </small></a>
+                                </li>
+
+                                <li><a href="#">Personel Eğitim Merkezi
+                                    <small class="label label-primary  pull-right"> {{ personelegitim }}  m² </small></a>
+                                </li>
+                                 <li><a href="#">Lojman
+                                    <small class="label label-primary  pull-right"> {{ lojman }} m² </small></a>
+                                </li>
+                                 <li><a href="#">Diger <small class="label label-primary  pull-right"> {{diger}} m² </small></a>
+                                </li>
+
+
+                            </ul>
+                        </div>
+                        <!-- /.footer -->
+
+                        <!-- /.box -->
+
+                        <!-- PRODUCT LIST -->
+
+
+                        <!-- /.box -->
+                    </div>
+
+
+
+                </div>
 
             </div>
+
+
 
             </div>
 
@@ -346,7 +429,118 @@
 
 
     <script>
+
         $(function () {
+
+            {#pie log#}
+            var pieChartCanvas = $('#pieChart2').get(0).getContext('2d');
+            var pieChart = new Chart(pieChartCanvas);
+            var PieData = [
+                {
+                    value: {{adaletbinasi}},
+                    color: '#f56954',
+                    highlight: '#f56954',
+                    label: 'Adalet Binası'
+                },
+                {
+                    value: {{cezainfaz}},
+                    color: '#00a65a',
+                    highlight: '#00a65a',
+                    label: 'Ceza İnfaz Kurumu'
+                },
+                {
+                    value: {{adlitip}},
+                    color: '#f39c12',
+                    highlight: '#f39c12',
+                    label: 'Adli Tıp'
+                },
+                {
+                    value: {{bolgeadliye}},
+                    color: '#00c0ef',
+                    highlight: '#00c0ef',
+                    label: 'Bölge Adliye Mahkemesi'
+                },
+                {
+                    value: {{bolgeidari}},
+                    color: '#3c8dbc',
+                    highlight: '#3c8dbc',
+                    label: 'Bölge İdare Mahkemesi'
+                },
+                {
+                    value: {{denetimserbeslik}},
+                    color: '#d2d6de',
+                    highlight: '#d2d6de',
+                    label: 'Denetimli Serbestlik'
+                },
+
+                {
+                    value: {{bakanlikbinasi}},
+                    color: '#d0c0ef',
+                    highlight: '#d0c0ef',
+                    label: 'Bakanlık Bİnası'
+                },
+                {
+                    value: {{personelegitim}},
+                    color: '#a0c0ef',
+                    highlight: '#a0c0ef',
+                    label: 'Personel Eğitim Merkezi'
+                },
+                                {
+                    value: {{lojman}},
+                    color: '#ECF0F5',
+                    highlight: '#ECF0F5',
+                    label: 'Lojman'
+                },
+                {
+                    value: {{diger}},
+                    color: '#000000',
+                    highlight: '#000000',
+                    label: 'Diger'
+                },
+
+            ];
+            var pieOptions = {
+                // Boolean - Whether we should show a stroke on each segment
+                segmentShowStroke: true,
+                // String - The colour of each segment stroke
+                segmentStrokeColor: '#fff',
+                // Number - The width of each segment stroke
+                segmentStrokeWidth: 1,
+                // Number - The percentage of the chart that we cut out of the middle
+                percentageInnerCutout: 50, // This is 0 for Pie charts
+                // Number - Amount of animation steps
+                animationSteps: 100,
+                // String - Animation easing effect
+                animationEasing: 'easeOutBounce',
+                // Boolean - Whether we animate the rotation of the Doughnut
+                animateRotate: true,
+                // Boolean - Whether we animate scaling the Doughnut from the centre
+                animateScale: true,
+                // Boolean - whether to make the chart responsive to window resizing
+                responsive: true,
+                // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
+                maintainAspectRatio: false,
+                // String - A legend template
+                legendTemplate: '<ul class=\'<%=name.toLowerCase()%>-legend\'><br><% for (var i=0; i<segments.length; i++){ %><li><span style= \'background-color:<%=segments[i].fillColor%>\'></span><%if(segments[i].label){ %><%=segments[i].label%><%}%></li><%}%></ul>',
+                // String - A tooltip template
+                tooltipTemplate: '<%=value%>  m²  <%=label%>'
+            };
+            // Create pie or douhnut chart
+            // You can switch between pie and douhnut using the method below.
+            pieChart.Doughnut(PieData, pieOptions);
+            // -----------------
+            // - END PIE CHART -
+
+
+
+
+
+
+
+
+
+
+
             $('#projects').DataTable({
 
 
