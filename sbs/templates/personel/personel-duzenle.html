@@ -154,163 +154,192 @@
                                         {{ employee_form.workDefinition }}
                                     </div>
                                     <div class="form-group">
-                                    <label>Grubu</label>
+                                        <label>Grubu</label>
 
-                                    <input type="text" name="days"
-                                           value="{{ employee_form.instance.user.groups.all.0.name }}"
-                                           class="form-control pull-right" disabled="">
+                                        <input type="text" name="days"
+                                               value="{{ employee_form.instance.user.groups.all.0.name }}"
+                                               class="form-control pull-right" disabled="">
 
+
+                                    </div>
 
                                 </div>
 
                             </div>
-
                         </div>
-                    </div>
-                    <div class="box-footer">
-                        <button class="btn btn-primary" type="submit">Kaydet</button>
-                    </div>
+                        <div class="box-footer">
+                            <button class="btn btn-primary" type="submit">Kaydet</button>
+                        </div>
 
+
+                    </div>
 
                 </div>
-
-            </div>
-            <div class="col-lg-6">
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">İletişim Bilgileri</h3>
-                    </div>
-                    <div class="box-body">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label> {{ user_form.email.label }}</label>
-                                    {{ user_form.email }}
-                                </div>
-                                <div class="form-group">
-                                    <label> {{ communication_form.phoneNumber.label }}</label>
-                                    {{ communication_form.phoneNumber }}
-                                </div>
-                                <div class="form-group">
-                                    <label> {{ communication_form.phoneNumber2.label }}</label>
-                                    {{ communication_form.phoneNumber2 }}
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label> {{ communication_form.country.label }}</label>
-                                    {{ communication_form.country }}
-                                </div>
-                                <div class="form-group">
-                                    <label> {{ communication_form.city.label }}</label>
-                                    {{ communication_form.city }}
-                                </div>
-                                <div class="form-group">
-                                    <label> {{ communication_form.postalCode.label }}</label>
-                                    {{ communication_form.postalCode }}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    <label> {{ communication_form.address.label }}</label>
-                                    {{ communication_form.address }}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="box-footer">
-                        <button class="btn btn-primary" type="submit">Kaydet</button>
-                    </div>
-
-
-                </div>
-                 <div class="box box-primary">
-
-                      <div class="box box-default">
+                <div class="col-lg-6">
+                    <div class="box box-primary">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Toplam İnşaat Alanlari</h3>
-
-                            <div class="box-tools pull-right">
-                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
-                                        class="fa fa-minus"></i>
-                                </button>
-                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i
-                                        class="fa fa-times"></i></button>
-                            </div>
+                            <h3 class="box-title">İletişim Bilgileri</h3>
                         </div>
-                        <!-- /.box-header -->
                         <div class="box-body">
                             <div class="row">
-                                <div class="col-md-12">
-                                    <div class="chart-responsive">
-                                        <canvas id="pieChart2" height="202" width="303"
-                                                style="width: 243px; height: 162px;"></canvas>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label> {{ user_form.email.label }}</label>
+                                        {{ user_form.email }}
                                     </div>
-                                    <!-- ./chart-responsive -->
+                                    <div class="form-group">
+                                        <label> {{ communication_form.phoneNumber.label }}</label>
+                                        {{ communication_form.phoneNumber }}
+                                    </div>
+                                    <div class="form-group">
+                                        <label> {{ communication_form.phoneNumber2.label }}</label>
+                                        {{ communication_form.phoneNumber2 }}
+                                    </div>
                                 </div>
-
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label> {{ communication_form.country.label }}</label>
+                                        {{ communication_form.country }}
+                                    </div>
+                                    <div class="form-group">
+                                        <label> {{ communication_form.city.label }}</label>
+                                        {{ communication_form.city }}
+                                    </div>
+                                    <div class="form-group">
+                                        <label> {{ communication_form.postalCode.label }}</label>
+                                        {{ communication_form.postalCode }}
+                                    </div>
+                                </div>
                             </div>
-                            <!-- /.row -->
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label> {{ communication_form.address.label }}</label>
+                                        {{ communication_form.address }}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <!-- /.box-body -->
-                        <div class="box-footer no-padding">
-
-
-                            <ul class="nav nav-pills nav-stacked">
-                                <li><a href="#">Ceza İnfaz Kurumu
-                                    <small class="label label-primary  pull-right"> {{cezainfaz}} m² </small></a>
-                                </li>
-                                <li><a href="#">Adalet Binası <small class="label label-primary  pull-right"> {{adaletbinasi}} m² </small></a>
-                                </li>
-                                <li><a href="#">Adli Tıp
-                                    <small class="label label-primary  pull-right"> {{adlitip}} m² </small></a>
-                                </li>
-
-
-                                <li><a href="#">Bölge Adliye Mahkemesi
-                                    <small class="label label-primary  pull-right"> {{bolgeadliye}} m² </small></a>
-                                </li>
-                                <li><a href="#">Bölge İdare Mahkemesi <small class="label label-primary  pull-right">
-                                    {{bolgeidari}} m² </small></a>
-                                </li>
-
-                                <li><a href="#">Denetimli Serbestlik
-                                    <small class="label label-primary  pull-right"> {{denetimserbeslik}}  m² </small></a>
-                                </li>
-                                <li><a href="#">Bakanlık Bİnası <small class="label label-primary  pull-right">
-                                    {{bakanlikbinasi}}  m² </small></a>
-                                </li>
-
-                                <li><a href="#">Personel Eğitim Merkezi
-                                    <small class="label label-primary  pull-right"> {{ personelegitim }}  m² </small></a>
-                                </li>
-                                 <li><a href="#">Lojman
-                                    <small class="label label-primary  pull-right"> {{ lojman }} m² </small></a>
-                                </li>
-                                 <li><a href="#">Diger <small class="label label-primary  pull-right"> {{diger}} m² </small></a>
-                                </li>
-
-
-                            </ul>
+                        <div class="box-footer">
+                            <button class="btn btn-primary" type="submit">Kaydet</button>
                         </div>
-                        <!-- /.footer -->
-
-                        <!-- /.box -->
-
-                        <!-- PRODUCT LIST -->
 
 
-                        <!-- /.box -->
+                    </div>
+                    <div class="box box-primary">
+
+                        <div class="box box-default">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">Toplam İnşaat Alanlari</h3>
+
+                                <div class="box-tools pull-right">
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                            class="fa fa-minus"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i
+                                            class="fa fa-times"></i></button>
+                                </div>
+                            </div>
+                            <!-- /.box-header -->
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="chart-responsive">
+                                            <canvas id="pieChart2" height="202" width="303"
+                                                    style="width: 243px; height: 162px;"></canvas>
+                                        </div>
+                                        <!-- ./chart-responsive -->
+                                    </div>
+
+                                </div>
+                                <!-- /.row -->
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-footer no-padding">
+
+
+                                <ul class="nav nav-pills nav-stacked">
+                                    {% if cezainfaz %}
+
+                                    <li><a href="#">Ceza İnfaz Kurumu
+                                        <small class="label label-primary  pull-right"> {{ cezainfaz }} m² </small></a>
+                                    </li>
+                                {% endif %}
+                                    {% if adaletbinasi %}
+                                        <li><a href="#">Adalet Binası <small
+                                                class="label label-primary  pull-right"> {{ adaletbinasi }} m² </small></a>
+                                        </li>
+                                    {% endif %}
+
+                                    {% if adlitip %}
+                                        <li><a href="#">Adli Tıp
+                                            <small class="label label-primary  pull-right"> {{ adlitip }}
+                                                m² </small></a>
+                                        </li>
+                                    {% endif %}
+
+                                    {% if bolgeadliye %}
+                                        <li><a href="#">Bölge Adliye Mahkemesi
+                                            <small class="label label-primary  pull-right"> {{ bolgeadliye }}
+                                                m² </small></a>
+                                        </li>
+                                    {% endif %}
+
+                                    {% if bolgeidari %}
+                                        <li><a href="#">Bölge İdare Mahkemesi <small
+                                                class="label label-primary  pull-right">
+                                            {{ bolgeidari }} m² </small></a>
+                                        </li>
+                                    {% endif %}
+
+                                    {% if denetimserbeslik %}
+                                        <li><a href="#">Denetimli Serbestlik
+                                            <small class="label label-primary  pull-right"> {{ denetimserbeslik }}
+                                                m² </small></a>
+                                        </li>
+                                    {% endif %}
+
+                                    {% if bakanlikbinasi %}
+                                        <li><a href="#">Bakanlık Bİnası <small class="label label-primary  pull-right">
+                                            {{ bakanlikbinasi }} m² </small></a>
+                                        </li>
+                                    {% endif %}
+
+                                    {% if personelegitim %}
+                                        <li><a href="#">Personel Eğitim Merkezi
+                                            <small class="label label-primary  pull-right"> {{ personelegitim }}
+                                                m² </small></a>
+                                        </li>
+                                    {% endif %}
+
+                                    {% if lojman %}
+                                        <li><a href="#">Lojman
+                                            <small class="label label-primary  pull-right"> {{ lojman }} m² </small></a>
+                                        </li>
+                                    {% endif %}
+
+                                    {% if diger %}
+                                        <li><a href="#">Diger <small
+                                                class="label label-primary  pull-right"> {{ diger }} m² </small></a>
+                                        </li>
+                                    {% endif %}
+
+                                </ul>
+                            </div>
+                            <!-- /.footer -->
+
+                            <!-- /.box -->
+
+                            <!-- PRODUCT LIST -->
+
+
+                            <!-- /.box -->
+                        </div>
+
+
                     </div>
 
-
-
                 </div>
-
-            </div>
-
 
 
             </div>
@@ -388,7 +417,7 @@
 
                                 </td>
                                 <td>{{ project.city }} </td>
-                                    <td>{{ project.insaatAlani }} </td>
+                                <td>{{ project.insaatAlani }} </td>
                                 <td>{{ project.butceYili }} </td>
 
                                 <td>{{ project.butceCinsi }} </td>
@@ -485,7 +514,7 @@
                     highlight: '#a0c0ef',
                     label: 'Personel Eğitim Merkezi'
                 },
-                                {
+                {
                     value: {{lojman}},
                     color: '#ECF0F5',
                     highlight: '#ECF0F5',
@@ -530,15 +559,6 @@
             pieChart.Doughnut(PieData, pieOptions);
             // -----------------
             // - END PIE CHART -
-
-
-
-
-
-
-
-
-
 
 
             $('#projects').DataTable({
