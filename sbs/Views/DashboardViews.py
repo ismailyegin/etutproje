@@ -9,6 +9,7 @@ from sbs.models import SportClubUser, SportsClub, Coach, Level, License, Athlete
 from sbs.models.EPProject import EPProject
 from sbs.models.Employee import Employee
 from sbs.services import general_methods
+from django.db.models import Sum
 # from rest_framework.authtoken.models import Token
 
 
@@ -131,6 +132,24 @@ def return_admin_dashboard(request):
 
 
 
+
+
+
+    cezainfaz_sum = int(EPProject.objects.filter(projeCinsi=EPProject.CIK).distinct().aggregate(Sum('insaatAlani'))['insaatAlani__sum'] or 0)
+    adaletbinasi_sum =int(EPProject.objects.filter(projeCinsi=EPProject.AB).aggregate(Sum('insaatAlani'))['insaatAlani__sum'] or 0)
+    adlitip_sum = int(EPProject.objects.filter(projeCinsi=EPProject.AT).aggregate(Sum('insaatAlani'))['insaatAlani__sum'] or 0)
+    bolgeadliye_sum = int(EPProject.objects.filter(projeCinsi=EPProject.BAM).aggregate(Sum('insaatAlani'))['insaatAlani__sum'] or 0)
+    bolgeidari_sum = int(EPProject.objects.filter(projeCinsi=EPProject.BIM).aggregate(Sum('insaatAlani'))['insaatAlani__sum'] or 0)
+    denetimserbeslik_sum = int(EPProject.objects.filter(projeCinsi=EPProject.DS).aggregate(Sum('insaatAlani'))['insaatAlani__sum'] or 0)
+    personelegitim_sum = int(EPProject.objects.filter(projeCinsi=EPProject.PEM).aggregate(Sum('insaatAlani'))['insaatAlani__sum'] or 0)
+    bakanlikbinasi_sum = int(EPProject.objects.filter(projeCinsi=EPProject.BB).aggregate(Sum('insaatAlani'))['insaatAlani__sum'] or 0)
+    diger_sum = int(EPProject.objects.filter(projeCinsi=EPProject.DIGER).aggregate(Sum('insaatAlani'))['insaatAlani__sum'] or 0)
+    lojman_sum = int(EPProject.objects.filter(projeCinsi=EPProject.LOJMAN).aggregate(Sum('insaatAlani'))['insaatAlani__sum'] or 0)
+
+
+
+
+
     return render(request, 'anasayfa/admin.html',
                   {'employees': last_employee,'personel_count':personel_count,'proje_count':proje_count,
                    'proje_status_PT':proje_status_PT,'proje_status_PDE':proje_status_PDE,
@@ -142,7 +161,21 @@ def return_admin_dashboard(request):
                    'denetimserbeslik':denetimserbeslik,
                    'personelegitim':personelegitim,
                    'bakanlikbinasi':bakanlikbinasi,
-                   'diger':diger,'lojman':lojman})
+                   'diger':diger,'lojman':lojman,
+
+                   'cezainfaz_sum': cezainfaz_sum,
+                   'adaletbinasi_sum': adaletbinasi_sum,
+                   'adlitip_sum': adlitip_sum,
+                   'bolgeadliye_sum': bolgeadliye_sum,
+                   'bolgeidari_sum': bolgeidari_sum,
+                   'denetimserbeslik_sum': denetimserbeslik_sum,
+                   'personelegitim_sum': personelegitim_sum,
+                   'bakanlikbinasi_sum': bakanlikbinasi_sum,
+                   'diger_sum': diger_sum, 'lojman_sum': lojman_sum,
+
+
+
+                   })
 
 
 @login_required
