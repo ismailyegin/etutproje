@@ -1,45 +1,29 @@
-import datetime
-from _socket import gaierror
-
-from django.contrib.auth import logout, authenticate, update_session_auth_hash
+from django.contrib import messages
+from django.contrib.auth import logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import SetPasswordForm
 from django.contrib.auth.models import User, Group
-from django.contrib import messages
-from django.core.mail import EmailMultiAlternatives
 from django.db.models import Q
+from django.db.models import Sum
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 
-from sbs.Forms import VisaForm
 from sbs.Forms.CategoryItemForm import CategoryItemForm
 from sbs.Forms.CommunicationForm import CommunicationForm
 from sbs.Forms.DisabledCommunicationForm import DisabledCommunicationForm
 from sbs.Forms.DisabledPersonForm import DisabledPersonForm
 from sbs.Forms.DisabledUserForm import DisabledUserForm
 from sbs.Forms.EmployeeForm import EmployeeForm
-from sbs.Forms.GradeForm import GradeForm
-from sbs.Forms.UserForm import UserForm
-from sbs.Forms.VisaForm import VisaForm
 from sbs.Forms.PersonForm import PersonForm
-from sbs.Forms.CoachSearchForm import CoachSearchForm
-from sbs.Forms.SearchClupForm import SearchClupForm
-
-
+from sbs.Forms.UserForm import UserForm
 from sbs.Forms.UserSearchForm import UserSearchForm
-from sbs.Forms.CompetitionForm import CompetitionForm
-from sbs.Forms.VisaSeminarForm import VisaSeminarForm
-from sbs.models import Coach, Athlete, Person, Communication, SportClubUser, Level, SportsClub
+from sbs.models import Coach, Person, Communication
 from sbs.models.CategoryItem import CategoryItem
-from sbs.models.Employee import Employee
-from sbs.models.VisaSeminar import VisaSeminar
-from sbs.models.EnumFields import EnumFields
-from sbs.models.EPProject import EPProject
 from sbs.models.Country import Country
+from sbs.models.EPProject import EPProject
+from sbs.models.Employee import Employee
 from sbs.services import general_methods
-from datetime import date, datetime
-from django.utils import timezone
-from django.db.models import Sum
+
 
 @login_required
 def add_employee(request):
