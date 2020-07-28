@@ -111,7 +111,7 @@ def return_admin_dashboard(request):
         logout(request)
         return redirect('accounts:login')
     # son eklenen 8 sporcuyu ekledik
-    last_employee = Employee.objects.order_by('-creationDate')[:4]
+    last_employee = Employee.objects.order_by('-creationDate')[:8]
     personel_count=Employee.objects.count()
     proje_count=EPProject.objects.count()
 
