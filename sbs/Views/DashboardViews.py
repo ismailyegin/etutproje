@@ -147,7 +147,7 @@ def return_admin_dashboard(request):
     diger_sum = int(EPProject.objects.filter(projeCinsi=EPProject.DIGER).aggregate(Sum('insaatAlani'))['insaatAlani__sum'] or 0)
     lojman_sum = int(EPProject.objects.filter(projeCinsi=EPProject.LOJMAN).aggregate(Sum('insaatAlani'))['insaatAlani__sum'] or 0)
 
-    projects = EPProject.objects.all()
+    projects = EPProject.objects.all().distinct()
     cezainfaz_tam = int(
         projects.filter(projeCinsi=EPProject.CIK, projectStatus=EPProject.PT).distinct().aggregate(Sum('insaatAlani'))[
             'insaatAlani__sum'] or 0)
