@@ -766,6 +766,9 @@
                         title: 'Personeller',
                         text: '<i class="fa  fa-print"></i>',
                         messageTop: '{{ personel.get_full_name }} Projeleri',
+                        exportOptions: {
+                            columns: [0, 1, ':visible']
+                        },
 
                         titleAttr: 'Yazdır'
                     },
@@ -774,6 +777,9 @@
                         download: 'open',
                         text: '<i class="fa fa-file-pdf-o"></i>',
                         messageTop: '{{ personel.get_full_name }} Projeleri',
+                        exportOptions: {
+                            columns: [0, 1, ':visible']
+                        },
 
                         titleAttr: 'Pdf Kaydet'
                     },
@@ -783,6 +789,9 @@
                         title: 'Projeler',
                         text: '<i class="fa fa-file-excel-o"></i>',
                         messageTop: '{{ personel.get_full_name }} Projeleri',
+                        exportOptions: {
+                            columns: [0, 1, ':visible']
+                        },
 
                         titleAttr: 'Excel Kaydet'
                     },
