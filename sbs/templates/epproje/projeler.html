@@ -249,6 +249,7 @@
                                     <th>Proje Durumu</th>
                                     <th>Proje Cinsi</th>
                                     <th>İs Bitim Tarihi</th>
+                                    <th>Açıklama </th>
                                     <th>İşlemler</th>
 
 
@@ -274,7 +275,7 @@
                                     <td>{{ project.projeCinsi }}</td>
 
                                     <td>{{ project.aifinish |date:"d/m/Y" }}</td>
-
+                                    <td>{{ project.phases.all.last.definition }} </td>
                                     <td>
                                         <div class="btn-group ">
 

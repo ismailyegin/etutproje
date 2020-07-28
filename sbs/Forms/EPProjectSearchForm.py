@@ -54,3 +54,4 @@ class EPProjectSearchForm(ModelForm):
             self.fields['city'].required = False
             self.fields['name'].required = False
             self.fields['karakteristik'].required = False
+            self.fields['karakteristik'].default=None

@@ -212,7 +212,7 @@ def return_projects(request):
         logout(request)
         return redirect('accounts:login')
 
-    search_form = EPProjectSearchForm()
+    search_form = EPProjectSearchForm(initial={'karakteristik': ''})
     projects = EPProject.objects.none()
     user = request.user
 
