@@ -268,57 +268,48 @@
                                     {% if adaletbinasi %}
                                         <li><a href="#">Adalet Binası <small
                                                 class="label label-primary  pull-right"> {{ adaletbinasi }} m² </small></a>
-                                        </li>
-                                    {% endif %}
+                                        </li>{% endif %}
 
                                     {% if adlitip %}
                                         <li><a href="#">Adli Tıp
                                             <small class="label label-primary  pull-right"> {{ adlitip }}
                                                 m² </small></a>
-                                        </li>
-                                    {% endif %}
+                                        </li>{% endif %}
 
                                     {% if bolgeadliye %}
                                         <li><a href="#">Bölge Adliye Mahkemesi
                                             <small class="label label-primary  pull-right"> {{ bolgeadliye }}
                                                 m² </small></a>
-                                        </li>
-                                    {% endif %}
-
+                                        </li>{% endif %}
                                     {% if bolgeidari %}
                                         <li><a href="#">Bölge İdare Mahkemesi <small
                                                 class="label label-primary  pull-right">
                                             {{ bolgeidari }} m² </small></a>
                                         </li>
                                     {% endif %}
-
                                     {% if denetimserbeslik %}
                                         <li><a href="#">Denetimli Serbestlik
                                             <small class="label label-primary  pull-right"> {{ denetimserbeslik }}
                                                 m² </small></a>
                                         </li>
                                     {% endif %}
-
                                     {% if bakanlikbinasi %}
                                         <li><a href="#">Bakanlık Bİnası <small class="label label-primary  pull-right">
                                             {{ bakanlikbinasi }} m² </small></a>
                                         </li>
                                     {% endif %}
-
                                     {% if personelegitim %}
                                         <li><a href="#">Personel Eğitim Merkezi
                                             <small class="label label-primary  pull-right"> {{ personelegitim }}
                                                 m² </small></a>
                                         </li>
                                     {% endif %}
-
                                     {% if lojman %}
                                         <li><a href="#">Lojman
                                             <small class="label label-primary  pull-right"> {{ lojman }} m² </small></a>
                                         </li>
                                     {% endif %}
-
-                                    {% if diger %}
+                                    {% if city %}
                                         <li><a href="#">Diger <small
                                                 class="label label-primary  pull-right"> {{ diger }} m² </small></a>
                                         </li>
@@ -339,7 +330,184 @@
 
                     </div>
 
+
+
                 </div>
+
+              <div class="col-lg-6">
+
+                                      <div class="box box-info collapsed-box">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">Devem Eden  İnşaat Alanlari</h3>
+
+                                <div class="box-tools pull-right">
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
+                                    </button>
+                                </div>
+                                <!-- /.box-tools -->
+                            </div>
+                            <!-- /.box-header -->
+                            <div class="box-body" style="display: none;">
+                                <div class="row" style="padding-bottom: 10px">
+
+
+                                     <ul class="nav nav-pills nav-stacked">
+                                    {% if cezainfaz_dev %}
+
+                                    <li><a href="#">Ceza İnfaz Kurumu
+                                        <small class="label label-primary  pull-right"> {{ cezainfaz_dev }} m² </small></a>
+                                    </li>{% endif %}
+                                    {% if adaletbinasi_dev %}
+                                        <li><a href="#">Adalet Binası <small
+                                                class="label label-primary  pull-right"> {{ adaletbinasi_dev }} m² </small></a>
+                                        </li>{% endif %}
+
+                                    {% if adlitip_dev %}
+                                        <li><a href="#">Adli Tıp
+                                            <small class="label label-primary  pull-right"> {{ adlitip_dev }}
+                                                m² </small></a>
+                                        </li>{% endif %}
+
+                                    {% if bolgeadliye_dev %}
+                                        <li><a href="#">Bölge Adliye Mahkemesi
+                                            <small class="label label-primary  pull-right"> {{ bolgeadliye_dev }}
+                                                m² </small></a>
+                                        </li>{% endif %}
+                                    {% if bolgeidari_dev %}
+                                        <li><a href="#">Bölge İdare Mahkemesi <small
+                                                class="label label-primary  pull-right">
+                                            {{ bolgeidari_dev }} m² </small></a>
+                                        </li>
+                                    {% endif %}
+                                    {% if denetimserbeslik_dev %}
+                                        <li><a href="#">Denetimli Serbestlik
+                                            <small class="label label-primary  pull-right"> {{ denetimserbeslik_dev }}
+                                                m² </small></a>
+                                        </li>
+                                    {% endif %}
+                                    {% if bakanlikbinasi_dev %}
+                                        <li><a href="#">Bakanlık Bİnası <small class="label label-primary  pull-right">
+                                            {{ bakanlikbinasi_dev }} m² </small></a>
+                                        </li>
+                                    {% endif %}
+                                    {% if personelegitim_dev %}
+                                        <li><a href="#">Personel Eğitim Merkezi
+                                            <small class="label label-primary  pull-right"> {{ personelegitim_dev }}
+                                                m² </small></a>
+                                        </li>
+                                    {% endif %}
+                                    {% if lojman_dev %}
+                                        <li><a href="#">Lojman
+                                            <small class="label label-primary  pull-right"> {{ lojman_dev }} m² </small></a>
+                                        </li>
+                                    {% endif %}
+                                    {% if diger_dev %}
+                                        <li><a href="#">Diger <small
+                                                class="label label-primary  pull-right"> {{ diger_dev }} m² </small></a>
+                                        </li>
+                                    {% endif %}
+
+                                </ul>
+
+
+
+                                </div>
+
+
+                            </div>
+
+
+
+                        </div>
+
+                <div class="box box-info collapsed-box">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">Tamamlanan İnşaat Alanlari</h3>
+
+                                <div class="box-tools pull-right">
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
+                                    </button>
+                                </div>
+                                <!-- /.box-tools -->
+                            </div>
+                            <!-- /.box-header -->
+                            <div class="box-body" style="display: none;">
+                                <div class="row" style="padding-bottom: 10px">
+
+
+                                     <ul class="nav nav-pills nav-stacked">
+                                    {% if cezainfaz_tam %}
+
+                                    <li><a href="#">Ceza İnfaz Kurumu
+                                        <small class="label label-primary  pull-right"> {{ cezainfaz_tam }} m² </small></a>
+                                    </li>{% endif %}
+                                    {% if adaletbinasi_tam %}
+                                        <li><a href="#">Adalet Binası <small
+                                                class="label label-primary  pull-right"> {{ adaletbinasi_tam }} m² </small></a>
+                                        </li>{% endif %}
+
+                                    {% if adlitip_tam %}
+                                        <li><a href="#">Adli Tıp
+                                            <small class="label label-primary  pull-right"> {{ adlitip_tam }}
+                                                m² </small></a>
+                                        </li>{% endif %}
+
+                                    {% if bolgeadliye_tam %}
+                                        <li><a href="#">Bölge Adliye Mahkemesi
+                                            <small class="label label-primary  pull-right"> {{ bolgeadliye_tam }}
+                                                m² </small></a>
+                                        </li>{% endif %}
+                                    {% if bolgeidari_tam %}
+                                        <li><a href="#">Bölge İdare Mahkemesi <small
+                                                class="label label-primary  pull-right">
+                                            {{ bolgeidari_tam }} m² </small></a>
+                                        </li>
+                                    {% endif %}
+                                    {% if denetimserbeslik_tam %}
+                                        <li><a href="#">Denetimli Serbestlik
+                                            <small class="label label-primary  pull-right"> {{ denetimserbeslik_tam }}
+                                                m² </small></a>
+                                        </li>
+                                    {% endif %}
+                                    {% if bakanlikbinasi_tam %}
+                                        <li><a href="#">Bakanlık Bİnası <small class="label label-primary  pull-right">
+                                            {{ bakanlikbinasi_tam }} m² </small></a>
+                                        </li>
+                                    {% endif %}
+                                    {% if personelegitim_tam %}
+                                        <li><a href="#">Personel Eğitim Merkezi
+                                            <small class="label label-primary  pull-right"> {{ personelegitim_tam }}
+                                                m² </small></a>
+                                        </li>
+                                    {% endif %}
+                                    {% if lojman_tam %}
+                                        <li><a href="#">Lojman
+                                            <small class="label label-primary  pull-right"> {{ lojman_tam }} m² </small></a>
+                                        </li>
+                                    {% endif %}
+                                    {% if diger_tam %}
+                                        <li><a href="#">Diger <small
+                                                class="label label-primary  pull-right"> {{ diger_tam }} m² </small></a>
+                                        </li>
+                                    {% endif %}
+
+                                </ul>
+
+
+
+                                </div>
+
+
+                            </div>
+
+
+
+                        </div>
+
+
+
+              </div>
+
 
 
             </div>
