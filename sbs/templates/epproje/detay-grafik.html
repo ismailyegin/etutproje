@@ -1,0 +1,265 @@
+{% extends 'base_layout.html' %}
+
+
+
+
+{% block content %}
+
+
+    <div class="row">
+
+
+        <div class="col-lg-4">
+
+
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Toplam İnşaat Alanlari</h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i
+                                class="fa fa-times"></i></button>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body" height="200" width="auto">
+
+                    <ul class="nav nav-pills nav-stacked">
+                        <li><a href="{% url 'sbs:detay' %}?get=Ceza İnfaz Kurumu">Ceza İnfaz Kurumu
+                            <small class="label label-primary  pull-right"> {{ cezainfaz }}</small></a>
+                        </li>
+                        <li><a href="{% url 'sbs:detay' %}?get=Adalet Binası">Adalet Binası <small
+                                class="label label-primary  pull-right"> {{ adaletbinasi }}</small></a>
+                        </li>
+                        <li><a href="{% url 'sbs:detay' %}?get=Adli Tıp">Adli Tıp
+                            <small class="label label-primary  pull-right"> {{ adlitip }}</small></a>
+                        </li>
+
+
+                        <li><a href="{% url 'sbs:detay' %}?get=Bölge Adliye Mahkemesi">Bölge Adliye Mahkemesi
+                            <small class="label label-primary  pull-right"> {{ bolgeadliye }}</small></a>
+                        </li>
+                        <li><a href="{% url 'sbs:detay' %}?get=Bölge İdare Mahkemesi">Bölge İdare Mahkemesi <small
+                                class="label label-primary  pull-right">
+                            {{ bolgeidari }}</small></a>
+                        </li>
+
+                        <li><a href="{% url 'sbs:detay' %}?get=Denetimli Serbestlik">Denetimli Serbestlik
+                            <small class="label label-primary  pull-right"> {{ denetimserbeslik }}</small></a>
+                        </li>
+                        <li><a href="{% url 'sbs:detay' %}?get=Bakanlık Bİnası">Bakanlık Bİnası <small
+                                class="label label-primary  pull-right">
+                            {{ bakanlikbinasi }}</small></a>
+                        </li>
+
+                        <li><a href="{% url 'sbs:detay' %}?get=Personel Eğitim Merkezi">Personel Eğitim Merkezi
+                            <small class="label label-primary  pull-right"> {{ personelegitim }}</small></a>
+                        </li>
+                        <li><a href="{% url 'sbs:detay' %}?get=Lojman">Lojman
+                            <small class="label label-primary  pull-right"> {{ lojman }}</small></a>
+                        </li>
+                        <li><a href="{% url 'sbs:detay' %}?get=Diger">Diger <small
+                                class="label label-primary  pull-right"> {{ diger }}</small></a>
+                        </li>
+
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+        <div class="col-lg-8">
+
+
+            <div class="box box-success">
+                <div class="box with-border">
+                    <h3 class="box-title">Projelerin m² Toplamları </h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i
+                                class="fa fa-times"></i></button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <div class="chart">
+                        <canvas id="canvas" height="auto" width="auto"></canvas>
+                    </div>
+                </div>
+                <!-- /.box-body -->
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+
+    </section>
+    </section>
+
+
+
+    <script>
+        $(function () {
+            {#pie log#}
+            var pieChartCanvas = $('#pieChart2').get(0).getContext('2d');
+            var pieChart = new Chart(pieChartCanvas);
+            var PieData = [
+                {
+                    value: {{adaletbinasi}},
+                    color: '#cd5c5c',
+                    highlight: '#d3d3d3',
+                    label: 'Adalet Binası'
+                },
+                {
+                    value: {{cezainfaz}},
+                    color: '#00868b',
+                    highlight: '#d3d3d3',
+                    label: 'Ceza İnfaz Kurumu'
+                },
+                {
+                    value: {{adlitip}},
+                    color: '#ffff00',
+                    highlight: '#d3d3d3',
+                    label: 'Adli Tıp'
+                },
+                {
+                    value: {{bolgeadliye}},
+                    color: '#8b4513',
+                    highlight: '#d3d3d3',
+                    label: 'Bölge Adliye Mahkemesi'
+                },
+                {
+                    value: {{bolgeidari}},
+                    color: '#ee9a00',
+                    highlight: '#d3d3d3',
+                    label: 'Bölge İdare Mahkemesi'
+                },
+                {
+                    value: {{denetimserbeslik}},
+                    color: '#ff00ff',
+                    highlight: '#d3d3d3',
+                    label: 'Denetimli Serbestlik'
+                },
+
+                {
+                    value: {{bakanlikbinasi}},
+                    color: '#000000',
+                    highlight: '#d3d3d3',
+                    label: 'Bakanlık Bİnası'
+                },
+                {
+                    value: {{personelegitim}},
+                    color: '#a9a9a9',
+                    highlight: '#d3d3d3',
+                    label: 'Personel Eğitim Merkezi'
+                },
+                {
+                    value: {{lojman}},
+                    color: '#00cd00',
+                    highlight: '#d3d3d3',
+                    label: 'Lojman'
+                },
+                {
+                    value: {{diger}},
+                    color: '#00f5ff',
+                    highlight: '#d3d3d3',
+                    label: 'Diger'
+                },
+
+            ];
+            var pieOptions = {
+                // Boolean - Whether we should show a stroke on each segment
+                segmentShowStroke: true,
+                // String - The colour of each segment stroke
+                segmentStrokeColor: '#fff',
+                // Number - The width of each segment stroke
+                segmentStrokeWidth: 1,
+                // Number - The percentage of the chart that we cut out of the middle
+                percentageInnerCutout: 50, // This is 0 for Pie charts
+                // Number - Amount of animation steps
+                animationSteps: 100,
+                // String - Animation easing effect
+                animationEasing: 'easeOutBounce',
+                // Boolean - Whether we animate the rotation of the Doughnut
+                animateRotate: true,
+                // Boolean - Whether we animate scaling the Doughnut from the centre
+                animateScale: true,
+                // Boolean - whether to make the chart responsive to window resizing
+                responsive: true,
+                // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
+                maintainAspectRatio: false,
+                // String - A legend template
+                legendTemplate: '<ul class=\'<%=name.toLowerCase()%>-legend\'><br><% for (var i=0; i<segments.length; i++){ %><li><span style= \'background-color:<%=segments[i].fillColor%>\'></span><%if(segments[i].label){ %><%=segments[i].label%><%}%></li><%}%></ul>',
+                // String - A tooltip template
+                tooltipTemplate: '<%=value%>  Tane  <%=label%>'
+            };
+            // Create pie or douhnut chart
+            // You can switch between pie and douhnut using the method below.
+            pieChart.Doughnut(PieData, pieOptions);
+            // -----------------
+            // - END PIE CHART -
+
+
+        });
+
+
+    </script>
+
+
+
+
+    <script>
+
+
+        var barChartData = {
+            labels: ["{{ isim }}"],
+            datasets: [
+
+                {
+                    fillColor: "rgba(151,187,205,0.5)",
+                    strokeColor: "rgba(151,187,205,0.8)",
+                    highlightFill: "rgba(151,187,205,0.75)",
+                    highlightStroke: "rgba(151,187,205,1)",
+                    data: [{{ cins_sum }}]
+                },
+                {
+                    fillColor: "rgba(255,106,106,0.5)",
+                    strokeColor: "rgba(151,187,205,0.8)",
+                    highlightFill: "rgba(151,187,205,0.75)",
+                    highlightStroke: "rgba(151,187,205,1)",
+                    data: [{{cins_tam}}]
+                },
+                {
+                    fillColor: "rgba(151,187,106,0.5)",
+                    strokeColor: "rgba(151,187,205,0.8)",
+                    highlightFill: "rgba(151,187,205,0.75)",
+                    highlightStroke: "rgba(151,187,205,1)",
+                    data: [{{cins_dev}}]
+                },
+            ]
+
+        }
+        window.onload = function () {
+            var ctx = document.getElementById("canvas").getContext("2d");
+            window.myBar = new Chart(ctx).Bar(barChartData, {
+                responsive: true
+            });
+        }
+
+    </script>
+
+
+{% endblock %}

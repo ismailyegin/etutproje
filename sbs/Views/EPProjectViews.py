@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
+from django.db.models import Sum
 
 
 
@@ -203,6 +204,60 @@ def edit_project(request, pk):
                   {'project_form': project_form, 'project': project, 'titles': titles, 'employees': employees,
                    'days': days})
 
+
+@login_required
+def return_detay(request):
+    perm = general_methods.control_access_personel(request)
+
+    if not perm:
+        logout(request)
+        return redirect('accounts:login')
+    get = request.GET.get('get')
+    cins = ''
+    cins_sum = 0
+    cins_tam = 0
+    cins_dev = 0
+    projects = EPProject.objects.all().distinct()
+    cezainfaz = int(
+        projects.filter(projeCinsi=EPProject.CIK).distinct().aggregate(Sum('insaatAlani'))['insaatAlani__sum'] or 0)
+    adaletbinasi = int(
+        projects.filter(projeCinsi=EPProject.AB).aggregate(Sum('insaatAlani'))['insaatAlani__sum'] or 0)
+    adlitip = int(projects.filter(projeCinsi=EPProject.AT).aggregate(Sum('insaatAlani'))['insaatAlani__sum'] or 0)
+    bolgeadliye = int(
+        projects.filter(projeCinsi=EPProject.BAM).aggregate(Sum('insaatAlani'))['insaatAlani__sum'] or 0)
+    bolgeidari = int(
+        projects.filter(projeCinsi=EPProject.BIM).aggregate(Sum('insaatAlani'))['insaatAlani__sum'] or 0)
+    denetimserbeslik = int(
+        projects.filter(projeCinsi=EPProject.DS).aggregate(Sum('insaatAlani'))['insaatAlani__sum'] or 0)
+    personelegitim = int(
+        projects.filter(projeCinsi=EPProject.PEM).aggregate(Sum('insaatAlani'))['insaatAlani__sum'] or 0)
+    bakanlikbinasi = int(
+        projects.filter(projeCinsi=EPProject.BB).aggregate(Sum('insaatAlani'))['insaatAlani__sum'] or 0)
+    diger = int(projects.filter(projeCinsi=EPProject.DIGER).aggregate(Sum('insaatAlani'))['insaatAlani__sum'] or 0)
+    lojman = int(
+        projects.filter(projeCinsi=EPProject.LOJMAN).aggregate(Sum('insaatAlani'))['insaatAlani__sum'] or 0)
+    if get:
+        cins = get
+        cins_sum = int(EPProject.objects.filter(projeCinsi=get).distinct().aggregate(Sum('insaatAlani'))[
+                           'insaatAlani__sum'] or 0)
+        cins_tam = int(EPProject.objects.filter(projeCinsi=cins, projectStatus=EPProject.PT).distinct().aggregate(
+            Sum('insaatAlani'))['insaatAlani__sum'] or 0)
+        cins_dev = int(EPProject.objects.filter(projeCinsi=cins, projectStatus=EPProject.PDE).distinct().aggregate(
+            Sum('insaatAlani'))['insaatAlani__sum'] or 0)
+
+    return render(request, 'epproje/detay-grafik.html',
+                  {'isim': cins, 'cins_dev': cins_dev, 'cins_sum': cins_sum, 'cins_tam': cins_tam,
+                   'cezainfaz': cezainfaz,
+                   'adaletbinasi': adaletbinasi,
+                   'adlitip': adlitip,
+                   'bolgeadliye': bolgeadliye,
+                   'bolgeidari': bolgeidari,
+                   'denetimserbeslik': denetimserbeslik,
+                   'personelegitim': personelegitim,
+                   'bakanlikbinasi': bakanlikbinasi,
+                   'diger': diger,
+                   'lojman': lojman,
+                   })
 
 @login_required
 def return_projects(request):

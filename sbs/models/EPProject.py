@@ -58,7 +58,7 @@ class EPProject(models.Model):
     BIM = 'Bölge İdare Mahkemesi'
     DS = 'Denetimli Serbestlik'
     PEM = 'Personel Eğitim Merkezi'
-    BB = 'Bakanlık Bİnası'
+    BB = 'Bakanlık Binası'
     LOJMAN='Lojman'
     DIGER = 'Diğer'
 

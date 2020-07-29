@@ -631,57 +631,62 @@
                                 <ul class="nav nav-pills nav-stacked">
                                     {% if cezainfaz_sum %}
 
-                                        <li><a href="#">Ceza İnfaz Kurumu
+                                        <li><a href="{% url 'sbs:detay' %}?get=Ceza İnfaz Kurumu">Ceza İnfaz Kurumu
                                             <small class="label label-primary  pull-right"> {{ cezainfaz_sum }}
                                                 m² </small></a>
                                         </li>{% endif %}
                                     {% if adaletbinasi_sum %}
-                                        <li><a href="#">Adalet Binası <small
+                                        <li><a href="{% url 'sbs:detay' %}?get=Adalet Binası">Adalet Binası <small
                                                 class="label label-primary  pull-right"> {{ adaletbinasi_sum }}
                                             m² </small></a>
                                         </li>{% endif %}
 
                                     {% if adlitip_sum %}
-                                        <li><a href="#">Adli Tıp
+                                        <li><a href="{% url 'sbs:detay' %}?get=Adli Tıp">Adli Tıp
                                             <small class="label label-primary  pull-right"> {{ adlitip_sum }}
                                                 m² </small></a>
                                         </li>{% endif %}
 
                                     {% if bolgeadliye_sum %}
-                                        <li><a href="#">Bölge Adliye Mahkemesi
+                                        <li><a href="{% url 'sbs:detay' %}?get=Bölge Adliye Mahkemesi">Bölge Adliye
+                                            Mahkemesi
                                             <small class="label label-primary  pull-right"> {{ bolgeadliye_sum }}
                                                 m² </small></a>
                                         </li>{% endif %}
                                     {% if bolgeidari_sum %}
-                                        <li><a href="#">Bölge İdare Mahkemesi <small
+                                        <li><a href="{% url 'sbs:detay' %}?get=Bölge İdare Mahkemesi">Bölge İdare
+                                            Mahkemesi <small
                                                 class="label label-primary  pull-right">
                                             {{ bolgeidari_sum }} m² </small></a>
                                         </li>
                                     {% endif %}
                                     {% if denetimserbeslik_sum %}
-                                        <li><a href="#">Denetimli Serbestlik
+                                        <li><a href="{% url 'sbs:detay' %}?get=Denetimli Serbestlik">Denetimli
+                                            Serbestlik
                                             <small class="label label-primary  pull-right"> {{ denetimserbeslik_sum }}
                                                 m² </small></a>
                                         </li>
                                     {% endif %}
                                     {% if bakanlikbinasi_sum %}
-                                        <li><a href="#">Bakanlık Bİnası <small class="label label-primary  pull-right">
+                                        <li><a href="{% url 'sbs:detay' %}?get=Bakanlık Binası">Bakanlık Binası <small
+                                                class="label label-primary  pull-right">
                                             {{ bakanlikbinasi_sum }} m² </small></a>
                                         </li>
                                     {% endif %}
                                     {% if personelegitim_sum %}
-                                        <li><a href="#">Personel Eğitim Merkezi
+                                        <li><a href="{% url 'sbs:detay' %}?get=Personel Eğitim Merkezi">Personel Eğitim
+                                            Merkezi
                                             <small class="label label-primary  pull-right"> {{ personelegitim_sum }}
                                                 m² </small></a>
                                         </li>
                                     {% endif %}
                                     {% if lojman_sum %}
-                                        <li><a href="#">Lojman
+                                        <li><a href="{% url 'sbs:detay' %}?get=Lojman">Lojman
                                             <small class="label label-primary  pull-right"> {{ lojman_sum }} m² </small></a>
                                         </li>
                                     {% endif %}
                                     {% if diger_sum %}
-                                        <li><a href="#">Diger <small
+                                        <li><a href="{% url 'sbs:detay' %}?get=Diger">Diger <small
                                                 class="label label-primary  pull-right"> {{ diger_sum }} m² </small></a>
                                         </li>
                                     {% endif %}
@@ -717,57 +722,62 @@
                                 <ul class="nav nav-pills nav-stacked">
                                     {% if cezainfaz_dev %}
 
-                                        <li><a href="#">Ceza İnfaz Kurumu
+                                        <li><a href="{% url 'sbs:detay' %}?get=Ceza İnfaz Kurumu">Ceza İnfaz Kurumu
                                             <small class="label label-primary  pull-right"> {{ cezainfaz_dev }}
                                                 m² </small></a>
                                         </li>{% endif %}
                                     {% if adaletbinasi_dev %}
-                                        <li><a href="#">Adalet Binası <small
+                                        <li><a href="{% url 'sbs:detay' %}?get=Adalet Binası">Adalet Binası <small
                                                 class="label label-primary  pull-right"> {{ adaletbinasi_dev }}
                                             m² </small></a>
                                         </li>{% endif %}
 
                                     {% if adlitip_dev %}
-                                        <li><a href="#">Adli Tıp
+                                        <li><a href="{% url 'sbs:detay' %}?get=Adli Tıp">Adli Tıp
                                             <small class="label label-primary  pull-right"> {{ adlitip_dev }}
                                                 m² </small></a>
                                         </li>{% endif %}
 
                                     {% if bolgeadliye_dev %}
-                                        <li><a href="#">Bölge Adliye Mahkemesi
+                                        <li><a href="{% url 'sbs:detay' %}?get=Bölge Adliye Mahkemesi">Bölge Adliye
+                                            Mahkemesi
                                             <small class="label label-primary  pull-right"> {{ bolgeadliye_dev }}
                                                 m² </small></a>
                                         </li>{% endif %}
                                     {% if bolgeidari_dev %}
-                                        <li><a href="#">Bölge İdare Mahkemesi <small
+                                        <li><a href="{% url 'sbs:detay' %}?get=Bölge İdare Mahkemesi">Bölge İdare
+                                            Mahkemesi <small
                                                 class="label label-primary  pull-right">
                                             {{ bolgeidari_dev }} m² </small></a>
                                         </li>
                                     {% endif %}
                                     {% if denetimserbeslik_dev %}
-                                        <li><a href="#">Denetimli Serbestlik
+                                        <li><a href="{% url 'sbs:detay' %}?get=Denetimli Serbestlik">Denetimli
+                                            Serbestlik
                                             <small class="label label-primary  pull-right"> {{ denetimserbeslik_dev }}
                                                 m² </small></a>
                                         </li>
                                     {% endif %}
                                     {% if bakanlikbinasi_dev %}
-                                        <li><a href="#">Bakanlık Bİnası <small class="label label-primary  pull-right">
+                                        <li><a href="{% url 'sbs:detay' %}?get=Bakanlık Binası">Bakanlık Binası <small
+                                                class="label label-primary  pull-right">
                                             {{ bakanlikbinasi_dev }} m² </small></a>
                                         </li>
                                     {% endif %}
                                     {% if personelegitim_dev %}
-                                        <li><a href="#">Personel Eğitim Merkezi
+                                        <li><a href="{% url 'sbs:detay' %}?get=Personel Eğitim Merkezi">Personel Eğitim
+                                            Merkezi
                                             <small class="label label-primary  pull-right"> {{ personelegitim_dev }}
                                                 m² </small></a>
                                         </li>
                                     {% endif %}
                                     {% if lojman_dev %}
-                                        <li><a href="#">Lojman
+                                        <li><a href="{% url 'sbs:detay' %}?get=Lojman">Lojman
                                             <small class="label label-primary  pull-right"> {{ lojman_dev }} m² </small></a>
                                         </li>
                                     {% endif %}
                                     {% if diger_dev %}
-                                        <li><a href="#">Diger <small
+                                        <li><a href="{% url 'sbs:detay' %}?get=Diger">Diger <small
                                                 class="label label-primary  pull-right"> {{ diger_dev }} m² </small></a>
                                         </li>
                                     {% endif %}
@@ -802,57 +812,62 @@
                                 <ul class="nav nav-pills nav-stacked">
                                     {% if cezainfaz_tam %}
 
-                                        <li><a href="#">Ceza İnfaz Kurumu
+                                        <li><a href="{% url 'sbs:detay' %}?get=Ceza İnfaz Kurumu">Ceza İnfaz Kurumu
                                             <small class="label label-primary  pull-right"> {{ cezainfaz_tam }}
                                                 m² </small></a>
                                         </li>{% endif %}
                                     {% if adaletbinasi_tam %}
-                                        <li><a href="#">Adalet Binası <small
+                                        <li><a href="{% url 'sbs:detay' %}?get=Adalet Binası">Adalet Binası <small
                                                 class="label label-primary  pull-right"> {{ adaletbinasi_tam }}
                                             m² </small></a>
                                         </li>{% endif %}
 
                                     {% if adlitip_tam %}
-                                        <li><a href="#">Adli Tıp
+                                        <li><a href="{% url 'sbs:detay' %}?get=Adli Tıp">Adli Tıp
                                             <small class="label label-primary  pull-right"> {{ adlitip_tam }}
                                                 m² </small></a>
                                         </li>{% endif %}
 
                                     {% if bolgeadliye_tam %}
-                                        <li><a href="#">Bölge Adliye Mahkemesi
+                                        <li><a href="{% url 'sbs:detay' %}?get=Bölge Adliye Mahkemesi">Bölge Adliye
+                                            Mahkemesi
                                             <small class="label label-primary  pull-right"> {{ bolgeadliye_tam }}
                                                 m² </small></a>
                                         </li>{% endif %}
                                     {% if bolgeidari_tam %}
-                                        <li><a href="#">Bölge İdare Mahkemesi <small
+                                        <li><a href="{% url 'sbs:detay' %}?get=Bölge İdare Mahkemesi">Bölge İdare
+                                            Mahkemesi <small
                                                 class="label label-primary  pull-right">
                                             {{ bolgeidari_tam }} m² </small></a>
                                         </li>
                                     {% endif %}
                                     {% if denetimserbeslik_tam %}
-                                        <li><a href="#">Denetimli Serbestlik
+                                        <li><a href="{% url 'sbs:detay' %}?get=Denetimli Serbestlik">Denetimli
+                                            Serbestlik
                                             <small class="label label-primary  pull-right"> {{ denetimserbeslik_tam }}
                                                 m² </small></a>
                                         </li>
                                     {% endif %}
                                     {% if bakanlikbinasi_tam %}
-                                        <li><a href="#">Bakanlık Bİnası <small class="label label-primary  pull-right">
+                                        <li><a href="{% url 'sbs:detay' %}?get=Bakanlık Binası">Bakanlık Binası <small
+                                                class="label label-primary  pull-right">
                                             {{ bakanlikbinasi_tam }} m² </small></a>
                                         </li>
                                     {% endif %}
                                     {% if personelegitim_tam %}
-                                        <li><a href="#">Personel Eğitim Merkezi
+                                        <li><a href="{% url 'sbs:detay' %}?get=Personel Eğitim Merkezi">Personel Eğitim
+                                            Merkezi
                                             <small class="label label-primary  pull-right"> {{ personelegitim_tam }}
                                                 m² </small></a>
                                         </li>
                                     {% endif %}
                                     {% if lojman_tam %}
-                                        <li><a href="#">Lojman
+                                        <li><a href="{% url 'sbs:detay' %}?get=Lojman">Lojman
                                             <small class="label label-primary  pull-right"> {{ lojman_tam }} m² </small></a>
                                         </li>
                                     {% endif %}
                                     {% if diger_tam %}
-                                        <li><a href="#">Diger <small
+                                        <li><a href="{% url 'sbs:detay' %}?get=Diger">Diger <small
                                                 class="label label-primary  pull-right"> {{ diger_tam }} m² </small></a>
                                         </li>
                                     {% endif %}
@@ -876,7 +891,7 @@
 
                     <div class="box box-success">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Projelerin m² Toplamları </h3>
+                            <h3 class="box-title">Projelerin İnşaat Alani Grafigi</h3>
 
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
@@ -1081,13 +1096,13 @@
             var PieData = [
                 {
                     value: {{adaletbinasi}},
-                    color: '#ff0000',
+                    color: '#cd5c5c',
                     highlight: '#d3d3d3',
                     label: 'Adalet Binası'
                 },
                 {
                     value: {{cezainfaz}},
-                    color: '#0000ff',
+                    color: '#00868b',
                     highlight: '#d3d3d3',
                     label: 'Ceza İnfaz Kurumu'
                 },
