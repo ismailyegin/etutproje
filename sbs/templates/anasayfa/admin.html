@@ -517,37 +517,50 @@
 
 
                             <ul class="nav nav-pills nav-stacked">
-                                <li><a href="#">Ceza İnfaz Kurumu
-                                    <small class="label label-primary  pull-right"> {{cezainfaz}}</small></a>
+                                <li><a href="{% url 'sbs:detay' %}?get=Ceza İnfaz Kurumu">Ceza İnfaz Kurumu
+                                    <small class="label   pull-right"
+                                           style="background-color:#0000ff; "> {{ cezainfaz }}</small></a>
                                 </li>
-                                <li><a href="#">Adalet Binası <small class="label label-primary  pull-right"> {{adaletbinasi}}</small></a>
+                                <li><a href="{% url 'sbs:detay' %}?get=Adalet Binası">Adalet Binası <small
+                                        class="label   pull-right"
+                                        style="background-color:#cd5c5c"> {{ adaletbinasi }}</small></a>
                                 </li>
-                                <li><a href="#">Adli Tıp
-                                    <small class="label label-primary  pull-right"> {{adlitip}}</small></a>
+                                <li><a href="{% url 'sbs:detay' %}?get=Adli Tıp">Adli Tıp
+                                    <small class="label  pull-right"
+                                           style="background-color:#ffff00"> {{ adlitip }}</small></a>
                                 </li>
 
 
-                                <li><a href="#">Bölge Adliye Mahkemesi
-                                    <small class="label label-primary  pull-right"> {{bolgeadliye}}</small></a>
+                                <li><a href="{% url 'sbs:detay' %}?get=Bölge Adliye Mahkemesi">Bölge Adliye Mahkemesi
+                                    <small class="label label-primary  pull-right"
+                                           style="background-color:#8b4513; "> {{ bolgeadliye }}</small></a>
                                 </li>
-                                <li><a href="#">Bölge İdare Mahkemesi <small class="label label-primary  pull-right">
+                                <li><a href="{% url 'sbs:detay' %}?get=Bölge İdare Mahkemesi">Bölge İdare Mahkemesi
+                                    <small class="label  pull-right"
+                                           style="background-color:#ee9a00; ">
                                     {{bolgeidari}}</small></a>
                                 </li>
 
-                                <li><a href="#">Denetimli Serbestlik
-                                    <small class="label label-primary  pull-right"> {{denetimserbeslik}}</small></a>
+                                <li><a href="{% url 'sbs:detay' %}?get=Denetimli Serbestlik">Denetimli Serbestlik
+                                    <small class="label   pull-right"
+                                           style="background-color:#ff00ff; "> {{ denetimserbeslik }}</small></a>
                                 </li>
-                                <li><a href="#">Bakanlık Bİnası <small class="label label-primary  pull-right">
+                                <li><a href="{% url 'sbs:detay' %}?get=Bakanlık Binası">Bakanlık Binası <small
+                                        class="label  pull-right"
+                                        style="background-color:#000000; ">
                                     {{bakanlikbinasi}}</small></a>
                                 </li>
 
-                                <li><a href="#">Personel Eğitim Merkezi
-                                    <small class="label label-primary  pull-right"> {{ personelegitim }}</small></a>
+                                <li><a href="{% url 'sbs:detay' %}?get=Personel Eğitim Merkezi">Personel Eğitim Merkezi
+                                    <small class="label   pull-right"
+                                           style="background-color:#a9a9a9; "> {{ personelegitim }}</small></a>
                                 </li>
-                                 <li><a href="#">Lojman
-                                    <small class="label label-primary  pull-right"> {{ lojman }}</small></a>
+                                <li><a href="{% url 'sbs:detay' %}?get=Lojman">Lojman
+                                    <small class="label   pull-right"
+                                           style="background-color:#00cd00; "> {{ lojman }}</small></a>
                                 </li>
-                                 <li><a href="#">Diger <small class="label label-primary  pull-right"> {{diger}}</small></a>
+                                <li><a href="{% url 'sbs:detay' %}?get=Diger">Diger <small class="label   pull-right"
+                                                                                           style="background-color:#00f5ff; "> {{ diger }}</small></a>
                                 </li>
 
 
@@ -891,7 +904,7 @@
 
                     <div class="box box-success">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Projelerin İnşaat Alani Grafigi</h3>
+                            <h3 class="box-title">Projelerin İnşaat Alani(m²)</h3>
 
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
