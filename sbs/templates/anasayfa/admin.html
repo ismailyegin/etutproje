@@ -606,6 +606,90 @@
                         </div>
                         <!-- /.box-footer -->
                     </div>
+                    <div class="box box-info collapsed-box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Toplam İnşaat Alanlari</h3>
+
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                        class="fa fa-plus"></i>
+                                </button>
+                            </div>
+                            <!-- /.box-tools -->
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body" style="display: none;">
+                            <div class="row" style="padding-bottom: 10px">
+
+
+                                <ul class="nav nav-pills nav-stacked">
+                                    {% if cezainfaz_sum %}
+
+                                        <li><a href="#">Ceza İnfaz Kurumu
+                                            <small class="label label-primary  pull-right"> {{ cezainfaz_sum }}
+                                                m² </small></a>
+                                        </li>{% endif %}
+                                    {% if adaletbinasi_sum %}
+                                        <li><a href="#">Adalet Binası <small
+                                                class="label label-primary  pull-right"> {{ adaletbinasi_sum }}
+                                            m² </small></a>
+                                        </li>{% endif %}
+
+                                    {% if adlitip_sum %}
+                                        <li><a href="#">Adli Tıp
+                                            <small class="label label-primary  pull-right"> {{ adlitip_sum }}
+                                                m² </small></a>
+                                        </li>{% endif %}
+
+                                    {% if bolgeadliye_sum %}
+                                        <li><a href="#">Bölge Adliye Mahkemesi
+                                            <small class="label label-primary  pull-right"> {{ bolgeadliye_sum }}
+                                                m² </small></a>
+                                        </li>{% endif %}
+                                    {% if bolgeidari_sum %}
+                                        <li><a href="#">Bölge İdare Mahkemesi <small
+                                                class="label label-primary  pull-right">
+                                            {{ bolgeidari_sum }} m² </small></a>
+                                        </li>
+                                    {% endif %}
+                                    {% if denetimserbeslik_sum %}
+                                        <li><a href="#">Denetimli Serbestlik
+                                            <small class="label label-primary  pull-right"> {{ denetimserbeslik_sum }}
+                                                m² </small></a>
+                                        </li>
+                                    {% endif %}
+                                    {% if bakanlikbinasi_sum %}
+                                        <li><a href="#">Bakanlık Bİnası <small class="label label-primary  pull-right">
+                                            {{ bakanlikbinasi_sum }} m² </small></a>
+                                        </li>
+                                    {% endif %}
+                                    {% if personelegitim_sum %}
+                                        <li><a href="#">Personel Eğitim Merkezi
+                                            <small class="label label-primary  pull-right"> {{ personelegitim_sum }}
+                                                m² </small></a>
+                                        </li>
+                                    {% endif %}
+                                    {% if lojman_sum %}
+                                        <li><a href="#">Lojman
+                                            <small class="label label-primary  pull-right"> {{ lojman_sum }} m² </small></a>
+                                        </li>
+                                    {% endif %}
+                                    {% if diger_sum %}
+                                        <li><a href="#">Diger <small
+                                                class="label label-primary  pull-right"> {{ diger_sum }} m² </small></a>
+                                        </li>
+                                    {% endif %}
+
+                                </ul>
+
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
 
 
                     <div class="box box-info collapsed-box">
@@ -777,6 +861,7 @@
 
 
                     </div>
+
 
 
                 </div>
@@ -990,8 +1075,8 @@
             var PieData = [
                 {
                     value: {{adaletbinasi}},
-                    color: '#f56954',
-                    highlight: '#f56954',
+                    color: '#ff6a6a',
+                    highlight: '#000000',
                     label: 'Adalet Binası'
                 },
                 {
@@ -1107,7 +1192,21 @@
 				highlightFill : "rgba(151,187,205,0.75)",
 				highlightStroke : "rgba(151,187,205,1)",
 				data : [{{ adaletbinasi_sum }},{{cezainfaz_sum}},{{adlitip_sum}},{{ bolgeadliye_sum }},{{ bolgeidari_sum }},{{ denetimserbeslik_sum }},{{ bakanlikbinasi_sum }},{{ personelegitim_sum }},{{ lojman_sum }},{{ diger_sum }}]
-			}
+            },
+            {
+                fillColor: "rgba(255,106,106,0.5)",
+                strokeColor: "rgba(151,187,205,0.8)",
+                highlightFill: "rgba(151,187,205,0.75)",
+                highlightStroke: "rgba(151,187,205,1)",
+                data: [{{ adaletbinasi_tam }}, {{cezainfaz_tam}}, {{adlitip_tam}}, {{ bolgeadliye_tam }}, {{ bolgeidari_tam }}, {{ denetimserbeslik_tam }}, {{ bakanlikbinasi_tam }}, {{ personelegitim_tam }}, {{ lojman_tam }}, {{ diger_tam }}]
+            },
+            {
+                fillColor: "rgba(151,187,106,0.5)",
+                strokeColor: "rgba(151,187,205,0.8)",
+                highlightFill: "rgba(151,187,205,0.75)",
+                highlightStroke: "rgba(151,187,205,1)",
+                data: [{{ adaletbinasi_dev }}, {{cezainfaz_dev}}, {{adlitip_dev}}, {{ bolgeadliye_dev }}, {{ bolgeidari_dev }}, {{ denetimserbeslik_dev }}, {{ bakanlikbinasi_dev }}, {{ personelegitim_dev }}, {{ lojman_dev }}, {{ diger_dev }}]
+            },
 		]
 
 	}
