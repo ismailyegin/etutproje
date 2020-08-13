@@ -51,6 +51,13 @@ from django.db.models import Sum
 @login_required
 def return_technical_dashboard(request):
     perm = general_methods.control_access_technical(request)
+
+    if not perm:
+        logout(request)
+        return redirect('accounts:login')
+
+
+
     user = request.user
     proje = EPProject.objects.all()
 
@@ -154,20 +161,6 @@ def return_technical_dashboard(request):
             'insaatAlani__sum'] or 0)
 
 
-
-
-
-
-
-
-
-
-
-
-
-    if not perm:
-        logout(request)
-        return redirect('accounts:login')
     return render(request, 'anasayfa/Tehnical.html', {'proje_count': proje_count,
                                                       'proje_status_PT': proje_status_PT,
                                                       'sorumlu_count': sorumlu_count,

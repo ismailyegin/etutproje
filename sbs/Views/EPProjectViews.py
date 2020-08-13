@@ -218,7 +218,24 @@ def return_detay(request):
     cins_sum = 0
     cins_tam = 0
     cins_dev = 0
+
+    if user.groups.filter(name='Personel'):
+        user = request.user
+
+        projects = EPProject.objects.filter(employees__employee__user=user).distinct()
+        projects |= EPProject.objects.filter(sorumlu__user=user).distinct()
+
+
+    elif user.groups.filter(name__in=['Teknik', 'Admin']):
+        projects = EPProject.objects.all().distinct()
+    else:
+        projects = EPProject.objects.all().distinct()
+
+
+
+
     projects = EPProject.objects.all().distinct()
+
     cezainfaz = int(
         projects.filter(projeCinsi=EPProject.CIK).distinct().aggregate(Sum('insaatAlani'))['insaatAlani__sum'] or 0)
     adaletbinasi = int(
@@ -923,6 +940,100 @@ def return_personel_dashboard(request):
     diger = proje.filter(projeCinsi=EPProject.DIGER).count()
     lojman = proje.filter(projeCinsi=EPProject.LOJMAN).count()
 
+    projects = proje
+
+    cezainfaz_sum = int(
+        projects.filter(projeCinsi=EPProject.CIK).distinct().aggregate(Sum('insaatAlani'))['insaatAlani__sum'] or 0)
+    adaletbinasi_sum = int(
+        projects.filter(projeCinsi=EPProject.AB).aggregate(Sum('insaatAlani'))['insaatAlani__sum'] or 0)
+    adlitip_sum = int(projects.filter(projeCinsi=EPProject.AT).aggregate(Sum('insaatAlani'))['insaatAlani__sum'] or 0)
+    bolgeadliye_sum = int(
+        projects.filter(projeCinsi=EPProject.BAM).aggregate(Sum('insaatAlani'))['insaatAlani__sum'] or 0)
+    bolgeidari_sum = int(
+        projects.filter(projeCinsi=EPProject.BIM).aggregate(Sum('insaatAlani'))['insaatAlani__sum'] or 0)
+    denetimserbeslik_sum = int(
+        projects.filter(projeCinsi=EPProject.DS).aggregate(Sum('insaatAlani'))['insaatAlani__sum'] or 0)
+    personelegitim_sum = int(
+        projects.filter(projeCinsi=EPProject.PEM).aggregate(Sum('insaatAlani'))['insaatAlani__sum'] or 0)
+    bakanlikbinasi_sum = int(
+        projects.filter(projeCinsi=EPProject.BB).aggregate(Sum('insaatAlani'))['insaatAlani__sum'] or 0)
+    diger_sum = int(projects.filter(projeCinsi=EPProject.DIGER).aggregate(Sum('insaatAlani'))['insaatAlani__sum'] or 0)
+    lojman_sum = int(
+        projects.filter(projeCinsi=EPProject.LOJMAN).aggregate(Sum('insaatAlani'))['insaatAlani__sum'] or 0)
+
+    cezainfaz_tam = int(
+        projects.filter(projeCinsi=EPProject.CIK, projectStatus=EPProject.PT).distinct().aggregate(Sum('insaatAlani'))[
+            'insaatAlani__sum'] or 0)
+    adaletbinasi_tam = int(
+        projects.filter(projeCinsi=EPProject.AB, projectStatus=EPProject.PT).aggregate(Sum('insaatAlani'))[
+            'insaatAlani__sum'] or 0)
+    adlitip_tam = int(
+        projects.filter(projeCinsi=EPProject.AT, projectStatus=EPProject.PT).aggregate(Sum('insaatAlani'))[
+            'insaatAlani__sum'] or 0)
+    bolgeadliye_tam = int(
+        projects.filter(projeCinsi=EPProject.BAM, projectStatus=EPProject.PT).aggregate(Sum('insaatAlani'))[
+            'insaatAlani__sum'] or 0)
+    bolgeidari_tam = int(
+        projects.filter(projeCinsi=EPProject.BIM, projectStatus=EPProject.PT).aggregate(Sum('insaatAlani'))[
+            'insaatAlani__sum'] or 0)
+    denetimserbeslik_tam = int(
+        projects.filter(projeCinsi=EPProject.DS, projectStatus=EPProject.PT).aggregate(Sum('insaatAlani'))[
+            'insaatAlani__sum'] or 0)
+    personelegitim_tam = int(
+        projects.filter(projeCinsi=EPProject.PEM, projectStatus=EPProject.PT).aggregate(Sum('insaatAlani'))[
+            'insaatAlani__sum'] or 0)
+    bakanlikbinasi_tam = int(
+        projects.filter(projeCinsi=EPProject.BB, projectStatus=EPProject.PT).aggregate(Sum('insaatAlani'))[
+            'insaatAlani__sum'] or 0)
+    diger_tam = int(
+        projects.filter(projeCinsi=EPProject.DIGER, projectStatus=EPProject.PT).aggregate(Sum('insaatAlani'))[
+            'insaatAlani__sum'] or 0)
+    lojman_tam = int(
+        projects.filter(projeCinsi=EPProject.LOJMAN, projectStatus=EPProject.PT).aggregate(Sum('insaatAlani'))[
+            'insaatAlani__sum'] or 0)
+
+    cezainfaz_dev = int(
+        projects.filter(projeCinsi=EPProject.CIK, projectStatus=EPProject.PDE).distinct().aggregate(Sum('insaatAlani'))[
+            'insaatAlani__sum'] or 0)
+    adaletbinasi_dev = int(
+        projects.filter(projeCinsi=EPProject.AB, projectStatus=EPProject.PDE).aggregate(Sum('insaatAlani'))[
+            'insaatAlani__sum'] or 0)
+    adlitip_dev = int(
+        projects.filter(projeCinsi=EPProject.AT, projectStatus=EPProject.PDE).aggregate(Sum('insaatAlani'))[
+            'insaatAlani__sum'] or 0)
+    bolgeadliye_dev = int(
+        projects.filter(projeCinsi=EPProject.BAM, projectStatus=EPProject.PDE).aggregate(Sum('insaatAlani'))[
+            'insaatAlani__sum'] or 0)
+    bolgeidari_dev = int(
+        projects.filter(projeCinsi=EPProject.BIM, projectStatus=EPProject.PDE).aggregate(Sum('insaatAlani'))[
+            'insaatAlani__sum'] or 0)
+    denetimserbeslik_dev = int(
+        projects.filter(projeCinsi=EPProject.DS, projectStatus=EPProject.PDE).aggregate(Sum('insaatAlani'))[
+            'insaatAlani__sum'] or 0)
+    personelegitim_dev = int(
+        projects.filter(projeCinsi=EPProject.PEM, projectStatus=EPProject.PDE).aggregate(Sum('insaatAlani'))[
+            'insaatAlani__sum'] or 0)
+    bakanlikbinasi_dev = int(
+        projects.filter(projeCinsi=EPProject.BB, projectStatus=EPProject.PDE).aggregate(Sum('insaatAlani'))[
+            'insaatAlani__sum'] or 0)
+    diger_dev = int(
+        projects.filter(projeCinsi=EPProject.DIGER, projectStatus=EPProject.PDE).aggregate(Sum('insaatAlani'))[
+            'insaatAlani__sum'] or 0)
+    lojman_dev = int(
+        projects.filter(projeCinsi=EPProject.LOJMAN, projectStatus=EPProject.PDE).aggregate(Sum('insaatAlani'))[
+            'insaatAlani__sum'] or 0)
+
+
+
+
+
+
+
+
+
+
+
+
     if not perm:
         logout(request)
         return redirect('accounts:login')
@@ -941,7 +1052,43 @@ def return_personel_dashboard(request):
                                                       'personelegitim': personelegitim,
                                                       'bakanlikbinasi': bakanlikbinasi,
                                                       'diger': diger,
-                                                      'lojman': lojman})
+                                                      'lojman': lojman,
+
+                                                      'cezainfaz_sum': cezainfaz_sum,
+                                                      'adaletbinasi_sum': adaletbinasi_sum,
+                                                      'adlitip_sum': adlitip_sum,
+                                                      'bolgeadliye_sum': bolgeadliye_sum,
+                                                      'bolgeidari_sum': bolgeidari_sum,
+                                                      'denetimserbeslik_sum': denetimserbeslik_sum,
+                                                      'personelegitim_sum': personelegitim_sum,
+                                                      'bakanlikbinasi_sum': bakanlikbinasi_sum,
+                                                      'diger_sum': diger_sum, 'lojman_sum': lojman_sum,
+
+                                                      'cezainfaz_dev': cezainfaz_dev,
+                                                      'adaletbinasi_dev': adaletbinasi_dev,
+                                                      'adlitip_dev': adlitip_dev,
+                                                      'bolgeadliye_dev': bolgeadliye_dev,
+                                                      'bolgeidari_dev': bolgeidari_dev,
+                                                      'denetimserbeslik_dev': denetimserbeslik_dev,
+                                                      'personelegitim_dev': personelegitim_dev,
+                                                      'bakanlikbinasi_dev': bakanlikbinasi_dev,
+                                                      'diger_dev': diger_dev,
+                                                      'lojman_dev': lojman_dev,
+
+                                                      'cezainfaz_tam': cezainfaz_tam,
+                                                      'adaletbinasi_tam': adaletbinasi_tam,
+                                                      'adlitip_tam': adlitip_tam,
+                                                      'bolgeadliye_tam': bolgeadliye_tam,
+                                                      'bolgeidari_tam': bolgeidari_tam,
+                                                      'denetimserbeslik_tam': denetimserbeslik_tam,
+                                                      'personelegitim_tam': personelegitim_tam,
+                                                      'bakanlikbinasi_tam': bakanlikbinasi_tam,
+                                                      'diger_tam': diger_tam,
+                                                      'lojman_tam': lojman_tam,
+
+                                                      })
+
+
 @login_required
 def add_vest_to_project(request, pk):
     perm = general_methods.control_access_personel(request)
