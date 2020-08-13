@@ -213,14 +213,15 @@ def return_detay(request):
     if not perm:
         logout(request)
         return redirect('accounts:login')
+    user = request.user
     get = request.GET.get('get')
+
     cins = ''
     cins_sum = 0
     cins_tam = 0
     cins_dev = 0
 
     if user.groups.filter(name='Personel'):
-        user = request.user
 
         projects = EPProject.objects.filter(employees__employee__user=user).distinct()
         projects |= EPProject.objects.filter(sorumlu__user=user).distinct()
