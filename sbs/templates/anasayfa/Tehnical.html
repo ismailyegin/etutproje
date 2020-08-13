@@ -479,6 +479,385 @@
 
 
                     <div class="box box-success">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Projelerin İnşaat Alani(m²)</h3>
+
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                        class="fa fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i
+                                        class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <div class="chart">
+                                <canvas id="canvas"></canvas>
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+
+
+                </div>
+                <div class="col-lg-4">
+
+
+                    <div class="box box-default">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Projelerin Dağılımı</h3>
+
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                        class="fa fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i
+                                        class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="chart-responsive">
+                                        <canvas id="pieChart2" height="202" width="303"
+                                                style="width: 243px; height: 162px;"></canvas>
+                                    </div>
+                                    <!-- ./chart-responsive -->
+                                </div>
+
+                            </div>
+                            <!-- /.row -->
+                        </div>
+                        <!-- /.box-body -->
+                        <div class="box-footer no-padding">
+
+
+                            <ul class="nav nav-pills nav-stacked">
+                                <li><a href="#">Ceza İnfaz Kurumu
+                                    <small class="label label-primary  pull-right"> {{ cezainfaz }}</small></a>
+                                </li>
+                                <li><a href="#">Adalet Binası <small
+                                        class="label label-primary  pull-right"> {{ adaletbinasi }}</small></a>
+                                </li>
+                                <li><a href="#">Adli Tıp
+                                    <small class="label label-primary  pull-right"> {{ adlitip }}</small></a>
+                                </li>
+
+
+                                <li><a href="#">Bölge Adliye Mahkemesi
+                                    <small class="label label-primary  pull-right"> {{ bolgeadliye }}</small></a>
+                                </li>
+                                <li><a href="#">Bölge İdare Mahkemesi <small class="label label-primary  pull-right">
+                                    {{ bolgeidari }}</small></a>
+                                </li>
+
+                                <li><a href="#">Denetimli Serbestlik
+                                    <small class="label label-primary  pull-right"> {{ denetimserbeslik }}</small></a>
+                                </li>
+                                <li><a href="#">Bakanlık Bİnası <small class="label label-primary  pull-right">
+                                    {{ bakanlikbinasi }}</small></a>
+                                </li>
+
+                                <li><a href="#">Personel Eğitim Merkezi
+                                    <small class="label label-primary  pull-right"> {{ personelegitim }}</small></a>
+                                </li>
+                                <li><a href="#">Lojman
+                                    <small class="label label-primary  pull-right"> {{ lojman }}</small></a>
+                                </li>
+                                <li><a href="#">Diger <small
+                                        class="label label-primary  pull-right"> {{ diger }}</small></a>
+                                </li>
+
+
+                            </ul>
+                        </div>
+                        <!-- /.footer -->
+
+                        <!-- /.box -->
+
+                        <!-- PRODUCT LIST -->
+
+
+                        <!-- /.box -->
+                    </div>
+
+
+                    <div class="box box-info collapsed-box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Toplam İnşaat Alanlari</h3>
+
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                        class="fa fa-plus"></i>
+                                </button>
+                            </div>
+                            <!-- /.box-tools -->
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body" style="display: none;">
+                            <div class="row" style="padding-bottom: 10px">
+
+
+                                <ul class="nav nav-pills nav-stacked">
+                                    {% if cezainfaz_sum %}
+
+                                        <li><a href="{% url 'sbs:detay' %}?get=Ceza İnfaz Kurumu">Ceza İnfaz Kurumu
+                                            <small class="label label-primary  pull-right"> {{ cezainfaz_sum }}
+                                                m² </small></a>
+                                        </li>{% endif %}
+                                    {% if adaletbinasi_sum %}
+                                        <li><a href="{% url 'sbs:detay' %}?get=Adalet Binası">Adalet Binası <small
+                                                class="label label-primary  pull-right"> {{ adaletbinasi_sum }}
+                                            m² </small></a>
+                                        </li>{% endif %}
+
+                                    {% if adlitip_sum %}
+                                        <li><a href="{% url 'sbs:detay' %}?get=Adli Tıp">Adli Tıp
+                                            <small class="label label-primary  pull-right"> {{ adlitip_sum }}
+                                                m² </small></a>
+                                        </li>{% endif %}
+
+                                    {% if bolgeadliye_sum %}
+                                        <li><a href="{% url 'sbs:detay' %}?get=Bölge Adliye Mahkemesi">Bölge Adliye
+                                            Mahkemesi
+                                            <small class="label label-primary  pull-right"> {{ bolgeadliye_sum }}
+                                                m² </small></a>
+                                        </li>{% endif %}
+                                    {% if bolgeidari_sum %}
+                                        <li><a href="{% url 'sbs:detay' %}?get=Bölge İdare Mahkemesi">Bölge İdare
+                                            Mahkemesi <small
+                                                    class="label label-primary  pull-right">
+                                                {{ bolgeidari_sum }} m² </small></a>
+                                        </li>
+                                    {% endif %}
+                                    {% if denetimserbeslik_sum %}
+                                        <li><a href="{% url 'sbs:detay' %}?get=Denetimli Serbestlik">Denetimli
+                                            Serbestlik
+                                            <small class="label label-primary  pull-right"> {{ denetimserbeslik_sum }}
+                                                m² </small></a>
+                                        </li>
+                                    {% endif %}
+                                    {% if bakanlikbinasi_sum %}
+                                        <li><a href="{% url 'sbs:detay' %}?get=Bakanlık Binası">Bakanlık Binası <small
+                                                class="label label-primary  pull-right">
+                                            {{ bakanlikbinasi_sum }} m² </small></a>
+                                        </li>
+                                    {% endif %}
+                                    {% if personelegitim_sum %}
+                                        <li><a href="{% url 'sbs:detay' %}?get=Personel Eğitim Merkezi">Personel Eğitim
+                                            Merkezi
+                                            <small class="label label-primary  pull-right"> {{ personelegitim_sum }}
+                                                m² </small></a>
+                                        </li>
+                                    {% endif %}
+                                    {% if lojman_sum %}
+                                        <li><a href="{% url 'sbs:detay' %}?get=Lojman">Lojman
+                                            <small class="label label-primary  pull-right"> {{ lojman_sum }} m² </small></a>
+                                        </li>
+                                    {% endif %}
+                                    {% if diger_sum %}
+                                        <li><a href="{% url 'sbs:detay' %}?get=Diger">Diger <small
+                                                class="label label-primary  pull-right"> {{ diger_sum }} m² </small></a>
+                                        </li>
+                                    {% endif %}
+
+                                </ul>
+
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="box box-info collapsed-box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Devam Eden Projelerin İnşaat Alanlari</h3>
+
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                        class="fa fa-plus"></i>
+                                </button>
+                            </div>
+                            <!-- /.box-tools -->
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body" style="display: none;">
+                            <div class="row" style="padding-bottom: 10px">
+
+
+                                <ul class="nav nav-pills nav-stacked">
+                                    {% if cezainfaz_dev %}
+
+                                        <li><a href="{% url 'sbs:detay' %}?get=Ceza İnfaz Kurumu">Ceza İnfaz Kurumu
+                                            <small class="label label-primary  pull-right"> {{ cezainfaz_dev }}
+                                                m² </small></a>
+                                        </li>{% endif %}
+                                    {% if adaletbinasi_dev %}
+                                        <li><a href="{% url 'sbs:detay' %}?get=Adalet Binası">Adalet Binası <small
+                                                class="label label-primary  pull-right"> {{ adaletbinasi_dev }}
+                                            m² </small></a>
+                                        </li>{% endif %}
+
+                                    {% if adlitip_dev %}
+                                        <li><a href="{% url 'sbs:detay' %}?get=Adli Tıp">Adli Tıp
+                                            <small class="label label-primary  pull-right"> {{ adlitip_dev }}
+                                                m² </small></a>
+                                        </li>{% endif %}
+
+                                    {% if bolgeadliye_dev %}
+                                        <li><a href="{% url 'sbs:detay' %}?get=Bölge Adliye Mahkemesi">Bölge Adliye
+                                            Mahkemesi
+                                            <small class="label label-primary  pull-right"> {{ bolgeadliye_dev }}
+                                                m² </small></a>
+                                        </li>{% endif %}
+                                    {% if bolgeidari_dev %}
+                                        <li><a href="{% url 'sbs:detay' %}?get=Bölge İdare Mahkemesi">Bölge İdare
+                                            Mahkemesi <small
+                                                    class="label label-primary  pull-right">
+                                                {{ bolgeidari_dev }} m² </small></a>
+                                        </li>
+                                    {% endif %}
+                                    {% if denetimserbeslik_dev %}
+                                        <li><a href="{% url 'sbs:detay' %}?get=Denetimli Serbestlik">Denetimli
+                                            Serbestlik
+                                            <small class="label label-primary  pull-right"> {{ denetimserbeslik_dev }}
+                                                m² </small></a>
+                                        </li>
+                                    {% endif %}
+                                    {% if bakanlikbinasi_dev %}
+                                        <li><a href="{% url 'sbs:detay' %}?get=Bakanlık Binası">Bakanlık Binası <small
+                                                class="label label-primary  pull-right">
+                                            {{ bakanlikbinasi_dev }} m² </small></a>
+                                        </li>
+                                    {% endif %}
+                                    {% if personelegitim_dev %}
+                                        <li><a href="{% url 'sbs:detay' %}?get=Personel Eğitim Merkezi">Personel Eğitim
+                                            Merkezi
+                                            <small class="label label-primary  pull-right"> {{ personelegitim_dev }}
+                                                m² </small></a>
+                                        </li>
+                                    {% endif %}
+                                    {% if lojman_dev %}
+                                        <li><a href="{% url 'sbs:detay' %}?get=Lojman">Lojman
+                                            <small class="label label-primary  pull-right"> {{ lojman_dev }} m² </small></a>
+                                        </li>
+                                    {% endif %}
+                                    {% if diger_dev %}
+                                        <li><a href="{% url 'sbs:detay' %}?get=Diger">Diger <small
+                                                class="label label-primary  pull-right"> {{ diger_dev }} m² </small></a>
+                                        </li>
+                                    {% endif %}
+
+                                </ul>
+
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+                    <div class="box box-info collapsed-box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Tamamlanan Projelerin İnşaat Alanlari</h3>
+
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                        class="fa fa-plus"></i>
+                                </button>
+                            </div>
+                            <!-- /.box-tools -->
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body" style="display: none;">
+                            <div class="row" style="padding-bottom: 10px">
+
+
+                                <ul class="nav nav-pills nav-stacked">
+                                    {% if cezainfaz_tam %}
+
+                                        <li><a href="{% url 'sbs:detay' %}?get=Ceza İnfaz Kurumu">Ceza İnfaz Kurumu
+                                            <small class="label label-primary  pull-right"> {{ cezainfaz_tam }}
+                                                m² </small></a>
+                                        </li>{% endif %}
+                                    {% if adaletbinasi_tam %}
+                                        <li><a href="{% url 'sbs:detay' %}?get=Adalet Binası">Adalet Binası <small
+                                                class="label label-primary  pull-right"> {{ adaletbinasi_tam }}
+                                            m² </small></a>
+                                        </li>{% endif %}
+
+                                    {% if adlitip_tam %}
+                                        <li><a href="{% url 'sbs:detay' %}?get=Adli Tıp">Adli Tıp
+                                            <small class="label label-primary  pull-right"> {{ adlitip_tam }}
+                                                m² </small></a>
+                                        </li>{% endif %}
+
+                                    {% if bolgeadliye_tam %}
+                                        <li><a href="{% url 'sbs:detay' %}?get=Bölge Adliye Mahkemesi">Bölge Adliye
+                                            Mahkemesi
+                                            <small class="label label-primary  pull-right"> {{ bolgeadliye_tam }}
+                                                m² </small></a>
+                                        </li>{% endif %}
+                                    {% if bolgeidari_tam %}
+                                        <li><a href="{% url 'sbs:detay' %}?get=Bölge İdare Mahkemesi">Bölge İdare
+                                            Mahkemesi <small
+                                                    class="label label-primary  pull-right">
+                                                {{ bolgeidari_tam }} m² </small></a>
+                                        </li>
+                                    {% endif %}
+                                    {% if denetimserbeslik_tam %}
+                                        <li><a href="{% url 'sbs:detay' %}?get=Denetimli Serbestlik">Denetimli
+                                            Serbestlik
+                                            <small class="label label-primary  pull-right"> {{ denetimserbeslik_tam }}
+                                                m² </small></a>
+                                        </li>
+                                    {% endif %}
+                                    {% if bakanlikbinasi_tam %}
+                                        <li><a href="{% url 'sbs:detay' %}?get=Bakanlık Binası">Bakanlık Binası <small
+                                                class="label label-primary  pull-right">
+                                            {{ bakanlikbinasi_tam }} m² </small></a>
+                                        </li>
+                                    {% endif %}
+                                    {% if personelegitim_tam %}
+                                        <li><a href="{% url 'sbs:detay' %}?get=Personel Eğitim Merkezi">Personel Eğitim
+                                            Merkezi
+                                            <small class="label label-primary  pull-right"> {{ personelegitim_tam }}
+                                                m² </small></a>
+                                        </li>
+                                    {% endif %}
+                                    {% if lojman_tam %}
+                                        <li><a href="{% url 'sbs:detay' %}?get=Lojman">Lojman
+                                            <small class="label label-primary  pull-right"> {{ lojman_tam }} m² </small></a>
+                                        </li>
+                                    {% endif %}
+                                    {% if diger_tam %}
+                                        <li><a href="{% url 'sbs:detay' %}?get=Diger">Diger <small
+                                                class="label label-primary  pull-right"> {{ diger_tam }} m² </small></a>
+                                        </li>
+                                    {% endif %}
+
+                                </ul>
+
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+                    <!-- /.box -->
+                </div>
+
+                <div class="col-lg-12">
+                    <div class="box box-success">
 
                         <div class="box-header with-border">
 
@@ -611,53 +990,49 @@
                                     </li>
 
 
-                                    {#                                    <li>#}
-                                    {#                                        <img src="{{ MEDIA_URL }}/logo/aile.png" alt="User Image">#}
-                                    {#                                        <a class="users-list-name" href="#">Aile, Çalışma ve Sosyal Hizmetler#}
-                                    {#                                            Bakanlığı</a>#}
-                                    {##}
-                                    {#                                    </li>#}
-                                    {##}
-                                    {#                                    <li>#}
-                                    {#                                        <img src="{{ MEDIA_URL }}/logo/dışişleri.png" alt="User Image">#}
-                                    {#                                        <a class="users-list-name" href="#">Dışişleri Bakanlığı</a>#}
-                                    {##}
-                                    {#                                    </li>#}
-                                    {#                                    <li>#}
-                                    {#                                        <img src="{{ MEDIA_URL }}/logo/diyanet.png" alt="User Image">#}
-                                    {#                                        <a class="users-list-name" href="#">Diyanet İşleri Başkanlığı</a>#}
-                                    {##}
-                                    {#                                    </li>#}
-                                    {##}
-                                    {#                                    <li>#}
-                                    {#                                        <img src="{{ MEDIA_URL }}/logo/gençlik.png" alt="User Image">#}
-                                    {#                                        <a class="users-list-name" href="#">Gençlik ve Spor Bakanlığı</a>#}
-                                    {##}
-                                    {#                                    </li>#}
-                                    {##}
-                                    {##}
-                                    {##}
-                                    {#                                    <li>#}
-                                    {#                                        <img src="{{ MEDIA_URL }}/logo/egitim.png" alt="User Image">#}
-                                    {#                                        <a class="users-list-name" href="#">Milli Eğitim Bakanlığı</a>#}
-                                    {##}
-                                    {#                                    </li>#}
-                                    {#                                    <li>#}
-                                    {#                                        <img src="{{ MEDIA_URL }}/logo/enerji.png" alt="User Image">#}
-                                    {#                                        <a class="users-list-name" href="#">Enerji ve Tabii Kaynaklar Bakanlığı</a>#}
-                                    {##}
-                                    {#                                    </li>#}
-                                    {##}
-                                    {##}
-                                    {#                                    <li>#}
-                                    {#                                        <img src="{{ MEDIA_URL }}/logo/nufus.png" alt="User Image">#}
-                                    {#                                        <a class="users-list-name" href="#">Nüfus ve Vatandaşlık İşleri Genel#}
-                                    {#                                            Müdürlüğü</a>#}
-                                    {##}
-                                    {#                                    </li>#}
-                                    {##}
-                                    {##}
-                                    {##}
+                                    <li>
+                                        <img src="{{ MEDIA_URL }}/logo/aile.png" alt="User Image">
+                                        <a class="users-list-name" href="#">Aile, Çalışma ve Sosyal Hizmetler
+                                            Bakanlığı</a>
+
+                                    </li>
+
+                                    <li>
+                                        <img src="{{ MEDIA_URL }}/logo/dışişleri.png" alt="User Image">
+                                        <a class="users-list-name" href="#">Dışişleri Bakanlığı</a>
+
+                                    </li>
+                                    <li>
+                                        <img src="{{ MEDIA_URL }}/logo/diyanet.png" alt="User Image">
+                                        <a class="users-list-name" href="#">Diyanet İşleri Başkanlığı</a>
+
+                                    </li>
+
+                                    <li>
+                                        <img src="{{ MEDIA_URL }}/logo/gençlik.png" alt="User Image">
+                                        <a class="users-list-name" href="#">Gençlik ve Spor Bakanlığı</a>
+
+                                    </li>
+
+
+                                    <li>
+                                        <img src="{{ MEDIA_URL }}/logo/egitim.png" alt="User Image">
+                                        <a class="users-list-name" href="#">Milli Eğitim Bakanlığı</a>
+
+                                    </li>
+                                    <li>
+                                        <img src="{{ MEDIA_URL }}/logo/enerji.png" alt="User Image">
+                                        <a class="users-list-name" href="#">Enerji ve Tabii Kaynaklar Bakanlığı</a>
+
+                                    </li>
+
+
+                                    <li>
+                                        <img src="{{ MEDIA_URL }}/logo/nufus.png" alt="User Image">
+                                        <a class="users-list-name" href="#">Nüfus ve Vatandaşlık İşleri Genel
+                                            Müdürlüğü</a>
+
+                                    </li>
 
 
                                 </ul>
@@ -669,89 +1044,7 @@
                         </div>
                     </div>
 
-                </div>
-                <div class="col-lg-4">
 
-
-                    <div class="box box-default">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">Projelerin Dağılımı</h3>
-
-                            <div class="box-tools pull-right">
-                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
-                                        class="fa fa-minus"></i>
-                                </button>
-                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i
-                                        class="fa fa-times"></i></button>
-                            </div>
-                        </div>
-                        <!-- /.box-header -->
-                        <div class="box-body">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="chart-responsive">
-                                        <canvas id="pieChart2" height="202" width="303"
-                                                style="width: 243px; height: 162px;"></canvas>
-                                    </div>
-                                    <!-- ./chart-responsive -->
-                                </div>
-
-                            </div>
-                            <!-- /.row -->
-                        </div>
-                        <!-- /.box-body -->
-                        <div class="box-footer no-padding">
-
-
-                            <ul class="nav nav-pills nav-stacked">
-                                <li><a href="#">Ceza İnfaz Kurumu
-                                    <small class="label label-primary  pull-right"> {{ cezainfaz }}</small></a>
-                                </li>
-                                <li><a href="#">Adalet Binası <small
-                                        class="label label-primary  pull-right"> {{ adaletbinasi }}</small></a>
-                                </li>
-                                <li><a href="#">Adli Tıp
-                                    <small class="label label-primary  pull-right"> {{ adlitip }}</small></a>
-                                </li>
-
-
-                                <li><a href="#">Bölge Adliye Mahkemesi
-                                    <small class="label label-primary  pull-right"> {{ bolgeadliye }}</small></a>
-                                </li>
-                                <li><a href="#">Bölge İdare Mahkemesi <small class="label label-primary  pull-right">
-                                    {{ bolgeidari }}</small></a>
-                                </li>
-
-                                <li><a href="#">Denetimli Serbestlik
-                                    <small class="label label-primary  pull-right"> {{ denetimserbeslik }}</small></a>
-                                </li>
-                                <li><a href="#">Bakanlık Bİnası <small class="label label-primary  pull-right">
-                                    {{ bakanlikbinasi }}</small></a>
-                                </li>
-
-                                <li><a href="#">Personel Eğitim Merkezi
-                                    <small class="label label-primary  pull-right"> {{ personelegitim }}</small></a>
-                                </li>
-                                <li><a href="#">Lojman
-                                    <small class="label label-primary  pull-right"> {{ lojman }}</small></a>
-                                </li>
-                                <li><a href="#">Diger <small
-                                        class="label label-primary  pull-right"> {{ diger }}</small></a>
-                                </li>
-
-
-                            </ul>
-                        </div>
-                        <!-- /.footer -->
-
-                        <!-- /.box -->
-
-                        <!-- PRODUCT LIST -->
-
-
-                        <!-- /.box -->
-                    </div>
-                    <!-- /.box -->
                 </div>
             </div>
         </section>
@@ -865,4 +1158,46 @@
 
 
     </script>
+    <script>
+        var randomScalingFactor = function () {
+            return Math.round(Math.random() * 100)
+        };
+
+        var barChartData = {
+            labels: ["Adalet Binası", "Ceza İnfaz", "Adli Tıp", "Bölge Adliye", "Bölge İdare", "Denetimli Serbestlik", "Bakanlık Bİnası", "Personel Eğitim", "Lojman", "Diger"],
+            datasets: [
+
+                {
+                    fillColor: "rgba(151,187,205,0.5)",
+                    strokeColor: "rgba(151,187,205,0.8)",
+                    highlightFill: "rgba(151,187,205,0.75)",
+                    highlightStroke: "rgba(151,187,205,1)",
+                    data: [{{ adaletbinasi_sum }}, {{cezainfaz_sum}}, {{adlitip_sum}}, {{ bolgeadliye_sum }}, {{ bolgeidari_sum }}, {{ denetimserbeslik_sum }}, {{ bakanlikbinasi_sum }}, {{ personelegitim_sum }}, {{ lojman_sum }}, {{ diger_sum }}]
+                },
+                {
+                    fillColor: "rgba(255,106,106,0.5)",
+                    strokeColor: "rgba(151,187,205,0.8)",
+                    highlightFill: "rgba(151,187,205,0.75)",
+                    highlightStroke: "rgba(151,187,205,1)",
+                    data: [{{ adaletbinasi_tam }}, {{cezainfaz_tam}}, {{adlitip_tam}}, {{ bolgeadliye_tam }}, {{ bolgeidari_tam }}, {{ denetimserbeslik_tam }}, {{ bakanlikbinasi_tam }}, {{ personelegitim_tam }}, {{ lojman_tam }}, {{ diger_tam }}]
+                },
+                {
+                    fillColor: "rgba(151,187,106,0.5)",
+                    strokeColor: "rgba(151,187,205,0.8)",
+                    highlightFill: "rgba(151,187,205,0.75)",
+                    highlightStroke: "rgba(151,187,205,1)",
+                    data: [{{ adaletbinasi_dev }}, {{cezainfaz_dev}}, {{adlitip_dev}}, {{ bolgeadliye_dev }}, {{ bolgeidari_dev }}, {{ denetimserbeslik_dev }}, {{ bakanlikbinasi_dev }}, {{ personelegitim_dev }}, {{ lojman_dev }}, {{ diger_dev }}]
+                },
+            ]
+
+        }
+        window.onload = function () {
+            var ctx = document.getElementById("canvas").getContext("2d");
+            window.myBar = new Chart(ctx).Bar(barChartData, {
+                responsive: true
+            });
+        }
+
+    </script>
+
 {% endblock %}

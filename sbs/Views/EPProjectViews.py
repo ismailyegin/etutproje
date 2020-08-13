@@ -32,6 +32,7 @@ from sbs.Forms.EPProjectSorumluForm import EPProjectSorumluForm
 
 from sbs.Forms.EPProjectSearchForm import EPProjectSearchForm
 from django.db.models import Q
+from django.contrib.humanize.templatetags.humanize import intcomma
 
 
 @login_required
@@ -258,6 +259,11 @@ def return_detay(request):
                    'diger': diger,
                    'lojman': lojman,
                    })
+
+
+def currency(dollars):
+    dollars = round(float(dollars), 2)
+    return "$%s%s" % (intcomma(int(dollars)), ("%0.2f" % dollars)[-3:])
 
 @login_required
 def return_projects(request):

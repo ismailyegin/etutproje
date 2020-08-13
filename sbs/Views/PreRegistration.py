@@ -30,6 +30,7 @@ from sbs.models.EnumFields import EnumFields
 from sbs.models.PreRegistration import PreRegistration
 from sbs.services import general_methods
 import datetime
+from accounts.models import Forgot
 
 
 from django.contrib.auth.models import Group, Permission, User
@@ -167,18 +168,25 @@ def approve_preRegistration(request,pk):
                 messages.success(request, 'Klüp ve iletisim kaydedilemedi')
 
             try:
-                subject, from_email, to = 'WUSHU - Kulüp Üye Bilgi Sistemi Kullanıcı Giriş Bilgileri', 'no-reply@twf.gov.tr', user.email
-                text_content = 'Aşağıda ki bilgileri kullanarak sisteme giriş yapabilirsiniz.'
-                html_content = '<p> <strong>Site adresi: </strong> <a href="http://sbs.twf.gov.tr:81/"></a>sbs.twf.gov.tr:81</p>'
-                html_content = html_content + '<p><strong>Kullanıcı Adı:  </strong>' + user.username + '</p>'
-                html_content = html_content + '<p><strong>Şifre: </strong>' + password + '</p>'
-                msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
+                fdk = Forgot(user=user, status=False)
+                fdk.save()
+
+                html_content = ''
+                subject, from_email, to = 'THF Bilgi Sistemi Kullanıcı Bilgileri', 'no-reply@thf.gov.tr', mail
+                html_content = '<h2>TÜRKİYE HALTER FEDERASYONU BİLGİ SİSTEMİ</h2>'
+                html_content = html_content + '<p><strong>Kullanıcı Adınız :' + str(fdk.user.username) + '</strong></p>'
+                # html_content = html_content + '<p> <strong>Site adresi:</strong> <a href="http://127.0.0.1:8000/newpassword?query=' + str(
+                #     fdk.uuid) + '">http://127.0.0.1:8000/sbs/profil-guncelle/?query=' + str(fdk.uuid) + '</p></a>'
+                html_content = html_content + '<p> <strong>Site adresi:</strong> <a href="http://sbs.halter.gov.tr/newpassword?query=' + str(
+                    fdk.uuid) + '">http://sbs.halter.gov.tr/sbs/profil-guncelle/?query=' + str(fdk.uuid) + '</p></a>'
+
+                msg = EmailMultiAlternatives(subject, '', from_email, [to])
                 msg.attach_alternative(html_content, "text/html")
                 msg.send()
-                messages.success(request, 'Kullanici kaydedildi ve şifresi  gönderildi.')
-            except:
-                messages.warning(request, 'mail gönderilemedi')
 
+                messages.success(request, "Giriş bilgileriniz mail adresinize gönderildi. ")
+            except:
+                messages.success(request, "Mail Gönderilemedi")
 
         else:
             messages.warning(request, 'Mail adresi sistem de kayıtlıdır. ')
