@@ -636,7 +636,7 @@ def add_phase_to_project(request, pk):
 
     try:
         date = request.POST.get('phaseDate')
-        dates = datetime.strptime(date, '%m/%d/%Y')
+        dates = datetime.strptime(date, '%d/%m/%Y')
         definition = request.POST.get('phaseDefinition')
         project = EPProject.objects.get(pk=pk)
         asama = EPPhase()
