@@ -386,21 +386,19 @@ def edit_project_pdf(request,pk):
 
     c.drawString(50, 390, "Kaç Gün Kaldi                    :%s (Gün)" % (days if  days else  ' ' ))
     c.setFont("Verdana", 15)
-    c.drawString(300,540,'Arsa Yapım Ödenek Bilgileri')
-    c.line(300, 530, 450, 530)
+    c.drawString(300, 520, 'Arsa Yapım Ödenek Bilgileri')
+    c.line(300, 510, 450, 510)
     c.setFont("Verdana", 10)
 
+    c.drawString(300, 490, "Arsa Alanı                    :%s m²" % (
+        "{0:,.2f}".format(project.arsaAlani) if project.arsaAlani else ' '))
 
-
-
-    c.drawString(300, 510, "Arsa Alanı                    :%s m²" % ("{0:,.2f}".format(project.arsaAlani) if project.arsaAlani else  ' ' ))
-
-
-
-    c.drawString(300, 490, "İnşaat Alanı                 :%s m² " % ( "{0:,.2f}".format(project.insaatAlani) if project.insaatAlani else  ' ' ))
-    c.drawString(300, 470, "Tahmini Ödenek Tutari :%s ₺" % ("{0:,.2f}".format(project.tahminiOdenekTutari) if project.tahminiOdenekTutari else  ' ' ))
+    c.drawString(300, 470, "İnşaat Alanı                 :%s m² " % (
+        "{0:,.2f}".format(project.insaatAlani) if project.insaatAlani else ' '))
+    c.drawString(300, 450, "Tahmini Ödenek Tutari :%s ₺" % (
+        "{0:,.2f}".format(project.tahminiOdenekTutari) if project.tahminiOdenekTutari else ' '))
     # c.drawString(300, 500, "Yaklaşık Maliyet           :%s " % ("{0:,.2f}".format(project.yaklasikMaliyet) if project.yaklasikMaliyet else  ' ' ))
-    y=450
+    y = 430
     if project.offers.all():
         c.setFont("Verdana", 15)
         c.drawString(300, y, 'Görüş ve Öneriler:')
