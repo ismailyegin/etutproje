@@ -375,10 +375,12 @@ def edit_project_pdf(request,pk):
             if len(project.name) == count:
                 name += ' '
                 name += kelime
-            if count % 70 == 0:
+            if count % 60 == 0:
                 if say == 0:
-                    c.drawString(50, x - 10 * say, "Projenin Aşamasi:%s" % name)
+                    c.setFont("Verdana", 10)
+                    c.drawString(50, x - 10 * say, "Projenin Aşaması:%s" % name)
                 else:
+                    c.setFont("Verdana", 10)
                     c.drawString(50, x - 10 * say, "%s" % name)
                 name = ''
                 say += 1
@@ -387,11 +389,14 @@ def edit_project_pdf(request,pk):
         if control:
 
             if say == 0:
+                c.setFont("Verdana", 10)
                 c.drawString(50, x - say * 10, "Projenin Aşamasi:%s" % name)
             else:
+                c.setFont("Verdana", 10)
                 c.drawString(50, x - say * 10, "%s" % name)
 
         else:
+            c.setFont("Verdana", 10)
             c.drawString(50, x - say * 10, "Projenin Aşamasi%s" % name)
 
         x = x - say * 10
