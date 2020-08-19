@@ -333,7 +333,6 @@ def edit_project_pdf(request,pk):
             name+=kelime
         count=count+1
     if control:
-        name
         c.drawString(50, 700, "%s" % name)
     else:
         c.drawString(50, 680, "%s" % name)
@@ -357,8 +356,51 @@ def edit_project_pdf(request,pk):
         c.drawString(50, 600, "İlçe                    :%s" % project.town)
     c.drawString(50,580,"Yatırım Programı :%s" %project.butceCinsi)
     c.drawString(50,560,"Bütçe Yılı            :%s" %project.butceYili)
-    c.drawString(50, 540, "Projenin Aşaması :%s" % project.phases.all().order_by(
-        'phaseDate').last() if project.phases.all().order_by('phaseDate').last() else ' ')
+
+    x = 540
+
+    if project.phases.all().order_by('phaseDate').last():
+        name = ''
+        count = 1
+        control = True
+        kelime = ''
+        say = 0
+        for item in str(project.phases.all().order_by('phaseDate').last()):
+            kelime += item
+            # print(kelime)
+
+            if item == ' ':
+                name += ' '
+                name += kelime
+                kelime = ''
+
+            if len(project.name) == count:
+                name += ' '
+                name += kelime
+            if count % 70 == 0:
+                if say == 0:
+                    c.drawString(50, x - 10 * say, "Projenin Aşamasi:%s" % name)
+                else:
+                    c.drawString(50, x - 10 * say, "%s" % name)
+                name = ''
+                say += 1
+
+            count = count + 1
+        if control:
+
+            if say == 0:
+                c.drawString(50, x - say * 10, "Projenin Aşamasi:%s" % name)
+            else:
+                c.drawString(50, x - say * 10, "%s" % name)
+
+            print('nemdem ')
+        else:
+            c.drawString(50, x - say * 10, "Projenin Aşamasi%s" % name)
+
+        x = x - say * 10
+    else:
+        c.drawString(50, x, '')
+        x = x - 20;
 
 
 
@@ -373,32 +415,46 @@ def edit_project_pdf(request,pk):
 
 
     c.setFont("Verdana", 15)
-    c.drawString(50,520,'İhale Bilgileri')
-    c.line(50, 510, 200, 510)
+    c.drawString(50, x - 20, 'İhale Bilgileri')  # 520
+    c.line(50, x - 30, 200, x - 30)  # 510
     c.setFont("Verdana", 10)
+    x = x - 50
 
-    c.drawString(50, 490, "İhale Tarihi                         :%s" % (project.ihaleTarihi.strftime('%m/%d/%Y') if project.ihaleTarihi else  ' '))
-    c.drawString(50, 470, "Sözleşme Tarihi                  :%s" %(project.sozlesmeTarihi.strftime('%m/%d/%Y')  if project.sozlesmeTarihi else  ' ' ))
-    c.drawString(50, 450, "Alım İşinin Başlangıç Tarihi  :%s" %(project.aistart.strftime('%m/%d/%Y')  if project.aistart else  ' ' ))
-    c.drawString(50, 430, "Alım İşinin Bitiş Tarihi         :%s"%(project.aifinish.strftime('%m/%d/%Y')  if project.aifinish else  ' ' ))
-    c.drawString(50, 410, "İşin Süresi                         :%s (Gün)" % (project.isSUresi if project.isSUresi else  ' ' ))
+    c.drawString(50, x, "İhale Tarihi                         :%s" % (
+        project.ihaleTarihi.strftime('%m/%d/%Y') if project.ihaleTarihi else ' '))
+    c.drawString(50, x - 20, "Sözleşme Tarihi                  :%s" % (
+        project.sozlesmeTarihi.strftime('%m/%d/%Y') if project.sozlesmeTarihi else ' '))
+    c.drawString(50, x - 40, "Alım İşinin Başlangıç Tarihi  :%s" % (
+        project.aistart.strftime('%m/%d/%Y') if project.aistart else ' '))
+    c.drawString(50, x - 60, "Alım İşinin Bitiş Tarihi         :%s" % (
+        project.aifinish.strftime('%m/%d/%Y') if project.aifinish else ' '))
+    c.drawString(50, x - 80,
+                 "İşin Süresi                         :%s (Gün)" % (project.isSUresi if project.isSUresi else ' '))
+    #
 
-
-    c.drawString(50, 390, "Kaç Gün Kaldi                    :%s (Gün)" % (days if  days else  ' ' ))
+    c.drawString(50, x - 100, "Kaç Gün Kaldi                    :%s (Gün)" % (days if days else ' '))
     c.setFont("Verdana", 15)
-    c.drawString(300, 520, 'Arsa Yapım Ödenek Bilgileri')
-    c.line(300, 510, 450, 510)
+
+    c.setFont("Verdana", 10)
+    c.drawString(50, x - 120, "Sözleşme Bedeli                :%s  ₺" % (
+        "{:,}".format(project.sozlesmeBedeli) if project.sozlesmeBedeli else '  '))
+    c.drawString(50, x - 140, "Sözleşme Bedeli Kdv Dahil  :%s ₺" % (
+        "{:,}".format(project.sozlesmeBedeliKdv) if project.sozlesmeBedeliKdv else '  '))
+
+    c.setFont("Verdana", 15)
+    c.drawString(300, x + 30, 'Arsa Yapım Ödenek Bilgileri')
+    c.line(300, x + 20, 450, x + 20)
     c.setFont("Verdana", 10)
 
-    c.drawString(300, 490, "Arsa Alanı                    :%s m²" % (
+    c.drawString(300, x, "Arsa Alanı                    :%s m²" % (
         "{0:,.2f}".format(project.arsaAlani) if project.arsaAlani else ' '))
 
-    c.drawString(300, 470, "İnşaat Alanı                 :%s m² " % (
+    c.drawString(300, x - 20, "İnşaat Alanı                 :%s m² " % (
         "{0:,.2f}".format(project.insaatAlani) if project.insaatAlani else ' '))
-    c.drawString(300, 450, "Tahmini Ödenek Tutari :%s ₺" % (
+    c.drawString(300, x - 40, "Tahmini Ödenek Tutari :%s ₺" % (
         "{0:,.2f}".format(project.tahminiOdenekTutari) if project.tahminiOdenekTutari else ' '))
     # c.drawString(300, 500, "Yaklaşık Maliyet           :%s " % ("{0:,.2f}".format(project.yaklasikMaliyet) if project.yaklasikMaliyet else  ' ' ))
-    y = 430
+    y = x -60
     if project.offers.all():
         c.setFont("Verdana", 15)
         c.drawString(300, y, 'Görüş ve Öneriler:')
@@ -475,27 +531,22 @@ def edit_project_pdf(request,pk):
         # c.drawString(280, 25, '%s' % page_num)
         # c.drawString(450, 25, 'Proje Takip Sistemi')
 
-
-    c.setFont("Verdana", 10)
-    c.drawString(50, 370, "Sözleşme Bedeli                :%s  ₺" % ( "{:,}".format(project.sozlesmeBedeli) if project.sozlesmeBedeli else  '  ' ))
-    c.drawString(50, 350, "Sözleşme Bedeli Kdv Dahil  :%s ₺" % ("{:,}".format(project.sozlesmeBedeliKdv) if project.sozlesmeBedeliKdv else  '  ' ))
-
-    y=330
+    # y=x-160
 
     if project.vest.all():
         c.setFont("Verdana", 15)
-        c.drawString(50, 330, 'Hakediş Bilgileri')
+        c.drawString(50, x - 160, 'Hakediş Bilgileri')
 
         c.setFont("Verdana", 10)
 
-        c.line(50, 320, 200, 320)
-        c.drawString(50, 310, 'Tarihi  ')
-        c.line(50, 300, 100, 300)
+        c.line(50, x - 170, 200, x - 170)
+        c.drawString(50, x - 180, 'Tarihi  ')
+        c.line(50, x - 200, 100, x - 200)
 
-        c.drawString(150, 310, 'Miktarı')
-        c.line(150, 300, 200, 300)
+        c.drawString(150, x - 180, 'Miktarı')
+        c.line(150, x - 200, 200, x - 200)
 
-        y = 280
+        y = x - 220
         for item in project.vest.all():
 
             if y > 50:
