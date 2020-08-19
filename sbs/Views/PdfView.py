@@ -764,8 +764,8 @@ def edit_project_pdf_personel(request,pk):
         c.drawString(50, 600, "İlçe                    :%s" % project.town)
     c.drawString(50,580,"Yatırım Programı :%s" %project.butceCinsi)
     c.drawString(50,560,"Bütçe Yılı            :%s" %project.butceYili)
-    c.drawString(50, 540, "Projenin Aşaması :%s" % project.phases.all().order_by(
-        'phaseDate').last() if project.phases.all().order_by('phaseDate').last() else ' ')
+    # c.drawString(50, 540, "Projenin Aşaması :%s" % project.phases.all().order_by(
+    #     'phaseDate').last() if project.phases.all().order_by('phaseDate').last() else ' ')
 
 
 
@@ -1065,8 +1065,8 @@ def edit_project_pdf_teknik(request,pk):
         c.drawString(50, 600, "İlçe                    :%s" % project.town)
     c.drawString(50,580,"Yatırım Programı :%s" %project.butceCinsi)
     c.drawString(50,560,"Bütçe Yılı            :%s" %project.butceYili)
-    c.drawString(50, 540, "Projenin Aşaması :%s" % project.phases.all().order_by(
-        'phaseDate').last() if project.phases.all().order_by('phaseDate').last() else ' ')
+    # c.drawString(50, 540, "Projenin Aşaması :%s" % project.phases.all().order_by(
+    #     'phaseDate').last() if project.phases.all().order_by('phaseDate').last() else ' ')
 
 
 
