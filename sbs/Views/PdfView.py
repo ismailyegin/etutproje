@@ -367,8 +367,6 @@ def edit_project_pdf(request,pk):
         say = 0
         for item in str(project.phases.all().order_by('phaseDate').last()):
             kelime += item
-            # print(kelime)
-
             if item == ' ':
                 name += ' '
                 name += kelime
@@ -393,7 +391,6 @@ def edit_project_pdf(request,pk):
             else:
                 c.drawString(50, x - say * 10, "%s" % name)
 
-            print('nemdem ')
         else:
             c.drawString(50, x - say * 10, "Projenin Aşamasi%s" % name)
 
