@@ -361,39 +361,48 @@ def edit_project_pdf(request,pk):
 
     if project.phases.all().order_by('phaseDate').last():
         name = ''
-        count = 1
+        count = 0
         control = True
         kelime = ''
         say = 0
         for item in str(project.phases.all().order_by('phaseDate').last()):
+
+            count = count + 1
+
             kelime += item
             if item == ' ':
+
                 name += ' '
                 name += kelime
                 kelime = ''
 
-            if len(project.name) == count:
+            if len(str(project.phases.all().order_by('phaseDate').last())) == count:
+
                 name += ' '
                 name += kelime
+                kelime = ' '
             if count % 60 == 0:
+
                 if say == 0:
                     c.setFont("Verdana", 10)
                     c.drawString(50, x - 10 * say, "Projenin Aşaması:%s" % name)
                 else:
                     c.setFont("Verdana", 10)
                     c.drawString(50, x - 10 * say, "%s" % name)
-                name = ''
+                name = ' '
                 say += 1
 
-            count = count + 1
         if control:
 
             if say == 0:
                 c.setFont("Verdana", 10)
                 c.drawString(50, x - say * 10, "Projenin Aşamasi:%s" % name)
+                name = ' '
+
             else:
                 c.setFont("Verdana", 10)
                 c.drawString(50, x - say * 10, "%s" % name)
+                name = ' '
 
         else:
             c.setFont("Verdana", 10)
