@@ -1,38 +1,35 @@
-import re
 from builtins import print
 from datetime import datetime
-from itertools import count
+from decimal import Decimal
 
 from django.contrib import messages
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.contrib.humanize.templatetags.humanize import intcomma
+from django.db.models import Q
+from django.db.models import Sum
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
-from django.db.models import Sum
-
-
+from django.utils import timezone
 
 from oxiterp.settings.base import MEDIA_URL
 from sbs.Forms.CategoryItemForm import CategoryItemForm
+from sbs.Forms.DisableEPProjectForm import DisableEPProjectForm
+from sbs.Forms.EPDocumentForm import EPDocumentForm
 from sbs.Forms.EPProjectForm import EPProjectForm
+from sbs.Forms.EPProjectSearchForm import EPProjectSearchForm
+from sbs.Forms.EPProjectSorumluForm import EPProjectSorumluForm
 from sbs.models import EPProject, CategoryItem, City
-from sbs.models.Town import Town
-from sbs.models.Employee import Employee
+from sbs.models.EPDocument import EPDocument
+from sbs.models.EPEmployee import EPEmployee
 from sbs.models.EPPhase import EPPhase
 from sbs.models.EPVest import EPVest
+from sbs.models.EPRequirements import EPRequirements
+from sbs.models.Employee import Employee
+from sbs.models.Town import Town
 from sbs.services import general_methods
 from sbs.services.general_methods import getProfileImage
-from django.utils import timezone
-
-from sbs.models.EPDocument import EPDocument
-from sbs.Forms.EPDocumentForm import EPDocumentForm
-from sbs.Forms.DisableEPProjectForm import DisableEPProjectForm
-from sbs.Forms.EPProjectSorumluForm import EPProjectSorumluForm
-
-from sbs.Forms.EPProjectSearchForm import EPProjectSearchForm
-from django.db.models import Q
-from django.contrib.humanize.templatetags.humanize import intcomma
 
 
 @login_required
@@ -52,22 +49,14 @@ def add_project(request):
         project.town = request.POST.get('town')
         project.save()
 
+        log = str(project.name) + " projesini kaydetti"
+        log = general_methods.logwrite(request, log)
+
         messages.success(request, 'Proje Kaydedilmiştir.')
 
         return redirect('sbs:proje-duzenle', pk=project.pk)
 
-        if project_form.is_valid():
-            project = project_form.save(commit=False)
-            project.town = request.POST.get('town')
-            project.save()
 
-            messages.success(request, 'Proje Kaydedilmiştir.')
-
-            return redirect('sbs:proje-duzenle', pk=project.pk)
-
-        else:
-
-            messages.warning(request, 'Alanları Kontrol Ediniz')
 
     return render(request, 'epproje/proje-ekle.html',
                   {'project_form': project_form})
@@ -195,6 +184,11 @@ def edit_project(request, pk):
             project.town = town
 
             project.save()
+
+            log = str(project.name) + " projesini güncelledi"
+            log = general_methods.logwrite(request, log)
+
+
 
             messages.success(request, 'Proje Başarıyla Güncellendi')
             return redirect('sbs:proje-duzenle', pk=project.pk)
@@ -454,6 +448,7 @@ def edit_employeetitle(request, pk):
         if request.POST.get('name') is not None:
             categoryItem.name = request.POST.get('name')
             categoryItem.save()
+
             messages.success(request, 'Başarıyla Güncellendi')
             return redirect('sbs:unvanlar')
         else:
@@ -470,20 +465,29 @@ def update_employee_to_project(request, pk):
     if not perm:
         logout(request)
         return redirect('accounts:login')
+    project = EPProject.objects.get(pk=pk)
+    id = request.POST.get('id')
+    employees = project.employees.get(pk=id)
+
+    if request.POST.get('title'):
+        title = CategoryItem.objects.get(pk=request.POST.get('title'))
+        employees.projectEmployeeTitle = title
+
+        log = str(project.name) + " projesinde " + str(
+            employees.employee.user.get_full_name()) + " personeli unvan  =" + str(title) + "olarak güncellendi "
+        log = general_methods.logwrite(request, log)
+
+    if request.POST.get('employee'):
+        employee = Employee.objects.get(pk=request.POST.get('employee'))
+        employees.employee = employee
+        log = str(project.name) + " projesinde " + str(employee.user.get_full_name()) + " personeli personel =" + str(
+            employee) + "olarak güncellendi "
+        log = general_methods.logwrite(request, log)
+    employees.save()
+    project.save()
+
     try:
-        project = EPProject.objects.get(pk=pk)
-        id = request.POST.get('id')
-        employees = project.employees.get(pk=id)
-
-        if request.POST.get('title'):
-            title = CategoryItem.objects.get(pk=request.POST.get('title'))
-            employees.projectEmployeeTitle
-        if request.POST.get('employee'):
-            employee = Employee.objects.get(pk=request.POST.get('employee'))
-            employees.employee = employee
-        employees.save()
-        project.save()
-
+        print()
         return JsonResponse({'status': 'Success', 'messages': 'save successfully'})
 
     except:
@@ -506,6 +510,10 @@ def add_employee_to_project(request, pk):
         project = EPProject.objects.get(pk=pk)
         employees = project.employees.create(projectEmployeeTitle=title, employee=employee)
         project.save()
+
+        log = str(project.name) + " projesine " + str(employee) + " ekledi unvan =" + str(title)
+        log = general_methods.logwrite(request, log)
+
         # messages.success(request, 'Personel Eklenmiştir')
         return JsonResponse({'status': 'Success', 'messages': 'save successfully', 'pk': employees.pk})
 
@@ -525,8 +533,12 @@ def delete_employee_from_project(request, project_pk, employee_pk):
         return redirect('accounts:login')
     if request.method == 'POST' and request.is_ajax():
         try:
-            athlete = EPProject.objects.get(pk=project_pk)
-            athlete.employees.remove(employee_pk)
+            project = EPProject.objects.get(pk=project_pk)
+
+            log = str(project.name) + " projesininden " + str(
+                EPEmployee.objects.get(pk=employee_pk).employee.user.get_full_name()) + " personeli sildi"
+            log = general_methods.logwrite(request, log)
+            project.employees.remove(employee_pk)
             return JsonResponse({'status': 'Success', 'messages': 'save successfully'})
         except EPProject.DoesNotExist:
             return JsonResponse({'status': 'Fail', 'msg': 'Object does not exist'})
@@ -552,6 +564,12 @@ def update_requirement_to_project(request, pk):
         requirements.save()
         project.save()
 
+        log = str(project.name) + " projesinde ihtiyacı günceleledi adet=" + str(amount) + "Tanım =" + str(definition)
+        log = general_methods.logwrite(request, log)
+
+
+
+
         # messages.success(request, 'İhtiyaç Eklenmiştir')
         return JsonResponse({'status': 'Success', 'messages': 'save successfully'})
     except:
@@ -571,6 +589,11 @@ def add_requirement_to_project(request, pk):
         definition = request.POST.get('definition')
         project = EPProject.objects.get(pk=pk)
         requirements = project.requirements.create(amount=amount, definition=definition)
+
+        log = str(project.name) + " projesine yeni ihtiyaç ekledi adet=" + str(amount) + "Tanım =" + str(definition)
+        log = general_methods.logwrite(request, log)
+
+
         # messages.success(request, 'İhtiyaç Eklenmiştir')
         return JsonResponse({'status': 'Success', 'messages': 'save successfully', 'pk': requirements.pk})
     except:
@@ -588,8 +611,14 @@ def delete_requirement_from_project(request, project_pk, employee_pk):
         return redirect('accounts:login')
     if request.method == 'POST' and request.is_ajax():
         try:
-            athlete = EPProject.objects.get(pk=project_pk)
-            athlete.requirements.remove(employee_pk)
+            project = EPProject.objects.get(pk=project_pk)
+            requirements = EPRequirements.objects.get(pk=employee_pk)
+
+            log = str(project.name) + " projesinde ihtiyac silindi  adet=" + str(requirements.amount) + "Tanım =" + str(
+                requirements.definition)
+            log = general_methods.logwrite(request, log)
+
+            project.requirements.remove(employee_pk)
             return JsonResponse({'status': 'Success', 'messages': 'save successfully'})
         except EPProject.DoesNotExist:
             return JsonResponse({'status': 'Fail', 'msg': 'Object does not exist'})
@@ -644,6 +673,12 @@ def add_phase_to_project(request, pk):
         asama.phaseDate = dates
         asama.save()
         project.phases.add(asama)
+
+        log = str(project.name) + " projesine asama ekledi id=" + str(asama.pk)
+        log = general_methods.logwrite(request, log)
+
+
+
         messages.success(request, 'Aşama Eklenmiştir')
         return JsonResponse({'status': 'Success', 'messages': 'save successfully', 'pk': asama.pk})
 
@@ -681,6 +716,11 @@ def delete_phase_from_project(request, project_pk, employee_pk):
     if request.method == 'POST' and request.is_ajax():
         try:
             athlete = EPProject.objects.get(pk=project_pk)
+
+            asama = EPPhase.objects.get(pk=employee_pk)
+
+            log = str(project.name) + " projesinde asama sildi id=" + str(asama.pk)
+            log = general_methods.logwrite(request, log)
             athlete.phases.remove(employee_pk)
             return JsonResponse({'status': 'Success', 'messages': 'save successfully'})
         except EPProject.DoesNotExist:
@@ -705,6 +745,11 @@ def add_offer_to_project(request, pk):
         imageUrl = MEDIA_URL + "profile/logo.png"
         date = datetime.now()
         dates = date.strftime('%d/%m/%Y %H:%M')
+
+        log = str(project.name) + " projesine yeni bir görüs ekledi time=" + str(dates)
+        log = general_methods.logwrite(request, log)
+
+
 
         project.offers.create(message=message, added_by=request.user)
         return JsonResponse({'status': 'Success', 'username': username, 'image': imageUrl, 'dates': dates})
@@ -1103,6 +1148,11 @@ def add_vest_to_project(request, pk):
 
     project = EPProject.objects.get(pk=pk)
     vest = project.vest.create(vest=vest, vestDate=dates)
+
+    log = str(project.name) + " hakedis ekledi " + str(vest.vest)
+    log = general_methods.logwrite(request, log)
+
+
     return JsonResponse({'status': 'Success', 'messages': 'save successfully', 'pk': vest.pk})
 
 
@@ -1115,8 +1165,13 @@ def delete_vest_from_project(request, project_pk, employee_pk):
         return redirect('accounts:login')
     if request.method == 'POST' and request.is_ajax():
         try:
-            athlete = EPProject.objects.get(pk=project_pk)
-            athlete.vest.remove(employee_pk)
+            project = EPProject.objects.get(pk=project_pk)
+
+            vest = EPVest.objects.get(pk=employee_pk)
+            log = str(project.name) + " hakedis sildi " + str(vest.vest)
+            log = general_methods.logwrite(request, log)
+            project.vest.remove(employee_pk)
+
             return JsonResponse({'status': 'Success', 'messages': 'save successfully'})
         except EPProject.DoesNotExist:
             return JsonResponse({'status': 'Fail', 'msg': 'Object does not exist'})
@@ -1135,12 +1190,18 @@ def update_vest_to_project(request, pk):
     vest = request.POST.get('vest')
     date = request.POST.get('vestdate')
     dates = datetime.strptime(date, '%d/%m/%Y')
+    print(type(vest))
 
-    hak = EPVest.objects.get(pk=pk)
+    vest = EPVest.objects.get(pk=pk)
+    vest.vest = Decimal(vest)
+    vest.vestDate = dates
+    vest.save()
 
-    hak.vest = str(vest)
-    hak.vestDate = dates
-    hak.save()
+    log = str(vest.pk) + "hakedis güncellendi."
+    log = general_methods.logwrite(request, log)
+
+
+
     return JsonResponse({'status': 'Success', 'messages': 'save successfully'})
 
     try:

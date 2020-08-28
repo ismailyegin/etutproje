@@ -24,6 +24,8 @@ from sbs.models.ClubRole import ClubRole
 from sbs.models.MenuTeknik import MenuTeknik
 from sbs.models.Employee import Employee
 
+from sbs.models.Logs import Logs
+from datetime import datetime
 
 
 def getMenu(request):
@@ -247,3 +249,31 @@ def import_csv():
             sportClubUser.role =ClubRole.objects.get(name__icontains=row[9].strip())
 
             sportClubUser.save()
+
+
+def get_client_ip(request):
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    return ip
+
+
+def logwrite(request, log):
+    try:
+        logs = Logs(user=request.user, subject=log, ip=get_client_ip(request))
+        logs.save()
+
+        # f = open("log.txt", "a")
+        log = get_client_ip(request) + "    [" + datetime.today().strftime('%d-%m-%Y %H:%M') + "] " + str(
+            user) + " " + log + " \n "
+        # f.write(log)
+        # f.close()
+
+    except Exception as e:
+        # f = open("log.txt", "a")
+        log = "[" + datetime.today().strftime('%d-%m-%Y %H:%M') + "] hata   \n "
+        # f.write(log)
+        # f.close()
+    return log
