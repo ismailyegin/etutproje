@@ -51,6 +51,8 @@ def login(request):
             # correct username and password login the user
             auth.login(request, user)
 
+            log = general_methods.logwrite(request, " Giris yapti")
+
 
 
             if user.groups.all()[0].name == 'Yonetim':
@@ -269,8 +271,10 @@ def forgot(request):
             fdk = Forgot(user=user, status=False)
             fdk.save()
 
+            log = general_methods.logwrite(request, " Yeni giris maili gönderildi")
+
             html_content = ''
-            subject, from_email, to = 'TWF Bilgi Sistemi Kullanıcı Bilgileri', 'no-reply@twf.gov.tr', mail
+            subject, from_email, to = 'THF Bilgi Sistemi Kullanıcı Bilgileri', 'no-reply@thf.gov.tr', mail
             html_content = '<h2>TÜRKİYE HALTER FEDERASYONU BİLGİ SİSTEMİ</h2>'
             html_content = html_content + '<p><strong>Kullanıcı Adınız :' + str(fdk.user.username) + '</strong></p>'
             # html_content = html_content + '<p> <strong>Site adresi:</strong> <a href="http://127.0.0.1:8000/newpassword?query=' + str(
