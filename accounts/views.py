@@ -149,6 +149,9 @@ def pre_registration(request):
 
 def pagelogout(request):
     logout(request)
+
+    log = general_methods.logwrite(request, "cikis yapti")
+
     return redirect('accounts:login')
 
 
