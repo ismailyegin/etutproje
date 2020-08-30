@@ -77,6 +77,11 @@ def add_employee(request):
 
             personel.save()
 
+            log = str(user.get_full_name()) + " personelini  kaydetti"
+            log = general_methods.logwrite(request, log)
+
+
+
             messages.success(request, 'Personel Başarıyla Kayıt Edilmiştir.')
 
             return redirect('sbs:personeller')
@@ -180,6 +185,9 @@ def edit_employee(request, pk):
             person_form.save()
             communication_form.save()
             employee_form.save()
+
+            log = str(user.get_full_name()) + " personel güncellendi"
+            log = general_methods.logwrite(request, log)
 
             messages.success(request, 'Personel Başarıyla Güncellenmiştir.')
 
@@ -352,6 +360,11 @@ def return_workdefinitions(request):
             categoryItem.forWhichClazz = "EMPLOYEE_WORKDEFINITION"
             categoryItem.isFirst = False
             categoryItem.save()
+
+            log = str(name) + " unvanini ekledi"
+            log = general_methods.logwrite(request, log)
+
+
             return redirect('sbs:istanimlari')
 
         else:
@@ -373,7 +386,12 @@ def delete_workdefinition(request, pk):
     if request.method == 'POST' and request.is_ajax():
         try:
             obj = CategoryItem.objects.get(pk=pk)
+
+            log = str(obj.name) + " unvani sildi"
+            log = general_methods.logwrite(request, log)
+
             obj.delete()
+
             return JsonResponse({'status': 'Success', 'messages': 'save successfully'})
         except CategoryItem.DoesNotExist:
             return JsonResponse({'status': 'Fail', 'msg': 'Object does not exist'})
@@ -396,6 +414,9 @@ def edit_workdefinition(request, pk):
             categoryItem.name = request.POST.get('name')
             categoryItem.save()
             messages.success(request, 'Başarıyla Güncellendi')
+
+            log = str(request.POST.get('name')) + " unvanini güncelledi"
+            log = general_methods.logwrite(request, log)
             return redirect('sbs:istanimlari')
         else:
             messages.warning(request, 'Alanları Kontrol Ediniz')
