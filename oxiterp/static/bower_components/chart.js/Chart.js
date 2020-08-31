@@ -2331,8 +2331,10 @@
 		//Cache a local reference to Chart.helpers
 		helpers = Chart.helpers;
 
-	var defaultConfig = {
-		//Boolean - Whether we should show a stroke on each segment
+
+    var defaultConfig = {
+
+        //Boolean - Whether we should show a stroke on each segment
 		segmentShowStroke : true,
 
 		//String - The colour of each segment stroke

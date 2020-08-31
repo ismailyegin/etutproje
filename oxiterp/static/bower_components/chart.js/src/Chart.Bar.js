@@ -5,7 +5,6 @@
 		Chart = root.Chart,
 		helpers = Chart.helpers;
 
-
 	var defaultConfig = {
 		//Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
 		scaleBeginAtZero : true,
