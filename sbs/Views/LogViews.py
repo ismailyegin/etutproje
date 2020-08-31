@@ -41,10 +41,6 @@ from accounts.models import Forgot
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 # from sbs.models.simplecategory import simlecategory
 
-
-from zeep import Client
-
-
 @login_required
 def return_log(request):
     perm = general_methods.control_access(request)
