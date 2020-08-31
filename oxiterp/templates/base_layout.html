@@ -116,27 +116,44 @@
             <div class="navbar-custom-menu">
                 <ul class="nav navbar-nav">
 
+                    {% if  notifications.count != 0 %}
 
                     <li class="dropdown notifications-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                             <i class="fa fa-bell-o"></i>
+
                             <span class="label label-warning">{{ notifications.count }}</span>
                         </a>
                         <ul class="dropdown-menu">
 
 
-                            <li class="header">{{ notifications.count }} tane beklemede basvuru var</li>
+                            <li class="header">{{ notifications.count }} tane bildirim var</li>
                             <li>
                                 <!-- inner menu: contains the actual data -->
                                 <ul class="menu">
 
                                     {% for notification in notifications %}
                                         <li>
+                                            {% if notification.tableName == "personel" %}
 
-                                            <a href="{% url notification.url %}?get={{ notification.urlget }}">
-                                                <i class="fa fa-warning text-yellow"></i> {{ notification.notification }}
+                                                <a href="{% url "sbs:personel-duzenle" pk=notification.entityId %}?notification={{ notification.pk }}">
+                                                    <i class="fa fa-user text-yellow"></i> {{ notification.notification }}
+                                                </a>
+                                            {% elif notification.tableName == "proje" %}
+
+                                                <a href="{% url "sbs:proje-duzenle" pk=notification.entityId %}?notification={{ notification.pk }}">
+                                                    <i class="fa fa-book text-yellow"></i> {{ notification.notification }}
+                                                </a>
+
+                                            {% else %}
+
+                                                {{ break }}
+
+                                            {% endif %}
+
+
                                                 {#                                            <small class="label label-primary pull-right">{{ total_notifications_refere }}</small>#}
-                                            </a>
+
                                         </li>
 
                                     {% endfor %}
@@ -145,6 +162,8 @@
                             <!--              <li class="footer"><a href="#">View all</a></li>-->
                         </ul>
                     </li>
+
+                    {% endif %}
 
 
                     <li class="dropdown user user-menu">

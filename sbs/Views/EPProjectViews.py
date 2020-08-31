@@ -30,6 +30,8 @@ from sbs.models.Employee import Employee
 from sbs.models.Town import Town
 from sbs.services import general_methods
 from sbs.services.general_methods import getProfileImage
+from sbs.models.Notification import Notification
+
 
 
 @login_required
@@ -133,6 +135,16 @@ def edit_project(request, pk):
         days = (project.aifinish - timezone.now()).days
         # if days < 0:
         #     days = 'Zamanı bitti.'
+
+    # bildirimden  gelinmisse ve sistem deki  kisinin ise true yap daha görülmesin
+    get = request.GET.get('notification')
+    if get:
+        notification = Notification.objects.get(pk=int(get))
+        if notification.users == request.user:
+            notification.is_show = True
+            notification.save()
+
+
 
     if request.method == 'POST':
         try:
@@ -300,10 +312,7 @@ def return_projects(request):
                 projects = EPProject.objects.filter(projectStatus=EPProject.PDE)
             else:
                 projects = EPProject.objects.filter(pk=int(get))
-                print('geldik')
-                print(projects)
-                # for item in projects:
-                #     print(item )
+
 
 
     elif user.groups.filter(name='Personel'):

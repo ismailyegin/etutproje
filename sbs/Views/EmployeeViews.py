@@ -23,6 +23,7 @@ from sbs.models.Country import Country
 from sbs.models.EPProject import EPProject
 from sbs.models.Employee import Employee
 from sbs.services import general_methods
+from sbs.models.Notification import Notification
 
 
 @login_required
@@ -167,8 +168,14 @@ def edit_employee(request, pk):
     diger_dev  = int(projects.filter(projeCinsi=EPProject.DIGER,projectStatus=EPProject.PDE).aggregate(Sum('insaatAlani'))['insaatAlani__sum'] or 0)
     lojman_dev  = int(projects.filter(projeCinsi=EPProject.LOJMAN,projectStatus=EPProject.PDE).aggregate(Sum('insaatAlani'))['insaatAlani__sum'] or 0)
 
-
-
+    # bildirimden  gelinmisse ve sistem deki  kisinin ise true yap daha görülmesin
+    get = request.GET.get('notification')
+    print(get)
+    if get:
+        notification = Notification.objects.get(pk=int(get))
+        if notification.users == request.user:
+            notification.is_show = True
+            notification.save()
 
 
 
