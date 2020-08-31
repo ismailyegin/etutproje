@@ -283,15 +283,16 @@ def logwrite(request, log):
 def get_notification(request):
     if (request.user.id):
         current_user = request.user
-        if current_user.groups.filter(name='Admin').exists():
+        notifications = Notification.objects.filter(users=request.user, is_show=False)
+        for item in notifications:
+            print(item)
 
-            notifications = Notification.objects.filter(users=request.user, is_show=False)
-            for item in notifications:
-                print(item)
+        return {
+            'notifications': notifications,
 
-            return {
-                'notifications': notifications,
+        }
 
-            }
+
+
 
     return {}

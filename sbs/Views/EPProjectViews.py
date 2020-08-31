@@ -788,7 +788,7 @@ def add_offer_to_project(request, pk):
     project.offers.create(message=message, added_by=request.user)
 
     for item in project.employees.all().exclude(employee__user=request.user):
-        notification = Notification(notification="Projeye eklendiniz.",
+        notification = Notification(notification="Projeye yeni bir görüs eklendi.",
                                     users=item.employee.user,
                                     entityId=project.pk,
                                     tableName="proje"
