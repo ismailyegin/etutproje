@@ -519,12 +519,20 @@ def add_employee_to_project(request, pk):
     if not perm:
         logout(request)
         return redirect('accounts:login')
+
     try:
         title = CategoryItem.objects.get(pk=request.POST.get('title'))
         employee = Employee.objects.get(pk=request.POST.get('employee'))
         project = EPProject.objects.get(pk=pk)
         employees = project.employees.create(projectEmployeeTitle=title, employee=employee)
         project.save()
+
+        notification = Notification(notification="Projeye eklendiniz.",
+                                    users=employee.user,
+                                    entityId=project.pk,
+                                    tableName="proje"
+                                    )
+        notification.save()
 
         log = str(project.name) + " projesine " + str(employee) + " ekledi unvan =" + str(title)
         log = general_methods.logwrite(request, log)
@@ -684,6 +692,18 @@ def add_phase_to_project(request, pk):
         dates = datetime.strptime(date, '%d/%m/%Y')
         definition = request.POST.get('phaseDefinition')
         project = EPProject.objects.get(pk=pk)
+
+        for item in project.employees.all().distinct():
+            notification = Notification(notification="Projeye yeni bir aşama eklendi",
+                                        users=item.employee.user,
+                                        entityId=project.pk,
+                                        tableName="proje"
+                                        )
+            notification.save()
+
+
+
+
         asama = EPPhase()
         asama.definition = definition
         asama.phaseDate = dates
@@ -753,21 +773,39 @@ def add_offer_to_project(request, pk):
     if not perm:
         logout(request)
         return redirect('accounts:login')
+
+    message = request.POST.get('message')
+    project = EPProject.objects.get(pk=pk)
+    username = request.user.first_name + " " + request.user.last_name
+    person = getProfileImage(request)
+    imageUrl = MEDIA_URL + "profile/logo.png"
+    date = datetime.now()
+    dates = date.strftime('%d/%m/%Y %H:%M')
+
+    log = str(project.name) + " projesine yeni bir görüs ekledi time=" + str(dates)
+    log = general_methods.logwrite(request, log)
+
+    project.offers.create(message=message, added_by=request.user)
+
+    for item in project.employees.all().exclude(employee__user=request.user):
+        notification = Notification(notification="Projeye eklendiniz.",
+                                    users=item.employee.user,
+                                    entityId=project.pk,
+                                    tableName="proje"
+                                    )
+        notification.save()
+
+
+
+
+
     try:
-        message = request.POST.get('message')
-        project = EPProject.objects.get(pk=pk)
-        username = request.user.first_name + " " + request.user.last_name
-        person = getProfileImage(request)
-        imageUrl = MEDIA_URL + "profile/logo.png"
-        date = datetime.now()
-        dates = date.strftime('%d/%m/%Y %H:%M')
-
-        log = str(project.name) + " projesine yeni bir görüs ekledi time=" + str(dates) + "Tanım =" + str(definition)
-        log = general_methods.logwrite(request, log)
+        print()
 
 
 
-        project.offers.create(message=message, added_by=request.user)
+
+
         return JsonResponse({'status': 'Success', 'username': username, 'image': imageUrl, 'dates': dates})
     except:
         return JsonResponse({'status': 'Fail', 'msg': 'Not a valid request'})
