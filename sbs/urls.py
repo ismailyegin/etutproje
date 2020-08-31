@@ -1,7 +1,8 @@
 from django.conf.urls import url
 
 from sbs.Views import DashboardViews, AthleteViews, RefereeViews, ClubViews, CoachViews, DirectoryViews, UserViews, \
-    CompetitionViews, AdminViews, HelpViews, PageViews, PreRegistration, EPProjectViews, EmployeeViews,PdfView,TechnicalViews
+    CompetitionViews, AdminViews, HelpViews, PageViews, PreRegistration, EPProjectViews, EmployeeViews, PdfView, \
+    TechnicalViews, LogViews
 
 app_name = 'sbs'
 
@@ -350,6 +351,9 @@ urlpatterns = [
     url(r'etut-proje/proje-personel-ekle/(?P<pk>\d+)$',
         EPProjectViews.add_employee_to_project, name='proje-personel-ekle'),
     url(r'etut-proje/personel/$', EPProjectViews.return_personel_dashboard, name='personel'),
+
+    url(r'log/log-kayıtlari/$', LogViews.return_log,
+        name='logs'),
 
 
 
