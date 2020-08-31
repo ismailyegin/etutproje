@@ -750,14 +750,16 @@ def delete_phase_from_project(request, project_pk, employee_pk):
         logout(request)
         return redirect('accounts:login')
     if request.method == 'POST' and request.is_ajax():
+
         try:
-            athlete = EPProject.objects.get(pk=project_pk)
+            project = EPProject.objects.get(pk=project_pk)
 
             asama = EPPhase.objects.get(pk=employee_pk)
 
             log = str(project.name) + " projesinde asama sildi id=" + str(asama.pk)
             log = general_methods.logwrite(request, log)
-            athlete.phases.remove(employee_pk)
+            project.phases.remove(employee_pk)
+
             return JsonResponse({'status': 'Success', 'messages': 'save successfully'})
         except EPProject.DoesNotExist:
             return JsonResponse({'status': 'Fail', 'msg': 'Object does not exist'})
