@@ -294,11 +294,17 @@ def return_projects(request):
         if get:
             if get == 'Projeler':
                 projects = EPProject.objects.all()
+            elif get == 'TamamlananProje':
+                projects = EPProject.objects.filter(projectStatus=EPProject.PT)
+            elif get == 'AçıkProje':
+                projects = EPProject.objects.filter(projectStatus=EPProject.PDE)
             else:
-                if get == 'TamamlananProje':
-                    projects = EPProject.objects.filter(projectStatus=EPProject.PT)
-                elif get == 'AçıkProje':
-                    projects = EPProject.objects.filter(projectStatus=EPProject.PDE)
+                projects = EPProject.objects.filter(pk=int(get))
+                print('geldik')
+                print(projects)
+                # for item in projects:
+                #     print(item )
+
 
     elif user.groups.filter(name='Personel'):
         get = request.GET.get('get')
@@ -618,6 +624,7 @@ def delete_requirement_from_project(request, project_pk, employee_pk):
                 requirements.definition)
             log = general_methods.logwrite(request, log)
 
+
             project.requirements.remove(employee_pk)
             return JsonResponse({'status': 'Success', 'messages': 'save successfully'})
         except EPProject.DoesNotExist:
@@ -746,7 +753,7 @@ def add_offer_to_project(request, pk):
         date = datetime.now()
         dates = date.strftime('%d/%m/%Y %H:%M')
 
-        log = str(project.name) + " projesine yeni bir görüs ekledi time=" + str(dates)
+        log = str(project.name) + " projesine yeni bir görüs ekledi time=" + str(dates) + "Tanım =" + str(definition)
         log = general_methods.logwrite(request, log)
 
 

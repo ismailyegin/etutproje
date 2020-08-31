@@ -23,6 +23,7 @@ from sbs.models.Country import Country
 from sbs.models.ClubRole import ClubRole
 from sbs.models.MenuTeknik import MenuTeknik
 from sbs.models.Employee import Employee
+from sbs.models.Notification import Notification
 
 from sbs.models.Logs import Logs
 from datetime import datetime
@@ -277,3 +278,26 @@ def logwrite(request, log):
         # f.write(log)
         # f.close()
     return log
+
+
+def get_notification(request):
+    if (request.user.id):
+        current_user = request.user
+        if current_user.groups.filter(name='Admin').exists():
+
+            notifications = Notification.objects.filter(users=request.user, is_show=False)
+            for item in notifications:
+                print(item)
+            # total_notifications_refere = ReferenceReferee.objects.filter(status=ReferenceReferee.WAITED).count()
+            # total_notifications_coach = ReferenceReferee.objects.filter(status=ReferenceCoach.WAITED).count()
+            # total_notifications_clup = PreRegistration.objects.filter(status=PreRegistration.WAITED).count()
+            # notifications_tatal = total_notifications_refere + total_notifications_coach + total_notifications_clup
+
+            return {
+                'notifications': notifications,
+                # 'total_notifications_coach': total_notifications_coach,
+                # 'total_notifications_clup': total_notifications_clup,
+                # 'notifications_tatal': notifications_tatal
+            }
+
+    return {}

@@ -117,6 +117,36 @@
                 <ul class="nav navbar-nav">
 
 
+                    <li class="dropdown notifications-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                            <i class="fa fa-bell-o"></i>
+                            <span class="label label-warning">{{ notifications.count }}</span>
+                        </a>
+                        <ul class="dropdown-menu">
+
+
+                            <li class="header">{{ notifications.count }} tane beklemede basvuru var</li>
+                            <li>
+                                <!-- inner menu: contains the actual data -->
+                                <ul class="menu">
+
+                                    {% for notification in notifications %}
+                                        <li>
+
+                                            <a href="{% url notification.url %}?get={{ notification.urlget }}">
+                                                <i class="fa fa-warning text-yellow"></i> {{ notification.notification }}
+                                                {#                                            <small class="label label-primary pull-right">{{ total_notifications_refere }}</small>#}
+                                            </a>
+                                        </li>
+
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                            <!--              <li class="footer"><a href="#">View all</a></li>-->
+                        </ul>
+                    </li>
+
+
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
 
