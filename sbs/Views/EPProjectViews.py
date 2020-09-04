@@ -74,6 +74,13 @@ def edit_project_personel(request, pk):
     project = EPProject.objects.get(pk=pk)
     projects = project.employees.filter(employee__user=user)
 
+    get = request.GET.get('notification')
+    if get:
+        notification = Notification.objects.get(pk=int(get))
+        if notification.users == request.user:
+            notification.is_show = True
+            notification.save()
+
     if project.sorumlu.user == user or projects:
         if project.sorumlu.user == user:
             return redirect('sbs:proje-duzenle', pk=project.pk)

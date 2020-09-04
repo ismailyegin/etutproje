@@ -170,7 +170,6 @@ def edit_employee(request, pk):
 
     # bildirimden  gelinmisse ve sistem deki  kisinin ise true yap daha görülmesin
     get = request.GET.get('notification')
-    print(get)
     if get:
         notification = Notification.objects.get(pk=int(get))
         if notification.users == request.user:

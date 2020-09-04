@@ -141,9 +141,20 @@
                                                 </a>
                                             {% elif notification.tableName == "proje" %}
 
-                                                <a href="{% url "sbs:proje-duzenle" pk=notification.entityId %}?notification={{ notification.pk }}">
+                                                {% if user.groups.all.0.name == "Personel" %}
+                                                    <a href="{% url "sbs:proje-incele-personel" pk=notification.entityId %}?notification={{ notification.pk }}">
                                                     <i class="fa fa-book text-yellow"></i> {{ notification.notification }}
                                                 </a>
+
+                                                {% else %}
+                                                    <a href="{% url "sbs:proje-duzenle" pk=notification.entityId %}?notification={{ notification.pk }}">
+                                                        <i class="fa fa-book text-yellow"></i> {{ notification.notification }}
+                                                    </a>
+
+                                                {% endif %}
+
+
+
 
                                             {% else %}
 
