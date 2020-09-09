@@ -287,7 +287,8 @@ def get_notification(request):
         say = notifications.count()
         if notifications.count() < 10:
             #
-            notifications |= Notification.objects.filter(users=request.user, is_show=True).order_by('-creationDate')[:6]
+            # notifications |= Notification.objects.filter(users=request.user, is_show=True).order_by('-creationDate')[:6]
+            notifications |= Notification.objects.filter(users=request.user, is_show=True).order_by('-creationDate')
         notifications = notifications.order_by("-creationDate").distinct()
         #         #     20 den az bildirim varsa
 
