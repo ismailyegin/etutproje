@@ -284,8 +284,10 @@ def get_notification(request):
     if (request.user.id):
         current_user = request.user
         notifications = Notification.objects.filter(users=request.user, is_show=False)
-        for item in notifications:
-            print(item)
+        if notifications.count() < 20:
+            notifications |= Notification.objects.filter(users=request.user, is_show=True)[:10]
+            notifications = notifications.order_by("-creationDate").distinct()
+        #         #     20 den az bildirim varsa
 
         return {
             'notifications': notifications,
