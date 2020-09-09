@@ -133,12 +133,12 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                             <i class="fa fa-bell-o"></i>
 
-                            <span class="label label-warning">{{ notifications.count }}</span>
+                            <span class="label label-warning">{{ count }}</span>
                         </a>
                         <ul class="dropdown-menu">
 
 
-                            <li class="header">{{ notifications.count }} tane bildirim var</li>
+                            <li class="header">{{ count }} tane yeni bildirim var</li>
                             <li>
                                 <!-- inner menu: contains the actual data -->
                                 <ul class="menu">
@@ -149,17 +149,34 @@
 
                                                 <a href="{% url "sbs:personel-duzenle" pk=notification.entityId %}?notification={{ notification.pk }}">
                                                     <i class="fa fa-user text-yellow"></i> {{ notification.notification }}
+
+                                                    {% if notification.is_show == False %}
+                                                        <small class="  pull-right"><i
+                                                                class="fa fa-circle text-primary"></i></small>
+                                                    {% endif %}
+
+
+
+
                                                 </a>
                                             {% elif notification.tableName == "proje" %}
 
                                                 {% if user.groups.all.0.name == "Personel" %}
                                                     <a href="{% url "sbs:proje-incele-personel" pk=notification.entityId %}?notification={{ notification.pk }}">
                                                     <i class="fa fa-book text-yellow"></i> {{ notification.notification }}
+                                                        {% if notification.is_show == False %}
+                                                            <small class="  pull-right"><i
+                                                                    class="fa fa-circle text-primary"></i></small>
+                                                        {% endif %}
                                                 </a>
 
                                                 {% else %}
                                                     <a href="{% url "sbs:proje-duzenle" pk=notification.entityId %}?notification={{ notification.pk }}">
                                                         <i class="fa fa-book text-yellow"></i> {{ notification.notification }}
+                                                        {% if notification.is_show == False %}
+                                                            <small class="  pull-right"><i
+                                                                    class="fa fa-circle text-primary"></i></small>
+                                                        {% endif %}
                                                     </a>
 
                                                 {% endif %}
