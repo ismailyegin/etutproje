@@ -267,8 +267,7 @@ def logwrite(request, log):
         logs.save()
 
         # f = open("log.txt", "a")
-        log = get_client_ip(request) + "    [" + datetime.today().strftime('%d-%m-%Y %H:%M') + "] " + str(
-            user) + " " + log + " \n "
+        #log = get_client_ip(request) + "    [" + datetime.today().strftime('%d-%m-%Y %H:%M') + "] " + str(user) + " " + log + " \n "
         # f.write(log)
         # f.close()
 
@@ -283,18 +282,13 @@ def logwrite(request, log):
 def get_notification(request):
     if (request.user.id):
         current_user = request.user
-        notifications = Notification.objects.filter(users=request.user, is_show=False)
-        say = notifications.count()
-        if notifications.count() < 10:
-            #
-            # notifications |= Notification.objects.filter(users=request.user, is_show=True).order_by('-creationDate')[:6]
-            notifications |= Notification.objects.filter(users=request.user, is_show=True).order_by('-creationDate')
-        notifications = notifications.order_by("-creationDate").distinct()
-        #         #     20 den az bildirim varsa
+        notifications = Notification.objects.filter(users=request.user).order_by("-creationDate")[:10]
+        say = Notification.objects.filter(users=request.user, is_show=False).count()
 
         return {
             'notifications': notifications,
             'count': say,
+
 
         }
 

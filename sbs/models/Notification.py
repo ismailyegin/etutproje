@@ -3,7 +3,7 @@ from django.db import models
 
 
 class Notification(models.Model):
-    notification = models.CharField(blank=True, null=True, max_length=120, verbose_name='Branş Adı')
+    notification = models.CharField(blank=True, null=True,max_length=200, verbose_name='Branş Adı')
     creationDate = models.DateTimeField(auto_now_add=True)
     modificationDate = models.DateTimeField(auto_now=True)
     users = models.ForeignKey(User, models.DO_NOTHING, blank=False, null=False)

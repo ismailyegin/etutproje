@@ -534,11 +534,12 @@ def add_employee_to_project(request, pk):
         employees = project.employees.create(projectEmployeeTitle=title, employee=employee)
         project.save()
 
-        notification = Notification(notification="Projeye eklendiniz.",
+        notification = Notification(
                                     users=employee.user,
                                     entityId=project.pk,
                                     tableName="proje"
                                     )
+        notification.notification=project.name+' projesine eklendiniz'
         notification.save()
 
         log = str(project.name) + " projesine " + str(employee) + " ekledi unvan =" + str(title)
@@ -854,7 +855,7 @@ def personel_list(request):
     except:
         return JsonResponse({'status': 'Fail', 'msg': 'Not a valid request'})
 
-    return redirect('sbs:proje-duzenle', pk=pk)
+
 
 
 @login_required
@@ -889,7 +890,7 @@ def ihtiyac_list(request):
     except:
         return JsonResponse({'status': 'Fail', 'msg': 'Not a valid request'})
 
-    return redirect('sbs:proje-duzenle', pk=pk)
+
 
 
 @login_required
@@ -921,7 +922,7 @@ def asama_list(request):
     except:
         return JsonResponse({'status': 'Fail', 'msg': 'Not a valid request'})
 
-    return redirect('sbs:proje-duzenle', pk=pk)
+
 
 
 @login_required
@@ -963,7 +964,7 @@ def deleteReferee(request, pk):
             obj = EPProject.objects.get(pk=pk)
             obj.delete()
             return JsonResponse({'status': 'Success', 'messages': 'save successfully'})
-        except Judge.DoesNotExist:
+        except :
             return JsonResponse({'status': 'Fail', 'msg': 'Object does not exist'})
 
     else:
