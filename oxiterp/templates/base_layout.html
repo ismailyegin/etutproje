@@ -131,33 +131,40 @@
                 <span class="sr-only">Toggle navigation</span>
             </a>
 
-            <div class="navbar-custom-menu" style="text-align: justify">
+            <div class="navbar-custom-menu">
 
 
 
 
-             <ul class="nav navbar-nav text-justify">
+             <ul class="nav navbar-nav">
 
 
                     <li class="dropdown notifications-menu text-justify">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                             <i class="fa fa-bell-o"></i>
 
+                            {% if count != 0 %}
                             <span class="label label-warning">{{ count }}</span>
+                        {% endif %}
+
+                            <span class="label label-warning"></span>
                         </a>
-                        <ul class="dropdown-menu text-justify">
-
-
+                        <ul class="dropdown-menu">
+                        {% if count != 0 %}
                             <li class="header">{{ count }} tane yeni bildirim var</li>
-                            <li class="text-justify">
+                        {% endif %}
+
+
+
+                            <li>
                                 <!-- inner menu: contains the actual data -->
                                 <ul class="menu">
 
                                     {% for notification in notifications %}
-                                        <li>
+                                        <li >
                                             {% if notification.tableName == "personel" %}
 
-                                                <a style=" width:40px;" href="{% url "sbs:personel-duzenle" pk=notification.entityId %}?notification={{ notification.pk }}">
+                                                <a  href="{% url "sbs:personel-duzenle" pk=notification.entityId %}?notification={{ notification.pk }}">
                                                     <i class="fa fa-user text-yellow "></i>{{ notification.notification }}
 
                                                     {% if notification.is_show == False %}
@@ -168,12 +175,10 @@
                                                 </a>
                                             {% elif notification.tableName == "proje" %}
 
-
-
                                                 {% if user.groups.all.0.name == "Personel" %}
                                                     <a   href="{% url "sbs:proje-incele-personel" pk=notification.entityId %}?notification={{ notification.pk }}">
                                                         <i
-                                                                class="fa fa-book text-yellow"></i>{{ notification.notification }}
+                                                                class="fa fa-book text-yellow"></i> {{ notification.notification }}
 
                                                         {% if notification.is_show == False %}
                                                             <small class="  pull-right"><i
@@ -182,9 +187,9 @@
                                                     </a>
 
                                                 {% else %}
-                                                    <a style="" href="{% url "sbs:proje-duzenle" pk=notification.entityId %}?notification={{ notification.pk }}">
-                                                      <i class="fa fa-book text-yellow"></i> <small >{{ notification.notification }} </small>
-                                                        {% if ç.is_show == False %}
+                                                    <a class="metin" href="{% url "sbs:proje-duzenle" pk=notification.entityId %}?notification={{ notification.pk }}">
+                                                       <small><i class="fa fa-book text-yellow" style="text-align: justify"></i> {{ notification.notification }}</small>
+                                                        {% if notification.is_show == False %}
                                                             <small class="  pull-right"><i
                                                                     class="fa fa-circle text-primary"></i></small>
                                                         {% endif %}
