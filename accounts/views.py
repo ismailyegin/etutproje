@@ -279,13 +279,13 @@ def forgot(request):
             log = general_methods.logwrite(request, " Yeni giris maili gönderildi")
 
             html_content = ''
-            subject, from_email, to = 'THF Bilgi Sistemi Kullanıcı Bilgileri', 'no-reply@thf.gov.tr', mail
-            html_content = '<h2>TÜRKİYE HALTER FEDERASYONU BİLGİ SİSTEMİ</h2>'
+            subject, from_email, to = 'Bilgi Sistemi Kullanıcı Bilgileri', 'no-reply@thf.gov.tr', mail
+            html_content = '<h2>ADALET BAKANLIGI PROJE TAKİP  SİSTEMİ</h2>'
             html_content = html_content + '<p><strong>Kullanıcı Adınız :' + str(fdk.user.username) + '</strong></p>'
             # html_content = html_content + '<p> <strong>Site adresi:</strong> <a href="http://127.0.0.1:8000/newpassword?query=' + str(
             #     fdk.uuid) + '">http://127.0.0.1:8000/sbs/profil-guncelle/?query=' + str(fdk.uuid) + '</p></a>'
-            html_content = html_content + '<p> <strong>Site adresi:</strong> <a href="http://sbs.halter.gov.tr/newpassword?query=' + str(
-                fdk.uuid) + '">http://sbs.halter.gov.tr/sbs/profil-guncelle/?query=' + str(fdk.uuid) + '</p></a>'
+            #html_content = html_content + '<p> <strong>Site adresi:</strong> <a href="http://sbs.halter.gov.tr/newpassword?query=' + str(
+              #  fdk.uuid) + '">http://sbs.halter.gov.tr/sbs/profil-guncelle/?query=' + str(fdk.uuid) + '</p></a>'
 
             msg = EmailMultiAlternatives(subject, '', from_email, [to])
             msg.attach_alternative(html_content, "text/html")

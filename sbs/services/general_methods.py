@@ -24,6 +24,7 @@ from sbs.models.ClubRole import ClubRole
 from sbs.models.MenuTeknik import MenuTeknik
 from sbs.models.Employee import Employee
 from sbs.models.Notification import Notification
+from django.core.mail import EmailMultiAlternatives
 
 from sbs.models.Logs import Logs
 from datetime import datetime
@@ -279,20 +280,32 @@ def logwrite(request, log):
     return log
 
 
+
+
+
 def get_notification(request):
     if (request.user.id):
-        current_user = request.user
         notifications = Notification.objects.filter(users=request.user).order_by("-creationDate")[:10]
         say = Notification.objects.filter(users=request.user, is_show=False).count()
 
         return {
             'notifications': notifications,
             'count': say,
-
-
         }
 
+    return {}
 
 
+
+def mailsend(request):
+    #gonderilecek kisinin mail adresi ve içerik gelecek
+    mail = request.POST.get('username')
+    subject, from_email, to = 'THF Bilgi Sistemi Kullanıcı Bilgileri', 'no-reply@thf.gov.tr', mail
+    html_content = '<h2>ADALET BAKANLIGI PROJE TAKİP  SİSTEMİ</h2>'
+    html_content = html_content + '<p><strong>gonderilecek veri:</strong></p>'
+
+    msg = EmailMultiAlternatives(subject, '', from_email, [to])
+    msg.attach_alternative(html_content, "text/html")
+    msg.send()
 
     return {}

@@ -9,7 +9,7 @@
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.7 -->
-    {% load staticfiles %}
+    {% load static %}
     <link rel="stylesheet" href="{% static 'bower_components/bootstrap/dist/css/bootstrap.min.css' %}">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{% static 'bower_components/font-awesome/css/font-awesome.min.css' %}">
@@ -83,6 +83,12 @@
             height: 300px;
             width: auto;
         }
+
+        .metin {
+            text-align: justify;
+        }
+
+
     </style>
 
     {#    test harita #}
@@ -91,9 +97,9 @@
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
-  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-  <![endif]-->
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
 
     <!-- Google Font -->
     <link rel="stylesheet"
@@ -113,7 +119,8 @@
             <span class="logo-mini"><b>T.C.</b></span>
             <!-- logo for regular state and mobile devices -->
 
-            <span class="logo-lg"><img src="http://kobiltek.com:81/etutproje/static/images/base-logo.png" alt="User Image" style="margin-bottom: 5px;"> </span>
+            <span class="logo-lg"><img src="http://kobiltek.com:81/etutproje/static/images/base-logo.png"
+                                       alt="User Image" style="margin-bottom: 5px;"> </span>
             {#            <span class="logo-lg"><img src="{% static 'images/base-logo.png' %}" alt="User Image" style="margin-bottom: 5px;"> </span>#}
 
         </a>
@@ -146,32 +153,31 @@
                                         <li>
                                             {% if notification.tableName == "personel" %}
 
-                                                <a href="{% url "sbs:personel-duzenle" pk=notification.entityId %}?notification={{ notification.pk }}">
-                                                    <i class="fa fa-user text-yellow"></i> {{ notification.notification }}
+                                                <a class="metin" href="{% url "sbs:personel-duzenle" pk=notification.entityId %}?notification={{ notification.pk }}">
+                                                    <i class="fa fa-user text-yellow "></i>{{ notification.notification }}
 
                                                     {% if notification.is_show == False %}
                                                         <small class="  pull-right"><i
                                                                 class="fa fa-circle text-primary"></i></small>
                                                     {% endif %}
 
-
-
-
                                                 </a>
                                             {% elif notification.tableName == "proje" %}
 
                                                 {% if user.groups.all.0.name == "Personel" %}
                                                     <a href="{% url "sbs:proje-incele-personel" pk=notification.entityId %}?notification={{ notification.pk }}">
-                                                    <i class="fa fa-book text-yellow"></i> {{ notification.notification }}
+                                                        <i
+                                                                class="fa fa-book text-yellow "></i> {{ notification.notification }}
+
                                                         {% if notification.is_show == False %}
                                                             <small class="  pull-right"><i
                                                                     class="fa fa-circle text-primary"></i></small>
                                                         {% endif %}
-                                                </a>
+                                                    </a>
 
                                                 {% else %}
-                                                    <a href="{% url "sbs:proje-duzenle" pk=notification.entityId %}?notification={{ notification.pk }}">
-                                                        <i class="fa fa-book text-yellow"></i> {{ notification.notification }}
+                                                    <a class="metin" href="{% url "sbs:proje-duzenle" pk=notification.entityId %}?notification={{ notification.pk }}">
+                                                       <small><i class="fa fa-book text-yellow"></i> {{ notification.notification }}</small>
                                                         {% if notification.is_show == False %}
                                                             <small class="  pull-right"><i
                                                                     class="fa fa-circle text-primary"></i></small>
@@ -187,14 +193,15 @@
                                             {% endif %}
 
 
-                                                {#                                            <small class="label label-primary pull-right">{{ total_notifications_refere }}</small>#}
+                                            {#                                            <small class="label label-primary pull-right">{{ total_notifications_refere }}</small>#}
 
                                         </li>
 
                                     {% endfor %}
                                 </ul>
                             </li>
-                            <!--              <li class="footer"><a href="#">View all</a></li>-->
+
+                            <li class="footer"><a href="{% url "sbs:bildirimler" %}"> Bütün Bilridimleri Görüntüle</a></li>
                         </ul>
                     </li>
 
@@ -227,7 +234,7 @@
                                         <small> Hakem</small>
 
 
-                                         {% elif user.groups.all.0.name == "Teknik" %}
+                                    {% elif user.groups.all.0.name == "Teknik" %}
                                         <small> Teknik Personel</small>
 
 
@@ -293,7 +300,7 @@
                                         <a href="{% url "sbs:personel-profil-guncelle" %}"
                                            class="btn btn-default btn-flat">Profil Bilgisi</a>
 
-                                        {% elif user.groups.all.0.name == "Teknik" %}
+                                    {% elif user.groups.all.0.name == "Teknik" %}
                                         <a href="{% url "sbs:teknik-profil-guncelle" %}"
                                            class="btn btn-default btn-flat">Profil Bilgisi</a>
 
@@ -347,7 +354,6 @@
             <ul class="sidebar-menu" data-widget="tree">
 
 
-
                 {% if  user.groups.all.0.name == 'Sporcu ' %}
 
                     {% for menu in adminmenus %}
@@ -389,7 +395,7 @@
 
 
 
-                {% elif user.groups.all.0.name == "Personel"%}
+                {% elif user.groups.all.0.name == "Personel" %}
 
                     {% for menu in personelmenus %}
 
@@ -430,7 +436,7 @@
 
 
 
-                {% elif  user.groups.all.0.name == "Teknik"%}
+                {% elif  user.groups.all.0.name == "Teknik" %}
 
                     {% for menu in teknikmenus %}
 
@@ -876,7 +882,7 @@
         blur: function () {
             formatCurrency($(this), "blur");
         }
-     });
+    });
     $("input[data-type='currency']").on({
         keyup: function () {
             formatCurrency($(this));

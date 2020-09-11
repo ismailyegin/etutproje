@@ -2,7 +2,7 @@ from django.conf.urls import url
 
 from sbs.Views import DashboardViews, AthleteViews, RefereeViews, ClubViews, CoachViews, DirectoryViews, UserViews, \
     CompetitionViews, AdminViews, HelpViews, PageViews, PreRegistration, EPProjectViews, EmployeeViews, PdfView, \
-    TechnicalViews, LogViews
+    TechnicalViews, LogViews,NotificationView
 
 app_name = 'sbs'
 
@@ -453,6 +453,10 @@ urlpatterns = [
         name='teknik-profil-guncelle'),
     url(r'teknik/personeller/$', TechnicalViews.return_employees, name='personeller-teknik'),
     url(r'teknik/personel-ekle/$', TechnicalViews.add_employee, name='personel-ekle-teknik'),
+
+    url(r'notification/notification-all/$', NotificationView.notification, name='bildirimler'),
+
+
 
 
 

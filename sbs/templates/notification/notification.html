@@ -49,96 +49,99 @@
     <section class="content">
 
         <!-- /.row -->
-        <!-- Main row -->
-        <div class="row">
+        <!-- Main row --><div class="container">
+        <div class="row justify-content-md-center">
 
 
-            <section class="col-lg-12 ">
+            <div class=" col col-md-auto ">
 
 
-                <div class="box-body">
+                {% if notification.all %}
+                    {% for notification in notification %}
 
 
-                    <div class="box box-primary">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">Bildirimler</h3>
-                        </div>
 
 
-                        <table id="kategori" class="table table-bordered table-hover">
-                            <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>İş Tanımı</th>
-                                <th>İşlemler</th>
+                            {% if notification.tableName == "personel" %}
 
-                            </tr>
-                            </thead>
-
-                            <tbody>
-
-
-                            {% if categoryitem.all %}
-                                {% for item in categoryitem %}
-                                    <tr>
-                                        <td>{{ forloop.counter }} </td>
-                                        <td>{{ item.name }}</td>
-                                        <td>
-                                            <div class="btn-group">
-                                                <a href="{% url "sbs:istanimi-duzenle" item.pk %}"
-                                                   type="button" class="btn btn-warning"><i
-                                                        class="fa fa-edit"></i>Güncelle
-                                                </a>
-
-                                                <a class="btn btn-danger"
-                                                   data-toggle="modal" onclick=deleteClubRole({{ item.pk }})><i
-                                                        class="fa fa-trash"></i>Sil</a>
+                                <a class="metin"
+                                   href="{% url "sbs:personel-duzenle" pk=notification.entityId %}?notification={{ notification.pk }}">
+                                    <div class="box box-default">
+                                            <div class="box-header with-border">
+                                                <p class="box-title pull-right">{{notification.creationDate }}</p>
                                             </div>
-                                        </td>
+                                            <div class="box-body">
+                                               <i class="fa fa-book text-yellow"></i> {{ notification.notification }}
 
-                                    </tr>
+                                                {% if notification.is_show == False %}
+                                            <small class="  pull-right"><i
+                                                    class="fa fa-circle text-primary"></i></small>
+                                        {% endif %}
+                                            </div>
 
-                                {% endfor %}
+                                        </div>
+
+                                </a>
+                            {% elif notification.tableName == "proje" %}
+
+                                {% if user.groups.all.0.name == "Personel" %}
+                                    <a href="{% url "sbs:proje-incele-personel" pk=notification.entityId %}?notification={{ notification.pk }}">
+                                        <div class="box box-default">
+                                            <div class="box-header with-border">
+                                                <p class="box-title pull-right">{{notification.creationDate }}</p>
+                                            </div>
+                                            <div class="box-body">
+                                               <i class="fa fa-book text-yellow"></i> {{ notification.notification }}
+
+                                                {% if notification.is_show == False %}
+                                            <small class="  pull-right"><i
+                                                    class="fa fa-circle text-primary"></i></small>
+                                        {% endif %}
+                                            </div>
+
+                                        </div>
+                                    </a>
+
+                                {% else %}
+                                    <a href="{% url "sbs:proje-duzenle" pk=notification.entityId %}?notification={{ notification.pk }}">
+
+                                        <div class="box box-default">
+                                            <div class="box-header with-border">
+                                                <p class="box-title pull-right">{{notification.creationDate }}</p>
+                                            </div>
+                                            <div class="box-body">
+                                               <i class="fa fa-book text-yellow"></i> {{ notification.notification }}
+
+                                                {% if notification.is_show == False %}
+                                            <small class="  pull-right"><i
+                                                    class="fa fa-circle text-primary"></i></small>
+                                        {% endif %}
+                                            </div>
+
+                                        </div>
+
+
+
+
+                                    </a>
+
+                                {% endif %}
+
+                            {% else %}
+
+                                {{ break }}
+
                             {% endif %}
 
+                    {% endfor %}
+                {% endif %}
 
-                            </tbody>
-                        </table>
-
-
-                    </div>
-                    <!-- /.box -->
-
-
-                </div>
-            </section>
+            </div>
 
 
         </div>
-        <!-- /.row (main row) -->
+    </div>
 
     </section>
-
-
-
-    <script>
-        $(function () {
-            $('#kategori').DataTable({
-                'paging': false,
-                'lengthChange': false,
-                'searching': false,
-                'ordering': false,
-                'info': false,
-                'autoWidth': true
-            })
-
-        })
-    </script>
-
-
-
-
-
-
 
 {% endblock %}
