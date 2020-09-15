@@ -10,11 +10,17 @@ from sbs.models.EPProject import EPProject
 from sbs.models.Employee import Employee
 from sbs.services import general_methods
 from django.db.models import Sum
+from sbs.models.Message import Message
 # from rest_framework.authtoken.models import Token
 
 
 from datetime import date, datetime
 
+
+@login_required
+def return_message(request):
+    fdk = Message.objects.all()
+    return render(request, 'Chat/chat.html')
 
 @login_required
 def return_athlete_dashboard(request):

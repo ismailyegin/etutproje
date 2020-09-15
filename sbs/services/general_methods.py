@@ -23,6 +23,7 @@ from sbs.models.Country import Country
 from sbs.models.ClubRole import ClubRole
 from sbs.models.MenuTeknik import MenuTeknik
 from sbs.models.Employee import Employee
+from sbs.models.Message import Message
 from sbs.models.Notification import Notification
 from django.core.mail import EmailMultiAlternatives
 
@@ -290,12 +291,23 @@ def get_notification(request):
 
         return {
             'notifications': notifications,
-            'count': say,
+            'notificationsCount': say,
         }
 
     return {}
 
 
+def get_message(request):
+    if (request.user.id):
+        messages = Message.objects.filter(user=request.user).order_by("-creationDate")[:6]
+        say = Message.objects.filter(user=request.user, is_show=False).count()
+
+        return {
+            # 'message': messages,
+            # 'messageCount': say,
+        }
+
+    return {}
 
 def mailsend(request):
     #gonderilecek kisinin mail adresi ve içerik gelecek

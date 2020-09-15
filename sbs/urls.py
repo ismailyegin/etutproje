@@ -1,10 +1,17 @@
 from django.conf.urls import url
-
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from sbs.api.message import UserModelViewSet, MessageModelViewSet
 from sbs.Views import DashboardViews, AthleteViews, RefereeViews, ClubViews, CoachViews, DirectoryViews, UserViews, \
     CompetitionViews, AdminViews, HelpViews, PageViews, PreRegistration, EPProjectViews, EmployeeViews, PdfView, \
     TechnicalViews, LogViews,NotificationView
 
 app_name = 'sbs'
+
+router = DefaultRouter()
+router.register(r'message', MessageModelViewSet, basename='message-api')
+router.register(r'user', UserModelViewSet, basename='user-api')
+
 
 urlpatterns = [
 
@@ -455,6 +462,12 @@ urlpatterns = [
     url(r'teknik/personel-ekle/$', TechnicalViews.add_employee, name='personel-ekle-teknik'),
 
     url(r'notification/notification-all/$', NotificationView.notification, name='bildirimler'),
+
+    url(r'message/messages/$', DashboardViews.return_message,
+        name='message'),
+
+    path(r'api/v1/', include(router.urls)),
+
 
 
 
