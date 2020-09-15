@@ -303,8 +303,8 @@ def get_message(request):
         say = Message.objects.filter(user=request.user, is_show=False).count()
 
         return {
-            # 'message': messages,
-            # 'messageCount': say,
+            'message': messages,
+            'messageCount': say,
         }
 
     return {}

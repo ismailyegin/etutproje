@@ -14,12 +14,12 @@ from rest_framework.authentication import SessionAuthentication
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.viewsets import ModelViewSet
 from datetime import date, datetime
+from django.shortcuts import get_object_or_404
 
 
 class CsrfExemptSessionAuthentication(SessionAuthentication):
     def enforce_csrf(self, request):
         return
-
 
 class MessagePagination(PageNumberPagination):
     """
@@ -56,11 +56,13 @@ class MessageModelViewSet(ModelViewSet):
 
 class UserModelViewSet(ModelViewSet):
     queryset = User.objects.all()
-
     serializer_class = UserModelSerializer
+
     allowed_methods = ('GET', 'HEAD', 'OPTIONS')
+    authentication_classes = (CsrfExemptSessionAuthentication,)
     pagination_class = None  # Get all user
 
     def list(self, request, *args, **kwargs):
-        self.queryset = self.queryset.exclude(id=request.user.pk)
+        # Get all users except yourself
+        self.queryset = self.queryset.exclude(id=request.user.id)
         return super(UserModelViewSet, self).list(request, *args, **kwargs)

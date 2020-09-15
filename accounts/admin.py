@@ -35,6 +35,7 @@ from sbs.models.EPEmployee import EPEmployee
 from sbs.models.EPRequirements import EPRequirements
 from sbs.models.EPPhase import EPPhase
 from sbs.models.EPOffer import EPOffer
+from sbs.models.Message import Message
 
 # Register your models here.
 admin.site.register(CategoryItem)
@@ -51,3 +52,4 @@ admin.site.register(City)
 admin.site.register(Menu)
 admin.site.register(Punishment)
 admin.site.register(Person)
+admin.site.register(Message)

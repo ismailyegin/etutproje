@@ -1,4 +1,4 @@
-from sbs.consumers import consumers
+from sbs import consumers
 
 from django.conf.urls import url
 

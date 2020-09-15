@@ -9,8 +9,8 @@ from sbs.Views import DashboardViews, AthleteViews, RefereeViews, ClubViews, Coa
 app_name = 'sbs'
 
 router = DefaultRouter()
-router.register(r'message', MessageModelViewSet, basename='message-api')
-router.register(r'user', UserModelViewSet, basename='user-api')
+router.register(r'mesaj', MessageModelViewSet, basename='message-api')
+router.register(r'kul', UserModelViewSet, basename='user-api')
 
 
 urlpatterns = [
@@ -463,10 +463,10 @@ urlpatterns = [
 
     url(r'notification/notification-all/$', NotificationView.notification, name='bildirimler'),
 
-    url(r'message/messages/$', DashboardViews.return_message,
+    url(r'message/$', DashboardViews.return_message,
         name='message'),
 
-    path(r'api/v1/', include(router.urls)),
+    path(r'message/api/v1/', include(router.urls)),
 
 
 

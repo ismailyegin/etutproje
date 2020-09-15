@@ -12,9 +12,9 @@ class MessageModelSerializer(ModelSerializer):
         user = self.context['request'].user
         recipient = get_object_or_404(
             User, username=validated_data['recipient']['username'])
-        msg = MessageModel(recipient=recipient,
-                           body=validated_data['body'],
-                           user=user)
+        msg = Message(recipient=recipient,
+                      body=validated_data['body'],
+                      user=user)
         msg.save()
         return msg
 
@@ -26,4 +26,9 @@ class MessageModelSerializer(ModelSerializer):
 class UserModelSerializer(ModelSerializer):
     class Meta:
         model = User
-        fields = ('username')
+        fields = ['username']
+        # extra_kwargs = {'password': {'write_only': True}}
+
+    # class Meta:
+    #     model = User
+    #     fields = ('username')

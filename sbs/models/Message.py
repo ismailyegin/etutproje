@@ -54,7 +54,7 @@ class Message(models.Model):
         """
         new = self.id
         self.body = self.body.strip()  # Trimming whitespaces from the body
-        super(MessageModel, self).save(*args, **kwargs)
+        super(Message, self).save(*args, **kwargs)
         if new is None:
             self.notify_ws_clients()
 
