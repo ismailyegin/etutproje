@@ -21,6 +21,7 @@ function updateUserList() {
 }
 
 function drawMessage(message) {
+    console.log("draw mesaj ");
     let position = 'left';
     const date = new Date(message.timestamp);
     if (message.user === currentUser) position = 'right';
@@ -37,6 +38,7 @@ function drawMessage(message) {
 }
 
 function getConversation(recipient) {
+    console.log("get convert");
     $.getJSON(`/sbs/message/api/v1/mesaj/?target=${recipient}`, function (data) {
         messageList.children('.message').remove();
         for (let i = data['results'].length - 1; i >= 0; i--) {
@@ -48,8 +50,9 @@ function getConversation(recipient) {
 }
 
 function getMessageById(message) {
+
+    console.log("get mesaj ");
     id = JSON.parse(message).message
-    alert()
     $.getJSON(`/sbs/message/api/v1/mesaj/${id}/`, function (data) {
         if (data.user === currentRecipient ||
             (data.recipient === currentRecipient && data.user == currentUser)) {
@@ -70,6 +73,8 @@ function sendMessage(recipient, body) {
 }
 
 function setCurrentRecipient(username) {
+
+    console.log("set curre");
     currentRecipient = username;
     getConversation(currentRecipient);
     enableInput();
@@ -83,6 +88,7 @@ function enableInput() {
 }
 
 function disableInput() {
+    console.log("disable input ");
     chatInput.prop('disabled', true);
     chatButton.prop('disabled', true);
 }
@@ -90,6 +96,8 @@ function disableInput() {
 $(document).ready(function () {
     updateUserList();
     disableInput();
+
+    console.log("gelecek ws");
 
     // let socket = new WebSocket(`ws://127.0.0.1:8000/?session_key=${sessionKey}`);
     var socket = new WebSocket(
@@ -102,6 +110,7 @@ $(document).ready(function () {
     });
 
     chatButton.click(function () {
+        console.log("click");
         if (chatInput.val().length > 0) {
             sendMessage(currentRecipient, chatInput.val());
             chatInput.val('');
@@ -109,6 +118,9 @@ $(document).ready(function () {
     });
 
     socket.onmessage = function (e) {
+        console.log("onmessage");
+
+        alert('yeni bir mesaj geldi');
         getMessageById(e.data);
     };
 });

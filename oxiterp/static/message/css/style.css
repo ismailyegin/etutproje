@@ -2,6 +2,16 @@
     float: none;
 }
 
+.list-group {
+    position: relative;
+    padding: 10px;
+    margin: 0;
+    height: 400px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+
+}
+
 .messages {
     position: relative;
     padding: 10px 10px 0 10px;

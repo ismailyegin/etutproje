@@ -3,7 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 # from rest_framework_simplejwt import views as jwt_views
-from django.http import JsonResponse
+# from django.http import JsonResponse
+from rest_framework.response import Response
 
 from sbs.models.Message import Message
 from django.db.models import Q
@@ -28,8 +29,14 @@ class MessagePagination(PageNumberPagination):
     page_size = 10
 
 
+class UserPagination(PageNumberPagination):
+    """
+    Limit message prefetch to one page.
+    """
+    page_size = 10
+
 class MessageModelViewSet(ModelViewSet):
-    queryset = Message.objects.all()
+    queryset = Message.objects.all().order_by("-creationDate")
     serializer_class = MessageModelSerializer
     allowed_methods = ('GET', 'POST', 'HEAD', 'OPTIONS')
     authentication_classes = (CsrfExemptSessionAuthentication,)
