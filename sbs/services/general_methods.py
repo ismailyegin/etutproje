@@ -327,9 +327,10 @@ def get_message(request):
         #         #     messages|= Message.objects.filter(pk=item)
         #         # messages=messages.distinct().order_by('-creationDate')
 
-        query = 'select * from (SELECT * FROM etutproje.sbs_message where user_id=%s or recipient_id=%s order by creationDate desc limit 10000) as t group by chat_id' % (
-            request.user.pk, request.user.pk)
-        messages = list(Message.objects.raw(query))
+        # query = 'select * from (SELECT * FROM etutproje.sbs_message where user_id=%s or recipient_id=%s order by creationDate desc limit 10000) as t group by chat_id' % (
+        #     request.user.pk, request.user.pk)
+        # messages = list(Message.objects.raw(query))
+        messages = Message.objects.none()
         mesaj = []
         for item in messages:
 
@@ -376,12 +377,12 @@ def get_message(request):
                                   image,
                                   username))
 
-        say = len(list(Message.objects.raw(
-            'select * from (select * from (SELECT * FROM etutproje.sbs_message where  recipient_id=%s order by creationDate desc limit 10000) as t group by chat_id) as x where x.is_show=0;' % (
-                request.user.pk))))
+        # say = len(list(Message.objects.raw(
+        #     'select * from (select * from (SELECT * FROM etutproje.sbs_message where  recipient_id=%s order by creationDate desc limit 10000) as t group by chat_id) as x where x.is_show=0;' % (
+        #         request.user.pk))))
         return {
             'messages': mesaj,
-            'messageCount': say,
+            # 'messageCount': say,
         }
     else:
         return {}
