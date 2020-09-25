@@ -1,7 +1,8 @@
 from django.conf.urls import url
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from sbs.api.message import UserModelViewSet, MessageModelViewSet
+from sbs.api.message import UserModelViewSet, MessageModelViewSet, UserModelEndMessageViewSet
+
 from sbs.Views import DashboardViews, AthleteViews, RefereeViews, ClubViews, CoachViews, DirectoryViews, UserViews, \
     CompetitionViews, AdminViews, HelpViews, PageViews, PreRegistration, EPProjectViews, EmployeeViews, PdfView, \
     TechnicalViews, LogViews,NotificationView
@@ -11,6 +12,8 @@ app_name = 'sbs'
 router = DefaultRouter()
 router.register(r'mesaj', MessageModelViewSet, basename='message-api')
 router.register(r'kul', UserModelViewSet, basename='user-api')
+router.register(r'kulEndMessage', UserModelEndMessageViewSet, basename='user-api-end')
+
 
 
 urlpatterns = [
@@ -468,10 +471,7 @@ urlpatterns = [
 
     path(r'message/api/v1/', include(router.urls)),
 
-
-
-
-
+    # url(r'hello/$', TestList.as_view(), name='hello'),
 
 
 ]

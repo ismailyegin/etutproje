@@ -2,20 +2,20 @@ from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
-# from rest_framework_simplejwt import views as jwt_views
-# from django.http import JsonResponse
 from rest_framework.response import Response
-
 from sbs.models.Message import Message
 from django.db.models import Q
-
-from sbs.Serializers.serializers import MessageModelSerializer
+from sbs.models.Message import Message
+from sbs.Serializers.serializers import MessageModelSerializer, MessageEndModelSerializer
 from sbs.Serializers.serializers import UserModelSerializer
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.viewsets import ModelViewSet
 from datetime import date, datetime
 from django.shortcuts import get_object_or_404
+
+
+# from rest_framework.views import APIView
 
 
 class CsrfExemptSessionAuthentication(SessionAuthentication):
@@ -26,14 +26,14 @@ class MessagePagination(PageNumberPagination):
     """
     Limit message prefetch to one page.
     """
-    page_size = 10
+    page_size = 20
 
 
 class UserPagination(PageNumberPagination):
     """
     Limit message prefetch to one page.
     """
-    page_size = 10
+    page_size = 50
 
 class MessageModelViewSet(ModelViewSet):
     queryset = Message.objects.all().order_by("-creationDate")
@@ -47,9 +47,21 @@ class MessageModelViewSet(ModelViewSet):
                                              Q(user=request.user))
         target = self.request.query_params.get('target', None)
         if target is not None:
-            self.queryset = self.queryset.filter(
-                Q(recipient=request.user, user__username=target) |
-                Q(recipient__username=target, user=request.user))
+
+            try:
+                for message in Message.objects.filter(user__username=target, recipient=request.user):
+                    message.is_show = True;
+                    message.save()
+
+                self.queryset = self.queryset.filter(
+                    Q(recipient=request.user, user__username=target) |
+                    Q(recipient__username=target, user=request.user))
+
+
+
+            except:
+                print('Ex ')
+
         return super(MessageModelViewSet, self).list(request, *args, **kwargs)
 
     def retrieve(self, request, *args, **kwargs):
@@ -58,6 +70,7 @@ class MessageModelViewSet(ModelViewSet):
                                  Q(user=request.user),
                                  Q(pk=kwargs['pk'])))
         serializer = self.get_serializer(msg)
+        print('retrieve')
         return Response(serializer.data)
 
 
@@ -65,11 +78,33 @@ class UserModelViewSet(ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserModelSerializer
 
-    allowed_methods = ('GET', 'HEAD', 'OPTIONS')
+    allowed_methods = ('GET', 'POST', 'HEAD', 'OPTIONS')
     authentication_classes = (CsrfExemptSessionAuthentication,)
-    pagination_class = None  # Get all user
+    pagination_class = UserPagination  # Get all user
 
     def list(self, request, *args, **kwargs):
         # Get all users except yourself
         self.queryset = self.queryset.exclude(id=request.user.id)
         return super(UserModelViewSet, self).list(request, *args, **kwargs)
+
+
+class UserModelEndMessageViewSet(ModelViewSet):
+    queryset = Message.objects.none()
+    serializer_class = MessageEndModelSerializer
+    allowed_methods = ('GET', 'POST', 'HEAD', 'OPTIONS')
+    authentication_classes = (CsrfExemptSessionAuthentication,)
+    pagination_class = None  # Get all user
+
+    def list(self, request, *args, **kwargs):
+        query = 'select * from (SELECT * FROM etutproje.sbs_message where user_id=%s or recipient_id=%s order by creationDate desc limit 10000) as t group by chat_id' % (
+        request.user.pk, request.user.pk)
+        messages = Message.objects.raw(query)
+        for item in messages:
+            self.queryset |= Message.objects.filter(pk=item.pk)
+
+        return super(UserModelEndMessageViewSet, self).list(request, *args, **kwargs)
+
+# class TestList(APIView):
+#     authentication_classes = (CsrfExemptSessionAuthentication)
+#     def get(self,request):
+#         return Response({"message": "Hello, world!"})

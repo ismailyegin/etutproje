@@ -3,6 +3,8 @@ from django.db import models
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
 
+import uuid
+
 
 class Message(models.Model):
     """
@@ -11,15 +13,17 @@ class Message(models.Model):
 
     """
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='user',
-                             related_name='from_user', db_index=True)
+                             related_name='message_user', db_index=True)
     recipient = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='recipient',
-                                  related_name='to_user', db_index=True)
+                                  related_name='message_recipient', db_index=True)
     creationDate = models.DateTimeField('creationDate', auto_now_add=True, editable=False,
                                         db_index=True)
     modificationDate = models.DateTimeField('modificationDate', auto_now_add=True, editable=False,
                                             db_index=True)
     body = models.TextField('body')
     is_show = models.BooleanField(default=False)
+
+    chat_id = models.UUIDField(default=uuid.uuid4, editable=False, blank=False, null=False)
 
     def __str__(self):
         return str(self.pk)
@@ -48,10 +52,6 @@ class Message(models.Model):
         async_to_sync(channel_layer.group_send)("{}".format(self.recipient.id), notification)
 
     def save(self, *args, **kwargs):
-        """
-        Trims white spaces, saves the message and notifies the recipient via WS
-        if the message is new.
-        """
         new = self.id
         self.body = self.body.strip()  # Trimming whitespaces from the body
         super(Message, self).save(*args, **kwargs)
@@ -62,4 +62,5 @@ class Message(models.Model):
         app_label = 'sbs'
         verbose_name = 'message'
         verbose_name_plural = 'messages'
+        default_related_name = 'message'
         # ordering = ('-creationDate')

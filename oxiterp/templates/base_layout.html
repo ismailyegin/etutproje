@@ -19,6 +19,10 @@
 
     <link rel="stylesheet" href="{% static 'plugins/iCheck/all.css' %}">
 
+
+    <link rel="stylesheet" href="{% static 'message/Allertify/alertify.min.css' %}">
+    <link rel="stylesheet" href="{% static 'message/Allertify/alertify.rtl.min.css' %}">
+
     <link rel="stylesheet"
           href="{% static 'bower_components/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css' %}">
 
@@ -107,6 +111,7 @@
 </head>
 {% load static %}
 <body class="hold-transition skin-blue fixed sidebar-mini">
+
 <div class="preloader"></div>
 <!-- Site wrapper -->
 <div class="wrapper">
@@ -140,79 +145,67 @@
                     <li class="dropdown messages-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                             <i class="fa fa-envelope-o"></i>
-                            <span class="label label-success">{{ messageCount }}</span>
+                            <span class="label label-success" id="count">
+
+                                {% if messageCount != 0 %}
+                                    {{ messageCount }}
+                                {% endif %}
+
+
+
+
+                                </span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li class="header">You have 4 messages</li>
+
+
+                            <li class="header text-right">
+
+                                    <span class="text-right"><button onclick="modalAccess()"
+                                                                     class="btn btn-block btn-primary"><i
+                                            class="fa fa-edit"></i> Yeni Mesaj </button></span>
+
+
+                            </li>
+
+
                             <li>
                                 <!-- inner menu: contains the actual data -->
                                 <ul class="menu">
-                                    <li><!-- start message -->
-                                        <a href="#">
-                                            <div class="pull-left">
-                                                <img src="{{ MEDIA_URL }}{{ person.profileImage }}" class="img-circle"
-                                                     alt="User Image">
-                                            </div>
-                                            <h4>
-                                                Support Team
-                                                <small><i class="fa fa-clock-o"></i> 5 mins</small>
-                                            </h4>
-                                            <p>Why not buy a new awesome theme?</p>
-                                        </a>
+
+
+                                    {% for message in messages %}
+                                        {% if message.is_show == False %}
+                                            <li class="list-menu bg-info" id="{{ message.chat_id }}">
+                                                {% else %}
+                                            <li class="list-menu" id="{{ message.chat_id }}">
+                                        {% endif %}
+
+
+
+                                    <a href="{% url "sbs:message" %}?username={{ message.username }}">
+                                        <div class="pull-left"><img
+                                                src="{{ MEDIA_URL }}{{ message.image }}"
+                                                class="img-circle" alt="User Image"></div>
+                                        <small> {{ message.creationDate |date:"d/m/y"|lower }}
+                                        </small>
+                                        <h4>
+
+                                            {{ message.user }}
+
+                                            <small><i
+                                                    class="fa fa-clock-o"></i> {{ message.creationDate |date:"H:i"|lower }}
+                                            </small>
+                                        </h4>
+
+
+                                        <p>{{ message.body }}</p>
+                                    </a>
+
                                     </li>
-                                    <!-- end message -->
-                                    <li>
-                                        <a href="#">
-                                            <div class="pull-left">
-                                                <img src="{{ MEDIA_URL }}{{ person.profileImage }}" class="img-circle"
-                                                     alt="User Image">
-                                            </div>
-                                            <h4>
-                                                AdminLTE Design Team
-                                                <small><i class="fa fa-clock-o"></i> 2 hours</small>
-                                            </h4>
-                                            <p>Why not buy a new awesome theme?</p>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <div class="pull-left">
-                                                <img src="{{ MEDIA_URL }}{{ person.profileImage }}" class="img-circle"
-                                                     alt="User Image">
-                                            </div>
-                                            <h4>
-                                                Developers
-                                                <small><i class="fa fa-clock-o"></i> Today</small>
-                                            </h4>
-                                            <p>Why not buy a new awesome theme?</p>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <div class="pull-left">
-                                                <img src="{{ MEDIA_URL }}{{ person.profileImage }}" class="img-circle"
-                                                     alt="User Image">
-                                            </div>
-                                            <h4>
-                                                Sales Department
-                                                <small><i class="fa fa-clock-o"></i> Yesterday</small>
-                                            </h4>
-                                            <p>Why not buy a new awesome theme?</p>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <div class="pull-left">
-                                                <img src="{{ MEDIA_URL }}{{ person.profileImage }}" class="img-circle"
-                                                     alt="User Image">
-                                            </div>
-                                            <h4>
-                                                Reviewers
-                                                <small><i class="fa fa-clock-o"></i> 2 days</small>
-                                            </h4>
-                                            <p>Why not buy a new awesome theme?</p>
-                                        </a>
-                                    </li>
+                                    {% endfor %}
+
+
                                 </ul>
                             </li>
                             <li class="footer"><a href="{% url "sbs:message" %}">Bütün mesajlari görüntüle</a></li>
@@ -223,27 +216,26 @@
                     <li class="dropdown notifications-menu text-justify">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                             <i class="fa fa-bell-o"></i>
-
                             {% if notificationsCount != 0 %}
                                 <span class="label label-warning">{{ notificationsCount }}</span>
-                        {% endif %}
+                            {% endif %}
 
                             <span class="label label-warning"></span>
                         </a>
                         <ul class="dropdown-menu">
                             {% if notificationsCount != 0 %}
                                 <li class="header">{{ notificationsCount }} tane yeni bildirim var</li>
-                        {% endif %}
+                            {% endif %}
 
                             <li>
                                 <!-- inner menu: contains the actual data -->
                                 <ul class="menu">
 
                                     {% for notification in notifications %}
-                                        <li >
+                                        <li>
                                             {% if notification.tableName == "personel" %}
 
-                                                <a  href="{% url "sbs:personel-duzenle" pk=notification.entityId %}?notification={{ notification.pk }}">
+                                                <a href="{% url "sbs:personel-duzenle" pk=notification.entityId %}?notification={{ notification.pk }}">
                                                     <i class="fa fa-user text-yellow "></i>{{ notification.notification }}
 
                                                     {% if notification.is_show == False %}
@@ -255,7 +247,7 @@
                                             {% elif notification.tableName == "proje" %}
 
                                                 {% if user.groups.all.0.name == "Personel" %}
-                                                    <a   href="{% url "sbs:proje-incele-personel" pk=notification.entityId %}?notification={{ notification.pk }}">
+                                                    <a href="{% url "sbs:proje-incele-personel" pk=notification.entityId %}?notification={{ notification.pk }}">
                                                         <i
                                                                 class="fa fa-book text-yellow"></i> {{ notification.notification }}
 
@@ -266,8 +258,11 @@
                                                     </a>
 
                                                 {% else %}
-                                                    <a class="metin" href="{% url "sbs:proje-duzenle" pk=notification.entityId %}?notification={{ notification.pk }}">
-                                                       <small><i class="fa fa-book text-yellow" style="text-align: justify"></i> {{ notification.notification }}</small>
+                                                    <a class="metin"
+                                                       href="{% url "sbs:proje-duzenle" pk=notification.entityId %}?notification={{ notification.pk }}">
+                                                        <small><i class="fa fa-book text-yellow"
+                                                                  style="text-align: justify"></i> {{ notification.notification }}
+                                                        </small>
                                                         {% if notification.is_show == False %}
                                                             <small class="  pull-right"><i
                                                                     class="fa fa-circle text-primary"></i></small>
@@ -291,10 +286,10 @@
                                 </ul>
                             </li>
 
-                            <li class="footer"><a href="{% url "sbs:bildirimler" %}"> Bütün Bilridimleri Görüntüle</a></li>
+                            <li class="footer"><a href="{% url "sbs:bildirimler" %}"> Bütün Bilridimleri Görüntüle</a>
+                            </li>
                         </ul>
                     </li>
-
 
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -624,8 +619,11 @@
         <!-- /.sidebar -->
     </aside>
 
+
     <div class="content-wrapper">
         <script src="{% static 'alert/sweetalert.min.js' %}"></script>
+
+
         {% block content %}
 
 
@@ -781,81 +779,104 @@
             <div class="tab-pane" id="control-sidebar-home-tab1">Kobiltek Bilisim</div>
             <!-- /.tab-pane -->
             <!-- Settings tab content -->
-            <div class="tab-pane" id="control-sidebar-settings-tab">
-                <form method="post">
-                    <h3 class="control-sidebar-heading">General Settings</h3>
-
-                    <div class="form-group">
-                        <label class="control-sidebar-subheading">
-                            Report panel usage
-                            <input type="checkbox" class="pull-right" checked>
-                        </label>
-
-                        <p>
-                            Some information about this general settings option
-                        </p>
-                    </div>
-                    <!-- /.form-group -->
-
-                    <div class="form-group">
-                        <label class="control-sidebar-subheading">
-                            Allow mail redirect
-                            <input type="checkbox" class="pull-right" checked>
-                        </label>
-
-                        <p>
-                            Other sets of options are available
-                        </p>
-                    </div>
-                    <!-- /.form-group -->
-
-                    <div class="form-group">
-                        <label class="control-sidebar-subheading">
-                            Expose author name in posts
-                            <input type="checkbox" class="pull-right" checked>
-                        </label>
-
-                        <p>
-                            Allow the user to show his name in blog posts
-                        </p>
-                    </div>
-                    <!-- /.form-group -->
-
-                    <h3 class="control-sidebar-heading">Chat Settings</h3>
-
-                    <div class="form-group">
-                        <label class="control-sidebar-subheading">
-                            Show me as online
-                            <input type="checkbox" class="pull-right" checked>
-                        </label>
-                    </div>
-                    <!-- /.form-group -->
-
-                    <div class="form-group">
-                        <label class="control-sidebar-subheading">
-                            Turn off notifications
-                            <input type="checkbox" class="pull-right">
-                        </label>
-                    </div>
-                    <!-- /.form-group -->
-
-                    <div class="form-group">
-                        <label class="control-sidebar-subheading">
-                            Delete chat history
-                            <a href="javascript:void(0)" class="text-red pull-right"><i class="fa fa-trash-o"></i></a>
-                        </label>
-                    </div>
-                    <!-- /.form-group -->
-                </form>
-            </div>
+            {#            <div class="tab-pane" id="control-sidebar-settings-tab">#}
+            {#                <form method="post">#}
+            {#                    <h3 class="control-sidebar-heading">General Settings</h3>#}
+            {##}
+            {#                    <div class="form-group">#}
+            {#                        <label class="control-sidebar-subheading">#}
+            {#                            Report panel usage#}
+            {#                            <input type="checkbox" class="pull-right" checked>#}
+            {#                        </label>#}
+            {##}
+            {#                        <p>#}
+            {#                            Some information about this general settings option#}
+            {#                        </p>#}
+            {#                    </div>#}
+            {#                    <!-- /.form-group -->#}
+            {##}
+            {#                    <div class="form-group">#}
+            {#                        <label class="control-sidebar-subheading">#}
+            {#                            Allow mail redirect#}
+            {#                            <input type="checkbox" class="pull-right" checked>#}
+            {#                        </label>#}
+            {##}
+            {#                        <p>#}
+            {#                            Other sets of options are available#}
+            {#                        </p>#}
+            {#                    </div>#}
+            {#                    <!-- /.form-group -->#}
+            {##}
+            {#                    <div class="form-group">#}
+            {#                        <label class="control-sidebar-subheading">#}
+            {#                            Expose author name in posts#}
+            {#                            <input type="checkbox" class="pull-right" checked>#}
+            {#                        </label>#}
+            {##}
+            {#                        <p>#}
+            {#                            Allow the user to show his name in blog posts#}
+            {#                        </p>#}
+            {#                    </div>#}
+            {#                    <!-- /.form-group -->#}
+            {##}
+            {#                    <h3 class="control-sidebar-heading">Chat Settings</h3>#}
+            {##}
+            {#                    <div class="form-group">#}
+            {#                        <label class="control-sidebar-subheading">#}
+            {#                            Show me as online#}
+            {#                            <input type="checkbox" class="pull-right" checked>#}
+            {#                        </label>#}
+            {#                    </div>#}
+            {#                    <!-- /.form-group -->#}
+            {##}
+            {#                    <div class="form-group">#}
+            {#                        <label class="control-sidebar-subheading">#}
+            {#                            Turn off notifications#}
+            {#                            <input type="checkbox" class="pull-right">#}
+            {#                        </label>#}
+            {#                    </div>#}
+            {#                    <!-- /.form-group -->#}
+            {##}
+            {#                    <div class="form-group">#}
+            {#                        <label class="control-sidebar-subheading">#}
+            {#                            Delete chat history#}
+            {#                            <a href="javascript:void(0)" class="text-red pull-right"><i class="fa fa-trash-o"></i></a>#}
+            {#                        </label>#}
+            {#                    </div>#}
+            {#                    <!-- /.form-group -->#}
+            {#                </form>#}
+            {#            </div>#}
             <!-- /.tab-pane -->
         </div>
     </aside>
-    <!-- /.control-sidebar -->
-    <!-- Add the sidebar's background. This div must be placed
-         immediately after the control sidebar -->
 
-</div>
+
+    <div class="modal fade" id="users" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <a href="" class="list-group-item disabled">
+                        <h4 class="list-group-item-heading">Kullanicilar</h4>
+
+                    </a>
+                </div>
+
+                <div class="modal-body list-group" id="user-list-main">
+
+
+                    {#      <div class="modal-footer">#}
+                    {#        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>#}
+                    {#        <button type="button" class="btn btn-primary">Save changes</button>#}
+                    {#      </div>#}
+                </div>
+            </div>
+        </div>
+        <!-- /.control-sidebar -->
+        <!-- Add the sidebar's background. This div must be placed
+             immediately after the control sidebar -->
+
+    </div>
 <!-- ./wrapper -->
 
 
@@ -933,7 +954,9 @@
 
 
 <script src="{% static 'fieldChooser/js/jquery.lwMultiSelect.js' %}"></script>
+    <script src="{% static 'message/Allertify/alertify.min.js' %}"></script>
 
+    {#    <script src="{% static 'message/js/app.js' %}"></script>#}
 
 <script>
     $(function () {
@@ -952,7 +975,53 @@
 
 <script>
 
+
     $(document).ready(function () {
+
+
+        $('.main-sidebar').controlSidebar();
+        let sessionKey = '{{ request.session.session_key }}';
+        let currentUser = '{{ request.user.username }}';
+
+
+        var socket = new WebSocket(
+            'ws://' + window.location.host +
+            '/ws?session_key=${sessionKey}')
+        {#alert( window.location.host);#}
+        socket.onmessage = function (e) {
+            getMessageById(e.data)
+            id = JSON.parse(e.data).user;
+            if (id != {{ request.user.pk }}) {
+                for (i = 0; i < document.getElementsByClassName("list-menu").length; i++) {
+                    var x = document.getElementsByClassName("list-menu")[i].id;
+                    if (JSON.parse(e.data).chat_id == x) {
+                        {#                     bu degerden elimiz de oldugunda  yukariya ekle   #}
+
+                        mesaj = $("#" + x).find('p').text(JSON.parse(e.data).body);
+
+
+                        {#                        mesaj bildirimi bir artırıldı#}
+                        {#                        count = $("#count").text().trim();#}
+                        {#                        $("#count").text(parseInt(count) + 1);#}
+
+                        break;
+                    } else {
+
+                        console.log('Bu degerden elimizde yok yeni eklenecek')
+
+                    }
+
+
+                }
+
+
+                alertify.success('Yeni bir mesajınız var <br> ' + JSON.parse(e.data).username + '<br> ' + JSON.parse(e.data).body);
+
+
+            }
+        };
+
+
         $("#number").keydown(function (event) {
             // Allow: backspace, delete, tab, escape, and enter
             if (event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 27 || event.keyCode == 13 ||
@@ -970,6 +1039,7 @@
             }
         });
     });
+
 
     $("input[data-type='currency']").on({
         keyup: function () {
@@ -1186,6 +1256,36 @@
     $('#tags').tagsInput({
         // my parameters here
     });
+
+    function modalAccess() {
+        userList = $('#user-list-main');
+        $.getJSON('/sbs/message/api/v1/kul/', function (data) {
+            console.log(data);
+
+            userList.children('.usermainlist').remove();
+
+            for (let i = 0; i < data.count; i++) {
+                console.log(data.count);
+                const userItem = `<a class="list-group-item users" id="${data.results[i]['username']}"><img  class="img-circle" style="width: 60px;height: 60px;" src='/media/${data.results[i]['image']}'>    ${data.results[i]['first_name']} ${data.results[i]['last_name']}</a>`;
+                $(userItem).appendTo('#user-list-main');
+
+            }
+            $('.users').click(function () {
+                alert
+                userList.children('.active').removeClass('active');
+                let selected = event.target;
+                $(selected).addClass('active');
+                window.location.replace("{% url "sbs:message"%}?target=" + selected.id);
+            });
+        });
+
+        $("#users").on("shown.bs.modal", function (e) {
+
+        }).modal('show');
+
+
+    }
+
 
 
 </script>

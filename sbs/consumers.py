@@ -2,6 +2,7 @@
 
 from channels.generic.websocket import AsyncWebsocketConsumer
 import json
+from sbs.models.Message import Message
 
 
 class ChatConsumer(AsyncWebsocketConsumer):
@@ -39,11 +40,19 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
     async def recieve_group_message(self, event):
         message = event['message']
+        messageModel = Message.objects.get(pk=event['message'])
 
         # Send message to WebSocket
         await self.send(
             text_data=json.dumps({
-                'message': message
+                'message': message,
+                'body': messageModel.body,
+                'user': messageModel.user.pk,
+                'username': messageModel.user.get_full_name(),
+                'recipient': messageModel.recipient.get_full_name(),
+                'recipient_id': messageModel.recipient.pk,
+                'chat_id': str(messageModel.chat_id),
+
             }))
 
 # --------------------------------------

@@ -6,16 +6,18 @@ let messageList = $('#messages');
 
 function updateUserList() {
     $.getJSON('api/v1/kul/', function (data) {
+        console.log(data);
         userList.children('.user').remove();
-        for (let i = 0; i < data.length; i++) {
-            const userItem = `<a class="list-group-item user">${data[i]['username']}</a>`;
+        for (let i = 0; i < data.count; i++) {
+            console.log('beklenilen =' + data.results[i]['username'])
+            const userItem = ` <a class="list-group-item user" id="${data.results[i]['username']}"><img class="img-circle" style="width: 30px;height: 30px;" src='/media/${data.results[i]['image']}'>    ${data.results[i]['first_name']} ${data.results[i]['last_name']}</a>`;
             $(userItem).appendTo('#user-list');
         }
         $('.user').click(function () {
             userList.children('.active').removeClass('active');
             let selected = event.target;
             $(selected).addClass('active');
-            setCurrentRecipient(selected.text);
+            setCurrentRecipient(selected.id);
         });
     });
 }
@@ -23,7 +25,7 @@ function updateUserList() {
 function drawMessage(message) {
     console.log("draw mesaj ");
     let position = 'left';
-    const date = new Date(message.timestamp);
+    const date = new Date(message.creationDate);
     if (message.user === currentUser) position = 'right';
     const messageItem = `
             <li class="message ${position}">
@@ -40,6 +42,7 @@ function drawMessage(message) {
 function getConversation(recipient) {
     console.log("get convert");
     $.getJSON(`/sbs/message/api/v1/mesaj/?target=${recipient}`, function (data) {
+        console.log(data);
         messageList.children('.message').remove();
         for (let i = data['results'].length - 1; i >= 0; i--) {
             drawMessage(data['results'][i]);
@@ -48,9 +51,7 @@ function getConversation(recipient) {
     });
 
 }
-
 function getMessageById(message) {
-
     console.log("get mesaj ");
     id = JSON.parse(message).message
     $.getJSON(`/sbs/message/api/v1/mesaj/${id}/`, function (data) {
@@ -63,6 +64,7 @@ function getMessageById(message) {
 }
 
 function sendMessage(recipient, body) {
+
     $.post('/sbs/message/api/v1/mesaj/', {
         recipient: recipient,
         body: body
@@ -97,12 +99,27 @@ $(document).ready(function () {
     updateUserList();
     disableInput();
 
+    var q = document.URL.split('?')[1];
+    console.log(q)
+    if (q != null) {
+        var username = q.split('=')[1]
+        if (username != null) {
+
+            setCurrentRecipient(username)
+        }
+
+    }
+
+
+
+
+
     console.log("gelecek ws");
 
-    // let socket = new WebSocket(`ws://127.0.0.1:8000/?session_key=${sessionKey}`);
-    var socket = new WebSocket(
-        'ws://' + window.location.host +
-        '/ws?session_key=${sessionKey}')
+    // // let socket = new WebSocket(`ws://127.0.0.1:8000/?session_key=${sessionKey}`);
+    // var socket = new WebSocket(
+    //     'ws://' + window.location.host +
+    //     '/ws?session_key=${sessionKey}')
 
     chatInput.keypress(function (e) {
         if (e.keyCode == 13)
@@ -110,19 +127,17 @@ $(document).ready(function () {
     });
 
     chatButton.click(function () {
-        console.log("click");
         if (chatInput.val().length > 0) {
             sendMessage(currentRecipient, chatInput.val());
             chatInput.val('');
         }
     });
 
-    socket.onmessage = function (e) {
-        console.log("onmessage");
-
-        alert('yeni bir mesaj geldi');
-        getMessageById(e.data);
-    };
+    // socket.onmessage = function (e) {
+    //     console.log("onmessage");
+    //     alert();
+    //     getMessageById(e.data);
+    // };
 });
 
 

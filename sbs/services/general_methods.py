@@ -1,34 +1,27 @@
 import csv
+from datetime import datetime
 
 from django.conf import settings
-from django.contrib.auth import logout
 from django.contrib.auth.models import Permission, User, Group
-from django.shortcuts import redirect
-from sbs.models.MenuPersonel import MenuPersonel
-
-from sbs.models.Menu import Menu
-from sbs.models.MenuAdmin import MenuAdmin
-from sbs.models.MenuPersonel import MenuPersonel
-from sbs.models.MenuDirectory import MenuDirectory
-from sbs.models.SportClubUser import SportClubUser
-from sbs.models.Person import Person
-from sbs.models.Athlete import Athlete
-from sbs.models.Coach import Coach
-from sbs.models.Judge import Judge
-from sbs.models.DirectoryMember import DirectoryMember
-from sbs.models.SportsClub import SportsClub
-from sbs.models.Communication import Communication
-from sbs.models.City import City
-from sbs.models.Country import Country
-from sbs.models.ClubRole import ClubRole
-from sbs.models.MenuTeknik import MenuTeknik
-from sbs.models.Employee import Employee
-from sbs.models.Message import Message
-from sbs.models.Notification import Notification
 from django.core.mail import EmailMultiAlternatives
 
+from sbs.models.City import City
+from sbs.models.ClubRole import ClubRole
+from sbs.models.Communication import Communication
+from sbs.models.Country import Country
+from sbs.models.DirectoryMember import DirectoryMember
+from sbs.models.Employee import Employee
 from sbs.models.Logs import Logs
-from datetime import datetime
+from sbs.models.Menu import Menu
+from sbs.models.MenuAdmin import MenuAdmin
+from sbs.models.MenuDirectory import MenuDirectory
+from sbs.models.MenuPersonel import MenuPersonel
+from sbs.models.MenuTeknik import MenuTeknik
+from sbs.models.Message import Message
+from sbs.models.Notification import Notification
+from sbs.models.Person import Person
+from sbs.models.SportClubUser import SportClubUser
+from sbs.models.SportsClub import SportsClub
 
 
 def getMenu(request):
@@ -297,15 +290,101 @@ def get_notification(request):
     return {}
 
 
-def get_message(request):
-    if (request.user.id):
-        messages = Message.objects.filter(user=request.user).order_by("-creationDate")[:6]
-        say = Message.objects.filter(user=request.user, is_show=False).count()
+class Messages:
+    def __init__(self, body, user, creationDate, is_show, chat_id, image, username):
+        self.body = body
+        self.user = user
+        self.creationDate = creationDate
+        self.is_show = is_show
+        self.chat_id = chat_id
+        self.image = image
+        self.username = username
 
+
+
+def get_message(request):
+    if (request.user):
+        # # mesaj gönderenler
+        #         # query = 'Select * from  sbs_message where recipient_id=%s  group by user_id order by creationDate desc' %request.user.pk
+        #         # messagesIn = Message.objects.raw(query)
+        #         # # mesaj gönderdiklerim
+        #         # query = 'Select * from  sbs_message where user_id=%s  group by recipient_id order by creationDate desc' % request.user.pk
+        #         # messagesOut= Message.objects.raw(query)
+        #         # list = []
+        #         # for item in messagesIn:
+        #         #     query='Select * from  sbs_message where (user_id=%s and   recipient_id=%s) or  (user_id=%s and   recipient_id=%s) order by creationDate desc LIMIT 1' % (request.user.pk,item.user.pk,item.user.pk,request.user.pk)
+        #         #     message=Message.objects.raw(query)
+        #         #     for m in message:
+        #         #         list.append(m.pk)
+        #         # for item in messagesOut:
+        #         #     query='Select * from  sbs_message where (user_id=%s and   recipient_id=%s) or  (user_id=%s and   recipient_id=%s) order by creationDate desc LIMIT 1' % (request.user.pk,item.recipient.pk,item.recipient.pk,request.user.pk)
+        #         #     message = Message.objects.raw(query)
+        #         #     for m in message:
+        #         #         list.append(m.pk)
+        #         #
+        #         # messages=Message.objects.none()
+        #         # for item in list:
+        #         #     messages|= Message.objects.filter(pk=item)
+        #         # messages=messages.distinct().order_by('-creationDate')
+        query = 'select * from (SELECT * FROM etutproje.sbs_message where user_id=%s or recipient_id=%s order by creationDate desc limit 10000) as t group by chat_id' % (
+            request.user.pk, request.user.pk)
+        messages = list(Message.objects.raw(query))
+        mesaj = []
+        for item in messages:
+
+            message = Message.objects.get(pk=int(item.id))
+            image = ''
+            username = ''
+
+            # if message.user.groups.filter(name='Personel').exists():
+            # :
+
+            # benim gönderdigim mesaj
+            if (request.user == message.user):
+                if message.recipient.groups.filter(name='Personel').exists() or message.recipient.groups.filter(
+                        name='Teknik').exists():
+                    image = Employee.objects.get(user=message.recipient).person.profileImage
+                    username = Employee.objects.get(user=message.recipient).user.username
+                elif message.recipient.groups.filter(name='Admin').exists():
+                    image = 'profile/logo.png'
+                    username = 'admin'
+
+                user = message.recipient.get_full_name()
+                is_show = True
+
+
+            # bana gelen mesaj
+            else:
+                if message.user.groups.filter(name='Personel').exists() or message.user.groups.filter(
+                        name='Teknik').exists():
+                    image = Employee.objects.get(user=message.user).person.profileImage
+                    username = Employee.objects.get(user=message.user).user.username
+
+                elif message.user.groups.filter(name='Admin').exists():
+                    image = 'profile/logo.png'
+                    username = 'admin'
+
+                user = message.user.get_full_name()
+                is_show = message.is_show
+
+            mesaj.append(Messages(message.body,
+                                  user,
+                                  message.creationDate,
+                                  is_show,
+                                  str(message.chat_id),
+                                  image,
+                                  username))
+
+        say = len(list(Message.objects.raw(
+            'select * from (select * from (SELECT * FROM etutproje.sbs_message where  recipient_id=%s order by creationDate desc limit 10000) as t group by chat_id) as x where x.is_show=0;' % (
+                request.user.pk))))
         return {
-            'message': messages,
+            'messages': mesaj,
             'messageCount': say,
         }
+    else:
+        return {}
+
 
     return {}
 
