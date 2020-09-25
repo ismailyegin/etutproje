@@ -10,7 +10,7 @@ function updateUserList() {
         userList.children('.user').remove();
         for (let i = 0; i < data.count; i++) {
             console.log('beklenilen =' + data.results[i]['username'])
-            const userItem = ` <a class="list-group-item user" id="${data.results[i]['username']}"><img class="img-circle" style="width: 30px;height: 30px;" src='/media/${data.results[i]['image']}'>    ${data.results[i]['first_name']} ${data.results[i]['last_name']}</a>`;
+            const userItem = ` <a class="list-group-item user" id="${data.results[i]['username']}"><img class="img-circle" style="width: 30px;height: 30px;" src='/etutproje/media/${data.results[i]['image']}'>    ${data.results[i]['first_name']} ${data.results[i]['last_name']}</a>`;
             $(userItem).appendTo('#user-list');
         }
         $('.user').click(function () {

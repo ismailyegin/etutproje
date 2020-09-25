@@ -1266,7 +1266,7 @@
 
             for (let i = 0; i < data.count; i++) {
                 console.log(data.count);
-                const userItem = `<a class="list-group-item users" id="${data.results[i]['username']}"><img  class="img-circle" style="width: 60px;height: 60px;" src='/media/${data.results[i]['image']}'>    ${data.results[i]['first_name']} ${data.results[i]['last_name']}</a>`;
+                const userItem = `<a class="list-group-item users" id="${data.results[i]['username']}"><img  class="img-circle" style="width: 60px;height: 60px;" src='/etutproje/media/${data.results[i]['image']}'>    ${data.results[i]['first_name']} ${data.results[i]['last_name']}</a>`;
                 $(userItem).appendTo('#user-list-main');
 
             }
