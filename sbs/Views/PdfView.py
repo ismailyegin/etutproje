@@ -57,6 +57,8 @@ from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.rl_config import defaultPageSize
 from reportlab.lib.units import inch
 
+from reportlab.pdfbase.pdfmetrics import registerFontFamily
+
 
 
 
@@ -271,8 +273,7 @@ def edit_project_pdf(request,pk):
     c = canvas.Canvas(buffer)
     c.setTitle('Etüt Proje')
 
-
-    logo = ImageReader('http://kobiltek.com:81/etutproje/'+MEDIA_URL + "profile/logo.png")
+    logo = ImageReader('http://kobiltek.com:81/etutproje/' + MEDIA_URL + "profile/logo.png")
     c.drawImage(logo, 460, 740, width=80, height=80, mask='auto')
     # for i in range(5):
     #     page_num = c.getPageNumber()
@@ -289,15 +290,19 @@ def edit_project_pdf(request,pk):
 
     pdfmetrics.registerFont(TTFont('Verdana', 'Verdana.ttf'))
 
+    pdfmetrics.registerFont(TTFont('Vera', 'Vera.ttf'))
+    pdfmetrics.registerFont(TTFont('VeraBd', 'VeraBd.ttf'))
+    pdfmetrics.registerFont(TTFont('VeraIt', 'VeraIt.ttf'))
+    pdfmetrics.registerFont(TTFont('VeraBI', 'VeraBI.ttf'))
+
+
     c.setFont("Verdana", 8)
 
     c.drawString(50, 800, " Rapor Tarih:" )
 
     c.drawString(105, 800, "%s" % datetime.datetime.today().strftime('%d-%m-%Y %H:%M'))
 
-
-
-    c.setFont("Verdana", 16)
+    c.setFont("Tahoma", 16)
     c.drawString(100,770,'DESTEK HİZMETLERİ DAİRE BAŞKANLIĞI ')
     c.drawString(120, 745, ' ETÜT PROJE ŞUBE MÜDÜRLÜĞÜ')
 
@@ -449,8 +454,16 @@ def edit_project_pdf(request,pk):
     c.setFont("Verdana", 10)
     c.drawString(50, x - 120, "Sözleşme Bedeli                :%s  ₺" % (
         "{:,}".format(project.sozlesmeBedeli) if project.sozlesmeBedeli else '  '))
-    c.drawString(50, x - 140, "Sözleşme Bedeli Kdv Dahil  :%s ₺" % (
+    c.drawString(50, x - 140, "Sözleşme Bedeli Kdv Dahil    :%s ₺" % (
         "{:,}".format(project.sozlesmeBedeliKdv) if project.sozlesmeBedeliKdv else '  '))
+
+    c.drawString(50, x - 160, 'Proje Bürosu Adı                :%s' % project.ihaleProjeBurosuName)
+    c.drawString(50, x - 180, 'İhale Müellif                      :%s' % project.ihalemuellif)
+    c.drawString(50, x - 200, 'İletişim (email)                  :%s' % project.ihaleimail)
+    c.drawString(50, x - 220, 'İletişim (tel)                      :%s' % project.ihaletel)
+
+
+
 
     c.setFont("Verdana", 15)
     c.drawString(300, x + 30, 'Arsa Yapım Ödenek Bilgileri')
@@ -465,6 +478,7 @@ def edit_project_pdf(request,pk):
     c.drawString(300, x - 40, "Tahmini Ödenek Tutari :%s ₺" % (
         "{0:,.2f}".format(project.tahminiOdenekTutari) if project.tahminiOdenekTutari else ' '))
     # c.drawString(300, 500, "Yaklaşık Maliyet           :%s " % ("{0:,.2f}".format(project.yaklasikMaliyet) if project.yaklasikMaliyet else  ' ' ))
+
     y = x -60
     if project.offers.all():
         c.setFont("Verdana", 15)
@@ -545,19 +559,21 @@ def edit_project_pdf(request,pk):
     # y=x-160
 
     if project.vest.all():
+        # 160
         c.setFont("Verdana", 15)
-        c.drawString(50, x - 160, 'Hakediş Bilgileri')
+
+        c.drawString(50, x - 240, 'Hakediş Bilgileri')
 
         c.setFont("Verdana", 10)
 
-        c.line(50, x - 170, 200, x - 170)
-        c.drawString(50, x - 180, 'Tarihi  ')
-        c.line(50, x - 200, 100, x - 200)
+        c.line(50, x - 250, 200, x - 250)
+        c.drawString(50, x - 270, 'Tarihi  ')
+        c.line(50, x - 280, 100, x - 280)
 
-        c.drawString(150, x - 180, 'Miktarı')
-        c.line(150, x - 200, 200, x - 200)
+        c.drawString(150, x - 270, 'Miktarı')
+        c.line(150, x - 280, 200, x - 280)
 
-        y = x - 220
+        y = x - 300
         for item in project.vest.all():
 
             if y > 50:
@@ -577,6 +593,7 @@ def edit_project_pdf(request,pk):
 
     if project.requirements.all():
         y = y - 20
+
         c.setFont("Verdana", 15)
         c.drawString(50, y, 'İhtiyaç Listesi ')
         y = y - 10
