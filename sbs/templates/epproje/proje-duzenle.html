@@ -568,20 +568,50 @@
                                             {{ project_form.isSUresi }}
                                         </div>
                                     </div>
+
                                     <div class="col-lg-6">
-                                        <div class="form-group"
-                                        ">
-                                        <label>Kaç Gün Kaldı</label>
-
-                                        <input type="text" name="days" value="{{ days }}"
-                                               class="form-control pull-right" DISABLED>
-
-
+                                        <div class="form-group">
+                                            <label> Kaç Gün Kaldı</label>
+                                            <input type="text" name="days" value="{{ days }}" class="form-control"
+                                                   readonly="readonly">
+                                        </div>
                                     </div>
+
+
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>{{ project_form.ihaleProjeBurosuName.label }}</label>
+
+                                            {{ project_form.ihaleProjeBurosuName }}
+
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>{{ project_form.ihaletel.label }}</label>
+
+                                            {{ project_form.ihaletel }}
+
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>{{ project_form.ihalemuellif.label }}</label>
+
+                                            {{ project_form.ihalemuellif }}
+
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>{{ project_form.ihaleimail.label }}</label>
+                                            {{ project_form.ihaleimail }}
+
+                                        </div>
+                                    </div>
+
+
                                 </div>
-
-
-                            </div>
                             <div class="box-footer text-right">
                                 <button class="btn btn-primary " type="submit">Kaydet</button>
                             </div>

@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import ModelForm
 
-from sbs.models import SportsClub, EPProject
+from sbs.models import EPProject
 
 
 class EPProjectForm(ModelForm):
@@ -9,7 +9,8 @@ class EPProjectForm(ModelForm):
         model = EPProject
 
         fields = ('name', 'butceCinsi', 'butceYili', 'projeCinsi', 'ihaleTarihi',  'sozlesmeTarihi', 'isSUresi',
-                  'isBitimTarihi', 'city','sorumlu','aistart','aifinish','karakteristik','projectStatus')
+                  'isBitimTarihi', 'city', 'sorumlu', 'aistart', 'aifinish', 'karakteristik', 'projectStatus',
+                  'ihaleProjeBurosuName', 'ihaletel', 'ihaleimail', 'ihalemuellif')
         labels = {
             'name': 'Proje Tanımı',
             'butceCinsi': 'Yatırım Programı ',
@@ -25,10 +26,24 @@ class EPProjectForm(ModelForm):
             'aifinish':'Alım İşinin Bitiş Tarihi',
             'karakteristik':'Karakteristik',
             'projectStatus':'Projenin Durumu',
+            'ihaleProjeBurosuName': 'Proge Bürosu Adı ',
+            'ihaletel': 'İletişim (tel)',
+            'ihaleimail': 'İletişim (mail)',
+            'ihalemuellif': 'Müellif Adı-Soyadı',
+
 
 
         }
         widgets = {
+
+            'ihaleProjeBurosuName': forms.TextInput(attrs={'class': 'form-control '}),
+            'ihaletel': forms.TextInput(attrs={'class': 'form-control '}),
+            'ihaleimail': forms.TextInput(attrs={'class': 'form-control ', 'placeholder': 'Mail adresi'}),
+            'ihalemuellif': forms.TextInput(attrs={'class': 'form-control '}),
+
+
+
+
 
             'name': forms.TextInput(attrs={'class': 'form-control ', 'required': 'required'}),
             'butceCinsi': forms.Select(attrs={'class': 'form-control select2 select2-hidden-accessible',

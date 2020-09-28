@@ -115,6 +115,13 @@ class EPProject(models.Model):
     # alim isinin=>Ai
     aistart = models.DateTimeField(null=True, blank=True)
     aifinish = models.DateTimeField(null=True, blank=True)
+    # ihale eklentileri
+    ihaleProjeBurosuName = models.CharField(blank=True, null=True, max_length=120, verbose_name='Branş Adı')
+    ihaletel = models.CharField(blank=True, null=True, max_length=120, verbose_name='İletişim (telefon)')
+    ihaleimail = models.CharField(blank=True, null=True, max_length=120, verbose_name='İletişim (mail) ')
+    ihalemuellif = models.CharField(blank=True, null=True, max_length=120, verbose_name='Müellif Adı soyadı')
+
+
 
 
     def __str__(self):
