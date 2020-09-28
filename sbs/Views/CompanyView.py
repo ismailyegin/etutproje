@@ -45,10 +45,9 @@ def return_add_Company(request):
             company.communication = communication
             company.save()
 
-            messages.success(request, 'Şirket Kayıt Edilmiştir.')
+            messages.success(request, 'Firma Kayıt Edilmiştir.')
             return redirect('sbs:company-list')
         else:
-            print('alanlari kontrol ediniz')
             messages.warning(request, 'Alanları Kontrol Ediniz')
     return render(request, 'Company/Company.html',
                   {'company_form': company_form, 'communication_form': communication_form})
@@ -62,9 +61,6 @@ def return_list_Company(request):
         logout(request)
         return redirect('accounts:login')
     company_form = Company.objects.all().order_by('-creationDate')
-    print(company_form)
-    for item in company_form:
-        print(item.name)
 
     return render(request, 'Company/Companys.html',
                   {'company_form': company_form})
@@ -92,10 +88,9 @@ def return_update_Company(request, pk):
             company.communication = communication
             company.save()
 
-            messages.success(request, 'Şirket Güncellenmiştir.')
+            messages.success(request, 'Firma Güncellenmiştir.')
             return redirect('sbs:company-list')
         else:
-            print('alanlari kontrol ediniz')
             messages.warning(request, 'Alanları Kontrol Ediniz')
 
     return render(request, 'Company/CompanyUpdate.html',

@@ -139,14 +139,14 @@
 
                     <div class="box box-primary">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Şirketler</h3>
+                            <h3 class="box-title">Firmalar</h3>
                         </div>
                         <div class="box-header with-border">
                             <div class="btn-group">
                                 {% if user.groups.all.0.name == 'Yonetim' or user.groups.all.0.name == 'Admin' %}
                                     <a href="{% url "sbs:company-add" %}"
                                        type="button" class="btn btn-success"><i
-                                            class="fa fa-edit"></i> Yeni Şirket Ekle
+                                            class="fa fa-edit"></i> Yeni Firma Ekle
                                     </a>
                                 {% endif %}
                             </div>
@@ -248,7 +248,7 @@
                     },
                     {
                         extend: 'print',
-                        title: 'Şirketler',
+                        title: 'Firmalar  ',
                         text: '<i class="fa  fa-print"></i>',
                         exportOptions: {
                             columns: [0, 1, ':visible']
@@ -269,7 +269,7 @@
                         extend: 'excelHtml5',
                         title: 'Sbs Bilgi Sistemi',
                         text: '<i class="fa fa-file-excel-o"></i>',
-                        messageTop: 'Şirketler ',
+                        messageTop: 'Firmalar',
                         {#footer: true,#}
                         exportOptions: {
                             {#     yer degisimi de yapilabilir.#}
@@ -285,7 +285,7 @@
 
                             $.fn.dataTable.fileSave(
                                 new Blob([JSON.stringify(data)]),
-                                'Şirketler.json'
+                                'Firmalar.json'
                             );
                         }
                     }
