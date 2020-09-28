@@ -15,7 +15,7 @@ class CompanyForm(ModelForm):
             'taxOffice',
             'taxnumber',
             'mail')
-        labels = {'name': 'Şirket İsmi',
+        labels = {'name': 'Firma İsmi',
                   'sorumlu ': 'Şirket Sorumlusu',
                   'isFormal': 'Şirket Türü ?',
                   'degree': 'Unvan',

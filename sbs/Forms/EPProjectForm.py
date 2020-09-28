@@ -30,7 +30,7 @@ class EPProjectForm(ModelForm):
             'ihaletel': 'İletişim (tel)',
             'ihaleimail': 'İletişim (mail)',
             'ihalemuellif': 'Müellif Adı-Soyadı',
-            'company': 'Şirket',
+            'company': 'Firma',
 
 
 

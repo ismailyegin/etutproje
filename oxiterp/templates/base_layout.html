@@ -142,7 +142,75 @@
                 <ul class="nav navbar-nav">
 
 
+                    <li class="dropdown messages-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            <i class="fa fa-envelope-o"></i>
+                            <span class="label label-success" id="count">
 
+                                {% if messageCount != 0 %}
+                                    {{ messageCount }}
+                                {% endif %}
+
+
+
+
+                                </span>
+                        </a>
+                        <ul class="dropdown-menu">
+
+
+                            <li class="header text-right">
+
+                                    <span class="text-right"><button onclick="modalAccess()"
+                                                                     class="btn btn-block btn-primary"><i
+                                            class="fa fa-edit"></i> Yeni Mesaj </button></span>
+
+
+                            </li>
+
+
+                            <li>
+                                <!-- inner menu: contains the actual data -->
+                                <ul class="menu">
+
+
+                                    {% for message in messages %}
+                                        {% if message.is_show == False %}
+                                            <li class="list-menu bg-info" id="{{ message.chat_id }}">
+                                                {% else %}
+                                            <li class="list-menu" id="{{ message.chat_id }}">
+                                        {% endif %}
+
+
+
+                                    <a href="{% url "sbs:message" %}?username={{ message.username }}">
+                                        <div class="pull-left"><img
+                                                src="{{ MEDIA_URL }}{{ message.image }}"
+                                                class="img-circle" alt="User Image"></div>
+                                        <small> {{ message.creationDate |date:"d/m/y"|lower }}
+                                        </small>
+                                        <h4>
+
+                                            {{ message.user }}
+
+                                            <small><i
+                                                    class="fa fa-clock-o"></i> {{ message.creationDate |date:"H:i"|lower }}
+                                            </small>
+                                        </h4>
+
+
+                                        <p>{{ message.body }}</p>
+                                    </a>
+
+                                    </li>
+                                    {% endfor %}
+
+
+                                </ul>
+                            </li>
+                            <li class="footer"><a href="{% url "sbs:message" %}">Bütün mesajlari görüntüle</a></li>
+                        </ul>
+                    </li>
 
 
                     <li class="dropdown notifications-menu text-justify">
@@ -358,7 +426,9 @@
                         </ul>
                     </li>
                     <!-- Control Sidebar Toggle Button -->
-
+                    <li>
+                        <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+                    </li>
 
                 </ul>
             </div>
@@ -909,7 +979,6 @@
     $(document).ready(function () {
 
 
-        $('.main-sidebar').controlSidebar();
         let sessionKey = '{{ request.session.session_key }}';
         let currentUser = '{{ request.user.username }}';
 
