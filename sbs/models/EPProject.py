@@ -10,6 +10,7 @@ from sbs.models.EPPhase import EPPhase
 from sbs.models.EPOffer import EPOffer
 from sbs.models.EPDocument import EPDocument
 from sbs.models.EPVest import EPVest
+from sbs.models.Company import Company
 class EPProject(models.Model):
 
 
@@ -116,10 +117,14 @@ class EPProject(models.Model):
     aistart = models.DateTimeField(null=True, blank=True)
     aifinish = models.DateTimeField(null=True, blank=True)
     # ihale eklentileri
-    ihaleProjeBurosuName = models.CharField(blank=True, null=True, max_length=120, verbose_name='Branş Adı')
-    ihaletel = models.CharField(blank=True, null=True, max_length=120, verbose_name='İletişim (telefon)')
-    ihaleimail = models.CharField(blank=True, null=True, max_length=120, verbose_name='İletişim (mail) ')
-    ihalemuellif = models.CharField(blank=True, null=True, max_length=120, verbose_name='Müellif Adı soyadı')
+    company = models.ForeignKey(Company, on_delete=models.SET_NULL, verbose_name='Sirket', related_name='Sirket',
+                                null=True, blank=True)
+
+    #
+    # ihaleProjeBurosuName = models.CharField(blank=True, null=True, max_length=120, verbose_name='Branş Adı')
+    # ihaletel = models.CharField(blank=True, null=True, max_length=120, verbose_name='İletişim (telefon)')
+    # ihaleimail = models.CharField(blank=True, null=True, max_length=120, verbose_name='İletişim (mail) ')
+    # ihalemuellif = models.CharField(blank=True, null=True, max_length=120, verbose_name='Müellif Adı soyadı')
 
 
 

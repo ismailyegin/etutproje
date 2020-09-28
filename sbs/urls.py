@@ -5,7 +5,7 @@ from sbs.api.message import UserModelViewSet, MessageModelViewSet, UserModelEndM
 
 from sbs.Views import DashboardViews, AthleteViews, RefereeViews, ClubViews, CoachViews, DirectoryViews, UserViews, \
     CompetitionViews, AdminViews, HelpViews, PageViews, PreRegistration, EPProjectViews, EmployeeViews, PdfView, \
-    TechnicalViews, LogViews,NotificationView
+    TechnicalViews, LogViews, NotificationView, CompanyView
 
 app_name = 'sbs'
 
@@ -472,6 +472,13 @@ urlpatterns = [
     path(r'message/api/v1/', include(router.urls)),
 
     # url(r'hello/$', TestList.as_view(), name='hello'),
+
+    #     company
+    url(r'etut-proje/company/company-add/$', CompanyView.return_add_Company, name='company-add'),
+    url(r'etut-proje/company/company-list/$', CompanyView.return_list_Company, name='company-list'),
+    url(r'etut-proje/company/company-update/(?P<pk>\d+)$', CompanyView.return_update_Company, name='company-update'),
+
+
 
 
 ]

@@ -13,4 +13,5 @@ class MenuAdmin(models.Model):
     count=models.IntegerField(null=True,blank=True)
 
     class Meta:
+        ordering = ['count']
         default_permissions = ()
