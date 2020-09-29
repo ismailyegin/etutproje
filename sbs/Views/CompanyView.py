@@ -16,6 +16,7 @@ from sbs.Forms.CommunicationForm import CommunicationForm
 from sbs.Forms.CompanyForm import CompanyForm
 from sbs.models.Company import Company
 from sbs.models.Communication import Communication
+from sbs.models.EPProject import EPProject
 
 from sbs.services import general_methods
 from datetime import date, datetime
@@ -34,7 +35,6 @@ def return_add_Company(request):
     company_form = CompanyForm()
     communication_form = CommunicationForm()
     if request.method == 'POST':
-        print('gelecek sensin ')
         company_form = CompanyForm(request.POST, request.FILES)
         communication_form = CommunicationForm(request.POST, request.FILES)
         if company_form.is_valid():
@@ -75,10 +75,9 @@ def return_update_Company(request, pk):
         return redirect('accounts:login')
     company = Company.objects.get(pk=pk)
     company_form = CompanyForm(request.POST or None, instance=company)
-    print(company_form)
-
     communication = Communication.objects.get(pk=company.communication.pk)
     communication_form = CommunicationForm(request.POST or None, instance=communication)
+    projects = EPProject.objects.filter(company=company)
 
     if request.method == 'POST':
         if company_form.is_valid():
@@ -87,11 +86,13 @@ def return_update_Company(request, pk):
             company = company_form.save(commit=False)
             company.communication = communication
             company.save()
-
             messages.success(request, 'Firma Güncellenmiştir.')
             return redirect('sbs:company-list')
         else:
             messages.warning(request, 'Alanları Kontrol Ediniz')
 
     return render(request, 'Company/CompanyUpdate.html',
-                  {'company_form': company_form, 'communication_form': communication_form})
+                  {'company_form': company_form,
+                   'communication_form': communication_form,
+                   'projects': projects,
+                   })

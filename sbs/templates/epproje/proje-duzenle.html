@@ -580,9 +580,35 @@
 
                                     <div class="col-lg-12">
                                         <div class="form-group">
+
                                             <label>{{ project_form.company.label }}</label>
 
-                                            {{ project_form.company }}
+
+                                            {% if project.company %}
+
+                                                <div class="input-group">
+
+                                                    {{ project_form.company }}
+
+                                                    <div class="input-group-btn">
+
+
+                                                        <a href="{% url 'sbs:company-update' pk=project.company.pk %}"
+                                                           type="button" class="btn btn-default"> Firma İncele
+                                                        </a>
+
+
+                                                    </div>
+
+
+                                                </div>
+                                            {% else %}
+
+                                                {{ project_form.company }}
+
+                                            {% endif %}
+
+
 
                                         </div>
                                     </div>

@@ -70,6 +70,10 @@
                             <h3 class="box-title">Genel Bilgiler</h3>
                         </div>
                         <div class="box-body">
+                            <div class="form-group">
+                                <label> {{ company_form.isFormal.label }}</label>
+                                {{ company_form.isFormal }}
+                            </div>
 
                             <div class="form-group">
                                 <label> {{ company_form.name.label }}</label>
@@ -79,23 +83,20 @@
                                 <label> {{ company_form.degree.label }}</label>
                                 {{ company_form.degree }}
                             </div>
-                            <div class="form-group">
-                                <label> {{ company_form.isFormal.label }}</label>
-                                {{ company_form.isFormal }}
-                            </div>
-                            <div class="form-group">
-                                <label>{{ company_form.sorumlu.label }}</label>
 
-                                {{ company_form.sorumlu }}
-                            </div>
 
                             <div class="form-group">
                                 <label> {{ company_form.taxOffice.label }}</label>
                                 {{ company_form.taxOffice }}
                             </div>
                             <div class="form-group">
-                                <label> {{ company_form.taxnumber.label }}</label>
+                                <label id="labelTaxNumber"> {{ company_form.taxnumber.label }}</label>
                                 {{ company_form.taxnumber }}
+                            </div>
+                            <div class="form-group">
+                                <label>{{ company_form.sorumlu.label }}</label>
+
+                                {{ company_form.sorumlu }}
                             </div>
                         </div>
                         <div class="box-footer">
@@ -166,6 +167,26 @@
 
 
     </section>
+
+
+    <script>
+
+        $(document).ready(function () {
+
+            $('#id_isFormal').change(function () {
+                selected = $("#id_isFormal option:selected").text();
+                if (selected == 'Kurumsal') {
+                    $('#labelTaxNumber').html('Vergi Numarası');
+                } else {
+                    $('#labelTaxNumber').html('TC Kimlik Numarasi');
+                }
+
+
+            });
+        });
+
+
+    </script>
 
 {% endblock %}
 

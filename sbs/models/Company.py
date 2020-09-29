@@ -11,7 +11,7 @@ class Company(models.Model):
     name = models.CharField(blank=False, null=False, max_length=120, verbose_name='İsim')
     communication = models.OneToOneField(Communication, on_delete=models.CASCADE, db_column='communication')
     sorumlu = models.CharField(blank=True, null=True, max_length=120, verbose_name='Sorumlu')
-    isFormal = models.BooleanField(default=True, choices=IsFormal)
+    isFormal = models.BooleanField(default=False, choices=IsFormal)
     degree = models.CharField(blank=True, null=True, max_length=120, verbose_name='Unvan')
     taxOffice = models.CharField(blank=True, null=True, max_length=120, verbose_name='Vergi Dairesi ')
     taxnumber = models.CharField(null=True, blank=True, max_length=120, verbose_name='Vergi Numarasi  ')

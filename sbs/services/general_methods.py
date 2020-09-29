@@ -30,7 +30,8 @@ def getMenu(request):
 
 
 def getAdminMenu(request):
-    adminmenus = MenuAdmin.objects.all().order_by('count')
+    adminmenus = MenuAdmin.objects.all()
+
     return {'adminmenus': adminmenus}
 
 def getPersonelMenu(request):
