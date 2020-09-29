@@ -1,23 +1,23 @@
 from django import forms
 from django.forms import ModelForm
-
 from sbs.models.Company import Company
-
 
 class CompanyForm(ModelForm):
     class Meta:
         model = Company
         fields = (
+
             'name',
             'sorumlu',
             'isFormal',
             'degree',
             'taxOffice',
             'taxnumber',
-            'mail')
+            'mail'
+        )
         labels = {'name': 'Firma İsmi',
                   'sorumlu ': 'Firma  Sorumlusu',
-                  'isFormal': 'Firma  Türü ?',
+                  'isFormal': 'Firma  Türü ',
                   'degree': 'Unvan',
                   'taxOffice': 'Verdi Dairesi',
                   'taxnumber': 'Vergi Numarası',

@@ -284,6 +284,16 @@
 
         $(document).ready(function () {
 
+
+            isFormal = $("#id_isFormal option:selected").text();
+
+            if (isFormal == 'Bireysel') {
+                $('#labelTaxNumber').html('TC Kimlik Numarasi');
+
+            } else {
+                $('#labelTaxNumber').html('Vergi Numarası');
+            }
+
             $('#id_isFormal').change(function () {
                 selected = $("#id_isFormal option:selected").text();
                 if (selected == 'Kurumsal') {
