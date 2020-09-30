@@ -2253,6 +2253,7 @@
 
         function modalEmployee() {
             userList = $('#employee-list-main');
+            {#$.getJSON('/etutproje/sbs/message/api/v1/employess/', function (data) {#}
             $.getJSON('/etutproje/sbs/message/api/v1/employess/', function (data) {
                 console.log(data);
 
@@ -2269,6 +2270,8 @@
                     $(selected).addClass('active');
                     window.location.replace("{% url "sbs:proje-duzenle" pk=project.pk %}?user=" + selected.id);
                 });
+
+
             });
 
             $("#employee").on("shown.bs.modal", function (e) {
@@ -2281,11 +2284,12 @@
 
         function modalCompany() {
             userList = $('#company-list-main');
+            {#$.getJSON('/etutproje/sbs/message/api/v1/company/', function (data) {#}
             $.getJSON('/etutproje/sbs/message/api/v1/company/', function (data) {
                 console.log(data);
 
                 userList.children('.companys').remove();
-                {#for (let i = 0; i < data.count; i++) {#}
+                for (let i = 0; i < data.count; i++) {
 
                     const userItem = `<a class="list-group-item list-group-item-action companys" name="${data.results[i]['name']}"  id="${data.results[i]['id']}">${data.results[i]['name']} <br>${data.results[i]['sorumlu']} </a>`;
 
@@ -2300,6 +2304,7 @@
                     userList.children('.active').removeClass('active');
                     let selected = event.target;
                     {#print(selected);#}
+                console.log('gelecek sene ')
                     $(selected).addClass('active');
                     {#window.location.replace("{% url "sbs:proje-duzenle" pk=project.pk %}?user=" + selected.id);#}
                     if (selected.id != null) {
