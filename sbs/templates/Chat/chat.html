@@ -65,7 +65,7 @@
         function updateUserList() {
 
 
-            $.getJSON('api/v1/kul/', function (data) {
+            $.getJSON('/etutproje/sbs/message/api/v1/kul/', function (data) {
                 console.log(data);
                 userList.children('.user').remove();
                 for (let i = 0; i < data.count; i++) {
@@ -101,7 +101,7 @@
 
         function getConversation(recipient) {
             console.log("get convert");
-            $.getJSON(`/sbs/message/api/v1/mesaj/?target=${recipient}`, function (data) {
+            $.getJSON(`/etutproje/sbs/message/api/v1/mesaj/?target=${recipient}`, function (data) {
                 console.log(data);
                 messageList.children('.message').remove();
                 for (let i = data['results'].length - 1; i >= 0; i--) {
@@ -115,7 +115,7 @@
         function getMessageById(message) {
             console.log("get mesaj ");
             id = JSON.parse(message).message
-            $.getJSON(`/sbs/message/api/v1/mesaj/${id}/`, function (data) {
+            $.getJSON(`/etutproje/sbs/message/api/v1/mesaj/${id}/`, function (data) {
                 if (data.user === currentRecipient ||
                     (data.recipient === currentRecipient && data.user == currentUser)) {
                     drawMessage(data);
@@ -126,7 +126,7 @@
 
         function sendMessage(recipient, body) {
 
-            $.post('/sbs/message/api/v1/mesaj/', {
+            $.post('/etutproje/sbs/message/api/v1/mesaj/', {
                 recipient: recipient,
                 body: body
             }).fail(function () {
