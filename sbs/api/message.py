@@ -19,6 +19,9 @@ from rest_framework.viewsets import ModelViewSet
 from datetime import date, datetime
 from django.shortcuts import get_object_or_404
 
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import filters
+
 
 # from rest_framework.views import APIView
 
@@ -121,6 +124,9 @@ class EmployeModelViewSet(ModelViewSet):
 
     allowed_methods = ('GET', 'POST', 'HEAD', 'OPTIONS')
     authentication_classes = (CsrfExemptSessionAuthentication,)
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['user']
+
 
     # pagination_class = UserPagination  # Get all user
 
@@ -133,6 +139,8 @@ class CompanyModelViewSet(ModelViewSet):
     serializer_class = CompanyModelSerializer
     allowed_methods = ('GET', 'POST', 'HEAD', 'OPTIONS')
     authentication_classes = (CsrfExemptSessionAuthentication,)
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['name']
 
     # pagination_class = UserPagination  # Get all user
 

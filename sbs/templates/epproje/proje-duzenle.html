@@ -3,9 +3,10 @@
 
 
 
-    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+    <div class="modal fade " tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
          id="companys" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
+
+        <div class="modal-dialog">
             <div class="modal-content">
 
 
@@ -14,11 +15,30 @@
                         <h4 class="list-group-item-heading">Firmalar</h4>
 
                     </a>
+                    <div class="list-group-item">
+
+                        <div class="input-group">
+                            <input type="text" class="form-control companysearch" name="search" value=""
+                                   id="companysearch">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default companysearch" type="submit">
+                                    <span class="glyphicon glyphicon-search" aria-hidden="true">
+
+                                   </span>
+                                    Ara
+                                </button>
+                             </span>
+                        </div>
+                    </div>
+
                 </div>
 
-                <div class="modal-body list-group" id="company-list-main">
+
+                <div class="modal-body" id="company-list-main">
+
 
                 </div>
+
             </div>
         </div>
     </div>
@@ -2273,7 +2293,9 @@
                     $(userItem).appendTo('#company-list-main');
 
                 }
-                $('.companys').click(function () {
+                ;
+            });
+            $('.companys').click(function () {
 
                     userList.children('.active').removeClass('active');
                     let selected = event.target;
@@ -2293,6 +2315,28 @@
                     }
 
                     $("#companys").modal('hide');
+                });
+
+            $(".companysearch").change(function () {
+
+                var search = $("#companysearch").val();
+                url = "/etutproje/sbs/message/api/v1/company/?search=" + search
+
+                $.getJSON(url, function (data) {
+                    console.log(data);
+
+                    userList.children('.companys').remove();
+                    for (let i = 0; i < data.count; i++) {
+
+                        const userItem = `<a class="list-group-item list-group-item-action companys" name="${data.results[i]['name']}"  id="${data.results[i]['id']}">${data.results[i]['name']} <br>${data.results[i]['sorumlu']} </a>`;
+
+
+                        $(userItem).appendTo('#company-list-main');
+
+                    }
+                    ;
+
+
                 });
             });
 

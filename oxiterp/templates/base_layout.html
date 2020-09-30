@@ -1258,10 +1258,10 @@
 
     function modalAccess() {
         userList = $('#user-list-main');
-        $.getJSON('/sbs/message/api/v1/kul/', function (data) {
+        $.getJSON('/etutproje/sbs/message/api/v1/kul/', function (data) {
             console.log(data);
 
-            userList.children('.usermainlist').remove();
+            userList.children('.users').remove();
 
             for (let i = 0; i < data.count; i++) {
                 console.log(data.count);
@@ -1270,7 +1270,6 @@
 
             }
             $('.users').click(function () {
-                alert
                 userList.children('.active').removeClass('active');
                 let selected = event.target;
                 $(selected).addClass('active');
