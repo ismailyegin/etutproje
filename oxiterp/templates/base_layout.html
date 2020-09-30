@@ -985,7 +985,7 @@
 
         var socket = new WebSocket(
             'ws://' + window.location.host +
-            '/ws?session_key=${sessionKey}')
+            '/etutproje/ws?session_key=${sessionKey}')
         {#alert( window.location.host);#}
         socket.onmessage = function (e) {
             getMessageById(e.data)
