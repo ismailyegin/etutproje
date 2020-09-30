@@ -983,10 +983,7 @@
         let currentUser = '{{ request.user.username }}';
 
 
-        var socket = new WebSocket(
-            'ws://' + window.location.host +
-            '/etutproje/ws?session_key=' + sessionKey)
-        {#alert( window.location.host);#}
+        var socket = new WebSocket('ws://' + window.location.host + '/etutproje/ws?session_key=' + sessionKey);
         socket.onmessage = function (e) {
             getMessageById(e.data)
             id = JSON.parse(e.data).user;
