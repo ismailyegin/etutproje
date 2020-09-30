@@ -477,9 +477,9 @@ urlpatterns = [
     # url(r'hello/$', TestList.as_view(), name='hello'),
 
     #     company
-    url(r'etut-proje/company/company-add/$', CompanyView.return_add_Company, name='company-add'),
-    url(r'etut-proje/company/company-list/$', CompanyView.return_list_Company, name='company-list'),
-    url(r'etut-proje/company/company-update/(?P<pk>\d+)$', CompanyView.return_update_Company, name='company-update'),
+    url(r'company/company-add/$', CompanyView.return_add_Company, name='company-add'),
+    url(r'company/company-list/$', CompanyView.return_list_Company, name='company-list'),
+    url(r'company/company-update/(?P<pk>\d+)$', CompanyView.return_update_Company, name='company-update'),
 
 
 
