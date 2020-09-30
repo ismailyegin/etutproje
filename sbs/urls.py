@@ -1,7 +1,8 @@
 from django.conf.urls import url
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from sbs.api.message import UserModelViewSet, MessageModelViewSet, UserModelEndMessageViewSet
+from sbs.api.message import UserModelViewSet, MessageModelViewSet, UserModelEndMessageViewSet, EmployeModelViewSet, \
+    CompanyModelViewSet
 
 from sbs.Views import DashboardViews, AthleteViews, RefereeViews, ClubViews, CoachViews, DirectoryViews, UserViews, \
     CompetitionViews, AdminViews, HelpViews, PageViews, PreRegistration, EPProjectViews, EmployeeViews, PdfView, \
@@ -13,6 +14,8 @@ router = DefaultRouter()
 router.register(r'mesaj', MessageModelViewSet, basename='message-api')
 router.register(r'kul', UserModelViewSet, basename='user-api')
 router.register(r'kulEndMessage', UserModelEndMessageViewSet, basename='user-api-end')
+router.register(r'employess', EmployeModelViewSet, basename='employee-api')
+router.register(r'company', CompanyModelViewSet, basename='company-api')
 
 
 

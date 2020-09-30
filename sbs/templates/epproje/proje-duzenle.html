@@ -3,6 +3,53 @@
 
 
 
+    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+         id="companys" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+
+                <div class="modal-header">
+                    <a href="{% url 'sbs:company-list' %}" class="list-group-item disabled">
+                        <h4 class="list-group-item-heading">Firmalar</h4>
+
+                    </a>
+                </div>
+
+                <div class="modal-body list-group" id="company-list-main">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="employee" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <a href="" class="list-group-item disabled">
+                        <h4 class="list-group-item-heading">Personeller</h4>
+
+                    </a>
+                </div>
+
+                <div class="modal-body list-group" id="employee-list-main">
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+
+
+
+
     <div class="modal modal-warning fade in deneme23" tabindex="-1" role="dialog" id="pdf"
          aria-hidden="true" style="display: none;">
         <div class="modal-dialog">
@@ -448,16 +495,51 @@
 
 
                                                         <label> {{ project_form.sorumlu.label }}</label>
-                                                        {{ project_form.sorumlu }}
+
+                                                        {% if project.sorumlu %}
+                                                            <div class="input-group margin">
+
+
+                                                                <div class="input-group-btn">
+                                                                    <button type="button"
+                                                                            class="btn btn-default dropdown-toggle"
+                                                                            data-toggle="dropdown"
+                                                                            aria-expanded="false">
+
+
+                                                                        <span class="fa fa-plus-circle"></span></button>
+                                                                    <ul class="dropdown-menu text-center">
+                                                                        <li><a onclick="modalEmployee()">Degistir</a>
+                                                                        </li>
+                                                                        <li class="divider"></li>
+                                                                        <li>
+                                                                            <a href="{% url 'sbs:proje-duzenle' pk=project.sorumlu.pk %}">İncele </a>
+                                                                        </li>
+
+                                                                    </ul>
+                                                                </div>
+                                                                <input type="text" name="sorumlu"
+                                                                       value="{{ project_form.instance.sorumlu }}"
+                                                                       class="form-control" style="width: 100%;"
+                                                                       readonly="readonly" id="id_sorumlu" disabled>
+                                                                <!-- /btn-group -->
+
+                                                            </div>
+                                                        {% else %}
+                                                            {{ project_form.sorumlu }}
+                                                        {% endif %}
 
                                                     {% else %}
+
+
+
 
 
                                                         <label> Proje Sorumlusu</label>
                                                         <input type="text" name="sorumlu"
                                                                value="{{ project_form.instance.sorumlu }}"
                                                                class="form-control" style="width: 100%;"
-                                                               readonly="readonly" id="id_sorumlu">
+                                                               readonly="readonly" id="id_sorumlu" disabled>
 
 
 
@@ -584,30 +666,46 @@
                                             <label>{{ project_form.company.label }}</label>
 
 
-                                            {% if project.company %}
-
-                                                <div class="input-group">
-
-                                                    {{ project_form.company }}
-
-                                                    <div class="input-group-btn">
+                                            <div class="input-group margin">
 
 
-                                                        <a href="{% url 'sbs:company-update' pk=project.company.pk %}"
-                                                           type="button" class="btn btn-default"> Firma İncele
-                                                        </a>
+                                                <div class="input-group-btn">
+                                                    <button type="button"
+                                                            class="btn btn-default dropdown-toggle"
+                                                            data-toggle="dropdown"
+                                                            aria-expanded="false">
 
-
-                                                    </div>
-
-
+                                                        <span class="fa fa-plus-circle"></span></button>
+                                                    <ul class="dropdown-menu">
+                                                        <li><a onclick="modalCompany()">Degistir</a></li>
+                                                        <li class="divider"></li>
+                                                        <li>
+                                                            {% if project.company %}
+                                                                <a id="companyDetail"
+                                                                   href="{% url 'sbs:company-update' pk=project.company.pk %} }}">İncele </a>
+                                                            {% else %}
+                                                                <a id="companyDetail" href="#">İncele </a>
+                                                            {% endif %}
+                                                        </li>
+                                                    </ul>
                                                 </div>
-                                            {% else %}
+                                                <select name="company"
+                                                        class="form-control select2 select2-hidden-accessible"
+                                                        style="width: 100%;" id="id_company">
 
-                                                {{ project_form.company }}
 
-                                            {% endif %}
+                                                    {% if project.company %}
 
+                                                        <option value="1" selected="">{{ project.company }}</option>
+
+
+                                                    {% endif %}
+
+
+                                                </select>
+
+
+                                            </div>
 
 
                                         </div>
@@ -625,11 +723,7 @@
                     </div>
                     <!-- /.box -->
                     </div>
-
-
                     {#    arsa yapım ödenek             ----------------------------------------#}
-
-
                     <div class="col-md-6">
                         <div class="box box-info collapsed-box">
                             <div class="box-header with-border">
@@ -2134,7 +2228,81 @@
                 $('#modal-danger').modal('hide');
             });
 
-        }
+     };
+
+
+        function modalEmployee() {
+            userList = $('#employee-list-main');
+            $.getJSON('/sbs/message/api/v1/employess/', function (data) {
+                console.log(data);
+
+                userList.children('.employe').remove();
+
+                for (let i = 0; i < data.count; i++) {
+                    const userItem = `<a class="list-group-item employe" id="${data.results[i]['user'].username}"><img  class="img-circle" style="width: 60px;height: 60px;" src='${data.results[i]['person'].profileImage}'>    ${data.results[i]['user'].first_name} ${data.results[i]['user'].last_name}</a>`;
+                    $(userItem).appendTo('#employee-list-main');
+
+                }
+                $('.employe').click(function () {
+                    userList.children('.active').removeClass('active');
+                    let selected = event.target;
+                    $(selected).addClass('active');
+                    window.location.replace("{% url "sbs:proje-duzenle" pk=project.pk %}?user=" + selected.id);
+                });
+            });
+
+            $("#employee").on("shown.bs.modal", function (e) {
+
+            }).modal('show');
+
+
+        };
+
+
+        function modalCompany() {
+            userList = $('#company-list-main');
+            $.getJSON('/sbs/message/api/v1/company/', function (data) {
+                console.log(data);
+
+                userList.children('.companys').remove();
+                for (let i = 0; i < data.count; i++) {
+                    const userItem = `<a class="list-group-item companys" name="${data.results[i]['name']}" style="height 300px;" id="${data.results[i]['id']}">    ${data.results[i]['name']} -> ${data.results[i]['sorumlu']}</a>`;
+                    $(userItem).appendTo('#company-list-main');
+
+                }
+                $('.companys').click(function () {
+
+                    userList.children('.active').removeClass('active');
+                    let selected = event.target;
+                    {#print(selected);#}
+                    $(selected).addClass('active');
+                    {#window.location.replace("{% url "sbs:proje-duzenle" pk=project.pk %}?user=" + selected.id);#}
+                    if (selected.id == null) {
+
+
+                    } else {
+                        $('#id_company')
+                            .find('option')
+                            .remove()
+                            .end()
+                            .append('<option  value="' + selected.id + '" selected>' + selected.name + '</option>');
+
+                        var url = "{% url "sbs:company-update" pk=12 %}".replace(12, selected.id.toString());
+                        $("#companyDetail").attr("href", url);
+                    }
+                    $("#companys").modal('hide');
+                });
+            });
+
+            $("#companys").on("shown.bs.modal", function (e) {
+
+            }).modal('show');
+
+
+        };
+
+
+
 
 
     </script>

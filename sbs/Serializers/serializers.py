@@ -4,7 +4,11 @@ from sbs.models.Message import Message
 from rest_framework.serializers import ModelSerializer, CharField
 from django.http import JsonResponse
 from rest_framework import serializers
+
 from sbs.models.Employee import Employee
+from sbs.models.Person import Person
+from sbs.models.CategoryItem import CategoryItem
+from sbs.models.Company import Company
 
 class MessageModelSerializer(ModelSerializer):
     user = CharField(source='user.username', read_only=True)
@@ -55,4 +59,32 @@ class MessageEndModelSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Message
+        fields = '__all__'
+
+
+class PersonModelSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Person
+        fields = '__all__'
+
+
+class CategoryItemModelSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CategoryItem
+        fields = '__all__'
+
+
+class EmployeModelSerializer(serializers.ModelSerializer):
+    user = UserModelSerializer()
+    person = PersonModelSerializer()
+    workDefinition = CategoryItemModelSerializer()
+
+    class Meta:
+        model = Employee
+        fields = '__all__'
+
+
+class CompanyModelSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Company
         fields = '__all__'

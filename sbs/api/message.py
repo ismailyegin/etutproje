@@ -5,8 +5,13 @@ from django.shortcuts import render, redirect
 from rest_framework.response import Response
 from sbs.models.Message import Message
 from django.db.models import Q
+
 from sbs.models.Message import Message
-from sbs.Serializers.serializers import MessageModelSerializer, MessageEndModelSerializer
+from sbs.models.Employee import Employee
+from sbs.models.Company import Company
+
+from sbs.Serializers.serializers import MessageModelSerializer, MessageEndModelSerializer, EmployeModelSerializer, \
+    CompanyModelSerializer
 from sbs.Serializers.serializers import UserModelSerializer
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.pagination import PageNumberPagination
@@ -108,3 +113,28 @@ class UserModelEndMessageViewSet(ModelViewSet):
 #     authentication_classes = (CsrfExemptSessionAuthentication)
 #     def get(self,request):
 #         return Response({"message": "Hello, world!"})
+
+
+class EmployeModelViewSet(ModelViewSet):
+    queryset = Employee.objects.all()
+    serializer_class = EmployeModelSerializer
+
+    allowed_methods = ('GET', 'POST', 'HEAD', 'OPTIONS')
+    authentication_classes = (CsrfExemptSessionAuthentication,)
+
+    # pagination_class = UserPagination  # Get all user
+
+    def list(self, request, *args, **kwargs):
+        return super(EmployeModelViewSet, self).list(request, *args, **kwargs)
+
+
+class CompanyModelViewSet(ModelViewSet):
+    queryset = Company.objects.all()
+    serializer_class = CompanyModelSerializer
+    allowed_methods = ('GET', 'POST', 'HEAD', 'OPTIONS')
+    authentication_classes = (CsrfExemptSessionAuthentication,)
+
+    # pagination_class = UserPagination  # Get all user
+
+    def list(self, request, *args, **kwargs):
+        return super(CompanyModelViewSet, self).list(request, *args, **kwargs)

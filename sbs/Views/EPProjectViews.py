@@ -12,6 +12,7 @@ from django.db.models import Sum
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
 from django.utils import timezone
+from twisted.conch.insults.insults import privateModes
 
 from oxiterp.settings.base import MEDIA_URL
 from sbs.Forms.CategoryItemForm import CategoryItemForm
@@ -143,7 +144,21 @@ def edit_project(request, pk):
         # if days < 0:
         #     days = 'Zamanı bitti.'
 
+    #   proje sorumlusu degiştirildi
+    user_sorumlu = request.GET.get('user')
+    if user_sorumlu:
+        try:
+            print("try calisti")
+            project.sorumlu = Employee.objects.get(user__username=user_sorumlu)
+            project.save()
+        except:
+            print('eror loglamasi yapilacak')
+
+
+
+
     # bildirimden  gelinmisse ve sistem deki  kisinin ise true yap daha görülmesin
+
     get = request.GET.get('notification')
     if get:
         notification = Notification.objects.get(pk=int(get))
@@ -169,6 +184,7 @@ def edit_project(request, pk):
         insaatAlani = insaatAlani.replace(".", "")
         insaatAlani = insaatAlani.replace(",", ".")
 
+
         tahmini = request.POST.get('tahmini')
         tahmini = tahmini.replace(".", "")
         tahmini = tahmini.replace(",", ".")
@@ -191,18 +207,27 @@ def edit_project(request, pk):
 
         town = request.POST.get('town')
 
+        if project.sorumlu:
+            sorumlu = project.sorumlu
+
+        print('bekledigim deger=', request.POST.get('company'))
+
+
         if project_form.is_valid():
 
-            project = project_form.save(commit=False)
-            project.insaatAlani = insaatAlani
-            project.tahminiOdenekTutari = tahmini
-            project.yaklasikMaliyet = yaklasik
-            project.sozlesmeBedeli = sozlesmebedeli
-            project.arsaAlani = arsa
-            project.sozlesmeBedeliKdv = sozlesmebedeliKdv
-            project.town = town
+            projectSave = project_form.save(commit=False)
+            projectSave.insaatAlani = insaatAlani
+            projectSave.tahminiOdenekTutari = tahmini
+            projectSave.yaklasikMaliyet = yaklasik
+            projectSave.sozlesmeBedeli = sozlesmebedeli
+            projectSave.arsaAlani = arsa
+            projectSave.sozlesmeBedeliKdv = sozlesmebedeliKdv
+            projectSave.town = town
 
-            project.save()
+            if request.POST.get('sorumlu') is None and sorumlu:
+                projectSave.sorumlu = sorumlu
+
+            projectSave.save()
 
             log = str(project.name) + " projesini güncelledi"
             log = general_methods.logwrite(request, log)
