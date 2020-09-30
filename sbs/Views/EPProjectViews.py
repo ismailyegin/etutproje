@@ -12,7 +12,7 @@ from django.db.models import Sum
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
 from django.utils import timezone
-from twisted.conch.insults.insults import privateModes
+# from twisted.conch.insults.insults import privateModes
 
 from oxiterp.settings.base import MEDIA_URL
 from sbs.Forms.CategoryItemForm import CategoryItemForm
