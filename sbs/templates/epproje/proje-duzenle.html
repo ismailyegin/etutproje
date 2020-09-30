@@ -2285,7 +2285,7 @@
                 console.log(data);
 
                 userList.children('.companys').remove();
-                for (let i = 0; i < data.count; i++) {
+                {#for (let i = 0; i < data.count; i++) {#}
 
                     const userItem = `<a class="list-group-item list-group-item-action companys" name="${data.results[i]['name']}"  id="${data.results[i]['id']}">${data.results[i]['name']} <br>${data.results[i]['sorumlu']} </a>`;
 
