@@ -2310,7 +2310,6 @@
                     }
 
 
-                    window.location.replace("{% url "sbs:proje-duzenle" pk=project.pk %}?user=" + selected.id);
                 });
 
 
@@ -2327,7 +2326,34 @@
                             $(userItem).appendTo('#employee-list-main');
 
                         }
-                        ;
+                        $('.employe').click(function () {
+                            userList.children('.active').removeClass('active');
+                            let selected = event.target;
+                            $(selected).addClass('active');
+
+                            if (selected.id != null) {
+
+                                $('#id_sorumlu')
+                                    .find('option')
+                                    .remove()
+                                    .end()
+                                    .append('<option  value="' + selected.id + '" selected>' + selected.name + '</option>');
+
+
+                                $("#employee").modal('hide');
+
+                                var url = "{% url "sbs:personel-duzenle" pk=12 %}".replace(12, selected.id.toString());
+                                $("#sorumluDetail").attr("href", url);
+
+
+                            }
+
+
+                        });
+
+
+
+
 
 
                     })
@@ -2399,7 +2425,24 @@
                         $(userItem).appendTo('#company-list-main');
 
                     }
-                    ;
+                    $('.companys').click(function () {
+                        userList.children('.active').removeClass('active');
+                        let selected = event.target;
+                        $(selected).addClass('active');
+                        if (selected.id != null) {
+
+                            $('#id_company')
+                                .find('option')
+                                .remove()
+                                .end()
+                                .append('<option  value="' + selected.id + '" selected>' + selected.name + '</option>');
+
+                            var url = "{% url "sbs:company-update" pk=12 %}".replace(12, selected.id.toString());
+                            $("#companyDetail").attr("href", url);
+                        }
+
+                        $("#companys").modal('hide');
+                    });
 
 
                 });
