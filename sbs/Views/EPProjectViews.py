@@ -145,14 +145,14 @@ def edit_project(request, pk):
         #     days = 'Zamanı bitti.'
 
     #   proje sorumlusu degiştirildi
-    user_sorumlu = request.GET.get('user')
-    if user_sorumlu:
-        try:
-            print("try calisti")
-            project.sorumlu = Employee.objects.get(user__username=user_sorumlu)
-            project.save()
-        except:
-            print('eror loglamasi yapilacak')
+    # user_sorumlu = request.GET.get('user')
+    # if user_sorumlu:
+    #     try:
+    #         print("try calisti")
+    #         project.sorumlu = Employee.objects.get(user__username=user_sorumlu)
+    #         project.save()
+    #     except:
+    #         print('eror loglamasi yapilacak')
 
 
 

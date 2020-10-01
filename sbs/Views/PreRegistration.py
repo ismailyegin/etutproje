@@ -72,7 +72,8 @@ def rejected_preRegistration(request,pk):
     veri.status=PreRegistration.DENIED
     veri.save()
     prepegidtration=PreRegistration.objects.all()
-    return render(request, 'kulup/kulupBasvuru.html',
+    return render(request,
+                  'kulup/kulupBasvuru.html',
                   {'prepegidtration': prepegidtration })
 
 

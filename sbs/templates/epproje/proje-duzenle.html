@@ -53,6 +53,21 @@
                         <h4 class="list-group-item-heading">Personeller</h4>
 
                     </a>
+                    <div class="list-group-item">
+
+                        <div class="input-group">
+                            <input type="text" class="form-control companysearch" name="searchEmloyee" value=""
+                                   id="searchEmloyee">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default searchEmloyee" type="submit">
+                                    <span class="glyphicon glyphicon-search" aria-hidden="true">
+
+                                   </span>
+                                    Ara
+                                </button>
+                             </span>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="modal-body list-group" id="employee-list-main">
@@ -510,13 +525,14 @@
 
                                             <div class="col-lg-3">
                                                 <div class="form-group">
+
                                                     {% if user.groups.all.0.name == 'Admin' %}
 
 
 
                                                         <label> {{ project_form.sorumlu.label }}</label>
 
-                                                        {% if project.sorumlu %}
+
                                                             <div class="input-group margin">
 
 
@@ -527,41 +543,43 @@
                                                                             aria-expanded="false">
 
 
-                                                                        <span class="fa fa-plus-circle"></span></button>
+                                                                        <span class="fa fa-plus-circle"></span>
+                                                                    </button>
                                                                     <ul class="dropdown-menu text-center">
-                                                                        <li><a onclick="modalEmployee()">Degistir</a>
+                                                                        <li>
+                                                                            <a onclick="modalEmployee()">Degistir</a>
                                                                         </li>
                                                                         <li class="divider"></li>
                                                                         <li>
-                                                                            <a href="{% url 'sbs:personel-duzenle' pk=project.sorumlu.pk %}">İncele </a>
+                                                                            {% if project.sorumlu %}
+                                                                                <a id="sorumluDetail" target="_blank"
+                                                                                   href="{% url 'sbs:personel-duzenle' pk=project.sorumlu.pk %}">İncele </a>
+                                                                            {% else %}
+                                                                                <a id="sorumluDetail" target="_blank"
+                                                                                   href="#">İncele </a>
+                                                                            {% endif %}
+
                                                                         </li>
 
                                                                     </ul>
                                                                 </div>
-                                                                <input type="text" name="sorumlu"
-                                                                       value="{{ project_form.instance.sorumlu }}"
-                                                                       class="form-control" style="width: 100%;"
-                                                                       readonly="readonly" id="id_sorumlu" disabled>
-                                                                <!-- /btn-group -->
 
+
+                                                                <select name="sorumlu"
+                                                                        class="form-control select2 select2-hidden-accessible"
+                                                                        style="width: 100%;" id="id_sorumlu" disable>
+
+
+                                                                    {% if project.sorumlu %}
+
+                                                                        <option value="{{ project.sorumlu.pk }}"
+                                                                                selected="">{{ project.sorumlu }}</option>
+
+
+                                                                    {% endif %}
+
+                                                                </select>
                                                             </div>
-                                                        {% else %}
-                                                            {{ project_form.sorumlu }}
-                                                        {% endif %}
-
-                                                    {% else %}
-
-
-
-
-
-                                                        <label> Proje Sorumlusu</label>
-                                                        <input type="text" name="sorumlu"
-                                                               value="{{ project_form.instance.sorumlu }}"
-                                                               class="form-control" style="width: 100%;"
-                                                               readonly="readonly" id="id_sorumlu" disabled>
-
-
 
 
 
@@ -701,7 +719,7 @@
                                                         <li class="divider"></li>
                                                         <li>
                                                             {% if project.company %}
-                                                                <a id="companyDetail"
+                                                                <a id="companyDetail" target="_blank"
                                                                    href="{% url 'sbs:company-update' pk=project.company.pk %}">İncele </a>
                                                             {% else %}
                                                                 <a id="companyDetail" href="#">İncele </a>
@@ -1335,8 +1353,12 @@
         {##}
         {# });#}
 
-
+        let urlApi = '/etut-proje/sbs/message/api/v1/';
         $(document).ready(function () {
+
+
+            {#let urlApi='/etutproje/sbs/message/api/v1/'#}
+
             formatCurrency($('#yaklasik'), "blur");
             formatCurrency($('#insaat'), "blur");
             formatCurrency($('#tahmini'), "blur");
@@ -2215,7 +2237,8 @@
 
 
         }
-     function deleteoffers(id, competitionId) {
+
+        function deleteoffers(id, competitionId) {
 
             console.log(id);
             var html = '';
@@ -2254,13 +2277,13 @@
         function modalEmployee() {
             userList = $('#employee-list-main');
             {#$.getJSON('/etutproje/sbs/message/api/v1/employess/', function (data) {#}
-            $.getJSON('/etutproje/sbs/message/api/v1/employess/', function (data) {
-                console.log(data);
+            $.getJSON(urlApi + 'employess/', function (data) {
+                {#console.log(data);#}
 
                 userList.children('.employe').remove();
 
                 for (let i = 0; i < data.count; i++) {
-                    const userItem = `<a class="list-group-item employe" id="${data.results[i]['user'].username}"><img  class="img-circle" style="width: 60px;height: 60px;" src='${data.results[i]['person'].profileImage}'>    ${data.results[i]['user'].first_name} ${data.results[i]['user'].last_name}</a>`;
+                    const userItem = `<a class="list-group-item employe" name=" ${data.results[i]['user'].first_name} ${data.results[i]['user'].last_name}" id="${data.results[i]['id']}"><img  class="img-circle" style="width: 60px;height: 60px;" src='${data.results[i]['person'].profileImage}'>    ${data.results[i]['user'].first_name} ${data.results[i]['user'].last_name}</a>`;
                     $(userItem).appendTo('#employee-list-main');
 
                 }
@@ -2268,7 +2291,45 @@
                     userList.children('.active').removeClass('active');
                     let selected = event.target;
                     $(selected).addClass('active');
-                    window.location.replace("{% url "sbs:proje-duzenle" pk=project.pk %}?user=" + selected.id);
+
+                    if (selected.id != null) {
+
+                        $('#id_sorumlu')
+                            .find('option')
+                            .remove()
+                            .end()
+                            .append('<option  value="' + selected.id + '" selected>' + selected.name + '</option>');
+
+
+                        $("#employee").modal('hide');
+
+                        var url = "{% url "sbs:personel-duzenle" pk=12 %}".replace(12, selected.id.toString());
+                        $("#sorumluDetail").attr("href", url);
+
+
+                    }
+
+
+                    {#window.location.replace("{% url "sbs:proje-duzenle" pk=project.pk %}?user=" + selected.id);#}
+                });
+                $(".searchEmloyee").change(function () {
+
+                    var search = $("#searchEmloyee").val();
+                    url = urlApi + "employess/?search=" + search
+
+                    $.getJSON(url, function (data) {
+                        console.log(data);
+
+                        userList.children('.employe').remove();
+                        for (let i = 0; i < data.count; i++) {
+                            const userItem = `<a class="list-group-item employe" name=" ${data.results[i]['user'].first_name} ${data.results[i]['user'].last_name}" id="${data.results[i]['id']}"><img  class="img-circle" style="width: 60px;height: 60px;" src='${data.results[i]['person'].profileImage}'>    ${data.results[i]['user'].first_name} ${data.results[i]['user'].last_name}</a>`;
+                            $(userItem).appendTo('#employee-list-main');
+
+                        }
+                        ;
+
+
+                    });
                 });
 
 
@@ -2285,7 +2346,7 @@
         function modalCompany() {
             userList = $('#company-list-main');
             {#$.getJSON('/etutproje/sbs/message/api/v1/company/', function (data) {#}
-            $.getJSON('/etutproje/sbs/message/api/v1/company/', function (data) {
+            $.getJSON(urlApi + 'company/', function (data) {
                 console.log(data);
 
                 userList.children('.companys').remove();
@@ -2297,10 +2358,8 @@
                     $(userItem).appendTo('#company-list-main');
 
                 }
-                ;
-            });
-            $('.companys').click(function () {
 
+                $('.companys').click(function () {
                     userList.children('.active').removeClass('active');
                     let selected = event.target;
                     {#print(selected);#}
@@ -2325,7 +2384,7 @@
             $(".companysearch").change(function () {
 
                 var search = $("#companysearch").val();
-                url = "/etutproje/sbs/message/api/v1/company/?search=" + search
+                url = urlApi + "company/?search=" + search
 
                 $.getJSON(url, function (data) {
                     console.log(data);
@@ -2350,7 +2409,9 @@
             }).modal('show');
 
 
-        };
+            });
+
+        }
 
 
 

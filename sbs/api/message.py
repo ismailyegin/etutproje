@@ -19,6 +19,7 @@ from rest_framework.viewsets import ModelViewSet
 from datetime import date, datetime
 from django.shortcuts import get_object_or_404
 
+import django_filters.rest_framework
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
 
@@ -124,8 +125,8 @@ class EmployeModelViewSet(ModelViewSet):
 
     allowed_methods = ('GET', 'POST', 'HEAD', 'OPTIONS')
     authentication_classes = (CsrfExemptSessionAuthentication,)
-    filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['user']
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['user__first_name', 'user__last_name', 'user__username', 'user__email']
 
 
     # pagination_class = UserPagination  # Get all user
