@@ -12,7 +12,6 @@ from django.db.models import Sum
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
 from django.utils import timezone
-# from twisted.conch.insults.insults import privateModes
 
 from oxiterp.settings.base import MEDIA_URL
 from sbs.Forms.CategoryItemForm import CategoryItemForm
@@ -31,8 +30,9 @@ from sbs.models.Employee import Employee
 from sbs.models.Town import Town
 from sbs.services import general_methods
 from sbs.services.general_methods import getProfileImage
-from sbs.models.Notification import Notification
 
+
+# from twisted.conch.insults.insults import privateModes
 
 
 @login_required
@@ -82,26 +82,32 @@ def edit_project_personel(request, pk):
             notification.is_show = True
             notification.save()
 
-    if project.sorumlu.user == user or projects:
+    if project.sorumlu:
+
         if project.sorumlu.user == user:
             return redirect('sbs:proje-duzenle', pk=project.pk)
-
-
         else:
             project_form = DisableEPProjectForm(request.POST or None, instance=project)
             days = None
             if project.aifinish:
                 days = (project.aifinish - timezone.now()).days
 
-
             return render(request, 'epproje/Proje-incele-Personel.html',
                           {'project': project, 'project_form': project_form,
                            'days': days})
-
-
-
     else:
-        return redirect('sbs:personel')
+        project_form = DisableEPProjectForm(request.POST or None, instance=project)
+        days = None
+        if project.aifinish:
+            days = (project.aifinish - timezone.now()).days
+
+        return render(request, 'epproje/Proje-incele-Personel.html',
+                      {'project': project, 'project_form': project_form,
+                       'days': days})
+
+
+
+
 
 
 @login_required

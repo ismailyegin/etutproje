@@ -119,7 +119,39 @@
 
     <header class="main-header">
         <!-- Logo -->
-        <a href="#" class="logo">
+
+        {% if user.groups.all.0.name == "Personel" %}
+            <a href="{% url 'sbs:personel' %}" class="logo">
+
+
+
+
+        {% elif user.groups.all.0.name == "Teknik" %}
+            <a href="{% url 'sbs:anasayfa-teknik' %}" class="logo">
+
+
+
+
+        {% elif user.groups.all.0.name == "Admin" %}
+            <a href="{% url 'sbs:admin' %}" class="logo">
+
+
+
+        {% else %}
+            <a href="#" class="logo">
+        {% endif %}
+
+
+
+
+
+
+
+
+
+
+
+
             <!-- mini logo for sidebar mini 50x50 pixels -->
             <span class="logo-mini"><b>T.C.</b></span>
             <!-- logo for regular state and mobile devices -->
@@ -981,9 +1013,7 @@
 
         let sessionKey = '{{ request.session.session_key }}';
         let currentUser = '{{ request.user.username }}';
-
-
-        var socket = new WebSocket('ws://' + window.location.host + '/etutproje/ws?session_key=' + sessionKey);
+        var socket = new WebSocket('ws://' + window.location.host + '/ws?session_key=' + sessionKey);
         socket.onmessage = function (e) {
             getMessageById(e.data)
             id = JSON.parse(e.data).user;
