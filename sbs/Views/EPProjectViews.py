@@ -30,6 +30,7 @@ from sbs.models.Employee import Employee
 from sbs.models.Town import Town
 from sbs.services import general_methods
 from sbs.services.general_methods import getProfileImage
+from sbs.models.Notification import Notification
 
 
 # from twisted.conch.insults.insults import privateModes
@@ -558,26 +559,31 @@ def add_employee_to_project(request, pk):
         logout(request)
         return redirect('accounts:login')
 
+
     try:
+        # personel kaydedildi
         title = CategoryItem.objects.get(pk=request.POST.get('title'))
         employee = Employee.objects.get(pk=request.POST.get('employee'))
         project = EPProject.objects.get(pk=pk)
         employees = project.employees.create(projectEmployeeTitle=title, employee=employee)
         project.save()
-
+        # bildirimler gönderiliyor
         notification = Notification(
-                                    users=employee.user,
-                                    entityId=project.pk,
-                                    tableName="proje"
-                                    )
-        notification.notification=project.name+' projesine eklendiniz'
+            users=employee.user,
+            entityId=project.pk,
+            tableName="proje"
+        )
+        notification.notification = project.name + ' projesine eklendiniz'
         notification.save()
+
+        # işlemin log kaydı eklenedi
 
         log = str(project.name) + " projesine " + str(employee) + " ekledi unvan =" + str(title)
         log = general_methods.logwrite(request, log)
 
         # messages.success(request, 'Personel Eklenmiştir')
         return JsonResponse({'status': 'Success', 'messages': 'save successfully', 'pk': employees.pk})
+
 
     except:
         return JsonResponse({'status': 'Fail', 'msg': 'Not a valid request'})

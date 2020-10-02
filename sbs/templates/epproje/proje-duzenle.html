@@ -239,7 +239,7 @@
                 </div>
                 <div class="modal-body">
                     <label for="title">Ünvan</label>
-                    <select id="title" class="form-control" required>
+                    <select id="titleAdd" name="titleAdd" class="form-control" required>
                         <option value="" selected>Seçiniz...</option>
                         {% for title in titles %}
                             <option value="{{ title.pk }}">{{ title.name }}</option>
@@ -247,7 +247,7 @@
 
                     </select>
                     <label for="employee">Personel</label>
-                    <select id="employee" class="form-control" required>
+                    <select id="employeeAdd" name="employeeAdd" class="form-control" required>
                         <option value="" selected>Seçiniz...</option>
                         {% for employee in employees %}
                             <option value="{{ employee.pk }}">{{ employee }}</option>
@@ -1585,7 +1585,9 @@
             $("#reddetwhy").on("shown.bs.modal", function (e) {
 
                 console.log(e);
+
                 $("#btn-gonder").click(function (e) {
+
                     if (e.handled !== true) { // This will prevent event triggering more then once
                         e.handled = true;
 
@@ -1594,8 +1596,8 @@
                             type: "POST",
                             data: {
                                 'csrfmiddlewaretoken': "{{  csrf_token  }}",
-                                title: $('#title').val(),
-                                employee: $('#employee').val(),
+                                title: $('#titleAdd').val(),
+                                employee: $('#employeeAdd').val(),
                                 isActive: 'False'
 
                             },
@@ -1609,8 +1611,8 @@
                                     var count = p.rows().count() + 1;
                                     p.row.add([
                                         count.toString(),
-                                        $('#title option:selected').text(),
-                                        $('#employee option:selected').text(),
+                                        $('#titleAdd option:selected').text(),
+                                        $('#employeeAdd option:selected').text(),
                                         '<div class="btn-group"><a type="button" class="btn btn-danger" onclick=deleteEmployee({{ project.pk }},' + result.pk + ')>  <i class="fa fa-trash"></i></a></div>',
 
                                     ]).node().id = 'personel-' + result.pk;
