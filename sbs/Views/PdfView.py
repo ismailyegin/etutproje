@@ -273,8 +273,8 @@ def edit_project_pdf(request,pk):
     c = canvas.Canvas(buffer)
     c.setTitle('Etüt Proje')
 
-    logo = ImageReader('http://kobiltek.com:81/etutproje/' + MEDIA_URL + "profile/logo.png")
-    c.drawImage(logo, 460, 740, width=80, height=80, mask='auto')
+    # logo = ImageReader('http://kobiltek.com:81/etutproje/' + MEDIA_URL + "profile/logo.png")
+    # c.drawImage(logo, 460, 740, width=80, height=80, mask='auto')
     # for i in range(5):
     #     page_num = c.getPageNumber()
     #     # text = "Proje Takip Programi %s" % page_num
@@ -305,11 +305,6 @@ def edit_project_pdf(request,pk):
     c.setFont("Verdana", 16)
     c.drawString(100,770,'DESTEK HİZMETLERİ DAİRE BAŞKANLIĞI ')
     c.drawString(120, 745, ' ETÜT PROJE ŞUBE MÜDÜRLÜĞÜ')
-
-
-
-
-
 
     c.setFont("Verdana", 15)
     name=''
@@ -457,7 +452,8 @@ def edit_project_pdf(request,pk):
     c.drawString(50, x - 140, "Sözleşme Bedeli Kdv Dahil  :%s ₺" % (
         "{:,}".format(project.sozlesmeBedeliKdv) if project.sozlesmeBedeliKdv else '  '))
 
-    c.drawString(50, x - 160, 'Firma :%s' % project.company.name)
+    c.drawString(50, x - 160, 'Firma :%s' % (
+        project.company if project.company else ' '))
     # c.drawString(50, x - 180, 'İhale Müellif                      :%s' % project.ihalemuellif)
     # c.drawString(50, x - 200, 'İletişim (email)                  :%s' % project.ihaleimail)
     # c.drawString(50, x - 220, 'İletişim (tel)                      :%s' % project.ihaletel)
