@@ -302,7 +302,7 @@ def edit_project_pdf(request,pk):
 
     c.drawString(105, 800, "%s" % datetime.datetime.today().strftime('%d-%m-%Y %H:%M'))
 
-    c.setFont("Tahoma", 16)
+    c.setFont("Verdana", 16)
     c.drawString(100,770,'DESTEK HİZMETLERİ DAİRE BAŞKANLIĞI ')
     c.drawString(120, 745, ' ETÜT PROJE ŞUBE MÜDÜRLÜĞÜ')
 
@@ -454,13 +454,13 @@ def edit_project_pdf(request,pk):
     c.setFont("Verdana", 10)
     c.drawString(50, x - 120, "Sözleşme Bedeli                :%s  ₺" % (
         "{:,}".format(project.sozlesmeBedeli) if project.sozlesmeBedeli else '  '))
-    c.drawString(50, x - 140, "Sözleşme Bedeli Kdv Dahil    :%s ₺" % (
+    c.drawString(50, x - 140, "Sözleşme Bedeli Kdv Dahil  :%s ₺" % (
         "{:,}".format(project.sozlesmeBedeliKdv) if project.sozlesmeBedeliKdv else '  '))
 
-    c.drawString(50, x - 160, 'Proje Bürosu Adı                :%s' % project.ihaleProjeBurosuName)
-    c.drawString(50, x - 180, 'İhale Müellif                      :%s' % project.ihalemuellif)
-    c.drawString(50, x - 200, 'İletişim (email)                  :%s' % project.ihaleimail)
-    c.drawString(50, x - 220, 'İletişim (tel)                      :%s' % project.ihaletel)
+    c.drawString(50, x - 160, 'Firma :%s' % project.company.name)
+    # c.drawString(50, x - 180, 'İhale Müellif                      :%s' % project.ihalemuellif)
+    # c.drawString(50, x - 200, 'İletişim (email)                  :%s' % project.ihaleimail)
+    # c.drawString(50, x - 220, 'İletişim (tel)                      :%s' % project.ihaletel)
 
 
 
@@ -562,18 +562,18 @@ def edit_project_pdf(request,pk):
         # 160
         c.setFont("Verdana", 15)
 
-        c.drawString(50, x - 240, 'Hakediş Bilgileri')
+        c.drawString(50, x - 180, 'Hakediş Bilgileri')
 
         c.setFont("Verdana", 10)
 
-        c.line(50, x - 250, 200, x - 250)
-        c.drawString(50, x - 270, 'Tarihi  ')
-        c.line(50, x - 280, 100, x - 280)
+        c.line(50, x - 190, 200, x - 190)
+        c.drawString(50, x - 210, 'Tarihi  ')
+        c.line(50, x - 220, 100, x - 220)
 
-        c.drawString(150, x - 270, 'Miktarı')
-        c.line(150, x - 280, 200, x - 280)
+        c.drawString(150, x - 210, 'Miktarı')
+        c.line(150, x - 220, 200, x - 220)
 
-        y = x - 300
+        y = x - 240
         for item in project.vest.all():
 
             if y > 50:
