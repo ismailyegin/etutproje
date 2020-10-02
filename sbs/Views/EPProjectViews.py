@@ -1291,14 +1291,14 @@ def update_vest_to_project(request, pk):
     vest = request.POST.get('vest')
     date = request.POST.get('vestdate')
     dates = datetime.strptime(date, '%d/%m/%Y')
-    print(type(vest))
+    # print(type(vest))
 
-    vest = EPVest.objects.get(pk=pk)
-    vest.vest = Decimal(vest)
-    vest.vestDate = dates
-    vest.save()
+    vestobject = EPVest.objects.get(pk=pk)
+    vestobject.vest = Decimal(vest)
+    vestobject.vestDate = dates
+    vestobject.save()
 
-    log = str(vest.pk) + "hakedis güncellendi."
+    log = str(vestobject.pk) + "     hakedis güncellendi."
     log = general_methods.logwrite(request, log)
 
 
