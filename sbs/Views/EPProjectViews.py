@@ -216,10 +216,6 @@ def edit_project(request, pk):
 
         if project.sorumlu:
             sorumlu = project.sorumlu
-
-        print('bekledigim deger=', request.POST.get('company'))
-
-
         if project_form.is_valid():
 
             projectSave = project_form.save(commit=False)

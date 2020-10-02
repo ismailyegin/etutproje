@@ -85,7 +85,7 @@
 
 
 
-    <div class="modal modal-warning fade in deneme23" tabindex="-1" role="dialog" id="pdf"
+    <div class="modal modal-warning  fade in deneme23" tabindex="-1" role="dialog" id="pdf"
          aria-hidden="true" style="display: none;">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -734,8 +734,11 @@
 
                                                     {% if project.company %}
 
-                                                        <option value="1" selected="">{{ project.company }}</option>
+                                                        <option value="" selected="">--------</option>
 
+                                                        <option value="1" selected="">{{ project.company }}</option>
+                                                    {% else %}
+                                                        <option value="" selected="">--------</option>
 
                                                     {% endif %}
 
@@ -1344,14 +1347,6 @@
 
     <script>
 
-
-        {#    $(document).ready(function(){#}
-        {##}
-        {##}
-        {#        alert('');#}
-        {##}
-        {##}
-        {# });#}
 
         let urlApi = '/etutproje/sbs/message/api/v1/';
         $(document).ready(function () {
@@ -1993,8 +1988,6 @@
                                 } else {
                                     Console.log('Error');
                                 }
-
-
                             }
                         });
 
