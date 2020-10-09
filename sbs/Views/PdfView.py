@@ -273,7 +273,7 @@ def edit_project_pdf(request,pk):
     c = canvas.Canvas(buffer)
     c.setTitle('Etüt Proje')
 
-    # logo = ImageReader('http://kobiltek.com:81/etutproje/' + MEDIA_URL + "profile/logo.png")
+    logo = ImageReader('http://kobiltek.com:81/etutproje/' + MEDIA_URL + "profile/logo.png")
     # c.drawImage(logo, 460, 740, width=80, height=80, mask='auto')
     # for i in range(5):
     #     page_num = c.getPageNumber()
@@ -432,13 +432,13 @@ def edit_project_pdf(request,pk):
     x = x - 50
 
     c.drawString(50, x, "İhale Tarihi                         :%s" % (
-        project.ihaleTarihi.strftime('%m/%d/%Y') if project.ihaleTarihi else ' '))
+        project.ihaleTarihi.strftime('%d/%m/%Y') if project.ihaleTarihi else ' '))
     c.drawString(50, x - 20, "Sözleşme Tarihi                  :%s" % (
-        project.sozlesmeTarihi.strftime('%m/%d/%Y') if project.sozlesmeTarihi else ' '))
+        project.sozlesmeTarihi.strftime('%d/%m/%Y') if project.sozlesmeTarihi else ' '))
     c.drawString(50, x - 40, "Alım İşinin Başlangıç Tarihi  :%s" % (
-        project.aistart.strftime('%m/%d/%Y') if project.aistart else ' '))
+        project.aistart.strftime('%d/%m/%Y') if project.aistart else ' '))
     c.drawString(50, x - 60, "Alım İşinin Bitiş Tarihi         :%s" % (
-        project.aifinish.strftime('%m/%d/%Y') if project.aifinish else ' '))
+        project.aifinish.strftime('%d/%m/%Y') if project.aifinish else ' '))
     c.drawString(50, x - 80,
                  "İşin Süresi                         :%s (Gün)" % (project.isSUresi if project.isSUresi else ' '))
     #
@@ -573,7 +573,7 @@ def edit_project_pdf(request,pk):
         for item in project.vest.all():
 
             if y > 50:
-                c.drawString(50, y, '%s' % item.vestDate.strftime('%m/%d/%Y') if item.vestDate else '  ')
+                c.drawString(50, y, '%s' % item.vestDate.strftime('%d/%m/%Y') if item.vestDate else '  ')
                 c.drawString(150, y, '%s ₺ ' % ("{0:,.2f}".format(int(item.vest)) if int(item.vest) else '  '))
                 y -= 20
             else:
