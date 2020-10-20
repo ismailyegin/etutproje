@@ -159,10 +159,6 @@
                                     <th>İsim</th>
                                     <th>Ünvan</th>
                                     <th>Sorumlu</th>
-                                    {#                                    <th>Türü</th>#}
-
-                                    {#                                    <th>Vergi Dairesi</th>#}
-                                    {#                                    <th>Vergi Numarasi</th>#}
                                     <td>işlemler</td>
 
 
@@ -176,10 +172,6 @@
                                             <td>{{ company.name }}</td>
                                             <td>{{ company.degree }}</td>
                                             <td>{{ company.sorumlu }}</td>
-                                            {#                                            <td>{{ company.isFormal }} </td>#}
-
-                                            {#                                            <td>{{ company.taxOffice }}</td>#}
-                                            {#                                            <td>{{ company.taxnumber }}</td>#}
                                             <td>
                                                 <div class="btn-group">
                                                     <a href="{% url "sbs:company-update" company.pk %}"
