@@ -269,7 +269,7 @@ def UserAllMail(request):
         fdk = Forgot(user=user, status=False)
         fdk.save()
 
-        log = general_methods.logwrite(request, " Yeni giris maili gönderildi")
+        log = general_methods.logwrite(request, " Yeni giris maili gönderildi  ")
 
         html_content = ''
         subject, from_email, to = 'Etut Proje Bilgi Sistemi Kullanıcı Bilgileri', 'etutproje@kobiltek.com', mail
@@ -277,10 +277,9 @@ def UserAllMail(request):
         html_content = html_content + '<p><strong>Kullanıcı Adınız :' + str(fdk.user.username) + '</strong></p>'
         # html_content = html_content + '<p> <strong>Site adresi:</strong> <a href="http://127.0.0.1:8000/newpassword?query=' + str(
         #     fdk.uuid) + '">http://127.0.0.1:8000/sbs/profil-guncelle/?query=' + str(fdk.uuid) + '</p></a>'
-        html_content = html_content + '<p> <strong>Şifre Belirleme Adresi:</strong> <a href="http://www.kobiltek.com:81/etutproje/sbs/newpassword?query=' + str(
+        html_content = html_content + '<p> <strong>Yeni şifre oluşturma linki:</strong> <a href="http://www.kobiltek.com:81/etutproje/sbs/newpassword?query=' + str(
             fdk.uuid) + '">http://www.kobiltek.com:81/etutproje/sbs/profil-guncelle/?query=' + str(
             fdk.uuid) + '</p></a>'
-
         msg = EmailMultiAlternatives(subject, '', from_email, [to])
         msg.attach_alternative(html_content, "text/html")
         msg.send()
@@ -312,7 +311,7 @@ def forgot(request):
             html_content = html_content + '<p><strong>Kullanıcı Adınız :' + str(fdk.user.username) + '</strong></p>'
             # html_content = html_content + '<p> <strong>Site adresi:</strong> <a href="http://127.0.0.1:8000/newpassword?query=' + str(
             #     fdk.uuid) + '">http://127.0.0.1:8000/sbs/profil-guncelle/?query=' + str(fdk.uuid) + '</p></a>'
-            html_content = html_content + '<p> <strong>Şifre Belirleme Adresi:</strong> <a href="http://www.kobiltek.com:81/etutproje/sbs/newpassword?query=' + str(
+            html_content = html_content + '<p> <strong>Yeni şifre oluşturma linki:</strong> <a href="http://www.kobiltek.com:81/etutproje/sbs/newpassword?query=' + str(
                 fdk.uuid) + '">http://www.kobiltek.com:81/etutproje/sbs/profil-guncelle/?query=' + str(
                 fdk.uuid) + '</p></a>'
 
