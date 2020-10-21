@@ -271,7 +271,7 @@ def UserAllMail(request):
 
         f = open("log.txt", "a")
         log = "şifre gönderildi"
-        log = + str(
+        log = str(
             user) + " " + log + " \n "
         f.write(log)
         f.close()
