@@ -271,7 +271,7 @@ def UserAllMail(request):
         
         f = open("log.txt", "a")
         log = "şifre gönderildi"
-        log = get_client_ip(request) + "    [" + datetime.today().strftime('%d-%m-%Y %H:%M') + "] " + str(
+        log = "    [" + datetime.today().strftime('%d-%m-%Y %H:%M') + "] " + str(
             user) + " " + log + " \n "
         f.write(log)
         f.close()
