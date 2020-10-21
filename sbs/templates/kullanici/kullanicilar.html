@@ -272,6 +272,17 @@
                         <div class="box-header with-border">
                             <h3 class="box-title">Sporcular</h3>
                         </div>
+                        <div class="box-header with-border">
+                            <div class="btn-group">
+                                {% if user.groups.all.0.name == 'Admin' %}
+
+                                    <a href="{% url "sbs:kullanicilar-toplu-mesaj" %}"
+                                       type="button" class="btn btn-success"><i
+                                            class="fa fa-edit"></i> Toplu Şifre Gönder
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </div>
                         <div class="box-body">
                             <table id="kullanicilar" class="table table-bordered table-hover">
                                 <thead>

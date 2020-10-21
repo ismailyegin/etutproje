@@ -314,6 +314,7 @@ urlpatterns = [
 
     # Kullanıcılar
     url(r'kullanici/kullanicilar/$', UserViews.return_users, name='kullanicilar'),
+    url(r'kullanici/kullanicilar/toplu$', UserViews.UserAllMail, name='kullanicilar-toplu-mesaj'),
     url(r'kullanici/kullanici-duzenle/(?P<pk>\d+)$', UserViews.update_user, name='kullanici-duzenle'),
     url(r'kullanici/kullanicilar/aktifet/(?P<pk>\d+)$', UserViews.active_user,
         name='kullanici-aktifet'),

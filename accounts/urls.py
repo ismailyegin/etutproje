@@ -21,6 +21,4 @@ urlpatterns = [
     url(r'newpassword$', views.updateUrlProfile, name='newPassword'),
     url(r'newlogin/(?P<pk>\d+)$', views.newlogin, name='newlogin'),
 
-    url(r'mailAll/$', views.UserAllMail, name='mail-toplu'),
-
 ]
