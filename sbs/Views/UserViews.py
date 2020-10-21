@@ -118,7 +118,7 @@ def UserAllMail(request):
         log = general_methods.logwrite(request, " Yeni giris maili gönderildi")
 
         html_content = ''
-        subject, from_email, to = 'Etut Proje Bilgi Sistemi Kullanıcı Bilgileri', 'etutproje@kobiltek.com', mail
+        subject, from_email, to = 'Etut Proje Bilgi Sistemi Kullanıcı Bilgileri', 'etutproje@kobiltek.com', user.email
         html_content = '<h2>ADALET BAKANLIGI PROJE TAKİP  SİSTEMİ</h2>'
         html_content = html_content + '<p><strong>Kullanıcı Adınız :' + str(fdk.user.username) + '</strong></p>'
         # html_content = html_content + '<p> <strong>Site adresi:</strong> <a href="http://127.0.0.1:8000/newpassword?query=' + str(
@@ -147,8 +147,9 @@ def send_information(request, pk):
         fdk = Forgot(user=user, status=False)
         fdk.save()
 
+
         html_content = ''
-        subject, from_email, to = 'Etut Proje Bilgi Sistemi Kullanıcı Bilgileri', 'etutproje@kobiltek.com', mail
+        subject, from_email, to = 'Etut Proje Bilgi Sistemi Kullanıcı Bilgileri', 'etutproje@kobiltek.com', user.email
         html_content = '<h2>ADALET BAKANLIGI PROJE TAKİP  SİSTEMİ</h2>'
         html_content = html_content + '<p><strong>Kullanıcı Adınız :' + str(fdk.user.username) + '</strong></p>'
         # html_content = html_content + '<p> <strong>Site adresi:</strong> <a href="http://127.0.0.1:8000/newpassword?query=' + str(
@@ -159,6 +160,8 @@ def send_information(request, pk):
         msg = EmailMultiAlternatives(subject, '', from_email, [to])
         msg.attach_alternative(html_content, "text/html")
         msg.send()
+
+        log = general_methods.logwrite(request, " Yeni giris maili gönderildi" + str(user))
 
         # password = User.objects.make_random_password()
         # obj.set_password(password)
