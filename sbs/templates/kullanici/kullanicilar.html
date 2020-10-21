@@ -272,17 +272,17 @@
                         <div class="box-header with-border">
                             <h3 class="box-title">Kullanıcılar</h3>
                         </div>
-                        <div class="box-header with-border">
-                            <div class="btn-group">
-                                {% if user.groups.all.0.name == 'Admin' %}
-
-                                    <a href="{% url "sbs:kullanicilar-toplu-mesaj" %}"
-                                       type="button" class="btn btn-success"><i
-                                            class="fa fa-edit"></i> Toplu Şifre Gönder
-                                    </a>
-                                {% endif %}
-                            </div>
-                        </div>
+                        {#                        <div class="box-header with-border">#}
+                        {#                            <div class="btn-group">#}
+                        {#                                {% if user.groups.all.0.name == 'Admin' %}#}
+                        {##}
+                        {#                                    <a href="{% url "sbs:kullanicilar-toplu-mesaj" %}"#}
+                        {#                                       type="button" class="btn btn-success"><i#}
+                        {#                                            class="fa fa-edit"></i> Toplu Şifre Gönder#}
+                        {#                                    </a>#}
+                        {#                                {% endif %}#}
+                        {#                            </div>#}
+                        {#                        </div>#}
                         <div class="box-body">
                             <table id="kullanicilar" class="table table-bordered table-hover">
                                 <thead>
@@ -483,6 +483,9 @@
             var html = ''
             $("#modal-mail").on("shown.bs.modal", function (e) {
                 $("#btn-conf12").click(function () {
+
+                    if (e.handled !== true) {
+                        e.handled = true;
                         $.ajax({
                             url: "{% url "sbs:kullanici-bilgi-gonder" pk=212121223232323232 %}".replace(/212121223232323232/, id.toString()),
                             type: "POST",
@@ -494,7 +497,7 @@
 
                                 if (result.status == 'Fail') {
                                     html = result.msg;
-                                debugger;
+                                    debugger;
                                     $(".successModalD").html(html);
                                     $('#modal-success-danger').on("shown.bs.modal", function (e) {
                                         $(".btn-ok").click(function () {
@@ -507,7 +510,7 @@
 
                                 } else {
                                     html = result.msg;
-                                debugger;
+                                    debugger;
                                     $(".successModal").html(html);
                                     $('#modal-success').on("shown.bs.modal", function (e) {
                                         $(".btn-ok").click(function () {
@@ -528,6 +531,7 @@
                                 console.log(result.status)
                             }
                         });
+                    }
                     }
                 )
                 ;
