@@ -268,10 +268,10 @@ def UserAllMail(request):
     for user in User.objects.all():
         fdk = Forgot(user=user, status=False)
         fdk.save()
-        
+
         f = open("log.txt", "a")
         log = "şifre gönderildi"
-        log = "    [" + datetime.today().strftime('%d-%m-%Y %H:%M') + "] " + str(
+        log = + str(
             user) + " " + log + " \n "
         f.write(log)
         f.close()
