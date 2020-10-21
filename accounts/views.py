@@ -277,7 +277,7 @@ def UserAllMail(request):
         html_content = html_content + '<p><strong>Kullanıcı Adınız :' + str(fdk.user.username) + '</strong></p>'
         # html_content = html_content + '<p> <strong>Site adresi:</strong> <a href="http://127.0.0.1:8000/newpassword?query=' + str(
         #     fdk.uuid) + '">http://127.0.0.1:8000/sbs/profil-guncelle/?query=' + str(fdk.uuid) + '</p></a>'
-        html_content = html_content + '<p> <strong>Site adresi:</strong> <a href="http://www.kobiltek.com:81/etutproje/sbs/newpassword?query=' + str(
+        html_content = html_content + '<p> <strong>Şifre Belirleme Adresi:</strong> <a href="http://www.kobiltek.com:81/etutproje/sbs/newpassword?query=' + str(
             fdk.uuid) + '">http://www.kobiltek.com:81/etutproje/sbs/profil-guncelle/?query=' + str(
             fdk.uuid) + '</p></a>'
 
@@ -312,7 +312,7 @@ def forgot(request):
             html_content = html_content + '<p><strong>Kullanıcı Adınız :' + str(fdk.user.username) + '</strong></p>'
             # html_content = html_content + '<p> <strong>Site adresi:</strong> <a href="http://127.0.0.1:8000/newpassword?query=' + str(
             #     fdk.uuid) + '">http://127.0.0.1:8000/sbs/profil-guncelle/?query=' + str(fdk.uuid) + '</p></a>'
-            html_content = html_content + '<p> <strong>Site adresi:</strong> <a href="http://www.kobiltek.com:81/etutproje/sbs/newpassword?query=' + str(
+            html_content = html_content + '<p> <strong>Şifre Belirleme Adresi:</strong> <a href="http://www.kobiltek.com:81/etutproje/sbs/newpassword?query=' + str(
                 fdk.uuid) + '">http://www.kobiltek.com:81/etutproje/sbs/profil-guncelle/?query=' + str(
                 fdk.uuid) + '</p></a>'
 
@@ -330,7 +330,6 @@ def forgot(request):
 
 
 def newlogin(request, pk):
-    print('ben geldim')
     clup = SportsClub.objects.get(pk=pk)
     # clüp
     club_form = ClubForm(instance=clup)
