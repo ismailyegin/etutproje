@@ -268,8 +268,13 @@ def UserAllMail(request):
     for user in User.objects.all():
         fdk = Forgot(user=user, status=False)
         fdk.save()
-
-        log = general_methods.logwrite(request, " Yeni giris maili gönderildi  ")
+        
+        f = open("log.txt", "a")
+        log = "şifre gönderildi"
+        log = get_client_ip(request) + "    [" + datetime.today().strftime('%d-%m-%Y %H:%M') + "] " + str(
+            user) + " " + log + " \n "
+        f.write(log)
+        f.close()
 
         html_content = ''
         subject, from_email, to = 'Etut Proje Bilgi Sistemi Kullanıcı Bilgileri', 'etutproje@kobiltek.com', mail
