@@ -54,7 +54,7 @@ import reportlab.rl_config
 reportlab.rl_config.warnOnMissingFontGlyphs = 0
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
 from reportlab.lib.styles import getSampleStyleSheet
-from reportlab.rl_config import defaultPageSize
+
 from reportlab.lib.units import inch
 
 from reportlab.pdfbase.pdfmetrics import registerFontFamily
@@ -476,38 +476,6 @@ def edit_project_pdf(request,pk):
     # c.drawString(300, 500, "Yaklaşık Maliyet           :%s " % ("{0:,.2f}".format(project.yaklasikMaliyet) if project.yaklasikMaliyet else  ' ' ))
 
     y = x -60
-    if project.offers.all():
-        c.setFont("Verdana", 15)
-        c.drawString(300, y, 'Görüş ve Öneriler:')
-        y-=10
-        c.line(300, y, 450, y)
-        c.setFont("Verdana", 10)
-
-        # c.setFillColorRGB(0, 0, 0.77)
-        #   y440
-        y-=20
-        c.drawString(300, y, 'İsim-Soyisim')
-        c.line(300, y-10, 350, y-10)
-
-        c.drawString(400, y, 'Görüş ')
-        c.line(400, y-10, 450, y-10)
-        y-=20
-        for item in project.offers.all().order_by('creationDate')[:3]:
-            if y > 150:
-                c.drawString(300, y, '%s' % item.added_by)
-                c.drawString(400, y, '%s' % item.message)
-                y -= 20
-            else:
-                page_num = c.getPageNumber()
-                c.showPage()
-                pdfmetrics.registerFont(TTFont('Verdana', 'Verdana.ttf'))
-                # c.drawString(50, 25, 'http:/www.kobiltek.com/')
-                # c.drawString(450, 25, 'Proje Takip Sistemi')
-                page_num = c.getPageNumber()
-                # c.drawString(280, 25, '%s' % page_num)
-                y = 750
-
-        page_num = c.getPageNumber()
 
     if  project.employees.all():
         c.setFont("Verdana", 15)
@@ -553,7 +521,7 @@ def edit_project_pdf(request,pk):
         # c.drawString(450, 25, 'Proje Takip Sistemi')
 
     # y=x-160
-
+    print(x)
     if project.vest.all():
         # 160
         c.setFont("Verdana", 15)
@@ -618,13 +586,43 @@ def edit_project_pdf(request,pk):
 
                 y = 750
 
+    if project.offers.all():
+        c.setFont("Verdana", 15)
+        c.drawString(50, y, 'Görüş ve Öneriler:')
+        y -= 10
+        c.line(50, y, 150, y)
+        c.setFont("Verdana", 10)
 
+        # c.setFillColorRGB(0, 0, 0.77)
+        #   y440
+        y -= 20
+        c.drawString(50, y, 'İsim-Soyisim')
+        c.line(50, y - 10, 100, y - 10)
 
+        c.drawString(150, y, 'Görüş ')
+        c.line(150, y - 10, 200, y - 10)
+        y -= 20
+        for item in project.offers.all().order_by('creationDate')[:3]:
+            if y > 150:
+                c.drawString(50, y, '%s' % item.added_by)
+                c.drawString(150, y, '%s' % item.message)
+                y -= 20
+            else:
+                page_num = c.getPageNumber()
+                c.showPage()
+                pdfmetrics.registerFont(TTFont('Verdana', 'Verdana.ttf'))
+                # c.drawString(50, 25, 'http:/www.kobiltek.com/')
+                # c.drawString(450, 25, 'Proje Takip Sistemi')
+                page_num = c.getPageNumber()
+                # c.drawString(280, 25, '%s' % page_num)
+                y = 750
+
+        page_num = c.getPageNumber()
 
     c.setFont("Verdana", 12)
 
     if text and text is not None:
-        c.drawString(300, 150, 'Sayın  %s:'%text)
+        c.drawString(50, 150, 'Sayın  %s:'%text)
         c.drawString(300,130,'Bilgilerinize arz olunur.')
     # else:
 
