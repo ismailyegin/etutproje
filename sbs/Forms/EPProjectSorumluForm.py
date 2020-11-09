@@ -9,7 +9,7 @@ class EPProjectSorumluForm(ModelForm):
         model = EPProject
 
         fields = ('name', 'butceCinsi', 'butceYili', 'projeCinsi', 'ihaleTarihi',  'sozlesmeTarihi', 'isSUresi',
-                  'isBitimTarihi', 'city','aistart','aifinish','karakteristik','projectStatus')
+                  'isBitimTarihi', 'city', 'aistart', 'aifinish', 'karakteristik', 'projectStatus', 'company')
         labels = {
             'name': 'Proje Tanımı',
             'butceCinsi': 'Yatırım Programı ',
@@ -24,6 +24,7 @@ class EPProjectSorumluForm(ModelForm):
             'aifinish':'Alım İşinin Bitiş Tarihi',
             'karakteristik':'Karakteristik',
             'projectStatus':'Projenin Durumu',
+            'company': 'Firma',
 
 
         }
