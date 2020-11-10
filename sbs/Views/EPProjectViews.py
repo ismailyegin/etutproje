@@ -345,6 +345,10 @@ def return_projects(request):
                 projects = EPProject.objects.filter(projectStatus=EPProject.PT)
             elif get == 'AçıkProje':
                 projects = EPProject.objects.filter(projectStatus=EPProject.PDE)
+            elif get == 'durdurulanProje':
+                projects = EPProject.objects.filter(projectStatus=EPProject.PD)
+            elif get == 'iptalProje':
+                projects = EPProject.objects.filter(projectStatus=EPProject.PIE)
             else:
                 projects = EPProject.objects.filter(pk=int(get))
 
