@@ -16,6 +16,8 @@ from sbs.models.Message import Message
 
 from datetime import date, datetime
 
+from django.conf import settings
+
 
 @login_required
 def return_message(request):
@@ -122,8 +124,11 @@ def return_admin_dashboard(request):
     proje_count=EPProject.objects.count()
 
 
+
     proje_status_PT=EPProject.objects.filter(projectStatus=EPProject.PT).distinct().count()
     proje_status_PDE=EPProject.objects.filter(projectStatus=EPProject.PDE).distinct().count()
+    proje_status_PD = EPProject.objects.filter(projectStatus=EPProject.PD).distinct().count()
+    proje_status_PIE = EPProject.objects.filter(projectStatus=EPProject.PIE).distinct().count()
 
     cezainfaz=EPProject.objects.filter(projeCinsi=EPProject.CIK).count()
     adaletbinasi=EPProject.objects.filter(projeCinsi=EPProject.AB).count()
@@ -224,8 +229,13 @@ def return_admin_dashboard(request):
 
 
     return render(request, 'anasayfa/admin.html',
-                  {'employees': last_employee,'personel_count':personel_count,'proje_count':proje_count,
-                   'proje_status_PT':proje_status_PT,'proje_status_PDE':proje_status_PDE,
+                  {'employees': last_employee,
+                   'personel_count': personel_count,
+                   'proje_count': proje_count,
+                   'proje_status_PT': proje_status_PT,
+                   'proje_status_PDE': proje_status_PDE,
+                   'proje_status_PD': proje_status_PD,
+                   'proje_status_PIE': proje_status_PIE,
                    'cezainfaz':cezainfaz,
                    'adaletbinasi':adaletbinasi,
                    'adlitip':adlitip,
