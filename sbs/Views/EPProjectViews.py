@@ -123,16 +123,16 @@ def edit_project(request, pk):
     user = request.user
 
     # güvenlik icin sorgu yapıldı
-
-    try:
-        if project.sorumlu.user != user:
-            perm = general_methods.control_access(request)
-            if not perm:
-                logout(request)
-                messages.warning(request, 'Bu alana girmeye yetkiniz yok.')
-                return redirect('accounts:login')
-    except:
-        print('hata')
+    #
+    # try:
+    #     if project.sorumlu.user != user:
+    #         perm = general_methods.control_access(request)
+    #         if not perm:
+    #             logout(request)
+    #             messages.warning(request, 'Bu alana girmeye yetkiniz yok.')
+    #             return redirect('accounts:login')
+    # except:
+    #     print('hata')
 
 
 
@@ -161,9 +161,6 @@ def edit_project(request, pk):
     #     except:
     #         print('eror loglamasi yapilacak')
 
-
-
-
     # bildirimden  gelinmisse ve sistem deki  kisinin ise true yap daha görülmesin
 
     get = request.GET.get('notification')
@@ -186,7 +183,7 @@ def edit_project(request, pk):
                 project.save()
 
         except:
-            print('hata var')
+            print('hata var document ')
         insaatAlani = request.POST.get('insaat')
         insaatAlani = insaatAlani.replace(".", "")
         insaatAlani = insaatAlani.replace(",", ".")
