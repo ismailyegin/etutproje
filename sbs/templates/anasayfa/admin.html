@@ -110,105 +110,326 @@
         <!-- Main content -->
         <section class="content">
 
-            <div class="row">
-                <div class="col-lg-2 col-xs-6">
-                    <!-- small box -->
-                    <div class="small-box bg-aqua">
-                        <div class="inner">
-                            <h3>{{ proje_count }}</h3>
-
-                            <p>Proje</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-home"></i>
-                        </div>
-                        <a href="{% url 'sbs:projeler' %}?get=Projeler" class="small-box-footer">Daha Fazla <i
-                                class="fa fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-                <!-- ./col -->
-                <div class="col-lg-2 col-xs-6">
-                    <!-- small box -->
-                    <div class="small-box bg-green">
-                        <div class="inner">
-                            <h3>{{ proje_status_PT }}<sup style="font-size: 20px"></sup></h3>
-
-                            <p>Tamamlanan Proje</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-stats-bars"></i>
-                        </div>
-                        <a href="{% url 'sbs:projeler' %}?get=TamamlananProje" class="small-box-footer">Daha Fazla <i
-                                class="fa fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-                <!-- ./col -->
-                <div class="col-lg-2 col-xs-6">
-                    <!-- small box -->
-                    <div class="small-box bg-yellow">
-                        <div class="inner">
-                            <h3>{{ proje_status_PDE }}</h3>
-
-                            <p>Açık Proje</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-stats-bars"></i>
-                        </div>
-                        <a href="{% url 'sbs:projeler' %}?get=AçıkProje" class="small-box-footer">Daha Fazla <i
-                                class="fa fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-                <!-- ./col -->
-                <div class="col-lg-2 col-xs-6">
-                    <!-- small box -->
-                    <div class="small-box bg-red">
-                        <div class="inner">
-                            <h3>{{ proje_status_PD }}</h3>
-
-                            <p>Durdurulan Proje</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-stats-bars"></i>
-                        </div>
-                        <a href="{% url 'sbs:projeler' %}?get=durdurulanProje" class="small-box-footer">Daha Fazla <i
-                                class="fa fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-                <div class="col-lg-2 col-xs-6">
-                    <!-- small box -->
-                    <div class="small-box bg-aqua-active">
-                        <div class="inner">
-                            <h3>{{ proje_status_PIE }}</h3>
-
-                            <p>İptal Edilen Proje </p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-stats-bars"></i>
-                        </div>
-                        <a href="{% url 'sbs:projeler' %}?get=iptalProje"" class="small-box-footer">Daha Fazla <i
-                            class="fa fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-
-
-                <div class="col-lg-2 col-xs-6">
-                    <!-- small box -->
-                    <div class="small-box bg-primary">
-                        <div class="inner">
-                            <h3>{{ personel_count }}</h3>
-
-                            <p>Personel</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-person"></i>
-                        </div>
-                        <a href="{% url 'sbs:personeller' %}?get=hepsi" class="small-box-footer">Daha Fazla <i
-                                class="fa fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-                <!-- ./col -->
-            </div>
+            {#            <div class="row">#}
+            {#                <div class="col-lg-2 col-xs-6">#}
+            {#                    <!-- small box -->#}
+            {#                    <div class="small-box bg-aqua">#}
+            {#                        <div class="inner">#}
+            {#                            <h3>{{ proje_count }}</h3>#}
+            {##}
+            {#                            <p>Proje</p>#}
+            {#                        </div>#}
+            {#                        <div class="icon">#}
+            {#                            <i class="ion ion-home"></i>#}
+            {#                        </div>#}
+            {#                        <a href="{% url 'sbs:projeler' %}?get=Projeler" class="small-box-footer">Daha Fazla <i#}
+            {#                                class="fa fa-arrow-circle-right"></i></a>#}
+            {#                    </div>#}
+            {#                </div>#}
+            {#                <!-- ./col -->#}
+            {#                <div class="col-lg-2 col-xs-6">#}
+            {#                    <!-- small box -->#}
+            {#                    <div class="small-box bg-green">#}
+            {#                        <div class="inner">#}
+            {#                            <h3>{{ proje_status_PT }}<sup style="font-size: 20px"></sup></h3>#}
+            {##}
+            {#                            <p>Tamamlanan Proje</p>#}
+            {#                        </div>#}
+            {#                        <div class="icon">#}
+            {#                            <i class="ion ion-stats-bars"></i>#}
+            {#                        </div>#}
+            {#                        <a href="{% url 'sbs:projeler' %}?get=TamamlananProje" class="small-box-footer">Daha Fazla <i#}
+            {#                                class="fa fa-arrow-circle-right"></i></a>#}
+            {#                    </div>#}
+            {#                </div>#}
+            {#                <!-- ./col -->#}
+            {#                <div class="col-lg-2 col-xs-6">#}
+            {#                    <!-- small box -->#}
+            {#                    <div class="small-box bg-yellow">#}
+            {#                        <div class="inner">#}
+            {#                            <h3>{{ proje_status_PDE }}</h3>#}
+            {##}
+            {#                            <p>Açık Proje</p>#}
+            {#                        </div>#}
+            {#                        <div class="icon">#}
+            {#                            <i class="ion ion-stats-bars"></i>#}
+            {#                        </div>#}
+            {#                        <a href="{% url 'sbs:projeler' %}?get=AçıkProje" class="small-box-footer">Daha Fazla <i#}
+            {#                                class="fa fa-arrow-circle-right"></i></a>#}
+            {#                    </div>#}
+            {#                </div>#}
+            {#                <!-- ./col -->#}
+            {#                <div class="col-lg-2 col-xs-6">#}
+            {#                    <!-- small box -->#}
+            {#                    <div class="small-box bg-red">#}
+            {#                        <div class="inner">#}
+            {#                            <h3>{{ proje_status_PD }}</h3>#}
+            {##}
+            {#                            <p>Durdurulan Proje</p>#}
+            {#                        </div>#}
+            {#                        <div class="icon">#}
+            {#                            <i class="ion ion-stats-bars"></i>#}
+            {#                        </div>#}
+            {#                        <a href="{% url 'sbs:projeler' %}?get=durdurulanProje" class="small-box-footer">Daha Fazla <i#}
+            {#                                class="fa fa-arrow-circle-right"></i></a>#}
+            {#                    </div>#}
+            {#                </div>#}
+            {#                <div class="col-lg-2 col-xs-6">#}
+            {#                    <!-- small box -->#}
+            {#                    <div class="small-box bg-aqua-active">#}
+            {#                        <div class="inner">#}
+            {#                            <h3>{{ proje_status_PIE }}</h3>#}
+            {##}
+            {#                            <p>İptal Edilen Proje </p>#}
+            {#                        </div>#}
+            {#                        <div class="icon">#}
+            {#                            <i class="ion ion-stats-bars"></i>#}
+            {#                        </div>#}
+            {#                        <a href="{% url 'sbs:projeler' %}?get=iptalProje"" class="small-box-footer">Daha Fazla <i#}
+            {#                            class="fa fa-arrow-circle-right"></i></a>#}
+            {#                    </div>#}
+            {#                </div>#}
+            {##}
+            {##}
+            {#                <div class="col-lg-2 col-xs-6">#}
+            {#                    <!-- small box -->#}
+            {#                    <div class="small-box bg-primary">#}
+            {#                        <div class="inner">#}
+            {#                            <h3>{{ personel_count }}</h3>#}
+            {##}
+            {#                            <p>Personel</p>#}
+            {#                        </div>#}
+            {#                        <div class="icon">#}
+            {#                            <i class="ion ion-person"></i>#}
+            {#                        </div>#}
+            {#                        <a href="{% url 'sbs:personeller' %}?get=hepsi" class="small-box-footer">Daha Fazla <i#}
+            {#                                class="fa fa-arrow-circle-right"></i></a>#}
+            {#                    </div>#}
+            {#                </div>#}
+            {#                <!-- ./col -->#}
+            {#            </div>#}
             <!-- Info boxes -->
+
+            <div class="row">
+
+                <a href="{% url 'sbs:projeler' %}?get=Projeler">
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="info-box">
+                        <span class="info-box-icon bg-yellow">
+                            <i class="ion ion-android-open"></i></span>
+
+                            <div class="info-box-content">
+                                <span class="info-box-text">Toplam Proje Sayısı </span>
+                                <span class="info-box-number">{{ proje_count }}</span>
+                            </div>
+
+
+                            <!-- /.info-box-content -->
+                        </div>
+                        <!-- /.info-box -->
+                    </div>
+                </a>
+                <a href="{% url 'sbs:projeler' %}?get=AçıkProje">
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="info-box">
+                            <span class="info-box-icon bg-aqua"><i class="ion ion-android-home"></i></span>
+
+                            <div class="info-box-content">
+                                <span class="info-box-text">Proje Devam ediyor </span>
+                                <span class="info-box-number header">{{ proje_status_PDE }}</span>
+                            </div>
+                            <!-- /.info-box-content -->
+                        </div>
+                        <!-- /.info-box -->
+                    </div>
+                </a>
+                <a href="{% url 'sbs:projeler' %}?get=TamamlananProje">
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="info-box">
+                            <span class="info-box-icon bg-red"><i class="fa ion-android-bulb"></i></span>
+
+                            <div class="info-box-content">
+                                <span class="info-box-text">Proje Tamamlandı</span>
+                                <span class="info-box-number">{{ proje_status_PT }}</span>
+                            </div>
+                            <!-- /.info-box-content -->
+                        </div>
+                        <!-- /.info-box -->
+                    </div>
+                    <!-- /.col -->
+                </a>
+                <a>
+
+
+                    <a href="{% url 'sbs:projeler' %}?get=durdurulanProje">
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <div class="info-box">
+                                <span class="info-box-icon bg-green"><i class="ion ion-android-bulb"></i></span>
+
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Proje Durduruldu</span>
+                                    <span class="info-box-number">{{ proje_status_PD }}</span>
+                                </div>
+                                <!-- /.info-box-content -->
+                            </div>
+                            <!-- /.info-box -->
+                        </div>
+                        <!-- /.col -->
+                    </a>
+                    <!-- /.col -->
+            </div>
+
+
+            <div class="row">
+
+                <div class="col-lg-8">
+                    <div class="box box-success">
+
+                        <div class="box-header with-border">
+
+                            <h3 class="box-title">Proje Drumlari</h3>
+
+
+                            <div class="box-tools pull-right">
+
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                        class="fa fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i
+                                        class="fa fa-times"></i>
+                                </button>
+                            </div>
+
+                            <div class="box-body no-padding">
+
+                                <div class="box-body">
+
+
+                                    <div class="table-responsive">
+                                        <table class="table no-margin">
+                                            <thead>
+                                            <tr>
+                                                <th>Proje Durumu</th>
+                                                <th>Proje Sayısı</th>
+
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td>Devam Eden Proje</td>
+                                                <td>
+                                                    <span class="label label-success">{{ proje_status_PDE }}</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Proje Tamamlandı</td>
+                                                <td>
+                                                    <span class="label label-success">{{ proje_status_PT }}</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Deprem Yön. Reviyonu Yapılıyor</td>
+                                                <td>
+                                                    <span class="label label-success">{{ proje_status_DYRY }}</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>İhale Sürecinde</td>
+                                                <td>
+                                                    <span class="label label-success">{{ proje_status_IH }}</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Proje Durduruldu</td>
+                                                <td>
+                                                    <span class="label label-success">{{ proje_status_PD }}</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Proje İptal Edildi</td>
+                                                <td>
+                                                    <span class="label label-success">{{ proje_status_PIE }}</span>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Toplam Proje Sayısı</td>
+                                                <td>
+                                                    <span class="label label-success">{{ proje_count }}</span>
+                                                </td>
+                                            </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+
+                                    <!-- /.table-responsive -->
+                                </div>
+
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <!-- Info Boxes Style 2 -->
+                    <div class="info-box bg-yellow">
+                        <span class="info-box-icon"><i class="ion ion-ios-pricetag-outline"></i></span>
+
+                        <div class="info-box-content">
+                            <span class="info-box-text">Proje İptal Edildi </span>
+                            <span class="info-box-number">{{ proje_status_PIE }}</span>
+
+                            <div class="progress">
+                                <div id="iptal" class="progress-bar" style="width: 0%"></div>
+                            </div>
+                            <span class="progress-description">
+                     Toplam Projeye Oranı= <span id="iptaltext"></span>
+                  </span>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                    <!-- /.info-box -->
+                    <div class="info-box bg-green">
+                        <span class="info-box-icon"><i class="ion ion-ios-heart-outline"></i></span>
+
+                        <div class="info-box-content">
+                            <span class="info-box-text">Proje İhale Sürecinde</span>
+                            <span class="info-box-number">{{ proje_status_IH }}</span>
+
+                            <div class="progress">
+                                <div id="ihale" class="progress-bar" style="width: 0%"></div>
+                            </div>
+                            <span class="progress-description">
+                      Toplam Projeye Oranı= <span id="ihaletext"></span>
+                  </span>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                    <!-- /.info-box -->
+
+                    <div class="info-box bg-aqua">
+                        <span class="info-box-icon"><i class="ion-ios-chatbubble-outline"></i></span>
+
+                        <div class="info-box-content">
+                            <span class="info-box-text">Deprem Yön Revizyonu yapılıyor</span>
+                            <span class="info-box-number">{{ proje_status_DYRY }}</span>
+
+                            <div class="progress">
+                                <div id="deprem" class="progress-bar" style="width: 100%"></div>
+                            </div>
+                            <span class="progress-description">
+                      Toplam Projeye Oranı= <span id="depremtext"></span>
+                  </span>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+
+                </div>
+            </div>
 
 
             <div class="row">
@@ -1169,221 +1390,7 @@
             </div>
 
 
-            <div class="row">
 
-
-                <div class="col-md-3 col-sm-6 col-xs-12">
-                    <div class="info-box">
-                        <span class="info-box-icon bg-yellow"><i class="ion ion-android-open"></i></span>
-
-                        <div class="info-box-content">
-                            <span class="info-box-text">Toplam Proje Sayısı </span>
-                            <span class="info-box-number">{{ proje_count }}</span>
-                        </div>
-                        <!-- /.info-box-content -->
-                    </div>
-                    <!-- /.info-box -->
-                </div>
-
-
-                <div class="col-md-3 col-sm-6 col-xs-12">
-                    <div class="info-box">
-                        <span class="info-box-icon bg-aqua"><i class="ion ion-android-home"></i></span>
-
-                        <div class="info-box-content">
-                            <span class="info-box-text">Proje Devam ediyor </span>
-                            <span class="info-box-number header">{{ proje_status_PDE }}</span>
-                        </div>
-                        <!-- /.info-box-content -->
-                    </div>
-                    <!-- /.info-box -->
-                </div>
-                <!-- /.col -->
-                <div class="col-md-3 col-sm-6 col-xs-12">
-                    <div class="info-box">
-                        <span class="info-box-icon bg-red"><i class="fa ion-android-bulb"></i></span>
-
-                        <div class="info-box-content">
-                            <span class="info-box-text">Proje Tamamlandı</span>
-                            <span class="info-box-number">{{ proje_status_PT }}</span>
-                        </div>
-                        <!-- /.info-box-content -->
-                    </div>
-                    <!-- /.info-box -->
-                </div>
-                <!-- /.col -->
-
-                <!-- fix for small devices only -->
-                <div class="clearfix visible-sm-block"></div>
-
-                <div class="col-md-3 col-sm-6 col-xs-12">
-                    <div class="info-box">
-                        <span class="info-box-icon bg-green"><i class="ion ion-android-bulb"></i></span>
-
-                        <div class="info-box-content">
-                            <span class="info-box-text">Proje Durduruldu</span>
-                            <span class="info-box-number">{{ proje_status_PD }}</span>
-                        </div>
-                        <!-- /.info-box-content -->
-                    </div>
-                    <!-- /.info-box -->
-                </div>
-                <!-- /.col -->
-
-                <!-- /.col -->
-            </div>
-
-
-            <div class="row">
-
-                <div class="col-lg-8">
-                    <div class="box box-success">
-
-                        <div class="box-header with-border">
-
-                            <h3 class="box-title">Proje Drumlari</h3>
-
-
-                            <div class="box-tools pull-right">
-
-                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
-                                        class="fa fa-minus"></i>
-                                </button>
-                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i
-                                        class="fa fa-times"></i>
-                                </button>
-                            </div>
-
-                            <div class="box-body no-padding">
-
-                                <div class="box-body">
-
-
-                                    <div class="table-responsive">
-                                        <table class="table no-margin">
-                                            <thead>
-                                            <tr>
-                                                <th>Proje Durumu</th>
-                                                <th>Proje Sayısı</th>
-
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr>
-                                                <td>Devam Eden Proje</td>
-                                                <td>
-                                                    <span class="label label-success">{{ proje_status_PDE }}</span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Proje Tamamlandı</td>
-                                                <td>
-                                                    <span class="label label-success">{{ proje_status_PT }}</span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Deprem Yön. Reviyonu Yapılıyor</td>
-                                                <td>
-                                                    <span class="label label-success">{{ proje_status_DYRY }}</span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>İhale Sürecinde</td>
-                                                <td>
-                                                    <span class="label label-success">{{ proje_status_IH }}</span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Proje Durduruldu</td>
-                                                <td>
-                                                    <span class="label label-success">{{ proje_status_PD }}</span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Proje İptal Edildi</td>
-                                                <td>
-                                                    <span class="label label-success">{{ proje_status_PIE }}</span>
-                                                </td>
-                                            </tr>
-
-                                            <tr>
-                                                <td>Toplam Proje Sayısı</td>
-                                                <td>
-                                                    <span class="label label-success">{{ proje_count }}</span>
-                                                </td>
-                                            </tr>
-
-                                            </tbody>
-                                        </table>
-                                    </div>
-
-
-                                    <!-- /.table-responsive -->
-                                </div>
-
-
-                            </div>
-
-
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <!-- Info Boxes Style 2 -->
-                    <div class="info-box bg-yellow">
-                        <span class="info-box-icon"><i class="ion ion-ios-pricetag-outline"></i></span>
-
-                        <div class="info-box-content">
-                            <span class="info-box-text">Proje İptal Edildi </span>
-                            <span class="info-box-number">{{ proje_status_PIE }}</span>
-
-                            <div class="progress">
-                                <div id="iptal" class="progress-bar" style="width: 0%"></div>
-                            </div>
-                            <span class="progress-description">
-                     Toplam Projeye Oranı= <span id="iptaltext"></span>
-                  </span>
-                        </div>
-                        <!-- /.info-box-content -->
-                    </div>
-                    <!-- /.info-box -->
-                    <div class="info-box bg-green">
-                        <span class="info-box-icon"><i class="ion ion-ios-heart-outline"></i></span>
-
-                        <div class="info-box-content">
-                            <span class="info-box-text">Proje İhale Sürecinde</span>
-                            <span class="info-box-number">{{ proje_status_IH }}</span>
-
-                            <div class="progress">
-                                <div id="ihale" class="progress-bar" style="width: 0%"></div>
-                            </div>
-                            <span class="progress-description">
-                      Toplam Projeye Oranı= <span id="ihaletext"></span>
-                  </span>
-                        </div>
-                        <!-- /.info-box-content -->
-                    </div>
-                    <!-- /.info-box -->
-
-                    <div class="info-box bg-aqua">
-                        <span class="info-box-icon"><i class="ion-ios-chatbubble-outline"></i></span>
-
-                        <div class="info-box-content">
-                            <span class="info-box-text">Deprem Yön Revizyonu yapılıyor</span>
-                            <span class="info-box-number">{{ proje_status_DYRY }}</span>
-
-                            <div class="progress">
-                                <div id="deprem" class="progress-bar" style="width: 100%"></div>
-                            </div>
-                            <span class="progress-description">
-                      Toplam Projeye Oranı= <span id="depremtext"></span>
-                  </span>
-                        </div>
-                        <!-- /.info-box-content -->
-                    </div>
-
-                </div>
-            </div>
 
 
         </section>
