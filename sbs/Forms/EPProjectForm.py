@@ -26,25 +26,13 @@ class EPProjectForm(ModelForm):
             'aifinish':'Alım İşinin Bitiş Tarihi',
             'karakteristik':'Karakteristik',
             'projectStatus':'Projenin Durumu',
-            'ihaleProjeBurosuName': 'Proge Bürosu Adı ',
-            'ihaletel': 'İletişim (tel)',
-            'ihaleimail': 'İletişim (mail)',
-            'ihalemuellif': 'Müellif Adı-Soyadı',
+
             'company': 'Firma',
 
 
 
         }
         widgets = {
-
-            'ihaleProjeBurosuName': forms.TextInput(attrs={'class': 'form-control '}),
-            'ihaletel': forms.TextInput(attrs={'class': 'form-control '}),
-            'ihaleimail': forms.TextInput(attrs={'class': 'form-control ', 'placeholder': 'Mail adresi'}),
-            'ihalemuellif': forms.TextInput(attrs={'class': 'form-control '}),
-
-
-
-
 
             'name': forms.TextInput(attrs={'class': 'form-control ', 'required': 'required'}),
             'butceCinsi': forms.Select(attrs={'class': 'form-control select2 select2-hidden-accessible',
