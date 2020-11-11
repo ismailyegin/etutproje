@@ -10,7 +10,7 @@ class EPProjectForm(ModelForm):
 
         fields = ('name', 'butceCinsi', 'butceYili', 'projeCinsi', 'ihaleTarihi',  'sozlesmeTarihi', 'isSUresi',
                   'isBitimTarihi', 'city', 'sorumlu', 'aistart', 'aifinish', 'karakteristik', 'projectStatus',
-                  'company',)
+                  'company')
         labels = {
             'name': 'Proje Tanımı',
             'butceCinsi': 'Yatırım Programı ',
@@ -26,7 +26,6 @@ class EPProjectForm(ModelForm):
             'aifinish':'Alım İşinin Bitiş Tarihi',
             'karakteristik':'Karakteristik',
             'projectStatus':'Projenin Durumu',
-
             'company': 'Firma',
 
 

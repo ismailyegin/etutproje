@@ -175,97 +175,106 @@ def edit_project(request, pk):
     f.write(log)
     f.close()
 
-    try:
-        if request.method == 'POST':
-            try:
-                if request.FILES['files']:
-                    document = request.FILES['files']
-                    data = EPDocument()
-                    data.name = document
-                    data.save()
-                    project.documents.add(data)
-                    project.save()
+    if request.method == 'POST':
 
-            except:
-                print('Document none ')
-            insaatAlani = request.POST.get('insaat')
-            insaatAlani = insaatAlani.replace(".", "")
-            insaatAlani = insaatAlani.replace(",", ".")
+        try:
+            if request.FILES['files']:
+                document = request.FILES['files']
+                data = EPDocument()
+                data.name = document
+                data.save()
+                project.documents.add(data)
+                project.save()
 
-            tahmini = request.POST.get('tahmini')
-            tahmini = tahmini.replace(".", "")
-            tahmini = tahmini.replace(",", ".")
+        except:
+            print('Document eror ')
+        insaatAlani = request.POST.get('insaat')
+        insaatAlani = insaatAlani.replace(".", "")
+        insaatAlani = insaatAlani.replace(",", ".")
 
-            yaklasik = request.POST.get('yaklasik')
-            yaklasik = yaklasik.replace(".", "")
-            yaklasik = yaklasik.replace(",", ".")
+        tahmini = request.POST.get('tahmini')
+        tahmini = tahmini.replace(".", "")
+        tahmini = tahmini.replace(",", ".")
 
-            sozlesmebedeli = request.POST.get('sozlesmebedeli')
-            sozlesmebedeli = sozlesmebedeli.replace(".", "")
-            sozlesmebedeli = sozlesmebedeli.replace(",", ".")
+        yaklasik = request.POST.get('yaklasik')
+        yaklasik = yaklasik.replace(".", "")
+        yaklasik = yaklasik.replace(",", ".")
 
-            sozlesmebedeliKdv = request.POST.get('sozlesmebedeliKdv')
-            sozlesmebedeliKdv = sozlesmebedeliKdv.replace(".", "")
-            sozlesmebedeliKdv = sozlesmebedeliKdv.replace(",", ".")
+        sozlesmebedeli = request.POST.get('sozlesmebedeli')
+        sozlesmebedeli = sozlesmebedeli.replace(".", "")
+        sozlesmebedeli = sozlesmebedeli.replace(",", ".")
 
-            arsa = request.POST.get('arsa')
-            arsa = arsa.replace(".", "")
-            arsa = arsa.replace(",", ".")
+        sozlesmebedeliKdv = request.POST.get('sozlesmebedeliKdv')
+        sozlesmebedeliKdv = sozlesmebedeliKdv.replace(".", "")
+        sozlesmebedeliKdv = sozlesmebedeliKdv.replace(",", ".")
 
-            f = open("log.txt", "a")
-            log = " \n arsa=" + arsa + ' sozlesme = ' + sozlesmebedeli + 'sozlesme Kdv = ' + sozlesmebedeliKdv + " \n "
-            f.write(log)
-            f.close()
-
-
-            town = request.POST.get('town')
-
-            if project.sorumlu:
-                sorumlu = project.sorumlu
-
-            if project_form.is_valid():
-                projectSave = project_form.save(commit=False)
-                projectSave.insaatAlani = insaatAlani
-                projectSave.tahminiOdenekTutari = tahmini
-                projectSave.yaklasikMaliyet = yaklasik
-                projectSave.sozlesmeBedeli = sozlesmebedeli
-                projectSave.arsaAlani = arsa
-                projectSave.sozlesmeBedeliKdv = sozlesmebedeliKdv
-                projectSave.town = town
-                projectSave.save()
-
-                if request.POST.get('sorumlu') is None and sorumlu:
-                    projectSave.sorumlu = sorumlu
-
-                projectSave.save()
-                print('veriler kaydedildi')
-
-                f = open("log.txt", "a")
-                log = 'veriler kaydedildi'
-                f.write(log)
-                f.close()
-
-                log = str(project.name) + "projesini güncelledi"
-                log = general_methods.logwrite(request, log)
-
-                messages.success(request, 'Proje Başarıyla Güncellendi')
-                return redirect('sbs:proje-duzenle', pk=project.pk)
-            else:
-
-                f = open("log.txt", "a")
-                log = 'Alanlari kontrol ediniz '
-                f.write(log)
-                f.close()
-
-
-
-                messages.warning(request, 'Alanları Kontrol Ediniz')
-    except:
-        print('post alanin da hata var')
+        arsa = request.POST.get('arsa')
+        arsa = arsa.replace(".", "")
+        arsa = arsa.replace(",", ".")
         f = open("log.txt", "a")
-        log = 'Post alaninda hata var  '
+        log = " \n arsa=" + arsa + ' sozlesme = ' + sozlesmebedeli + 'sozlesme Kdv = ' + sozlesmebedeliKdv + " \n "
         f.write(log)
         f.close()
+
+        f = open("log.txt", "a")
+        log = "\n tanimi  =" + str(request.POST.get('name'))
+        log = log + " \n butce cinsi  =" + request.POST.get('butceCinsi')
+        log = log + " \n butce yili  =" + str(request.POST.get('butceYili'))
+        log = log + " \n proje cinsi  =" + str(request.POST.get('projeCinsi'))
+        log = log + " \n ihale tarihi  =" + str(request.POST.get('ihaleTarihi'))
+        log = log + " \n sozlesme tarihi =" + str(request.POST.get('sozlesmeTarihi'))
+        log = log + " \n issuresi =" + str(request.POST.get('isSUresi'))
+        log = log + " \n city  =" + str(request.POST.get('city'))
+        log = log + " \n aistart  =" + str(request.POST.get('aistart'))
+        log = log + " \n aifinish  =" + str(request.POST.get('aifinish'))
+        log = log + " \n karakteristik =" + str(request.POST.get('karakteristik'))
+        log = log + " \n Status  =" + str(request.POST.get('projectStatus'))
+        log = log + " \n company  =" + str(request.POST.get('company'))
+        log = log + " \n sorumlu =" + str(request.POST.get('sorumlu'))
+        f.write(log)
+        f.close()
+
+        town = request.POST.get('town')
+
+        if project.sorumlu:
+            sorumlu = project.sorumlu
+
+        if project_form.is_valid():
+            projectSave = project_form.save(commit=False)
+            projectSave.insaatAlani = insaatAlani
+            projectSave.tahminiOdenekTutari = tahmini
+            projectSave.yaklasikMaliyet = yaklasik
+            projectSave.sozlesmeBedeli = sozlesmebedeli
+            projectSave.arsaAlani = arsa
+            projectSave.sozlesmeBedeliKdv = sozlesmebedeliKdv
+            projectSave.town = town
+            projectSave.save()
+
+            if request.POST.get('sorumlu') is None and sorumlu:
+                projectSave.sorumlu = sorumlu
+
+            projectSave.save()
+            print('veriler kaydedildi')
+
+            # f = open("log.txt", "a")
+            # log = 'veriler kaydedildi'
+            # f.write(log)
+            # f.close()
+
+            log = str(project.name) + "projesini güncelledi"
+            log = general_methods.logwrite(request, log)
+
+            messages.success(request, 'Proje Başarıyla Güncellendi')
+            return redirect('sbs:proje-duzenle', pk=project.pk)
+        else:
+
+            f = open("log.txt", "a")
+            log = 'Alanlari kontrol ediniz '
+            f.write(log)
+            f.close()
+            messages.warning(request, 'Alanları Kontrol Ediniz')
+
+
 
     return render(request, 'epproje/proje-duzenle.html',
                   {'project_form': project_form, 'project': project, 'titles': titles, 'employees': employees,
