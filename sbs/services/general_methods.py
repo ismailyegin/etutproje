@@ -268,6 +268,7 @@ def logwrite(request, log):
         # f.close()
 
     except Exception as e:
+        print('log write hata var ')
         # f = open("log.txt", "a")
         log = "[" + datetime.today().strftime('%d-%m-%Y %H:%M') + "] hata   \n "
         # f.write(log)
