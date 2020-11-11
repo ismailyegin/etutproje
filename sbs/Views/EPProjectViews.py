@@ -170,6 +170,11 @@ def edit_project(request, pk):
             notification.is_show = True
             notification.save()
 
+    f = open("log.txt", "a")
+    log = '\n sisteme giris' + "\n"
+    f.write(log)
+    f.close()
+
     try:
         if request.method == 'POST':
             try:
@@ -207,24 +212,27 @@ def edit_project(request, pk):
             arsa = arsa.replace(".", "")
             arsa = arsa.replace(",", ".")
 
+            f = open("log.txt", "a")
+            log = " \n arsa=" + arsa + ' sozlesme = ' + sozlesmebedeli + 'sozlesme Kdv = ' + sozlesmebedeliKdv + " \n "
+            f.write(log)
+            f.close()
+
+
             town = request.POST.get('town')
 
             if project.sorumlu:
                 sorumlu = project.sorumlu
-            if project_form.is_valid():
 
+            if project_form.is_valid():
                 projectSave = project_form.save(commit=False)
                 projectSave.insaatAlani = insaatAlani
                 projectSave.tahminiOdenekTutari = tahmini
-
                 projectSave.yaklasikMaliyet = yaklasik
-                print('test ')
                 projectSave.sozlesmeBedeli = sozlesmebedeli
-                print(projectSave.sozlesmeBedeli)
                 projectSave.arsaAlani = arsa
                 projectSave.sozlesmeBedeliKdv = sozlesmebedeliKdv
-                print(projectSave.sozlesmeBedeliKdv)
                 projectSave.town = town
+                projectSave.save()
 
                 if request.POST.get('sorumlu') is None and sorumlu:
                     projectSave.sorumlu = sorumlu
@@ -232,16 +240,32 @@ def edit_project(request, pk):
                 projectSave.save()
                 print('veriler kaydedildi')
 
-                log = str(project.name) + " projesini güncelledi"
+                f = open("log.txt", "a")
+                log = 'veriler kaydedildi'
+                f.write(log)
+                f.close()
+
+                log = str(project.name) + "projesini güncelledi"
                 log = general_methods.logwrite(request, log)
 
                 messages.success(request, 'Proje Başarıyla Güncellendi')
                 return redirect('sbs:proje-duzenle', pk=project.pk)
             else:
+
+                f = open("log.txt", "a")
+                log = 'Alanlari kontrol ediniz '
+                f.write(log)
+                f.close()
+
+
+
                 messages.warning(request, 'Alanları Kontrol Ediniz')
     except:
         print('post alanin da hata var')
-
+        f = open("log.txt", "a")
+        log = 'Post alaninda hata var  '
+        f.write(log)
+        f.close()
 
     return render(request, 'epproje/proje-duzenle.html',
                   {'project_form': project_form, 'project': project, 'titles': titles, 'employees': employees,
