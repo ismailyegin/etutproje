@@ -571,7 +571,7 @@
                                 <li><a href="{% url 'sbs:detay' %}?get=Bölge İdare Mahkemesi">Bölge İdare Mahkemesi
                                     <small class="label  pull-right"
                                            style="background-color:#ee9a00; text-c ">
-                                    {{bolgeidari}}</small></a>
+                                        {{ bolgeidari }}</small></a>
                                 </li>
 
                                 <li><a href="{% url 'sbs:detay' %}?get=Denetimli Serbestlik">Denetimli Serbestlik
@@ -581,7 +581,7 @@
                                 <li><a href="{% url 'sbs:detay' %}?get=Bakanlık Binası">Bakanlık Binası <small
                                         class="label  pull-right"
                                         style="background-color:#000000; ">
-                                    {{bakanlikbinasi}}</small></a>
+                                    {{ bakanlikbinasi }}</small></a>
                                 </li>
 
                                 <li><a href="{% url 'sbs:detay' %}?get=Personel Eğitim Merkezi">Personel Eğitim Merkezi
@@ -702,8 +702,8 @@
                                     {% if bolgeidari_sum %}
                                         <li><a href="{% url 'sbs:detay' %}?get=Bölge İdare Mahkemesi">Bölge İdare
                                             Mahkemesi <small
-                                                class="label label-primary  pull-right">
-                                            {{ bolgeidari_sum }} m² </small></a>
+                                                    class="label label-primary  pull-right">
+                                                {{ bolgeidari_sum }} m² </small></a>
                                         </li>
                                     {% endif %}
                                     {% if denetimserbeslik_sum %}
@@ -793,8 +793,8 @@
                                     {% if bolgeidari_dev %}
                                         <li><a href="{% url 'sbs:detay' %}?get=Bölge İdare Mahkemesi">Bölge İdare
                                             Mahkemesi <small
-                                                class="label label-primary  pull-right">
-                                            {{ bolgeidari_dev }} m² </small></a>
+                                                    class="label label-primary  pull-right">
+                                                {{ bolgeidari_dev }} m² </small></a>
                                         </li>
                                     {% endif %}
                                     {% if denetimserbeslik_dev %}
@@ -883,8 +883,8 @@
                                     {% if bolgeidari_tam %}
                                         <li><a href="{% url 'sbs:detay' %}?get=Bölge İdare Mahkemesi">Bölge İdare
                                             Mahkemesi <small
-                                                class="label label-primary  pull-right">
-                                            {{ bolgeidari_tam }} m² </small></a>
+                                                    class="label label-primary  pull-right">
+                                                {{ bolgeidari_tam }} m² </small></a>
                                         </li>
                                     {% endif %}
                                     {% if denetimserbeslik_tam %}
@@ -979,12 +979,269 @@
 
             </div>
 
+            <div class="row">
+                <div class="box box-success">
 
-            <div class="box box-success">
+                    <div class="box-header with-border">
+
+                        <h3 class="box-title">Linkler</h3>
+
+
+                        <div class="box-tools pull-right">
+
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                    class="fa fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i
+                                    class="fa fa-times"></i>
+                            </button>
+                        </div>
+
+                        <div class="box-body no-padding">
+
+                            <ul class="users-list clearfix">
+                                <li>
+                                    <a target="_blank" class="users-list-name" href="https://www.tccb.gov.tr/">
+                                        <img src="{{ MEDIA_URL }}/logo/cumhur.png" alt="User Image"><br>
+                                        Cumhurbaşkanlığı</a>
+
+                                </li>
+                                <li>
+                                    <a target="_blank" class="users-list-name" href="http://www.adalet.gov.tr/">
+                                        <img src="{{ MEDIA_URL }}/logo/adalet.png" alt="User Image"><br>
+                                        Adalet Bakanlığı</a>
+
+                                </li>
+
+                                <li>
+                                    <a target="_blank" class="users-list-name" href="https://www.enerji.gov.tr">
+                                        <img src="{{ MEDIA_URL }}/logo/enerji.png" alt="User Image"><br>
+                                        Enerji
+                                        ve Tabii Kaynaklar Bakanlığı</a>
+
+                                </li>
+
+
+                                <li>
+                                    <a target="_blank" class="users-list-name" href="https://www.hmb.gov.tr/">
+                                        <img src="{{ MEDIA_URL }}/logo/hazine.png" alt="User Image"><br>
+                                        Hazine ve Maliye
+                                        Bakanlığı</a>
+
+                                </li>
+                                <li>
+                                    <a target="_blank" class="users-list-name" href="https://www.icisleri.gov.tr/">
+                                        <img src="{{ MEDIA_URL }}/logo/içişleri.png" alt="User Image"><br>
+                                        İçişleri
+                                        Bakanlığı</a>
+
+                                </li>
+                                <li>
+                                    <a target="_blank" class="users-list-name" href="http://www.msb.gov.tr/">
+                                        <img src="{{ MEDIA_URL }}/logo/savunma.png" alt="User Image"><br>
+                                        Millî Savunma
+                                        Bakanlığı</a>
+
+                                </li>
+                                <li>
+                                    <a target="_blank" class="users-list-name" href="https://www.ktb.gov.tr/">
+                                        <img src="{{ MEDIA_URL }}/logo/kültür.png" alt="User Image"><br>
+                                        Kültür ve Turizm
+                                        Bakanlığı</a>
+                                </li>
+
+                                <li>
+                                    <a target="_blank" class="users-list-name" href="https://www.egm.gov.tr/">
+                                        <img src="{{ MEDIA_URL }}/logo/polis.png" alt="User Image"><br>
+                                        Emniyet Genel
+                                        Müdürlüğü</a>
+
+                                </li>
+
+
+                                <li>
+                                    <a target="_blank" class="users-list-name"
+                                       href="https://www.tarimorman.gov.tr/">
+                                        <img src="{{ MEDIA_URL }}/logo/tarım.png" alt="User Image"><br>
+                                        Tarım ve Orman
+                                        Bakanlığı</a>
+
+                                </li>
+
+                                <li>
+                                    <a target="_blank" class="users-list-name" href="https://www.uab.gov.tr/">
+                                        <img src="{{ MEDIA_URL }}/logo/ulaştırma.png" alt="User Image"><br>
+                                        Ulaştırma ve Altyapı
+                                        Bakanlığı</a>
+
+                                </li>
+
+                                <li>
+                                    <a target="_blank" class="users-list-name"
+                                       href="https://www.sanayi.gov.tr/anasayfa">
+                                        <img src="{{ MEDIA_URL }}/logo/sanayi.png" alt="User Image"><br>
+                                        Sanayi ve
+                                        Teknoloji Bakanlığı</a>
+
+                                </li>
+
+
+                                <li>
+                                    <a target="_blank" class="users-list-name" href="https://www.saglik.gov.tr/">
+                                        <img src="{{ MEDIA_URL }}/logo/saglık.png" alt="User Image"><br>
+                                        Sağlık
+                                        Bakanlığı</a>
+
+
+                                </li>
+
+
+                                <li>
+                                    <a target="_blank" class="users-list-name"
+                                       href="https://www.resmigazete.gov.tr/">
+                                        <img src="{{ MEDIA_URL }}/logo/resmi.png" alt="User Image"><br>
+                                        Resmi
+                                        Gazete</a>
+
+                                </li>
+
+                                <li>
+                                    <a target="_blank" class="users-list-name" href="https://www.ticaret.gov.tr/">
+                                        <img src="{{ MEDIA_URL }}/logo/ticaret.png" alt="User Image"><br>
+                                        Ticaret
+                                        Bakanlığı</a>
+
+                                </li>
+
+
+                                <li>
+                                    <a target="_blank" class="users-list-name" href="http://www.gsb.gov.tr/">
+                                        <img src="{{ MEDIA_URL }}/logo/gençlik.png" alt="User Image"><br>
+                                        Gençlik
+                                        ve Spor Bakanlığı</a>
+
+                                </li>
+
+
+                                {#                                    <li>#}
+                                {#                                        <img src="{{ MEDIA_URL }}/logo/diyanet.png" alt="User Image">#}
+                                {#                                        <a class="users-list-name" href="#">Diyanet İşleri Başkanlığı</a>#}
+                                {##}
+                                {#                                    </li>#}
+                                {##}
+
+                                {##}
+                                {##}
+                                {##}
+                                {#                                    <li>#}
+                                {#                                        <img src="{{ MEDIA_URL }}/logo/egitim.png" alt="User Image">#}
+                                {#                                        <a class="users-list-name" href="#">Milli Eğitim Bakanlığı</a>#}
+                                {##}
+                                {#                                    </li>#}
+                                {#                                    <li>#}
+                                {#                                        <img src="{{ MEDIA_URL }}/logo/enerji.png" alt="User Image">#}
+                                {#                                        <a class="users-list-name" href="#">Enerji ve Tabii Kaynaklar Bakanlığı</a>#}
+                                {##}
+                                {#                                    </li>#}
+                                {##}
+                                {##}
+                                {#                                    <li>#}
+                                {#                                        <img src="{{ MEDIA_URL }}/logo/nufus.png" alt="User Image">#}
+                                {#                                        <a class="users-list-name" href="#">Nüfus ve Vatandaşlık İşleri Genel#}
+                                {#                                            Müdürlüğü</a>#}
+                                {##}
+                                {#                                    </li>#}
+                                {##}
+                                {##}
+                                {##}
+
+
+                            </ul>
+
+
+                        </div>
+
+
+                    </div>
+                </div>
+
+
+            </div>
+
+
+            <div class="row">
+
+
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-yellow"><i class="ion ion-android-open"></i></span>
+
+                        <div class="info-box-content">
+                            <span class="info-box-text">Toplam Proje Sayısı </span>
+                            <span class="info-box-number">{{ proje_count }}</span>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                    <!-- /.info-box -->
+                </div>
+
+
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-aqua"><i class="ion ion-android-home"></i></span>
+
+                        <div class="info-box-content">
+                            <span class="info-box-text">Proje Devam ediyor </span>
+                            <span class="info-box-number header">{{ proje_status_PDE }}</span>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                    <!-- /.info-box -->
+                </div>
+                <!-- /.col -->
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-red"><i class="fa ion-android-bulb"></i></span>
+
+                        <div class="info-box-content">
+                            <span class="info-box-text">Proje Tamamlandı</span>
+                            <span class="info-box-number">{{ proje_status_PT }}</span>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                    <!-- /.info-box -->
+                </div>
+                <!-- /.col -->
+
+                <!-- fix for small devices only -->
+                <div class="clearfix visible-sm-block"></div>
+
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-green"><i class="ion ion-android-bulb"></i></span>
+
+                        <div class="info-box-content">
+                            <span class="info-box-text">Proje Durduruldu</span>
+                            <span class="info-box-number">{{ proje_status_PD }}</span>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                    <!-- /.info-box -->
+                </div>
+                <!-- /.col -->
+
+                <!-- /.col -->
+            </div>
+
+
+            <div class="row">
+
+                <div class="col-lg-8">
+                    <div class="box box-success">
 
                         <div class="box-header with-border">
 
-                            <h3 class="box-title">Linkler</h3>
+                            <h3 class="box-title">Proje Drumlari</h3>
 
 
                             <div class="box-tools pull-right">
@@ -999,166 +1256,70 @@
 
                             <div class="box-body no-padding">
 
-                                <ul class="users-list clearfix">
-                                    <li>
-                                        <a target="_blank" class="users-list-name" href="https://www.tccb.gov.tr/">
-                                            <img src="{{ MEDIA_URL }}/logo/cumhur.png" alt="User Image"><br>
-                                            Cumhurbaşkanlığı</a>
-
-                                    </li>
-                                    <li>
-                                        <a target="_blank" class="users-list-name" href="http://www.adalet.gov.tr/">
-                                            <img src="{{ MEDIA_URL }}/logo/adalet.png" alt="User Image"><br>
-                                            Adalet Bakanlığı</a>
-
-                                    </li>
-
-                                    <li>
-                                        <a target="_blank" class="users-list-name" href="https://www.enerji.gov.tr">
-                                            <img src="{{ MEDIA_URL }}/logo/enerji.png" alt="User Image"><br>
-                                            Enerji
-                                            ve Tabii Kaynaklar Bakanlığı</a>
-
-                                    </li>
+                                <div class="box-body">
 
 
-                                    <li>
-                                        <a target="_blank" class="users-list-name" href="https://www.hmb.gov.tr/">
-                                            <img src="{{ MEDIA_URL }}/logo/hazine.png" alt="User Image"><br>
-                                            Hazine ve Maliye
-                                            Bakanlığı</a>
+                                    <div class="table-responsive">
+                                        <table class="table no-margin">
+                                            <thead>
+                                            <tr>
+                                                <th>Proje Durumu</th>
+                                                <th>Proje Sayısı</th>
 
-                                    </li>
-                                    <li>
-                                        <a target="_blank" class="users-list-name" href="https://www.icisleri.gov.tr/">
-                                            <img src="{{ MEDIA_URL }}/logo/içişleri.png" alt="User Image"><br>
-                                            İçişleri
-                                            Bakanlığı</a>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td>Devam Eden Proje</td>
+                                                <td>
+                                                    <span class="label label-success">{{ proje_status_PDE }}</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Proje Tamamlandı</td>
+                                                <td>
+                                                    <span class="label label-success">{{ proje_status_PT }}</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Deprem Yön. Reviyonu Yapılıyor</td>
+                                                <td>
+                                                    <span class="label label-success">{{ proje_status_DYRY }}</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>İhale Sürecinde</td>
+                                                <td>
+                                                    <span class="label label-success">{{ proje_status_IH }}</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Proje Durduruldu</td>
+                                                <td>
+                                                    <span class="label label-success">{{ proje_status_PD }}</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Proje İptal Edildi</td>
+                                                <td>
+                                                    <span class="label label-success">{{ proje_status_PIE }}</span>
+                                                </td>
+                                            </tr>
 
-                                    </li>
-                                    <li>
-                                        <a target="_blank" class="users-list-name" href="http://www.msb.gov.tr/">
-                                            <img src="{{ MEDIA_URL }}/logo/savunma.png" alt="User Image"><br>
-                                            Millî Savunma
-                                            Bakanlığı</a>
+                                            <tr>
+                                                <td>Toplam Proje Sayısı</td>
+                                                <td>
+                                                    <span class="label label-success">{{ proje_count }}</span>
+                                                </td>
+                                            </tr>
 
-                                    </li>
-                                    <li>
-                                        <a target="_blank" class="users-list-name" href="https://www.ktb.gov.tr/">
-                                            <img src="{{ MEDIA_URL }}/logo/kültür.png" alt="User Image"><br>
-                                            Kültür ve Turizm
-                                            Bakanlığı</a>
-                                    </li>
-
-                                    <li>
-                                        <a target="_blank" class="users-list-name" href="https://www.egm.gov.tr/">
-                                            <img src="{{ MEDIA_URL }}/logo/polis.png" alt="User Image"><br>
-                                            Emniyet Genel
-                                            Müdürlüğü</a>
-
-                                    </li>
-
-
-                                    <li>
-                                        <a target="_blank" class="users-list-name"
-                                           href="https://www.tarimorman.gov.tr/">
-                                            <img src="{{ MEDIA_URL }}/logo/tarım.png" alt="User Image"><br>
-                                            Tarım ve Orman
-                                            Bakanlığı</a>
-
-                                    </li>
-
-                                    <li>
-                                        <a target="_blank" class="users-list-name" href="https://www.uab.gov.tr/">
-                                            <img src="{{ MEDIA_URL }}/logo/ulaştırma.png" alt="User Image"><br>
-                                            Ulaştırma ve Altyapı
-                                            Bakanlığı</a>
-
-                                    </li>
-
-                                    <li>
-                                        <a target="_blank" class="users-list-name"
-                                           href="https://www.sanayi.gov.tr/anasayfa">
-                                            <img src="{{ MEDIA_URL }}/logo/sanayi.png" alt="User Image"><br>
-                                            Sanayi ve
-                                            Teknoloji Bakanlığı</a>
-
-                                    </li>
+                                            </tbody>
+                                        </table>
+                                    </div>
 
 
-                                    <li>
-                                        <a target="_blank" class="users-list-name" href="https://www.saglik.gov.tr/">
-                                            <img src="{{ MEDIA_URL }}/logo/saglık.png" alt="User Image"><br>
-                                            Sağlık
-                                            Bakanlığı</a>
-
-
-                                    </li>
-
-
-                                    <li>
-                                        <a target="_blank" class="users-list-name"
-                                           href="https://www.resmigazete.gov.tr/">
-                                            <img src="{{ MEDIA_URL }}/logo/resmi.png" alt="User Image"><br>
-                                            Resmi
-                                            Gazete</a>
-
-                                    </li>
-
-                                    <li>
-                                        <a target="_blank" class="users-list-name" href="https://www.ticaret.gov.tr/">
-                                            <img src="{{ MEDIA_URL }}/logo/ticaret.png" alt="User Image"><br>
-                                            Ticaret
-                                            Bakanlığı</a>
-
-                                    </li>
-
-
-                                    <li>
-                                        <a target="_blank" class="users-list-name" href="http://www.gsb.gov.tr/">
-                                            <img src="{{ MEDIA_URL }}/logo/gençlik.png" alt="User Image"><br>
-                                            Gençlik
-                                            ve Spor Bakanlığı</a>
-
-                                    </li>
-
-
-
-
-                                    {#                                    <li>#}
-                                    {#                                        <img src="{{ MEDIA_URL }}/logo/diyanet.png" alt="User Image">#}
-                                    {#                                        <a class="users-list-name" href="#">Diyanet İşleri Başkanlığı</a>#}
-                                    {##}
-                                    {#                                    </li>#}
-                                    {##}
-
-                                    {##}
-                                    {##}
-                                    {##}
-                                    {#                                    <li>#}
-                                    {#                                        <img src="{{ MEDIA_URL }}/logo/egitim.png" alt="User Image">#}
-                                    {#                                        <a class="users-list-name" href="#">Milli Eğitim Bakanlığı</a>#}
-                                    {##}
-                                    {#                                    </li>#}
-                                    {#                                    <li>#}
-                                    {#                                        <img src="{{ MEDIA_URL }}/logo/enerji.png" alt="User Image">#}
-                                    {#                                        <a class="users-list-name" href="#">Enerji ve Tabii Kaynaklar Bakanlığı</a>#}
-                                    {##}
-                                    {#                                    </li>#}
-                                    {##}
-                                    {##}
-                                    {#                                    <li>#}
-                                    {#                                        <img src="{{ MEDIA_URL }}/logo/nufus.png" alt="User Image">#}
-                                    {#                                        <a class="users-list-name" href="#">Nüfus ve Vatandaşlık İşleri Genel#}
-                                    {#                                            Müdürlüğü</a>#}
-                                    {##}
-                                    {#                                    </li>#}
-                                    {##}
-                                    {##}
-                                    {##}
-
-
-                                </ul>
+                                    <!-- /.table-responsive -->
+                                </div>
 
 
                             </div>
@@ -1166,6 +1327,63 @@
 
                         </div>
                     </div>
+                </div>
+                <div class="col-md-4">
+                    <!-- Info Boxes Style 2 -->
+                    <div class="info-box bg-yellow">
+                        <span class="info-box-icon"><i class="ion ion-ios-pricetag-outline"></i></span>
+
+                        <div class="info-box-content">
+                            <span class="info-box-text">Proje İptal Edildi </span>
+                            <span class="info-box-number">{{ proje_status_PIE }}</span>
+
+                            <div class="progress">
+                                <div id="iptal" class="progress-bar" style="width: 0%"></div>
+                            </div>
+                            <span class="progress-description">
+                     Toplam Projeye Oranı= <span id="iptaltext"></span>
+                  </span>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                    <!-- /.info-box -->
+                    <div class="info-box bg-green">
+                        <span class="info-box-icon"><i class="ion ion-ios-heart-outline"></i></span>
+
+                        <div class="info-box-content">
+                            <span class="info-box-text">Proje İhale Sürecinde</span>
+                            <span class="info-box-number">{{ proje_status_IH }}</span>
+
+                            <div class="progress">
+                                <div id="ihale" class="progress-bar" style="width: 0%"></div>
+                            </div>
+                            <span class="progress-description">
+                      Toplam Projeye Oranı= <span id="ihaletext"></span>
+                  </span>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                    <!-- /.info-box -->
+
+                    <div class="info-box bg-aqua">
+                        <span class="info-box-icon"><i class="ion-ios-chatbubble-outline"></i></span>
+
+                        <div class="info-box-content">
+                            <span class="info-box-text">Deprem Yön Revizyonu yapılıyor</span>
+                            <span class="info-box-number">{{ proje_status_DYRY }}</span>
+
+                            <div class="progress">
+                                <div id="deprem" class="progress-bar" style="width: 100%"></div>
+                            </div>
+                            <span class="progress-description">
+                      Toplam Projeye Oranı= <span id="depremtext"></span>
+                  </span>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+
+                </div>
+            </div>
 
 
         </section>
@@ -1175,6 +1393,30 @@
 
     <script>
         $(function () {
+            deprem = ({{ proje_status_DYRY }} * 100
+        )/{{ proje_count }}
+            deprem = deprem.toString() + "%";
+            iptal = ({{ proje_status_PIE }} * 100
+        )/{{ proje_count }}
+            iptal = iptal.toString() + "%";
+            ihale = ({{ proje_status_IH }} * 100
+        )/{{ proje_count }}
+            ihale = ihale.toString() + "%";
+            $("#deprem").css("width", deprem);
+            $("#iptal").css("width", iptal);
+            $("#ihale").css("width", ihale);
+
+            $("#depremtext").text(deprem);
+            $("#iptaltext").text(iptal);
+            $("#ihaletext").text(ihale);
+
+
+
+
+
+
+
+
             {#pie log#}
             var pieChartCanvas = $('#pieChart2').get(0).getContext('2d');
             var pieChart = new Chart(pieChartCanvas);
@@ -1228,10 +1470,10 @@
                     highlight: '#d3d3d3',
                     label: 'Personel Eğitim Merkezi'
                 },
-                                {
+                {
                     value: {{lojman}},
-                                    color: '#00cd00',
-                                    highlight: '#d3d3d3',
+                    color: '#00cd00',
+                    highlight: '#d3d3d3',
                     label: 'Lojman'
                 },
                 {
@@ -1275,9 +1517,7 @@
             // - END PIE CHART -
 
 
-
-
-});
+        });
 
 
     </script>
@@ -1285,45 +1525,47 @@
 
 
 
-    	<script>
-	var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
+    <script>
+        var randomScalingFactor = function () {
+            return Math.round(Math.random() * 100)
+        };
 
-	var barChartData = {
-		labels : ["Adalet Binası","Ceza İnfaz","Adli Tıp","Bölge Adliye","Bölge İdare","Denetimli Serbestlik","Bakanlık Bİnası","Personel Eğitim","Lojman","Diger"],
-		datasets : [
+        var barChartData = {
+            labels: ["Adalet Binası", "Ceza İnfaz", "Adli Tıp", "Bölge Adliye", "Bölge İdare", "Denetimli Serbestlik", "Bakanlık Bİnası", "Personel Eğitim", "Lojman", "Diger"],
+            datasets: [
 
-			{
-				fillColor : "rgba(151,187,205,0.5)",
-				strokeColor : "rgba(151,187,205,0.8)",
-				highlightFill : "rgba(151,187,205,0.75)",
-				highlightStroke : "rgba(151,187,205,1)",
-				data : [{{ adaletbinasi_sum }},{{cezainfaz_sum}},{{adlitip_sum}},{{ bolgeadliye_sum }},{{ bolgeidari_sum }},{{ denetimserbeslik_sum }},{{ bakanlikbinasi_sum }},{{ personelegitim_sum }},{{ lojman_sum }},{{ diger_sum }}]
-            },
-            {
-                fillColor: "rgba(255,106,106,0.5)",
-                strokeColor: "rgba(151,187,205,0.8)",
-                highlightFill: "rgba(151,187,205,0.75)",
-                highlightStroke: "rgba(151,187,205,1)",
-                data: [{{ adaletbinasi_tam }}, {{cezainfaz_tam}}, {{adlitip_tam}}, {{ bolgeadliye_tam }}, {{ bolgeidari_tam }}, {{ denetimserbeslik_tam }}, {{ bakanlikbinasi_tam }}, {{ personelegitim_tam }}, {{ lojman_tam }}, {{ diger_tam }}]
-            },
-            {
-                fillColor: "rgba(151,187,106,0.5)",
-                strokeColor: "rgba(151,187,205,0.8)",
-                highlightFill: "rgba(151,187,205,0.75)",
-                highlightStroke: "rgba(151,187,205,1)",
-                data: [{{ adaletbinasi_dev }}, {{cezainfaz_dev}}, {{adlitip_dev}}, {{ bolgeadliye_dev }}, {{ bolgeidari_dev }}, {{ denetimserbeslik_dev }}, {{ bakanlikbinasi_dev }}, {{ personelegitim_dev }}, {{ lojman_dev }}, {{ diger_dev }}]
-            },
-		]
+                {
+                    fillColor: "rgba(151,187,205,0.5)",
+                    strokeColor: "rgba(151,187,205,0.8)",
+                    highlightFill: "rgba(151,187,205,0.75)",
+                    highlightStroke: "rgba(151,187,205,1)",
+                    data: [{{ adaletbinasi_sum }}, {{cezainfaz_sum}}, {{adlitip_sum}}, {{ bolgeadliye_sum }}, {{ bolgeidari_sum }}, {{ denetimserbeslik_sum }}, {{ bakanlikbinasi_sum }}, {{ personelegitim_sum }}, {{ lojman_sum }}, {{ diger_sum }}]
+                },
+                {
+                    fillColor: "rgba(255,106,106,0.5)",
+                    strokeColor: "rgba(151,187,205,0.8)",
+                    highlightFill: "rgba(151,187,205,0.75)",
+                    highlightStroke: "rgba(151,187,205,1)",
+                    data: [{{ adaletbinasi_tam }}, {{cezainfaz_tam}}, {{adlitip_tam}}, {{ bolgeadliye_tam }}, {{ bolgeidari_tam }}, {{ denetimserbeslik_tam }}, {{ bakanlikbinasi_tam }}, {{ personelegitim_tam }}, {{ lojman_tam }}, {{ diger_tam }}]
+                },
+                {
+                    fillColor: "rgba(151,187,106,0.5)",
+                    strokeColor: "rgba(151,187,205,0.8)",
+                    highlightFill: "rgba(151,187,205,0.75)",
+                    highlightStroke: "rgba(151,187,205,1)",
+                    data: [{{ adaletbinasi_dev }}, {{cezainfaz_dev}}, {{adlitip_dev}}, {{ bolgeadliye_dev }}, {{ bolgeidari_dev }}, {{ denetimserbeslik_dev }}, {{ bakanlikbinasi_dev }}, {{ personelegitim_dev }}, {{ lojman_dev }}, {{ diger_dev }}]
+                },
+            ]
 
-	}
-	window.onload = function(){
-		var ctx = document.getElementById("canvas").getContext("2d");
-		window.myBar = new Chart(ctx).Bar(barChartData, {
-			responsive : true
-		});
-	}
+        }
+        window.onload = function () {
+            var ctx = document.getElementById("canvas").getContext("2d");
+            window.myBar = new Chart(ctx).Bar(barChartData, {
+                responsive: true
+            });
+        }
 
-	</script>
+    </script>
 
 
 {% endblock %}

@@ -129,6 +129,8 @@ def return_admin_dashboard(request):
     proje_status_PDE=EPProject.objects.filter(projectStatus=EPProject.PDE).distinct().count()
     proje_status_PD = EPProject.objects.filter(projectStatus=EPProject.PD).distinct().count()
     proje_status_PIE = EPProject.objects.filter(projectStatus=EPProject.PIE).distinct().count()
+    proje_status_DYRY = EPProject.objects.filter(projectStatus=EPProject.DYRY).distinct().count()
+    proje_status_IH = EPProject.objects.filter(projectStatus=EPProject.IH).distinct().count()
 
     cezainfaz=EPProject.objects.filter(projeCinsi=EPProject.CIK).count()
     adaletbinasi=EPProject.objects.filter(projeCinsi=EPProject.AB).count()
@@ -231,11 +233,16 @@ def return_admin_dashboard(request):
     return render(request, 'anasayfa/admin.html',
                   {'employees': last_employee,
                    'personel_count': personel_count,
+
                    'proje_count': proje_count,
                    'proje_status_PT': proje_status_PT,
                    'proje_status_PDE': proje_status_PDE,
                    'proje_status_PD': proje_status_PD,
                    'proje_status_PIE': proje_status_PIE,
+                   'proje_status_DYRY': proje_status_DYRY,
+                   'proje_status_IH': proje_status_IH,
+
+
                    'cezainfaz':cezainfaz,
                    'adaletbinasi':adaletbinasi,
                    'adlitip':adlitip,
@@ -277,8 +284,6 @@ def return_admin_dashboard(request):
                    'bakanlikbinasi_tam': bakanlikbinasi_tam,
                    'diger_tam': diger_tam,
                    'lojman_tam': lojman_tam,
-
-
 
                    })
 
