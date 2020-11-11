@@ -183,7 +183,7 @@ def edit_project(request, pk):
                 project.save()
 
         except:
-            print('hata var document ')
+            print('Document none ')
         insaatAlani = request.POST.get('insaat')
         insaatAlani = insaatAlani.replace(".", "")
         insaatAlani = insaatAlani.replace(",", ".")
@@ -218,16 +218,21 @@ def edit_project(request, pk):
             projectSave = project_form.save(commit=False)
             projectSave.insaatAlani = insaatAlani
             projectSave.tahminiOdenekTutari = tahmini
+
             projectSave.yaklasikMaliyet = yaklasik
+            print('test ')
             projectSave.sozlesmeBedeli = sozlesmebedeli
+            print(projectSave.sozlesmeBedeli)
             projectSave.arsaAlani = arsa
             projectSave.sozlesmeBedeliKdv = sozlesmebedeliKdv
+            print(projectSave.sozlesmeBedeliKdv)
             projectSave.town = town
 
             if request.POST.get('sorumlu') is None and sorumlu:
                 projectSave.sorumlu = sorumlu
 
             projectSave.save()
+            print('veriler kaydedildi')
 
             log = str(project.name) + " projesini güncelledi"
             log = general_methods.logwrite(request, log)
