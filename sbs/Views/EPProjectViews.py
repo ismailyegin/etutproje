@@ -211,73 +211,46 @@ def edit_project(request, pk):
         arsa = request.POST.get('arsa')
         arsa = arsa.replace(".", "")
         arsa = arsa.replace(",", ".")
-        f = open("log.txt", "a")
-        log = " \n arsa=" + arsa + ' sozlesme = ' + sozlesmebedeli + 'sozlesme Kdv = ' + sozlesmebedeliKdv + " \n "
-        f.write(log)
-        f.close()
-
-        f = open("log.txt", "a")
-        log = "\n tanimi  =" + str(request.POST.get('name'))
-        log = log + " \n butce cinsi  =" + request.POST.get('butceCinsi')
-        log = log + " \n butce yili  =" + str(request.POST.get('butceYili'))
-        log = log + " \n proje cinsi  =" + str(request.POST.get('projeCinsi'))
-        log = log + " \n ihale tarihi  =" + str(request.POST.get('ihaleTarihi'))
-        log = log + " \n sozlesme tarihi =" + str(request.POST.get('sozlesmeTarihi'))
-        log = log + " \n issuresi =" + str(request.POST.get('isSUresi'))
-        log = log + " \n city  =" + str(request.POST.get('city'))
-        log = log + " \n aistart  =" + str(request.POST.get('aistart'))
-        log = log + " \n aifinish  =" + str(request.POST.get('aifinish'))
-        log = log + " \n karakteristik =" + str(request.POST.get('karakteristik'))
-        log = log + " \n Status  =" + str(request.POST.get('projectStatus'))
-        log = log + " \n company  =" + str(request.POST.get('company'))
-        log = log + " \n sorumlu =" + str(request.POST.get('sorumlu'))
-        f.write(log)
-        f.close()
 
         town = request.POST.get('town')
 
         if project.sorumlu:
             sorumlu = project.sorumlu
 
-        projectSave = project_form.save(commit=False)
-        projectSave.insaatAlani = insaatAlani
-        projectSave.tahminiOdenekTutari = tahmini
-        projectSave.yaklasikMaliyet = yaklasik
-        projectSave.sozlesmeBedeli = sozlesmebedeli
-        projectSave.arsaAlani = arsa
-        projectSave.sozlesmeBedeliKdv = sozlesmebedeliKdv
-        projectSave.town = town
-        projectSave.save()
+        if project_form.is_valid():
+            projectSave = project_form.save(commit=False)
+            projectSave.insaatAlani = insaatAlani
+            projectSave.tahminiOdenekTutari = tahmini
+            projectSave.yaklasikMaliyet = yaklasik
+            projectSave.sozlesmeBedeli = sozlesmebedeli
+            projectSave.arsaAlani = arsa
+            projectSave.sozlesmeBedeliKdv = sozlesmebedeliKdv
+            projectSave.town = town
+            projectSave.save()
 
-        if request.POST.get('sorumlu') is None and sorumlu:
-            projectSave.sorumlu = sorumlu
+            if request.POST.get('sorumlu') is None and sorumlu:
+                projectSave.sorumlu = sorumlu
 
-        projectSave.save()
-        print('veriler kaydedildi')
+            projectSave.save()
+            print('veriler kaydedildi')
 
-        # f = open("log.txt", "a")
-        # log = 'veriler kaydedildi'
-        # f.write(log)
-        # f.close()
+            # f = open("log.txt", "a")
+            # log = 'veriler kaydedildi'
+            # f.write(log)
+            # f.close()
 
-        log = str(project.name) + "projesini güncelledi"
-        log = general_methods.logwrite(request, log)
+            log = str(project.name) + "projesini güncelledi"
+            log = general_methods.logwrite(request, log)
 
-        messages.success(request, 'Proje Başarıyla Güncellendi')
-        return redirect('sbs:proje-duzenle', pk=project.pk)
+            messages.success(request, 'Proje Başarıyla Güncellendi')
+            return redirect('sbs:proje-duzenle', pk=project.pk)
+        else:
 
-        # if project_form.is_valid():
-        #
-        # else:
-        #
-        #     f = open("log.txt", "a")
-        #     log = 'Alanlari kontrol ediniz '
-        #     f.write(log)
-        #     f.close()
-        #     messages.warning(request, 'Alanları Kontrol Ediniz')
-
-
-
+            f = open("log.txt", "a")
+            log = 'Alanlari kontrol ediniz '
+            f.write(log)
+            f.close()
+            messages.warning(request, 'Alanları Kontrol Ediniz')
     return render(request, 'epproje/proje-duzenle.html',
                   {'project_form': project_form, 'project': project, 'titles': titles, 'employees': employees,
                    'days': days})
