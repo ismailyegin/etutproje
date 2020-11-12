@@ -31,6 +31,7 @@ from sbs.models.Town import Town
 from sbs.services import general_methods
 from sbs.services.general_methods import getProfileImage
 from sbs.models.Notification import Notification
+from sbs.models.Company import Company
 
 
 # from twisted.conch.insults.insults import privateModes
@@ -151,17 +152,6 @@ def edit_project(request, pk):
         # if days < 0:
         #     days = 'Zamanı bitti.'
 
-    #   proje sorumlusu degiştirildi
-    # user_sorumlu = request.GET.get('user')
-    # if user_sorumlu:
-    #     try:
-    #         print("try calisti")
-    #         project.sorumlu = Employee.objects.get(user__username=user_sorumlu)
-    #         project.save()
-    #     except:
-    #         print('eror loglamasi yapilacak')
-
-    # bildirimden  gelinmisse ve sistem deki  kisinin ise true yap daha görülmesin
 
     get = request.GET.get('notification')
     if get:
@@ -170,12 +160,8 @@ def edit_project(request, pk):
             notification.is_show = True
             notification.save()
 
-    f = open("log.txt", "a")
-    log = '\n sisteme giris' + "\n"
-    f.write(log)
-    f.close()
-
     if request.method == 'POST':
+
 
         try:
             if request.FILES['files']:
@@ -187,7 +173,7 @@ def edit_project(request, pk):
                 project.save()
 
         except:
-            print('Document eror ')
+            print('')
         insaatAlani = request.POST.get('insaat')
         insaatAlani = insaatAlani.replace(".", "")
         insaatAlani = insaatAlani.replace(",", ".")
@@ -228,16 +214,21 @@ def edit_project(request, pk):
             projectSave.town = town
             projectSave.save()
 
+            if request.POST.get('company'):
+                print(request.POST.get('company'))
+                if project.company.pk != request.POST.get('company'):
+                    projectSave.company = Company.objects.get(pk=request.POST.get('company'))
+            else:
+                projectSave.company = None
+
+
+
+
+
             if request.POST.get('sorumlu') is None and sorumlu:
                 projectSave.sorumlu = sorumlu
 
             projectSave.save()
-            print('veriler kaydedildi')
-
-            # f = open("log.txt", "a")
-            # log = 'veriler kaydedildi'
-            # f.write(log)
-            # f.close()
 
             log = str(project.name) + "projesini güncelledi"
             log = general_methods.logwrite(request, log)
@@ -246,10 +237,7 @@ def edit_project(request, pk):
             return redirect('sbs:proje-duzenle', pk=project.pk)
         else:
 
-            f = open("log.txt", "a")
-            log = 'Alanlari kontrol ediniz '
-            f.write(log)
-            f.close()
+            print('Alanlari kontrol ediniz')
             messages.warning(request, 'Alanları Kontrol Ediniz')
     return render(request, 'epproje/proje-duzenle.html',
                   {'project_form': project_form, 'project': project, 'titles': titles, 'employees': employees,

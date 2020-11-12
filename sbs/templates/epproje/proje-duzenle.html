@@ -736,7 +736,8 @@
 
                                                         <option value="" selected="">--------</option>
 
-                                                        <option value="1" selected="">{{ project.company }}</option>
+                                                        <option value="{{ project.company.pk }}"
+                                                                selected="">{{ project.company }}</option>
                                                     {% else %}
                                                         <option value="" selected="">--------</option>
 
@@ -2385,7 +2386,7 @@
                     userList.children('.active').removeClass('active');
                     let selected = event.target;
                     {#print(selected);#}
-                console.log('gelecek sene ')
+                    console.log('Adalet Bakanlıgı 2020');
                     $(selected).addClass('active');
                     {#window.location.replace("{% url "sbs:proje-duzenle" pk=project.pk %}?user=" + selected.id);#}
                     if (selected.id != null) {
