@@ -214,17 +214,6 @@ def edit_project(request, pk):
             projectSave.town = town
             projectSave.save()
 
-            if request.POST.get('company'):
-                print(request.POST.get('company'))
-                if project.company.pk != request.POST.get('company'):
-                    projectSave.company = Company.objects.get(pk=request.POST.get('company'))
-            else:
-                projectSave.company = None
-
-
-
-
-
             if request.POST.get('sorumlu') is None and sorumlu:
                 projectSave.sorumlu = sorumlu
 

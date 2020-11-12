@@ -11,7 +11,7 @@ class EPProjectForm(ModelForm):
         fields = ('name', 'butceCinsi', 'butceYili', 'projeCinsi', 'ihaleTarihi',  'sozlesmeTarihi', 'isSUresi',
                   # 'isBitimTarihi',
                   'city', 'sorumlu', 'aistart', 'aifinish', 'karakteristik', 'projectStatus',
-                  # 'company'
+                  'company'
                   )
         labels = {
             'name': 'Proje Tanımı',
@@ -28,7 +28,7 @@ class EPProjectForm(ModelForm):
             'aifinish':'Alım İşinin Bitiş Tarihi',
             'karakteristik':'Karakteristik',
             'projectStatus':'Projenin Durumu',
-            # 'company': 'Firma',
+            'company': 'Firma',
 
 
 
@@ -68,8 +68,8 @@ class EPProjectForm(ModelForm):
                                         'style': 'width: 100%;','id':'sehir', 'required': 'required'}),
             'sorumlu': forms.Select(attrs={'class': 'form-control select2 select2-hidden-accessible',
                                         'style': 'width: 100%;'}),
-            # 'company': forms.Select(attrs={'class': 'form-control select2 select2-hidden-accessible',
-            #                                'style': 'width: 100%;'}),
+            'company': forms.Select(attrs={'class': 'form-control select2 select2-hidden-accessible',
+                                           'style': 'width: 100%;'}),
             'aistart': forms.DateInput(
                 attrs={'class': 'form-control  pull-right datemask', 'autocomplete': 'on',
                        'onkeydown': 'return true'}),
