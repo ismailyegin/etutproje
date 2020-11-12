@@ -239,40 +239,42 @@ def edit_project(request, pk):
         if project.sorumlu:
             sorumlu = project.sorumlu
 
-        if project_form.is_valid():
-            projectSave = project_form.save(commit=False)
-            projectSave.insaatAlani = insaatAlani
-            projectSave.tahminiOdenekTutari = tahmini
-            projectSave.yaklasikMaliyet = yaklasik
-            projectSave.sozlesmeBedeli = sozlesmebedeli
-            projectSave.arsaAlani = arsa
-            projectSave.sozlesmeBedeliKdv = sozlesmebedeliKdv
-            projectSave.town = town
-            projectSave.save()
+        projectSave = project_form.save(commit=False)
+        projectSave.insaatAlani = insaatAlani
+        projectSave.tahminiOdenekTutari = tahmini
+        projectSave.yaklasikMaliyet = yaklasik
+        projectSave.sozlesmeBedeli = sozlesmebedeli
+        projectSave.arsaAlani = arsa
+        projectSave.sozlesmeBedeliKdv = sozlesmebedeliKdv
+        projectSave.town = town
+        projectSave.save()
 
-            if request.POST.get('sorumlu') is None and sorumlu:
-                projectSave.sorumlu = sorumlu
+        if request.POST.get('sorumlu') is None and sorumlu:
+            projectSave.sorumlu = sorumlu
 
-            projectSave.save()
-            print('veriler kaydedildi')
+        projectSave.save()
+        print('veriler kaydedildi')
 
-            # f = open("log.txt", "a")
-            # log = 'veriler kaydedildi'
-            # f.write(log)
-            # f.close()
+        # f = open("log.txt", "a")
+        # log = 'veriler kaydedildi'
+        # f.write(log)
+        # f.close()
 
-            log = str(project.name) + "projesini güncelledi"
-            log = general_methods.logwrite(request, log)
+        log = str(project.name) + "projesini güncelledi"
+        log = general_methods.logwrite(request, log)
 
-            messages.success(request, 'Proje Başarıyla Güncellendi')
-            return redirect('sbs:proje-duzenle', pk=project.pk)
-        else:
+        messages.success(request, 'Proje Başarıyla Güncellendi')
+        return redirect('sbs:proje-duzenle', pk=project.pk)
 
-            f = open("log.txt", "a")
-            log = 'Alanlari kontrol ediniz '
-            f.write(log)
-            f.close()
-            messages.warning(request, 'Alanları Kontrol Ediniz')
+        # if project_form.is_valid():
+        #
+        # else:
+        #
+        #     f = open("log.txt", "a")
+        #     log = 'Alanlari kontrol ediniz '
+        #     f.write(log)
+        #     f.close()
+        #     messages.warning(request, 'Alanları Kontrol Ediniz')
 
 
 
