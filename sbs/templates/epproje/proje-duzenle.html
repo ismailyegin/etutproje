@@ -688,7 +688,25 @@
                                             {{ project_form.isSUresi }}
                                         </div>
                                     </div>
-                                    {% if project.projectStatus != "Proje tamamlandı" %}
+                                    {% if project.projectStatus == "Proje tamamlandı" %}
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label> Kaç Gün Kaldı</label>
+                                                <input type="text" name="days" value="Proje Tamamlandı"
+                                                       class="form-control"
+                                                       readonly="readonly">
+                                            </div>
+                                        </div>
+                                    {% elif project.projectStatus == "Proje İptal Edildi" %}
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label> Kaç Gün Kaldı</label>
+                                                <input type="text" name="days" value="Proje İptal Edildi"
+                                                       class="form-control"
+                                                       readonly="readonly">
+                                            </div>
+                                        </div>
+                                    {% else %}
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label> Kaç Gün Kaldı</label>
