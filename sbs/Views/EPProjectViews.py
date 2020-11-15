@@ -182,9 +182,9 @@ def edit_project(request, pk):
         tahmini = tahmini.replace(".", "")
         tahmini = tahmini.replace(",", ".")
 
-        yaklasik = request.POST.get('yaklasik')
-        yaklasik = yaklasik.replace(".", "")
-        yaklasik = yaklasik.replace(",", ".")
+        # yaklasik = request.POST.get('yaklasik')
+        # yaklasik = yaklasik.replace(".", "")
+        # yaklasik = yaklasik.replace(",", ".")
 
         sozlesmebedeli = request.POST.get('sozlesmebedeli')
         sozlesmebedeli = sozlesmebedeli.replace(".", "")
@@ -207,7 +207,7 @@ def edit_project(request, pk):
             projectSave = project_form.save(commit=False)
             projectSave.insaatAlani = insaatAlani
             projectSave.tahminiOdenekTutari = tahmini
-            projectSave.yaklasikMaliyet = yaklasik
+            # projectSave.yaklasikMaliyet = yaklasik
             projectSave.sozlesmeBedeli = sozlesmebedeli
             projectSave.arsaAlani = arsa
             projectSave.sozlesmeBedeliKdv = sozlesmebedeliKdv
