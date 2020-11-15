@@ -442,9 +442,16 @@ def edit_project_pdf(request,pk):
     c.drawString(50, x - 80,
                  "İşin Süresi                         :%s (Gün)" % (project.isSUresi if project.isSUresi else ' '))
     #
+    if project.projectStatus == EPProject.PT:
+        c.drawString(50, x - 100, "Kaç Gün Kaldi                    :Proje Tamamlandı")
 
-    c.drawString(50, x - 100, "Kaç Gün Kaldi                    :%s (Gün)" % (days if days else ' '))
-    c.setFont("Verdana", 15)
+
+    elif project.projectStatus == EPProject.PIE:
+        c.drawString(50, x - 100, "Kaç Gün Kaldi                    :Proje İptal Edildi")
+
+
+    else:
+        c.drawString(50, x - 100, "Kaç Gün Kaldi                    :%s (Gün)" % (days if days else ' '))
 
     c.setFont("Verdana", 10)
     c.drawString(50, x - 120, "Sözleşme Bedeli                :%s  TL" % (
