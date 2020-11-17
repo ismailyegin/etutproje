@@ -21,17 +21,18 @@ from sbs.Forms.EPProjectForm import EPProjectForm
 from sbs.Forms.EPProjectSearchForm import EPProjectSearchForm
 from sbs.Forms.EPProjectSorumluForm import EPProjectSorumluForm
 from sbs.models import EPProject, CategoryItem, City
+from sbs.models.Company import Company
 from sbs.models.EPDocument import EPDocument
 from sbs.models.EPEmployee import EPEmployee
 from sbs.models.EPPhase import EPPhase
-from sbs.models.EPVest import EPVest
 from sbs.models.EPRequirements import EPRequirements
+from sbs.models.EPVest import EPVest
 from sbs.models.Employee import Employee
+from sbs.models.Notification import Notification
+from sbs.models.SubCompany import SubCompany
 from sbs.models.Town import Town
 from sbs.services import general_methods
 from sbs.services.general_methods import getProfileImage
-from sbs.models.Notification import Notification
-from sbs.models.Company import Company
 
 
 # from twisted.conch.insults.insults import privateModes
@@ -139,11 +140,15 @@ def edit_project(request, pk):
 
     if user.groups.filter(name='Personel'):
         project_form=EPProjectSorumluForm(request.POST or None, instance=project)
+
+
+
     elif user.groups.filter(name__in=['Yonetim', 'Admin']):
         project_form = EPProjectForm(request.POST or None, instance=project)
+
     else:
         project_form = EPProjectForm()
-
+    company = Company.objects.all()
     titles = CategoryItem.objects.filter(forWhichClazz="EPPROJECT_EMPLOYEE_TITLE")
     employees = Employee.objects.all()
 
@@ -230,8 +235,12 @@ def edit_project(request, pk):
             print('Alanlari kontrol ediniz')
             messages.warning(request, 'Alanları Kontrol Ediniz')
     return render(request, 'epproje/proje-duzenle.html',
-                  {'project_form': project_form, 'project': project, 'titles': titles, 'employees': employees,
-                   'days': days})
+                  {'project_form': project_form,
+                   'project': project,
+                   'titles': titles,
+                   'employees': employees,
+                   'days': days,
+                   'company': company})
 
 
 @login_required
@@ -500,6 +509,34 @@ def edit_employeetitle(request, pk):
 
 
 @login_required
+def project_subfirma(request, pk):
+    perm = general_methods.control_access_personel(request)
+
+    if not perm:
+        logout(request)
+        return redirect('accounts:login')
+    project = EPProject.objects.get(pk=pk)
+
+    if request.POST.get('title') and request.POST.get('company'):
+        title = CategoryItem.objects.get(pk=request.POST.get('title'))
+        company = Company.objects.get(pk=request.POST.get('company'))
+        subcompany = SubCompany(jopDescription=title, company=company)
+        subcompany.save()
+        project.subcompany.add(subcompany)
+        project.save()
+
+    try:
+        print()
+        return JsonResponse({'status': 'Success', 'messages': 'save successfully', 'pk': subcompany.pk})
+
+    except:
+        return JsonResponse({'status': 'Fail', 'msg': 'Not a valid request'})
+        messages.warning(request, 'Yeniden deneyiniz.')
+
+    return redirect('sbs:proje-duzenle', pk=pk)
+
+
+@login_required
 def update_employee_to_project(request, pk):
     perm = general_methods.control_access_personel(request)
 
@@ -594,12 +631,43 @@ def delete_employee_from_project(request, project_pk, employee_pk):
                 EPEmployee.objects.get(pk=employee_pk).employee.user.get_full_name()) + " personeli sildi"
             log = general_methods.logwrite(request, log)
             project.employees.remove(employee_pk)
+            project.save()
             return JsonResponse({'status': 'Success', 'messages': 'save successfully'})
         except EPProject.DoesNotExist:
             return JsonResponse({'status': 'Fail', 'msg': 'Object does not exist'})
 
     else:
         return JsonResponse({'status': 'Fail', 'msg': 'Not a valid request'})
+
+
+@login_required
+def delete_subcompany_project(request, project_pk, employee_pk):
+    perm = general_methods.control_access_personel(request)
+
+    if not perm:
+        logout(request)
+        return redirect('accounts:login')
+    if request.method == 'POST' and request.is_ajax():
+        try:
+            project = EPProject.objects.get(pk=project_pk)
+
+            log = str(project.name) + " projesininden  alt firma silindi" + str(
+                SubCompany.objects.get(pk=employee_pk))
+            log = general_methods.logwrite(request, log)
+            subcompany = SubCompany.objects.get(pk=employee_pk)
+            project.subcompany.remove(subcompany)
+            project.save()
+            return JsonResponse({'status': 'Success', 'messages': 'save successfully'})
+        except EPProject.DoesNotExist:
+            return JsonResponse({'status': 'Fail', 'msg': 'Object does not exist'})
+
+    else:
+        return JsonResponse({'status': 'Fail', 'msg': 'Not a valid request'})
+
+
+
+
+
 
 
 @login_required

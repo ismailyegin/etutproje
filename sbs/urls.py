@@ -372,6 +372,9 @@ urlpatterns = [
     url(r'etut-proje/proje-personel-guncelle/(?P<pk>\d+)$',
         EPProjectViews.update_employee_to_project, name='proje-personel-guncelle'),
 
+    url(r'etut-proje/proje-altproje/(?P<pk>\d+)$',
+        EPProjectViews.project_subfirma, name='proje-altfirma-ekle'),
+
     url(r'etut-proje/proje-hakedis-guncelle/(?P<pk>\d+)$',
         EPProjectViews.update_vest_to_project, name='proje-hakedis-guncelle'),
 
@@ -380,6 +383,10 @@ urlpatterns = [
     url(r'etut-proje/proje-personel-sil/(?P<project_pk>\d+)/(?P<employee_pk>\d+)/$',
         EPProjectViews.delete_employee_from_project,
         name='proje-personel-kaldir'),
+
+    url(r'etut-proje/proje-altfirma-sil/(?P<project_pk>\d+)/(?P<employee_pk>\d+)/$',
+        EPProjectViews.delete_subcompany_project,
+        name='proje-altfirma-kaldir'),
     url(r'etut-proje/proje-ihtiyac-ekle/(?P<pk>\d+)$',
         EPProjectViews.add_requirement_to_project, name='proje-ihtiyac-ekle'),
     url(r'etut-proje/proje-hakedis-ekle/(?P<pk>\d+)$',
