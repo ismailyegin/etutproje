@@ -160,6 +160,45 @@
 
                     </div>
 
+                    <div class="box-body">
+
+
+                        <div class="box box-primary">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">
+
+                                    Proje İş Tanımlari </h3>
+
+                            </div>
+
+                            <div class="box-header with-border">
+
+
+                                <div class="form-group">
+                                    <label>İş Tanımları</label>
+                                    <select class="form-control select2" multiple="multiple " name="jobDesription"
+                                            id="multipleSelect"
+                                            data-placeholder="İş Tanımı Seçiniz">
+                                        {% for item in jobDescription %}
+                                            <option value="{{ item.pk }}">{{ item.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+
+                                <div class="box-footer">
+                                    <button class="btn btn-primary" type="submit">Kaydet</button>
+                                </div>
+
+
+                            </div>
+
+
+                        </div>
+                        <!-- /.box -->
+
+
+                    </div>
+
                 </div>
 
             </div>
@@ -283,6 +322,11 @@
     <script>
 
         $(document).ready(function () {
+            var jop = new Array();
+            {% for item in company.JopDescription.all %}
+                jop.push("{{ item.pk }}");
+            {% endfor %}
+            $('#multipleSelect').val(jop);
 
 
             isFormal = $("#id_isFormal option:selected").text();

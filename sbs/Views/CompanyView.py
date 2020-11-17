@@ -17,6 +17,8 @@ from sbs.Forms.CompanyForm import CompanyForm
 from sbs.models.Company import Company
 from sbs.models.Communication import Communication
 from sbs.models.EPProject import EPProject
+from sbs.models.CategoryItem import CategoryItem
+
 
 from sbs.services import general_methods
 from datetime import date, datetime
@@ -34,23 +36,31 @@ def return_add_Company(request):
         return redirect('accounts:login')
     company_form = CompanyForm()
     communication_form = CommunicationForm()
+    jobDescription = CategoryItem.objects.all()
     if request.method == 'POST':
         company_form = CompanyForm(request.POST, request.FILES)
         communication_form = CommunicationForm(request.POST, request.FILES)
         if company_form.is_valid():
-
             communication = communication_form.save(commit=False)
             communication.save()
             company = company_form.save(commit=False)
             company.communication = communication
             company.save()
 
+            if request.POST.getlist('jobDesription'):
+                print('deger var ')
+                for item in request.POST.getlist('jobDesription'):
+                    company.JopDescription.add(CategoryItem.objects.get(pk=item))
+
+                    company.save()
+
             messages.success(request, 'Firma Kayıt Edilmiştir.')
             return redirect('sbs:company-list')
         else:
             messages.warning(request, 'Alanları Kontrol Ediniz')
     return render(request, 'Company/Company.html',
-                  {'company_form': company_form, 'communication_form': communication_form})
+                  {'company_form': company_form, 'communication_form': communication_form,
+                   'jobDescription': jobDescription})
 
 
 @login_required
@@ -78,6 +88,9 @@ def return_update_Company(request, pk):
     communication = Communication.objects.get(pk=company.communication.pk)
     communication_form = CommunicationForm(request.POST or None, instance=communication)
     projects = EPProject.objects.filter(company=company)
+    jobDescription = CategoryItem.objects.all()
+    for item in company.JopDescription.all():
+        print(item.name)
 
     if request.method == 'POST':
         if company_form.is_valid():
@@ -86,8 +99,18 @@ def return_update_Company(request, pk):
             company = company_form.save(commit=False)
             company.communication = communication
             company.save()
+
+            if request.POST.getlist('jobDesription'):
+                print('deger var ')
+                for item in company.JopDescription.all():
+                    company.JopDescription.remove(item)
+                    company.save()
+                for item in request.POST.getlist('jobDesription'):
+                    company.JopDescription.add(CategoryItem.objects.get(pk=item))
+                    company.save()
+
             messages.success(request, 'Firma Güncellenmiştir.')
-            return redirect('sbs:company-list')
+            # return redirect('sbs:company-list')
         else:
             messages.warning(request, 'Alanları Kontrol Ediniz')
 
@@ -95,4 +118,6 @@ def return_update_Company(request, pk):
                   {'company_form': company_form,
                    'communication_form': communication_form,
                    'projects': projects,
+                   'company': company,
+                   'jobDescription': jobDescription
                    })

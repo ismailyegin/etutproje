@@ -1,8 +1,12 @@
 from django import forms
 from django.forms import ModelForm
+
+from sbs.models.CategoryItem import CategoryItem
 from sbs.models.Company import Company
 
+
 class CompanyForm(ModelForm):
+
     class Meta:
         model = Company
         fields = (
@@ -13,7 +17,8 @@ class CompanyForm(ModelForm):
             'degree',
             'taxOffice',
             'taxnumber',
-            'mail'
+            'mail',
+
         )
         labels = {'name': 'Firma İsmi',
                   'sorumlu ': 'Firma  Sorumlusu',
@@ -21,7 +26,9 @@ class CompanyForm(ModelForm):
                   'degree': 'Unvan',
                   'taxOffice': 'Verdi Dairesi',
                   'taxnumber': 'Vergi Numarası',
-                  'mail': 'Mail Adresi '}
+                  'mail': 'Mail Adresi ',
+
+                  }
         widgets = {
 
             'isFormal': forms.Select(

@@ -355,10 +355,8 @@ urlpatterns = [
     url(r'etut-proje/proje-pdf/personel/(?P<pk>\d+)$', PdfView.edit_project_pdf_personel, name='proje-pdf-personel'),
     url(r'etut-proje/proje-excel/(?P<pk>\d+)$', PdfView.edit_project_excel, name='proje-excel'),
 
-
-
-    url(r'etut-proje/görevListesi/$', EPProjectViews.return_employeetitles, name='unvanlar'),
-    url(r'etut-proje/görevListesi/sil/(?P<pk>\d+)$', EPProjectViews.delete_employeetitle,
+    url(r'etut-proje/isTanimiListesi/$', EPProjectViews.return_employeetitles, name='unvanlar'),
+    url(r'etut-proje/isTanimi/sil/(?P<pk>\d+)$', EPProjectViews.delete_employeetitle,
         name='unvan-sil'),
     url(r'etut-proje/görev-duzenle/(?P<pk>\d+)$', EPProjectViews.edit_employeetitle,
         name='unvan-duzenle'),
