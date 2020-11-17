@@ -349,7 +349,7 @@ def return_employees_all(request):
 
 
 @login_required
-def return_workdefinitions(request):
+def return_workdefinitionslist(request):
     perm = general_methods.control_access(request)
 
     if not perm:
@@ -370,14 +370,13 @@ def return_workdefinitions(request):
             log = str(name) + " unvanini ekledi"
             log = general_methods.logwrite(request, log)
 
-
-            return redirect('sbs:istanimlari')
+            return redirect('sbs:unvanlistesi')
 
         else:
 
             messages.warning(request, 'Alanları Kontrol Ediniz')
     categoryitem = CategoryItem.objects.filter(forWhichClazz="EMPLOYEE_WORKDEFINITION")
-    return render(request, 'personel/istanimlari.html',
+    return render(request, 'epproje/unvanListesi.html',
                   {'category_item_form': category_item_form, 'categoryitem': categoryitem})
 
 
@@ -421,14 +420,40 @@ def edit_workdefinition(request, pk):
             categoryItem.save()
             messages.success(request, 'Başarıyla Güncellendi')
 
-            log = str(request.POST.get('name')) + " unvanini güncelledi"
+            log = str(request.POST.get('name')) + " is tanimi güncelledi"
             log = general_methods.logwrite(request, log)
-            return redirect('sbs:istanimlari')
+            return redirect('sbs:istanimiListesi')
         else:
             messages.warning(request, 'Alanları Kontrol Ediniz')
 
     return render(request, 'personel/istanimi-duzenle.html',
                   {'category_item_form': category_item_form})
+
+
+@login_required
+def edit_workdefinitionUnvan(request, pk):
+    perm = general_methods.control_access(request)
+
+    if not perm:
+        logout(request)
+        return redirect('accounts:login')
+    categoryItem = CategoryItem.objects.get(id=pk)
+    category_item_form = CategoryItemForm(request.POST or None, instance=categoryItem)
+    if request.method == 'POST':
+        if request.POST.get('name') is not None:
+            categoryItem.name = request.POST.get('name')
+            categoryItem.save()
+            messages.success(request, 'Başarıyla Güncellendi')
+
+            log = str(request.POST.get('name')) + " Unvan güncelledi"
+            log = general_methods.logwrite(request, log)
+            return redirect('sbs:unvanlistesi')
+        else:
+            messages.warning(request, 'Alanları Kontrol Ediniz')
+
+    return render(request, 'epproje/unvan-duzenle.html',
+                  {'category_item_form': category_item_form})
+
 
 
 

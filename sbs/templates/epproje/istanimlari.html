@@ -221,13 +221,13 @@
                         },
                         success: function (result) {
 
-                            html = 'Ünvan Başarıyla Silindi';
+                            html = 'İş Tanımı  Başarıyla Silindi';
                             debugger;
                             $(".successModal").html(html);
                             $('#modal-success').on("shown.bs.modal", function (e) {
                                 $(".btn-ok").click(function () {
 
-                                    window.location.replace("{% url "sbs:unvanlar" %}");
+                                    window.location.replace("{% url "sbs:istanimiListesi" %}");
 
                                 });
 

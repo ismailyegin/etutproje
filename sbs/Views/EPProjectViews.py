@@ -146,6 +146,7 @@ def edit_project(request, pk):
 
     titles = CategoryItem.objects.filter(forWhichClazz="EPPROJECT_EMPLOYEE_TITLE")
     employees = Employee.objects.all()
+
     days = None
     if project.aifinish:
         days = (project.aifinish - timezone.now()).days
@@ -446,13 +447,13 @@ def return_employeetitles(request):
             categoryItem.forWhichClazz = "EPPROJECT_EMPLOYEE_TITLE"
             categoryItem.isFirst = False
             categoryItem.save()
-            return redirect('sbs:unvanlar')
+            return redirect('sbs:istanimiListesi')
 
         else:
 
             messages.warning(request, 'Alanları Kontrol Ediniz')
     categoryitem = CategoryItem.objects.filter(forWhichClazz="EPPROJECT_EMPLOYEE_TITLE")
-    return render(request, 'epproje/unvanlar.html',
+    return render(request, 'epproje/istanimlari.html',
                   {'category_item_form': category_item_form, 'categoryitem': categoryitem})
 
 

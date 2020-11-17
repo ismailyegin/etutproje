@@ -18,8 +18,6 @@ from sbs.models.Company import Company
 from sbs.models.Communication import Communication
 from sbs.models.EPProject import EPProject
 from sbs.models.CategoryItem import CategoryItem
-
-
 from sbs.services import general_methods
 from datetime import date, datetime
 import datetime
@@ -36,7 +34,7 @@ def return_add_Company(request):
         return redirect('accounts:login')
     company_form = CompanyForm()
     communication_form = CommunicationForm()
-    jobDescription = CategoryItem.objects.all()
+    jobDescription = CategoryItem.objects.filter(forWhichClazz="EPPROJECT_EMPLOYEE_TITLE")
     if request.method == 'POST':
         company_form = CompanyForm(request.POST, request.FILES)
         communication_form = CommunicationForm(request.POST, request.FILES)
@@ -88,7 +86,7 @@ def return_update_Company(request, pk):
     communication = Communication.objects.get(pk=company.communication.pk)
     communication_form = CommunicationForm(request.POST or None, instance=communication)
     projects = EPProject.objects.filter(company=company)
-    jobDescription = CategoryItem.objects.all()
+    jobDescription = CategoryItem.objects.filter(forWhichClazz="EPPROJECT_EMPLOYEE_TITLE")
     for item in company.JopDescription.all():
         print(item.name)
 
@@ -99,12 +97,10 @@ def return_update_Company(request, pk):
             company = company_form.save(commit=False)
             company.communication = communication
             company.save()
-
+            for item in company.JopDescription.all():
+                company.JopDescription.remove(item)
+                company.save()
             if request.POST.getlist('jobDesription'):
-                print('deger var ')
-                for item in company.JopDescription.all():
-                    company.JopDescription.remove(item)
-                    company.save()
                 for item in request.POST.getlist('jobDesription'):
                     company.JopDescription.add(CategoryItem.objects.get(pk=item))
                     company.save()
