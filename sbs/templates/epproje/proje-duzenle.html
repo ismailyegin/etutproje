@@ -334,11 +334,50 @@
     </div>
 
 
+    <div class="modal modal-warning fade in deneme23" tabindex="-1" role="dialog" id="personelEdit"
+         aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title">Bilgileri Giriniz</h4>
+                </div>
+                <div class="modal-body">
+                    <label for="title">İş Tanımı</label>
+                    <select id="titleEdit" name="titleEdit" class="form-control" required>
+                        <option value="" selected>Seçiniz...</option>
+                        {% for title in titles %}
+                            <option value="{{ title.pk }}">{{ title.name }}</option>
+                        {% endfor %}
+
+                    </select>
+                    <label for="employee">Personel</label>
+                    <select id="employeeEdit" name="employeeEdit" class="form-control" required>
+                        <option value="" selected>Seçiniz...</option>
+                        {% for employee in employees %}
+                            <option value="{{ employee.pk }}">{{ employee }}</option>
+                        {% endfor %}
+                    </select>
+
+                </div>
+
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline pull-left btn-ok" id="btn-gonder-personelEdit"
+                            data-dismiss="modal">Kaydet
+                    </button>
+                    <button type="button" class="btn btn-outline" id="btn-closereddet-personelEdit">Geri Dön</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
 
 
 
-
-    <div class="modal modal-warning fade in deneme23" tabindex="-1" role="dialog" id="reddetwhy"
+    <div class="modal modal-warning fade in deneme23" tabindex="-1" role="dialog" id="personelAdd"
          aria-hidden="true" style="display: none;">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -1556,8 +1595,8 @@
     <script>
 
 
-        let urlApi = '/sbs/message/api/v1/';
-        {#let urlApi = '/etutproje/sbs/message/api/v1/';#}
+        {#let urlApi = '/sbs/message/api/v1/';#}
+        let urlApi = '/etutproje/sbs/message/api/v1/';
         $(document).ready(function () {
 
 
@@ -1787,7 +1826,7 @@
 
         function addEmployee(id) {
 
-            $("#reddetwhy").on("shown.bs.modal", function (e) {
+            $("#personelAdd").on("shown.bs.modal", function (e) {
 
                 console.log(e);
 
@@ -1837,7 +1876,7 @@
             $('#btn-closereddet').click(function () {
 
 
-                $('#modal-warning').modal('hide');
+                $('#personelAdd').modal('hide');
                 $('.modal').modal('hide');
 
             });
@@ -2192,14 +2231,14 @@
 
 
         function editEmployee(id, competitionId) {
-            $("#reddetwhy").on("shown.bs.modal", function (e) {
+            $("#personelEdit").on("shown.bs.modal", function (e) {
 
 
-                $('#title option:selected').text($('#personel-' + competitionId + ' td').eq(1).text());
-                $('#employee option:selected').text($('#personel-' + competitionId + ' td').eq(2).text());
+                $('#titleEdit option:selected').text($('#personel-' + competitionId + ' td').eq(1).text());
+                $('#employeeEdit option:selected').text($('#personel-' + competitionId + ' td').eq(2).text());
 
                 console.log(e);
-                $("#btn-gonder").click(function (e) {
+                $("#btn-gonder-personelEdit").click(function (e) {
                     if (e.handled !== true) { // This will prevent event triggering more then once
                         e.handled = true;
 
@@ -2208,8 +2247,8 @@
                             type: "POST",
                             data: {
                                 'csrfmiddlewaretoken': "{{  csrf_token  }}",
-                                title: $('#title').val(),
-                                employee: $('#employee').val(),
+                                title: $('#titleEdit').val(),
+                                employee: $('#employeeEdit').val(),
                                 id: competitionId,
                                 isActive: 'False'
 
@@ -2217,8 +2256,8 @@
                             success: function (result) {
 
                                 if (result.status == 'Success') {
-                                    $('#personel-' + competitionId + ' td').eq(1).text($('#title option:selected').text());
-                                    $('#personel-' + competitionId + ' td').eq(2).text($('#employee option:selected').text());
+                                    $('#personel-' + competitionId + ' td').eq(1).text($('#titleEdit option:selected').text());
+                                    $('#personel-' + competitionId + ' td').eq(2).text($('#employeeEdit option:selected').text());
                                 } else {
                                     console.log('Error');
                                 }
@@ -2231,10 +2270,10 @@
 
 
             }).modal('show');
-            $('#btn-closereddet').click(function () {
+            $('#btn-closereddet-personelEdit').click(function () {
 
 
-                $('#modal-warning').modal('hide');
+                $('#personelEdit').modal('hide');
                 $('.modal').modal('hide');
 
             });
