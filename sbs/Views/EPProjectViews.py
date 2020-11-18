@@ -616,20 +616,22 @@ def update_subcompany_information_to_project(request, pk):
     if not perm:
         logout(request)
         return redirect('accounts:login')
+    project = EPProject.objects.get(pk=pk)
+    subcompany = project.subcompany.get(pk=request.POST.get('id'))
+
+    return JsonResponse({'status': 'Success',
+                         'messages': 'save successfully',
+                         'cName': subcompany.company.name,
+                         'cMail': subcompany.company.mail,
+                         'cUser': subcompany.company.sorumlu,
+                         'cType': 'Bireysel' if subcompany.company.isFormal else 'Kurumsal',
+                         'cCepTel': subcompany.company.communication.phoneNumber,
+                         'cSabitTel': subcompany.company.communication.phoneNumber2,
+                         })
 
     try:
-        project = EPProject.objects.get(pk=pk)
-        subcompany = project.subcompany.get(pk=request.POST.get('id'))
+        print()
 
-        return JsonResponse({'status': 'Success',
-                             'messages': 'save successfully',
-                             'cName': subcompany.company.name,
-                             'cMail': subcompany.company.mail,
-                             'cUser': subcompany.company.sorumlu,
-                             'cType': 'Bireysel' if subcompany.company.isFormal else 'Kurumsal',
-                             'cCepTel': subcompany.company.communication.phoneNumber,
-                             'cSabitTel': subcompany.company.communication.phoneNumber2,
-                             })
 
     except:
 

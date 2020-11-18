@@ -1681,9 +1681,6 @@
         $(document).ready(function () {
 
 
-
-
-
             {#let urlApi='/etutproje/sbs/message/api/v1/'#}
 
             formatCurrency($('#yaklasik'), "blur");
@@ -2282,7 +2279,7 @@
                                         count.toString(),
                                         $('#subcompanyAdd option:selected').text(),
                                         $('#istanimi option:selected').text(),
-                                        '<div class="btn-group"><a type="button" class="btn btn-danger" onclick=deleteSubcompany({{ project.pk }},' + result.pk + ')>  <i class="fa fa-trash"></i></a></div>',
+                                        '<div class="btn-group"><a class="btn btn-success" data-toggle="modal" onclick=exammineSubCompany({{ project.pk }},' + result.pk + ')><i class="fa fa-play-circle"></i></a> <a class="btn btn-warning" data-toggle="modal" onclick=editSubCompany({{ project.pk }},' + result.pk + ')><i class="fa fa-edit"></i></a><a type="button" class="btn btn-danger" onclick=deleteSubcompany({{ project.pk }},' + result.pk + ')>  <i class="fa fa-trash"></i></a></div>',
 
                                     ]).node().id = 'subcompany-' + result.pk;
                                     p.draw(true);
@@ -2944,27 +2941,29 @@
         }
 
         function exammineSubCompany(id, competitionId) {
+            {#alert(competitionId);#}
+            $('#cType').val('');
+            $('#cName').val('');
+            $('#cMail').val('');
+            $('#cUser').val('');
+            $('#cCepTel').val('');
+            $('#cSabitTel').val('');
+            comp = competitionId
+
             $("#examine").on("shown.bs.modal", function (e) {
 
 
-                $('#cType').val('');
-                $('#cName').val('');
-                $('#cMail').val('');
-                $('#cUser').val('');
-                $('#cCepTel').val('');
-                $('#cSabitTel').val('');
-
-                console.log(e);
-
+                {#alert(e.handled+'-'+comp);#}
                 if (e.handled !== true) { // This will prevent event triggering more then once
                     e.handled = true;
+
 
                     $.ajax({
                         url: "{% url "sbs:proje-altproje-firmaBilgileri" pk=212121223232323232  %}".replace(/212121223232323232/, id.toString()),
                         type: "POST",
                         data: {
                             'csrfmiddlewaretoken': "{{  csrf_token  }}",
-                            id: competitionId,
+                            id: comp,
                             isActive: 'False'
 
                         },
@@ -2988,11 +2987,6 @@
                     });
                 }
 
-
-                $("#edit-btn-subcompanyAdd").click(function (e) {
-
-
-                });
 
 
             }).modal('show');
