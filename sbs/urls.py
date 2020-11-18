@@ -374,6 +374,9 @@ urlpatterns = [
     url(r'etut-proje/proje-altproje-guncelle/(?P<pk>\d+)$',
         EPProjectViews.update_subcompany_to_project, name='proje-altproje-guncelle'),
 
+    url(r'etut-proje/proje-altProjeFirma/(?P<pk>\d+)$',
+        EPProjectViews.update_subcompany_information_to_project, name='proje-altproje-firmaBilgileri'),
+
     url(r'etut-proje/proje-altproje/(?P<pk>\d+)$',
         EPProjectViews.project_subfirma, name='proje-altfirma-ekle'),
 

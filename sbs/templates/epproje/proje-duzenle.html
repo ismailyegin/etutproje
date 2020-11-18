@@ -1,6 +1,65 @@
 {% extends 'base_layout.html' %}
 {% block content %}
+    <div class="modal fade" id="examine" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Firma Bilgileri</h3>
 
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+
+
+                        <div class="col-lg-12">
+                            <div class="form-group ">
+                                <label> Firma Türü </label>
+                                <input type="text" name="sorumlu" value="" class="form-control" style="width: 100%;"
+                                       readonly="readonly" id="cType">
+
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label> Firmanin İsmi</label>
+                                <input type="text" name="projectStatus" value="" class="form-control"
+                                       style="width: 100%; " readonly="readonly" required="" id="cName">
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label> Firma Mail</label>
+                                <input type="text" name="projectStatus" value="" class="form-control"
+                                       style="width: 100%; " readonly="readonly" required="" id="cMail">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label> Firma Sorumlusu</label>
+                                <input type="text" name="projectStatus" value="" class="form-control"
+                                       style="width: 100%; " readonly="readonly" required="" id="cUser">
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    {#                    <button type="button" class="btn btn-primary">Save changes</button>#}
+                </div>
+            </div>
+        </div>
+    </div>
 
 
     <div class="modal fade " tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
@@ -1337,6 +1396,13 @@
                                                     <td>
                                                         <div class="btn-group">
 
+
+                                                            <a class="btn btn-success"
+                                                               data-toggle="modal"
+                                                               onclick=exammineSubCompany({{ project.pk }},{{ item.pk }})><i
+                                                                    class="fa fa-play-circle"></i></a>
+
+
                                                             <a class="btn btn-warning"
                                                                data-toggle="modal"
                                                                onclick=editSubCompany({{ project.pk }},{{ item.pk }})><i
@@ -1598,6 +1664,9 @@
         {#let urlApi = '/sbs/message/api/v1/';#}
         let urlApi = '/etutproje/sbs/message/api/v1/';
         $(document).ready(function () {
+
+
+
 
 
             {#let urlApi='/etutproje/sbs/message/api/v1/'#}
@@ -2859,6 +2928,63 @@
 
         }
 
+        function exammineSubCompany(id, competitionId) {
+            $("#examine").on("shown.bs.modal", function (e) {
+
+
+                $('#cType').val('');
+                $('#cName').val('');
+                $('#cMail').val('');
+                $('#cUser').val('');
+
+                console.log(e);
+
+                if (e.handled !== true) { // This will prevent event triggering more then once
+                    e.handled = true;
+
+                    $.ajax({
+                        url: "{% url "sbs:proje-altproje-firmaBilgileri" pk=212121223232323232  %}".replace(/212121223232323232/, id.toString()),
+                        type: "POST",
+                        data: {
+                            'csrfmiddlewaretoken': "{{  csrf_token  }}",
+                            id: competitionId,
+                            isActive: 'False'
+
+                        },
+                        success: function (result) {
+
+
+                            if (result.status == 'Success') {
+
+                                $('#cMail').val(result.cMail);
+                                $('#cUser').val(result.cUser);
+                                $('#cName').val(result.cName);
+                                $('#cType').val(result.cType);
+
+
+                            } else {
+                                console.log('Error');
+                            }
+                        }
+                    });
+                }
+
+
+                $("#edit-btn-subcompanyAdd").click(function (e) {
+
+
+                });
+
+
+            }).modal('show');
+            $('#edit-btn-closereddet').click(function () {
+
+
+                $('#editmodelsubcompany').modal('hide');
+                $('.modal').modal('hide');
+
+            });
+        }
 
     </script>
 

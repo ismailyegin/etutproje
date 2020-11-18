@@ -611,6 +611,33 @@ def update_subcompany_to_project(request, pk):
 
 
 @login_required
+def update_subcompany_information_to_project(request, pk):
+    perm = general_methods.control_access_personel(request)
+
+    if not perm:
+        logout(request)
+        return redirect('accounts:login')
+
+    try:
+        project = EPProject.objects.get(pk=pk)
+        subcompany = project.subcompany.get(pk=request.POST.get('id'))
+
+        return JsonResponse({'status': 'Success',
+                             'messages': 'save successfully',
+                             'cName': subcompany.company.name,
+                             'cMail': subcompany.company.mail,
+                             'cUser': subcompany.company.sorumlu,
+                             'cType': 'Bireysel' if subcompany.company.isFormal else 'Kurumsal',
+                             })
+
+    except:
+
+        return JsonResponse({'status': 'Fail', 'msg': 'Not a valid request'})
+        messages.warning(request, 'Yeniden deneyiniz.')
+
+    return redirect('sbs:proje-duzenle', pk=pk)
+
+@login_required
 def add_employee_to_project(request, pk):
     perm = general_methods.control_access_personel(request)
 
