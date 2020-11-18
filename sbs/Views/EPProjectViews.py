@@ -574,6 +574,41 @@ def update_employee_to_project(request, pk):
 
     return redirect('sbs:proje-duzenle', pk=pk)
 
+@login_required
+def update_subcompany_to_project(request, pk):
+    perm = general_methods.control_access_personel(request)
+
+    if not perm:
+        logout(request)
+        return redirect('accounts:login')
+    project = EPProject.objects.get(pk=pk)
+
+    subcompany = project.subcompany.get(pk=request.POST.get('id'))
+
+    if request.POST.get('title'):
+        title = CategoryItem.objects.get(pk=request.POST.get('title'))
+        subcompany.jopDescription = title
+        subcompany.save()
+
+    if request.POST.get('company'):
+        company = Company.objects.get(pk=request.POST.get('company'))
+        subcompany.company = company
+        subcompany.save()
+    log = str(project.name) + " projesinde  alt firma güncelledi"
+    log = general_methods.logwrite(request, log)
+
+    project.save()
+
+    try:
+        print()
+        return JsonResponse({'status': 'Success', 'messages': 'save successfully'})
+
+    except:
+        return JsonResponse({'status': 'Fail', 'msg': 'Not a valid request'})
+        messages.warning(request, 'Yeniden deneyiniz.')
+
+    return redirect('sbs:proje-duzenle', pk=pk)
+
 
 @login_required
 def add_employee_to_project(request, pk):

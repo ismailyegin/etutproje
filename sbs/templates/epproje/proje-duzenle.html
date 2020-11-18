@@ -2773,36 +2773,35 @@
             $("#editmodelsubcompany").on("shown.bs.modal", function (e) {
 
 
-                $('#editistanimi option:selected').text($('#subcompany-' + competitionId + ' td').eq(1).text());
-                $('#editsubcompanyAdd option:selected').text($('#subcompany-' + competitionId + ' td').eq(2).text());
+                $('#editistanimi option:selected').text($('#subcompany-' + competitionId + ' td').eq(2).text());
+                $('#editsubcompanyAdd option:selected').text($('#subcompany-' + competitionId + ' td').eq(1).text());
 
                 console.log(e);
                 $("#edit-btn-subcompanyAdd").click(function (e) {
                     if (e.handled !== true) { // This will prevent event triggering more then once
                         e.handled = true;
-                        alert();
 
-                        {#$.ajax({#}
-                        {#    url: "{% url "sbs:proje-personel-guncelle" pk=212121223232323232  %}".replace(/212121223232323232/, id.toString()),#}
-                        {#    type: "POST",#}
-                        {#    data: {#}
-                        {#        'csrfmiddlewaretoken': "{{  csrf_token  }}",#}
-                        {#        title: $('#title').val(),#}
-                        {#        employee: $('#employee').val(),#}
-                        {#        id: competitionId,#}
-                        {#        isActive: 'False'#}
-                        {##}
-                        {#    },#}
-                        {#    success: function (result) {#}
-                        {##}
-                        {#        if (result.status == 'Success') {#}
-                        {#            $('#personel-' + competitionId + ' td').eq(1).text($('#title option:selected').text());#}
-                        {#            $('#personel-' + competitionId + ' td').eq(2).text($('#employee option:selected').text());#}
-                        {#        } else {#}
-                        {#            console.log('Error');#}
-                        {#        }#}
-                        {#    }#}
-                        {# });#}
+                        $.ajax({
+                            url: "{% url "sbs:proje-altproje-guncelle" pk=212121223232323232  %}".replace(/212121223232323232/, id.toString()),
+                            type: "POST",
+                            data: {
+                                'csrfmiddlewaretoken': "{{  csrf_token  }}",
+                                title: $('#editistanimi').val(),
+                                company: $('#editsubcompanyAdd').val(),
+                                id: competitionId,
+                                isActive: 'False'
+
+                            },
+                            success: function (result) {
+
+                                if (result.status == 'Success') {
+                                    $('#subcompany-' + competitionId + ' td').eq(2).text($('#editistanimi option:selected').text());
+                                    $('#subcompany-' + competitionId + ' td').eq(1).text($('#editsubcompanyAdd option:selected').text());
+                                } else {
+                                    console.log('Error');
+                                }
+                            }
+                        });
                     }
 
 
