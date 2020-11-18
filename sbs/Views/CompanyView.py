@@ -85,7 +85,8 @@ def return_update_Company(request, pk):
     company_form = CompanyForm(request.POST or None, instance=company)
     communication = Communication.objects.get(pk=company.communication.pk)
     communication_form = CommunicationForm(request.POST or None, instance=communication)
-    projects = EPProject.objects.filter(company=company)
+    projects = EPProject.objects.filter(company=company).distinct()
+    subProject = EPProject.objects.filter(subcompany__company=company).distinct()
     jobDescription = CategoryItem.objects.filter(forWhichClazz="EPPROJECT_EMPLOYEE_TITLE")
     for item in company.JopDescription.all():
         print(item.name)
@@ -115,5 +116,6 @@ def return_update_Company(request, pk):
                    'communication_form': communication_form,
                    'projects': projects,
                    'company': company,
-                   'jobDescription': jobDescription
+                   'jobDescription': jobDescription,
+                   'subProject': subProject,
                    })

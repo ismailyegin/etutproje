@@ -219,10 +219,9 @@ def edit_project(request, pk):
             projectSave.sozlesmeBedeliKdv = sozlesmebedeliKdv
             projectSave.town = town
             projectSave.save()
-
-            if request.POST.get('sorumlu') is None and sorumlu:
-                projectSave.sorumlu = sorumlu
-
+            if request.POST.get('sorumlu'):
+                if request.POST.get('sorumlu') is None and sorumlu:
+                    projectSave.sorumlu = sorumlu
             projectSave.save()
 
             log = str(project.name) + "projesini güncelledi"
