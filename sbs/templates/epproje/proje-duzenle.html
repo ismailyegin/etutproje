@@ -1379,7 +1379,7 @@
                                     <div class="btn-group">
                                         <a class="btn btn-success"
                                            data-toggle="modal"
-                                           onclick=editsubCompany({{ project.pk }})><i
+                                           onclick=AddsubCompany({{ project.pk }})><i
                                                 class="fa fa-plus"></i> Alt Firma Ekle</a>
 
 
@@ -2236,77 +2236,6 @@
 
         {# edit personel ve ihtiyac alinacak#}
 
-        function editsubCompany(id, competitionId) {
-
-
-            $("#modelsubcompany").on("shown.bs.modal", function (e) {
-
-
-                {#$('#title option:selected').text($('#personel-' + competitionId + ' td').eq(1).text());#}
-                {#$('#employee option:selected').text($('#personel-' + competitionId + ' td').eq(2).text());#}
-
-                console.log(e);
-                $("#btn-subcompanyAdd").click(function (e) {
-
-
-
-                    {#console.log('benden deneme ')#}
-                    if (e.handled !== true) { // This will prevent event triggering more then once
-                        e.handled = true;
-
-
-                        {#console.log($("#istanimi").val());#}
-                        {#console.log($("#subcompanyAdd").val());#}
-
-                        $.ajax({
-                            url: "{% url "sbs:proje-altfirma-ekle" pk=212121223232323232  %}".replace(/212121223232323232/, id.toString()),
-                            type: "POST",
-                            data: {
-                                'csrfmiddlewaretoken': "{{  csrf_token  }}",
-                                title: $('#istanimi').val(),
-                                company: $('#subcompanyAdd').val(),
-                                id: competitionId,
-                                isActive: 'False'
-
-                            },
-                            success: function (result) {
-
-                                if (result.status == 'Success') {
-
-                                    var p = $('#altfirma').DataTable();
-                                    var count = p.rows().count() + 1;
-                                    p.row.add([
-                                        count.toString(),
-                                        $('#subcompanyAdd option:selected').text(),
-                                        $('#istanimi option:selected').text(),
-                                        '<div class="btn-group"><a class="btn btn-success" data-toggle="modal" onclick=exammineSubCompany({{ project.pk }},' + result.pk + ')><i class="fa fa-play-circle"></i></a> <a class="btn btn-warning" data-toggle="modal" onclick=editSubCompany({{ project.pk }},' + result.pk + ')><i class="fa fa-edit"></i></a><a type="button" class="btn btn-danger" onclick=deleteSubcompany({{ project.pk }},' + result.pk + ')>  <i class="fa fa-trash"></i></a></div>',
-
-                                    ]).node().id = 'subcompany-' + result.pk;
-                                    p.draw(true);
-
-
-                                } else {
-                                    console.log('Error');
-                                }
-                            }
-                        });
-                    }
-
-
-                });
-
-
-            }).modal('show');
-            $('#btn-closereddet').click(function () {
-
-
-                $('#modelsubcompany').modal('hide');
-                $('.modal').modal('hide');
-
-            });
-
-
-        }
 
 
 
@@ -2857,6 +2786,80 @@
 
         }
 
+        ,
+
+
+        function AddsubCompany(id, competitionId) {
+
+            $("#modelsubcompany").on("shown.bs.modal", function (e) {
+
+
+                {#$('#title option:selected').text($('#personel-' + competitionId + ' td').eq(1).text());#}
+                {#$('#employee option:selected').text($('#personel-' + competitionId + ' td').eq(2).text());#}
+
+                console.log(e);
+                $("#btn-subcompanyAdd").click(function (e) {
+
+
+
+                    {#console.log('benden deneme ')#}
+                    if (e.handled !== true) { // This will prevent event triggering more then once
+                        e.handled = true;
+
+
+                        {#console.log($("#istanimi").val());#}
+                        {#console.log($("#subcompanyAdd").val());#}
+
+                        $.ajax({
+                            url: "{% url "sbs:proje-altfirma-ekle" pk=212121223232323232  %}".replace(/212121223232323232/, id.toString()),
+                            type: "POST",
+                            data: {
+                                'csrfmiddlewaretoken': "{{  csrf_token  }}",
+                                title: $('#istanimi').val(),
+                                company: $('#subcompanyAdd').val(),
+                                id: competitionId,
+                                isActive: 'False'
+
+                            },
+                            success: function (result) {
+
+                                if (result.status == 'Success') {
+
+                                    var p = $('#altfirma').DataTable();
+                                    var count = p.rows().count() + 1;
+                                    p.row.add([
+                                        count.toString(),
+                                        $('#subcompanyAdd option:selected').text(),
+                                        $('#istanimi option:selected').text(),
+                                        '<div class="btn-group"><a class="btn btn-success" data-toggle="modal" onclick=exammineSubCompany({{ project.pk }},' + result.pk + ')><i class="fa fa-play-circle"></i></a> <a class="btn btn-warning" data-toggle="modal" onclick=editSubCompany({{ project.pk }},' + result.pk + ')><i class="fa fa-edit"></i></a><a type="button" class="btn btn-danger" onclick=deleteSubcompany({{ project.pk }},' + result.pk + ')>  <i class="fa fa-trash"></i></a></div>',
+
+                                    ]).node().id = 'subcompany-' + result.pk;
+                                    p.draw(true);
+
+
+                                } else {
+                                    console.log('Error');
+                                }
+                            }
+                        });
+                    }
+
+
+                });
+
+
+            }).modal('show');
+            $('#btn-closereddet').click(function () {
+
+
+                $('#modelsubcompany').modal('hide');
+                $('.modal').modal('hide');
+
+            });
+
+
+        }
+
         function deleteSubcompany(id, competitionId) {
 
             var html = '';
@@ -2890,6 +2893,7 @@
         }
 
         function editSubCompany(id, competitionId) {
+
             $("#editmodelsubcompany").on("shown.bs.modal", function (e) {
 
 
@@ -2998,6 +3002,7 @@
 
             });
         }
+
 
     </script>
 

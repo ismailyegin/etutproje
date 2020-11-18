@@ -1,6 +1,188 @@
 {% extends 'base_layout.html' %}
 {% block content %}
 
+    <div class="modal modal-danger fade in deneme22" tabindex="-1" role="dialog" id="modal-deleteSubcompany"
+         aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title">Uyarı</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Silmek istediğinizden emin misiniz?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline pull-left btn-ok" id="btn-modal-deleteSubcompany-yes"
+                            data-dismiss="modal">Evet
+                    </button>
+                    <button type="button" class="btn btn-outline" id="btn-modal-deleteSubcompany-no">Hayır</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <div class="modal modal-warning fade in deneme23" tabindex="-1" role="dialog" id="modelsubcompany"
+         aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title">Bilgileri Giriniz xxx</h4>
+                </div>
+                <div class="modal-body">
+                    <label for="title">İş Tanımı</label>
+                    <select id="istanimi" name="istanimi" class="form-control" required>
+                        <option value="" selected>Seçiniz...</option>
+                        {% for title in titles %}
+                            <option value="{{ title.pk }}">{{ title.name }}</option>
+                        {% endfor %}
+
+                    </select>
+                    <label for="employee">Firma </label>
+                    <select id="subcompanyAdd" name="subcompanyAdd" class="form-control" required>
+                        <option value="" selected>Seçiniz...</option>
+                        {% for item  in subCompany %}
+                            <option value="{{ item.pk }}">{{ item }}</option>
+                        {% endfor %}
+                    </select>
+
+                </div>
+
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline pull-left btn-ok" id="btn-subcompanyAdd"
+                            data-dismiss="modal">Kaydet
+                    </button>
+                    <button type="button" class="btn btn-outline" id="btn-closereddet">Geri Dön</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <div class="modal modal-warning fade in deneme23" tabindex="-1" role="dialog" id="editmodelsubcompany"
+         aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title">Bilgileri Giriniz</h4>
+                </div>
+                <div class="modal-body">
+                    <label for="title">İş Tanımı</label>
+                    <select id="editistanimi" name="editistanimi" class="form-control" required>
+                        <option value="" selected>Seçiniz...</option>
+
+
+
+                        {% for title in categori %}
+                            <option value="{{ title.pk }}">{{ title.name }}</option>
+                        {% endfor %}
+
+
+                    </select>
+                    <label for="employee">Firma </label>
+                    <select id="editsubcompanyAdd" name="subcompanyAdd" class="form-control" required>
+                        <option value="" selected>Seçiniz...</option>
+                        {% for item  in subCompany %}
+                            <option value="{{ item.company.pk }}">{{ item.company }}</option>
+                        {% endfor %}
+                    </select>
+
+                </div>
+
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline pull-left btn-ok" id="edit-btn-subcompanyAdd"
+                            data-dismiss="modal">Kaydet
+                    </button>
+                    <button type="button" class="btn btn-outline" id="edit-btn-closereddet">Geri Dön</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <div class="modal fade" id="examine" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Firma Bilgileri</h3>
+
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+
+
+                        <div class="col-lg-12">
+                            <div class="form-group ">
+                                <label> Firma Türü </label>
+                                <input type="text" name="sorumlu" value="" class="form-control" style="width: 100%;"
+                                       readonly="readonly" id="cType">
+
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label> İsim</label>
+                                <input type="text" name="projectStatus" value="" class="form-control"
+                                       style="width: 100%; " readonly="readonly" required="" id="cName">
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label> Mail</label>
+                                <input type="text" name="projectStatus" value="" class="form-control"
+                                       style="width: 100%; " readonly="readonly" required="" id="cMail">
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label> Cep Telefonu </label>
+                                <input type="text" name="projectStatus" value="" class="form-control"
+                                       style="width: 100%; " readonly="readonly" required="" id="cCepTel">
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label> Sabit Telefon</label>
+                                <input type="text" name="projectStatus" value="" class="form-control"
+                                       style="width: 100%; " readonly="readonly" required="" id="cSabitTel">
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label> Sorumlusu</label>
+                                <input type="text" name="projectStatus" value="" class="form-control"
+                                       style="width: 100%; " readonly="readonly" required="" id="cUser">
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                    {#                    <button type="button" class="btn btn-primary">Save changes</button>#}
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="modal fade" id="modal-progress" data-backdrop="static" data-keyboard="false"
          xmlns="http://www.w3.org/1999/html">
         <div class="modal-dialog">
@@ -736,8 +918,6 @@
                                             <th>No</th>
                                             <th>Ünvan</th>
                                             <th>Personel</th>
-
-
                                         </tr>
                                         </thead>
 
@@ -808,6 +988,93 @@
                                                     <td>{{ item.amount }}</td>
                                                     <td>{{ item.definition }}</td>
 
+                                                </tr>
+
+                                            {% endfor %}
+                                        {% endif %}
+
+
+                                        </tbody>
+                                    </table>
+                                </div>
+
+
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+                </div>
+
+
+                <div class="col-md-6">
+                    <div class="box box-info collapsed-box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">PROJE ALT FİRMALAR</h3>
+
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                        class="fa fa-plus"></i>
+                                </button>
+                            </div>
+                            <!-- /.box-tools -->
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body" style="display: none;">
+                            <div class="row" style="padding-bottom: 10px">
+                                <div class="col-lg-12">
+                                    <div class="btn-group">
+                                        <a class="btn btn-success"
+                                           data-toggle="modal"
+                                           onclick=AddsubCompany({{ project.pk }})><i
+                                                class="fa fa-plus"></i> Alt Firma Ekle</a>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <table id="altfirma" class="table table-bordered table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Firma</th>
+                                            <th>iş Tanımı</th>
+                                            <th>İşlemler</th>
+
+                                        </tr>
+                                        </thead>
+
+                                        <tbody>
+
+                                        {% if project.subcompany.all %}
+                                            {% for item in project.subcompany.all %}
+                                                <tr id="subcompany-{{ item.pk }}">
+                                                    <td>{{ forloop.counter }} </td>
+                                                    <td>{{ item.company }}</td>
+                                                    <td>{{ item.jopDescription }}</td>
+                                                    <td>
+                                                        <div class="btn-group">
+
+
+                                                            <a class="btn btn-success"
+                                                               data-toggle="modal"
+                                                               onclick=exammineSubCompany({{ project.pk }},{{ item.pk }})><i
+                                                                    class="fa fa-play-circle"></i></a>
+
+
+                                                            <a class="btn btn-warning"
+                                                               data-toggle="modal"
+                                                               onclick=editSubCompany({{ project.pk }},{{ item.pk }})><i
+                                                                    class="fa fa-edit"></i></a>
+
+
+                                                            <a class="btn btn-danger"
+                                                               data-toggle="modal"
+                                                               onclick=deleteSubcompany({{ project.pk }},{{ item.pk }})><i
+                                                                    class="fa fa-trash"></i></a>
+                                                        </div>
+                                                    </td>
                                                 </tr>
 
                                             {% endfor %}
@@ -1021,6 +1288,219 @@
 
         }
 
+
+        function AddsubCompany(id, competitionId) {
+
+            $("#modelsubcompany").on("shown.bs.modal", function (e) {
+
+
+                {#$('#title option:selected').text($('#personel-' + competitionId + ' td').eq(1).text());#}
+                {#$('#employee option:selected').text($('#personel-' + competitionId + ' td').eq(2).text());#}
+
+                console.log(e);
+                $("#btn-subcompanyAdd").click(function (e) {
+
+
+
+                    {#console.log('benden deneme ')#}
+                    if (e.handled !== true) { // This will prevent event triggering more then once
+                        e.handled = true;
+
+
+                        {#console.log($("#istanimi").val());#}
+                        {#console.log($("#subcompanyAdd").val());#}
+
+                        $.ajax({
+                            url: "{% url "sbs:proje-altfirma-ekle" pk=212121223232323232  %}".replace(/212121223232323232/, id.toString()),
+                            type: "POST",
+                            data: {
+                                'csrfmiddlewaretoken': "{{  csrf_token  }}",
+                                title: $('#istanimi').val(),
+                                company: $('#subcompanyAdd').val(),
+                                id: competitionId,
+                                isActive: 'False'
+
+                            },
+                            success: function (result) {
+
+                                if (result.status == 'Success') {
+
+                                    var p = $('#altfirma').DataTable();
+                                    var count = p.rows().count() + 1;
+                                    p.row.add([
+                                        count.toString(),
+                                        $('#subcompanyAdd option:selected').text(),
+                                        $('#istanimi option:selected').text(),
+                                        '<div class="btn-group"><a class="btn btn-success" data-toggle="modal" onclick=exammineSubCompany({{ project.pk }},' + result.pk + ')><i class="fa fa-play-circle"></i></a> <a class="btn btn-warning" data-toggle="modal" onclick=editSubCompany({{ project.pk }},' + result.pk + ')><i class="fa fa-edit"></i></a><a type="button" class="btn btn-danger" onclick=deleteSubcompany({{ project.pk }},' + result.pk + ')>  <i class="fa fa-trash"></i></a></div>',
+
+                                    ]).node().id = 'subcompany-' + result.pk;
+                                    p.draw(true);
+
+
+                                } else {
+                                    console.log('Error');
+                                }
+                            }
+                        });
+                    }
+
+
+                });
+
+
+            }).modal('show');
+            $('#btn-closereddet').click(function () {
+
+
+                $('#modelsubcompany').modal('hide');
+                $('.modal').modal('hide');
+
+            });
+
+
+        }
+
+        function deleteSubcompany(id, competitionId) {
+
+            var html = '';
+            $("#modal-deleteSubcompany").on("shown.bs.modal", function (e) {
+                $("#btn-modal-deleteSubcompany-yes").click(function (e) {
+
+                    $.ajax({
+                        url: "{% url "sbs:proje-altfirma-kaldir" project_pk=212121223232323232 employee_pk=999999999999999 %}".replace(/212121223232323232/, id.toString()).replace(/999999999999999/, competitionId.toString()),
+                        type: "POST",
+                        data: {
+                            'csrfmiddlewaretoken': "{{  csrf_token  }}",
+                            isActive: 'False'
+                        },
+                        success: function (result) {
+                            if (result.status == 'Success') {
+                                html = 'Personel başarıyla kaldırıldı.';
+                                $('#subcompany-' + competitionId).hide();
+                                console.log(result.status)
+                            } else {
+                                console.log('error');
+                            }
+                        }
+                    });
+
+                });
+            }).modal('show');
+            $('#btn-modal-deleteSubcompany-no').click(function () {
+                $('#modal-deleteSubcompany').modal('hide');
+            });
+
+        }
+
+        function editSubCompany(id, competitionId) {
+
+            $("#editmodelsubcompany").on("shown.bs.modal", function (e) {
+
+
+                $('#editistanimi option:selected').text($('#subcompany-' + competitionId + ' td').eq(2).text());
+                $('#editsubcompanyAdd option:selected').text($('#subcompany-' + competitionId + ' td').eq(1).text());
+
+                console.log(e);
+                $("#edit-btn-subcompanyAdd").click(function (e) {
+                    if (e.handled !== true) { // This will prevent event triggering more then once
+                        e.handled = true;
+
+                        $.ajax({
+                            url: "{% url "sbs:proje-altproje-guncelle" pk=212121223232323232  %}".replace(/212121223232323232/, id.toString()),
+                            type: "POST",
+                            data: {
+                                'csrfmiddlewaretoken': "{{  csrf_token  }}",
+                                title: $('#editistanimi').val(),
+                                company: $('#editsubcompanyAdd').val(),
+                                id: competitionId,
+                                isActive: 'False'
+
+                            },
+                            success: function (result) {
+
+                                if (result.status == 'Success') {
+                                    $('#subcompany-' + competitionId + ' td').eq(2).text($('#editistanimi option:selected').text());
+                                    $('#subcompany-' + competitionId + ' td').eq(1).text($('#editsubcompanyAdd option:selected').text());
+                                } else {
+                                    console.log('Error');
+                                }
+                            }
+                        });
+                    }
+
+
+                });
+
+
+            }).modal('show');
+            $('#edit-btn-closereddet').click(function () {
+
+
+                $('#editmodelsubcompany').modal('hide');
+                $('.modal').modal('hide');
+
+            });
+
+
+        }
+
+        function exammineSubCompany(id, competitionId) {
+            {#alert(competitionId);#}
+            $('#cType').val('');
+            $('#cName').val('');
+            $('#cMail').val('');
+            $('#cUser').val('');
+            $('#cCepTel').val('');
+            $('#cSabitTel').val('');
+            comp = competitionId
+
+            $("#examine").on("shown.bs.modal", function (e) {
+
+
+                {#alert(e.handled+'-'+comp);#}
+                if (e.handled !== true) { // This will prevent event triggering more then once
+                    e.handled = true;
+
+
+                    $.ajax({
+                        url: "{% url "sbs:proje-altproje-firmaBilgileri" pk=212121223232323232  %}".replace(/212121223232323232/, id.toString()),
+                        type: "POST",
+                        data: {
+                            'csrfmiddlewaretoken': "{{  csrf_token  }}",
+                            id: comp,
+                            isActive: 'False'
+
+                        },
+                        success: function (result) {
+
+
+                            if (result.status == 'Success') {
+
+                                $('#cMail').val(result.cMail);
+                                $('#cUser').val(result.cUser);
+                                $('#cName').val(result.cName);
+                                $('#cType').val(result.cType);
+                                $('#cCepTel').val(result.cCepTel);
+                                $('#cSabitTel').val(result.cSabitTel);
+
+
+                            } else {
+                                console.log('Error');
+                            }
+                        }
+                    });
+                }
+
+
+            }).modal('show');
+            $('#edit-btn-closereddet').click(function () {
+
+
+                $('#editmodelsubcompany').modal('hide');
+                $('.modal').modal('hide');
+
+            });
+        }
 
     </script>
 

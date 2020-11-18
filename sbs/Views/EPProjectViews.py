@@ -12,6 +12,7 @@ from django.db.models import Sum
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
 from django.utils import timezone
+from rest_framework.fields import empty
 
 from oxiterp.settings.base import MEDIA_URL
 from sbs.Forms.CategoryItemForm import CategoryItemForm
@@ -95,18 +96,32 @@ def edit_project_personel(request, pk):
             if project.aifinish:
                 days = (project.aifinish - timezone.now()).days
 
+            clubsPk = []
+            for item in project.employees.filter(employee__user=user):
+                clubsPk.append(int(item.projectEmployeeTitle.pk))
+                print(item.projectEmployeeTitle.pk)
+            titles = CategoryItem.objects.filter(id__in=clubsPk)
+            test = []
+            for item in titles:
+                test.append(item.pk)
+                print(item.name)
+            subCompany = Company.objects.filter(JopDescription__id__in=test).distinct()
+
+            for item in subCompany:
+                print(item)
             return render(request, 'epproje/Proje-incele-Personel.html',
                           {'project': project, 'project_form': project_form,
-                           'days': days})
+                           'days': days, 'subCompany': subCompany, 'titles': titles})
     else:
         project_form = DisableEPProjectForm(request.POST or None, instance=project)
         days = None
         if project.aifinish:
             days = (project.aifinish - timezone.now()).days
 
+
         return render(request, 'epproje/Proje-incele-Personel.html',
                       {'project': project, 'project_form': project_form,
-                       'days': days})
+                       'days': days, 'employee': employee, 'company': company})
 
 
 
