@@ -63,6 +63,7 @@ class EPProject(models.Model):
     BB = 'Bakanlık Binası'
     LOJMAN='Lojman'
     DIGER = 'Diğer'
+    ATVG = 'ATVG'
 
     PROJE_CINSI = (
         (CIK, 'Ceza İnfaz Kurumu'),
@@ -74,6 +75,7 @@ class EPProject(models.Model):
         (BB, 'Bakanlık Bİnası'),
         (PEM, 'Personel Eğitim Merkezi'),
         (LOJMAN, 'Lojman'),
+        (ATVG, 'ATVG'),
         (DIGER, 'Diğer'),
 
     )
