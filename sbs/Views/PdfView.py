@@ -498,7 +498,7 @@ def edit_project_pdf(request,pk):
 
         c.line(300, y-10, 350, y-10)
 
-        c.drawString(420, y, 'Unvan')
+        c.drawString(420, y, 'Kontrol Alanı')
         c.line(420, y - 10, 470, y - 10)
 
         # c.setFillColorRGB(0, 0, 0)
@@ -921,7 +921,7 @@ def edit_project_pdf_personel(request,pk):
 
         c.line(300, y-10, 350, y-10)
 
-        c.drawString(400, y, 'Unvan')
+        c.drawString(400, y, 'Kontrol Alanı')
         c.line(400, y-10, 450, y-10)
 
         # c.setFillColorRGB(0, 0, 0)
@@ -1173,7 +1173,7 @@ def edit_project_pdf_teknik(request,pk):
         c.drawString(50, 490, 'İsim-Soyisim')
         c.line(50, 480, 150, 480)
 
-        c.drawString(200, 490, 'Unvan')
+        c.drawString(200, 490, 'Kontrol Alanı')
         c.line(200, 480, 250, 480)
 
         y = 470
