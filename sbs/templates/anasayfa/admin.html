@@ -1573,18 +1573,62 @@
 
 
         });
-
-
         function CityColor() {
 
             var patternAColor = '#E9A635';
+            var patternBColor = '#E7721C';
+            var patternCColor = '#EC3333';
+            var data = new Array();
             {% for city in cities %}
 
 
+                data.push("{{ city }}");
+                count = data.filter(x => x =={{ city }}).length;
+                console.log("{{ city }}=" + data.filter(x => x =={{ city }}).length);
 
-                $("g[data-plakakodu='{{ city.plateNo }}'] path").css({fill: patternAColor})
+
+                switch (count) {
+                    case 1:
+                        $("g[data-plakakodu='{{ city }}'] path").css({fill: patternAColor})
+                        break;
+                    case 2:
+                        $("g[data-plakakodu='{{ city }}'] path").css({fill: patternAColor})
+                        break;
+                    case 3:
+                        $("g[data-plakakodu='{{ city }}'] path").css({fill: patternAColor})
+                        break;
+                    case 4:
+                        $("g[data-plakakodu='{{ city }}'] path").css({fill: patternBColor})
+                        break;
+                    case 5:
+                        $("g[data-plakakodu='{{ city }}'] path").css({fill: patternBColor})
+                        break;
+                    case 6:
+                        $("g[data-plakakodu='{{ city }}'] path").css({fill: patternBColor})
+                        break;
+
+                    default:
+                        $("g[data-plakakodu='{{ city }}'] path").css({fill: patternCColor})
+                }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             {% endfor %}
+
+            console.log(data);
 
         }
 

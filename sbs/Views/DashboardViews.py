@@ -227,7 +227,6 @@ def return_admin_dashboard(request):
     cityArray = []
     for item in projects:
         cityArray.append(item.city.plateNo)
-    cities = City.objects.filter(plateNo__in=cityArray).distinct()
 
     return render(request, 'anasayfa/admin.html',
                   {
@@ -292,7 +291,7 @@ def return_admin_dashboard(request):
                    'diger_tam': diger_tam,
                    'lojman_tam': lojman_tam,
                       'ATGV_tam': ATGV_tam,
-                      'cities': cities,
+                      'cities': cityArray,
                    })
 
 
