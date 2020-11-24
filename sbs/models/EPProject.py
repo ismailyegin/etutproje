@@ -45,11 +45,14 @@ class EPProject(models.Model):
     GENEL = 'Genel'
     ISYURTLARI = 'İş Yurtları'
     BIRIMDISI='Birim Dışı'
+    ATGV = 'ATGV  '
+
 
     BUTCE_CINSI = (
         (GENEL, 'Genel'),
         (ISYURTLARI, 'İş Yurtları'),
         (BIRIMDISI,'Birim Dışı'),
+        (ATGV, 'ATGV '),
 
     )
 
@@ -62,8 +65,8 @@ class EPProject(models.Model):
     PEM = 'Personel Eğitim Merkezi'
     BB = 'Bakanlık Binası'
     LOJMAN='Lojman'
+
     DIGER = 'Diğer'
-    ATVG = 'ATVG'
 
     PROJE_CINSI = (
         (CIK, 'Ceza İnfaz Kurumu'),
@@ -75,7 +78,7 @@ class EPProject(models.Model):
         (BB, 'Bakanlık Bİnası'),
         (PEM, 'Personel Eğitim Merkezi'),
         (LOJMAN, 'Lojman'),
-        (ATVG, 'ATVG'),
+        (ATGV, 'ATGV '),
         (DIGER, 'Diğer'),
 
     )

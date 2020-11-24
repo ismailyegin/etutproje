@@ -260,6 +260,11 @@
                                     {% for project in projects.all %}
                                         {% if project.projectStatus  ==  'Proje tamamlandı' %}
                                             <tr style="background-color:#E1d7d7">
+                                                {% elif project.projectStatus  ==  'Proje İptal Edildi' %}
+                                            <tr style="background-color:#EC8472">
+
+                                                {% elif project.projectStatus  ==  'Proje Durduruldu' %}
+                                            <tr style="background-color:#f4bd89">
 
                                                 {% else %}
                                             <tr>

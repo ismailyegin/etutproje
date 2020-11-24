@@ -222,13 +222,13 @@
 
                             <div class="box-header with-border">
                                 <div class="btn-group">
-                                    {% if user.groups.all.0.name == 'Admin' %}
+                                    {#                                    {% if user.groups.all.0.name == 'Admin' %}#}
 
-                                        <a href="{% url "sbs:proje-ekle" %}"
-                                           type="button" class="btn btn-success"><i
-                                                class="fa fa-edit"></i> Yeni Proje Ekle
-                                        </a>
-                                    {% endif %}
+                                    {#                                        <a href="{% url "sbs:proje-ekle" %}"#}
+                                    {#                                           type="button" class="btn btn-success"><i#}
+                                    {#                                                class="fa fa-edit"></i> Yeni Proje Ekle#}
+                                    {#                                        </a>#}
+                                    {#                                    {% endif %}#}
                                 </div>
                             </div>
 
@@ -246,7 +246,6 @@
                                         <th>İs Bitim Tarihi</th>
                                         <th>Açıklama</th>
                                         <th>İşlemler</th>
-
 
                                     </tr>
                                     </thead>
@@ -279,8 +278,6 @@
                                                        type="button" class="btn btn-warning btn-lg"><i
                                                             class="fa fa-edit"></i>
                                                     </a>
-
-
                                                 {% else %}
 
                                                     <a href="{% url "sbs:proje-incele-personel" project.pk %}"
@@ -333,13 +330,13 @@
 
                             <div class="box-header with-border">
                                 <div class="btn-group">
-                                    {% if user.groups.all.0.name == 'Admin' %}
-
-                                        <a href="{% url "sbs:proje-ekle" %}"
-                                           type="button" class="btn btn-success"><i
-                                                class="fa fa-edit"></i> Yeni Proje Ekle
-                                        </a>
-                                    {% endif %}
+                                    {#                                    {% if user.groups.all.0.name == 'Admin' %}#}
+                                    {##}
+                                    {#                                        <a href="{% url "sbs:proje-ekle" %}"#}
+                                    {#                                           type="button" class="btn btn-success"><i#}
+                                    {#                                                class="fa fa-edit"></i> Yeni Proje Ekle#}
+                                    {#                                        </a>#}
+                                    {#                                    {% endif %}#}
                                 </div>
                             </div>
 

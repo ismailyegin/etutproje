@@ -809,6 +809,11 @@
                                     <small class="label   pull-right"
                                            style="background-color:#a9a9a9; "> {{ personelegitim }}</small></a>
                                 </li>
+
+                                <li><a href="{% url 'sbs:detay' %}?get=ATGV ">ATGV
+                                    <small class="label   pull-right"
+                                           style="background-color:#a9a9a9; ">{{ ATGV }}</small></a>
+                                </li>
                                 <li><a href="{% url 'sbs:detay' %}?get=Lojman">Lojman
                                     <small class="label   pull-right"
                                            style="background-color:#00cd00; "> {{ lojman }}</small></a>
@@ -1001,6 +1006,12 @@
                                                 m² </small></a>
                                         </li>
                                     {% endif %}
+                                    {% if ATGV_sum %}
+                                        <li><a href="{% url 'sbs:detay' %}?get=ATGV ">ATGV
+                                            <small class="label label-primary  pull-right"> {{ ATGV_sum }}
+                                                m² </small></a>
+                                        </li>
+                                    {% endif %}
                                     {% if lojman_sum %}
                                         <li><a href="{% url 'sbs:detay' %}?get=Lojman">Lojman
                                             <small class="label label-primary  pull-right"> {{ lojman_sum }} m² </small></a>
@@ -1089,6 +1100,12 @@
                                         <li><a href="{% url 'sbs:detay' %}?get=Personel Eğitim Merkezi">Personel Eğitim
                                             Merkezi
                                             <small class="label label-primary  pull-right"> {{ personelegitim_dev }}
+                                                m² </small></a>
+                                        </li>
+                                    {% endif %}
+                                    {% if ATGV_dev %}
+                                        <li><a href="{% url 'sbs:detay' %}?get=ATGV">ATGV
+                                            <small class="label label-primary  pull-right"> {{ ATGV_dev }}
                                                 m² </small></a>
                                         </li>
                                     {% endif %}
@@ -1188,6 +1205,12 @@
                                             <small class="label label-primary  pull-right"> {{ lojman_tam }} m² </small></a>
                                         </li>
                                     {% endif %}
+                                    {% if ATGV_tam %}
+                                        <li><a href="{% url 'sbs:detay' %}?get=ATGV">ATGV <small
+                                                class="label label-primary  pull-right"> {{ ATGV_tam }} m² </small></a>
+                                        </li>
+                                    {% endif %}
+
                                     {% if diger_tam %}
                                         <li><a href="{% url 'sbs:detay' %}?get=Diger">Diger <small
                                                 class="label label-primary  pull-right"> {{ diger_tam }} m² </small></a>
@@ -1492,6 +1515,16 @@
                     highlight: '#d3d3d3',
                     label: 'Lojman'
                 },
+
+                {
+                    value: {{ ATGV  }},
+                    color: '#00cd22',
+                    highlight: '#d3d3d3',
+                    label: 'ATGV'
+                },
+
+
+
                 {
                     value: {{diger}},
                     color: '#00f5ff',
@@ -1547,7 +1580,7 @@
         };
 
         var barChartData = {
-            labels: ["Adalet Binası", "Ceza İnfaz", "Adli Tıp", "Bölge Adliye", "Bölge İdare", "Denetimli Serbestlik", "Bakanlık Bİnası", "Personel Eğitim", "Lojman", "Diger"],
+            labels: ["Adalet Binası", "Ceza İnfaz", "Adli Tıp", "Bölge Adliye", "Bölge İdare", "Denetimli Serbestlik", "Bakanlık Bİnası", "Personel Eğitim", "Lojman", "ATGV", "Diger"],
             datasets: [
 
                 {
@@ -1555,21 +1588,21 @@
                     strokeColor: "rgba(151,187,205,0.8)",
                     highlightFill: "rgba(151,187,205,0.75)",
                     highlightStroke: "rgba(151,187,205,1)",
-                    data: [{{ adaletbinasi_sum }}, {{cezainfaz_sum}}, {{adlitip_sum}}, {{ bolgeadliye_sum }}, {{ bolgeidari_sum }}, {{ denetimserbeslik_sum }}, {{ bakanlikbinasi_sum }}, {{ personelegitim_sum }}, {{ lojman_sum }}, {{ diger_sum }}]
+                    data: [{{ adaletbinasi_sum }}, {{cezainfaz_sum}}, {{adlitip_sum}}, {{ bolgeadliye_sum }}, {{ bolgeidari_sum }}, {{ denetimserbeslik_sum }}, {{ bakanlikbinasi_sum }}, {{ personelegitim_sum }}, {{ lojman_sum }}, {{ ATGV_sum }}, {{ diger_sum }}]
                 },
                 {
                     fillColor: "rgba(255,106,106,0.5)",
                     strokeColor: "rgba(151,187,205,0.8)",
                     highlightFill: "rgba(151,187,205,0.75)",
                     highlightStroke: "rgba(151,187,205,1)",
-                    data: [{{ adaletbinasi_tam }}, {{cezainfaz_tam}}, {{adlitip_tam}}, {{ bolgeadliye_tam }}, {{ bolgeidari_tam }}, {{ denetimserbeslik_tam }}, {{ bakanlikbinasi_tam }}, {{ personelegitim_tam }}, {{ lojman_tam }}, {{ diger_tam }}]
+                    data: [{{ adaletbinasi_tam }}, {{cezainfaz_tam}}, {{adlitip_tam}}, {{ bolgeadliye_tam }}, {{ bolgeidari_tam }}, {{ denetimserbeslik_tam }}, {{ bakanlikbinasi_tam }}, {{ personelegitim_tam }}, {{ lojman_tam }}, {{ ATGV_tam }}, {{ diger_tam }}]
                 },
                 {
                     fillColor: "rgba(151,187,106,0.5)",
                     strokeColor: "rgba(151,187,205,0.8)",
                     highlightFill: "rgba(151,187,205,0.75)",
                     highlightStroke: "rgba(151,187,205,1)",
-                    data: [{{ adaletbinasi_dev }}, {{cezainfaz_dev}}, {{adlitip_dev}}, {{ bolgeadliye_dev }}, {{ bolgeidari_dev }}, {{ denetimserbeslik_dev }}, {{ bakanlikbinasi_dev }}, {{ personelegitim_dev }}, {{ lojman_dev }}, {{ diger_dev }}]
+                    data: [{{ adaletbinasi_dev }}, {{cezainfaz_dev}}, {{adlitip_dev}}, {{ bolgeadliye_dev }}, {{ bolgeidari_dev }}, {{ denetimserbeslik_dev }}, {{ bakanlikbinasi_dev }}, {{ personelegitim_dev }}, {{ lojman_dev }}, {{ ATGV_dev }}, {{ diger_dev }}]
                 },
             ]
 

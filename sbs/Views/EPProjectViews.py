@@ -303,7 +303,10 @@ def return_detay(request):
         projects.filter(projeCinsi=EPProject.PEM).aggregate(Sum('insaatAlani'))['insaatAlani__sum'] or 0)
     bakanlikbinasi = int(
         projects.filter(projeCinsi=EPProject.BB).aggregate(Sum('insaatAlani'))['insaatAlani__sum'] or 0)
+    ATGV = int(projects.filter(projeCinsi=EPProject.ATGV).aggregate(Sum('insaatAlani'))['insaatAlani__sum'] or 0)
+
     diger = int(projects.filter(projeCinsi=EPProject.DIGER).aggregate(Sum('insaatAlani'))['insaatAlani__sum'] or 0)
+
     lojman = int(
         projects.filter(projeCinsi=EPProject.LOJMAN).aggregate(Sum('insaatAlani'))['insaatAlani__sum'] or 0)
     if get:
@@ -327,6 +330,7 @@ def return_detay(request):
                    'bakanlikbinasi': bakanlikbinasi,
                    'diger': diger,
                    'lojman': lojman,
+                   'ATGV': ATGV
                    })
 
 

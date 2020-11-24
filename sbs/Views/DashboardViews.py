@@ -142,6 +142,8 @@ def return_admin_dashboard(request):
     bakanlikbinasi=EPProject.objects.filter(projeCinsi=EPProject.BB).count()
     diger=EPProject.objects.filter(projeCinsi=EPProject.DIGER).count()
     lojman=EPProject.objects.filter(projeCinsi=EPProject.LOJMAN).count()
+    ATGV = EPProject.objects.filter(projeCinsi=EPProject.ATGV).count()
+    print(ATGV)
 
 
 
@@ -159,6 +161,8 @@ def return_admin_dashboard(request):
     bakanlikbinasi_sum = int(EPProject.objects.filter(projeCinsi=EPProject.BB).aggregate(Sum('insaatAlani'))['insaatAlani__sum'] or 0)
     diger_sum = int(EPProject.objects.filter(projeCinsi=EPProject.DIGER).aggregate(Sum('insaatAlani'))['insaatAlani__sum'] or 0)
     lojman_sum = int(EPProject.objects.filter(projeCinsi=EPProject.LOJMAN).aggregate(Sum('insaatAlani'))['insaatAlani__sum'] or 0)
+    ATGV_sum = int(
+        EPProject.objects.filter(projeCinsi=EPProject.ATGV).aggregate(Sum('insaatAlani'))['insaatAlani__sum'] or 0)
 
     projects = EPProject.objects.all().distinct()
     cezainfaz_tam = int(
@@ -191,6 +195,9 @@ def return_admin_dashboard(request):
     lojman_tam = int(
         projects.filter(projeCinsi=EPProject.LOJMAN, projectStatus=EPProject.PT).aggregate(Sum('insaatAlani'))[
             'insaatAlani__sum'] or 0)
+    ATGV_tam = int(
+        projects.filter(projeCinsi=EPProject.ATGV, projectStatus=EPProject.PT).aggregate(Sum('insaatAlani'))[
+            'insaatAlani__sum'] or 0)
 
     cezainfaz_dev = int(
         projects.filter(projeCinsi=EPProject.CIK, projectStatus=EPProject.PDE).distinct().aggregate(Sum('insaatAlani'))[
@@ -222,6 +229,9 @@ def return_admin_dashboard(request):
     lojman_dev = int(
         projects.filter(projeCinsi=EPProject.LOJMAN, projectStatus=EPProject.PDE).aggregate(Sum('insaatAlani'))[
             'insaatAlani__sum'] or 0)
+    ATGV_dev = int(
+        projects.filter(projeCinsi=EPProject.ATGV, projectStatus=EPProject.PDE).aggregate(Sum('insaatAlani'))[
+            'insaatAlani__sum'] or 0)
 
 
 
@@ -231,7 +241,8 @@ def return_admin_dashboard(request):
 
 
     return render(request, 'anasayfa/admin.html',
-                  {'employees': last_employee,
+                  {
+                      'employees': last_employee,
                    'personel_count': personel_count,
 
                    'proje_count': proje_count,
@@ -251,7 +262,10 @@ def return_admin_dashboard(request):
                    'denetimserbeslik':denetimserbeslik,
                    'personelegitim':personelegitim,
                    'bakanlikbinasi':bakanlikbinasi,
-                   'diger':diger,'lojman':lojman,
+                      'diger': diger,
+                      'lojman': lojman,
+                      'ATGV': ATGV,
+
 
                    'cezainfaz_sum': cezainfaz_sum,
                    'adaletbinasi_sum': adaletbinasi_sum,
@@ -261,7 +275,9 @@ def return_admin_dashboard(request):
                    'denetimserbeslik_sum': denetimserbeslik_sum,
                    'personelegitim_sum': personelegitim_sum,
                    'bakanlikbinasi_sum': bakanlikbinasi_sum,
-                   'diger_sum': diger_sum, 'lojman_sum': lojman_sum,
+                      'diger_sum': diger_sum,
+                      'lojman_sum': lojman_sum,
+                      'ATGV_sum': ATGV_sum,
 
                    'cezainfaz_dev': cezainfaz_dev,
                    'adaletbinasi_dev': adaletbinasi_dev,
@@ -273,6 +289,7 @@ def return_admin_dashboard(request):
                    'bakanlikbinasi_dev': bakanlikbinasi_dev,
                    'diger_dev': diger_dev,
                    'lojman_dev': lojman_dev,
+                      'ATGV_dev': ATGV_dev,
 
                    'cezainfaz_tam': cezainfaz_tam,
                    'adaletbinasi_tam': adaletbinasi_tam,
@@ -284,7 +301,7 @@ def return_admin_dashboard(request):
                    'bakanlikbinasi_tam': bakanlikbinasi_tam,
                    'diger_tam': diger_tam,
                    'lojman_tam': lojman_tam,
-
+                      'ATGV_tam': ATGV_tam,
                    })
 
 
