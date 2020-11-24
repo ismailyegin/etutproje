@@ -1432,6 +1432,12 @@
 
     <script>
         $(function () {
+
+
+            CityColor();
+
+
+
             deprem = ({{ proje_status_DYRY }} * 100
         )/{{ proje_count }}
             deprem = deprem.toString() + "%";
@@ -1569,12 +1575,20 @@
         });
 
 
-    </script>
+        function CityColor() {
+            alert();
+            var patternAColor = '#E9A635';
+            {% for city in cities %}
 
 
 
+                $("g[data-plakakodu='{{ city.plateNo }}'] path").css({fill: patternAColor})
 
-    <script>
+            {% endfor %}
+
+        }
+
+
         var randomScalingFactor = function () {
             return Math.round(Math.random() * 100)
         };

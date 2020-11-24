@@ -123,8 +123,6 @@ def return_admin_dashboard(request):
     personel_count=Employee.objects.count()
     proje_count=EPProject.objects.count()
 
-
-
     proje_status_PT=EPProject.objects.filter(projectStatus=EPProject.PT).distinct().count()
     proje_status_PDE=EPProject.objects.filter(projectStatus=EPProject.PDE).distinct().count()
     proje_status_PD = EPProject.objects.filter(projectStatus=EPProject.PD).distinct().count()
@@ -143,13 +141,6 @@ def return_admin_dashboard(request):
     diger=EPProject.objects.filter(projeCinsi=EPProject.DIGER).count()
     lojman=EPProject.objects.filter(projeCinsi=EPProject.LOJMAN).count()
     ATGV = EPProject.objects.filter(projeCinsi=EPProject.ATGV).count()
-    print(ATGV)
-
-
-
-
-
-
 
     cezainfaz_sum = int(EPProject.objects.filter(projeCinsi=EPProject.CIK).distinct().aggregate(Sum('insaatAlani'))['insaatAlani__sum'] or 0)
     adaletbinasi_sum =int(EPProject.objects.filter(projeCinsi=EPProject.AB).aggregate(Sum('insaatAlani'))['insaatAlani__sum'] or 0)
@@ -233,15 +224,14 @@ def return_admin_dashboard(request):
         projects.filter(projeCinsi=EPProject.ATGV, projectStatus=EPProject.PDE).aggregate(Sum('insaatAlani'))[
             'insaatAlani__sum'] or 0)
 
-
-
-
-
-
-
+    cityArray = []
+    for item in projects:
+        cityArray.append(item.city.plateNo)
+    cities = City.objects.filter(plateNo__in=cityArray).distinct()
 
     return render(request, 'anasayfa/admin.html',
                   {
+
                       'employees': last_employee,
                    'personel_count': personel_count,
 
@@ -302,6 +292,7 @@ def return_admin_dashboard(request):
                    'diger_tam': diger_tam,
                    'lojman_tam': lojman_tam,
                       'ATGV_tam': ATGV_tam,
+                      'cities': cities,
                    })
 
 
