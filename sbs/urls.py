@@ -438,6 +438,10 @@ urlpatterns = [
         EPProjectViews.delete_document_project,
         name='proje-dokuman-kaldir'),
 
+    url(r'etut-proje/proje-needdokuman-sil/(?P<project_pk>\d+)/(?P<employee_pk>\d+)/$',
+        EPProjectViews.delete_needdocument_project,
+        name='proje-ihtiyacDokuman-kaldir'),
+
 
     url(r'personel/personeller/$', EmployeeViews.return_employees, name='personeller'),
     url(r'personel/personeller/hepsi/$', EmployeeViews.return_employees_all, name='personeller-all'),

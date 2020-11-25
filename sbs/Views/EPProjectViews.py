@@ -1170,6 +1170,23 @@ def deleteReferee(request, pk):
 
 
 @login_required
+def delete_needdocument_project(request, project_pk, employee_pk):
+    perm = general_methods.control_access_personel(request)
+
+    if not perm:
+        logout(request)
+        return redirect('accounts:login')
+    if request.method == 'POST' and request.is_ajax():
+        try:
+            athlete = EPProject.objects.get(pk=project_pk)
+            athlete.needDocument.remove(employee_pk)
+            return JsonResponse({'status': 'Success', 'messages': 'save successfully'})
+        except EPProject.DoesNotExist:
+            return JsonResponse({'status': 'Fail', 'msg': 'Object does not exist'})
+
+    else:
+        return JsonResponse({'status': 'Fail', 'msg': 'Not a valid request'})
+@login_required
 def delete_document_project(request, project_pk, employee_pk):
     perm = general_methods.control_access_personel(request)
 
