@@ -887,7 +887,7 @@
                                             <label> Sözleşme Bedeli (₺)</label>
                                             <input type="text" name="sozlesmebedeli"
                                                    value="{{ project.sozlesmeBedeli }}"
-                                                   class="form-control "
+                                                   class="form-control format "
                                                    id="sozlesmebedeli" pattern="^\$\d{1.}(.\d{3})*(\,\d+)?$"
                                                    data-type="currency">
 
@@ -898,7 +898,7 @@
                                             <label> Sözleşme Bedeli Kdv Dahil(₺)</label>
                                             <input type="text" name="sozlesmebedeliKdv"
                                                    value="{{ project.sozlesmeBedeliKdv }}"
-                                                   class="form-control "
+                                                   class="form-control format "
                                                    id="sozlesmebedeliKdv" pattern="^\$\d{1.}(.\d{3})*(\,\d+)?$"
                                                    data-type="currency">
                                         </div>
@@ -1027,8 +1027,8 @@
                                         <div class="form-group">
                                             <label> Arsa Alanı (m2)</label>
                                             <input type="text" name="arsa" value="{{ project.arsaAlani }}"
-                                                   class="form-control "
-                                                   id="arsa" pattern="^\$\d{1.}(.\d{3})*(\,\d+)?$"
+                                                   class="form-control  format"
+                                                   id="arsa"
                                                    data-type="currency">
                                         </div>
 
@@ -1040,7 +1040,7 @@
                                         <div class="form-group">
                                             <label> İnşaat Alanı (m2)</label>
                                             <input type="text" name="insaat" value="{{ project.insaatAlani }}"
-                                                   class="form-control "
+                                                   class="form-control format "
                                                    id="insaat" pattern="^\$\d{1.}(.\d{3})*(\,\d+)?$"
                                                    data-type="currency">
                                         </div>
@@ -1050,7 +1050,7 @@
                                             <label> Tahmini Ödenek Tutarı (₺)</label>
                                             <input type="text" name="tahmini"
                                                    value="{{ project.tahminiOdenekTutari }}"
-                                                   class="form-control "
+                                                   class="form-control  format"
                                                    id="tahmini" pattern="^\$\d{1.}(.\d{3})*(\,\d+)?$"
                                                    data-type="currency">
                                         </div>
@@ -1139,8 +1139,8 @@
                                                 {% for item in project.vest.all %}
                                                     <tr id="hakedis-{{ item.pk }}">
                                                         <td>{{ forloop.counter }} </td>
-                                                        <td>{{ item.vestDate }}</td>
-                                                        <td>{{ item.vest }}</td>
+                                                        <td>{{ item.vestDate |date:" d/m/Y" }}</td>
+                                                        <td class="formatTd">{{ item.vest }}</td>
                                                         <td>
                                                             <div class="btn-group">
 
@@ -1682,14 +1682,22 @@
 
 
             {#let urlApi='/etutproje/sbs/message/api/v1/'#}
+            $('.format').val(addCommas($('.format').val()));
+            $('.formatTd').text(addCommas($('.formatTd').text()));
 
-            formatCurrency($('#yaklasik'), "blur");
-            formatCurrency($('#insaat'), "blur");
-            formatCurrency($('#tahmini'), "blur");
-            formatCurrency($('#sozlesmebedeli'), "blur");
-            formatCurrency($('#sozlesmebedeliKdv'), "blur");
-            formatCurrency($('#arsa'), "blur");
-            formatCurrency($('#yaklasik'), "blur");
+
+            {#$('#sozlesmebedeli')#}
+            {#$('#sozlesmebedeliKdv')#}
+            {#$('#arsa')#}
+
+
+
+
+            {#formatCurrency($('#insaat'), "blur");#}
+            {#formatCurrency($('#tahmini'), "blur");#}
+            {#formatCurrency($('#sozlesmebedeli'), "blur");#}
+            {#formatCurrency($('#sozlesmebedeliKdv'), "blur");#}
+            {#formatCurrency($('#arsa'), "blur");#}
 
 
             $("#sehir").change(function () {
@@ -1700,6 +1708,18 @@
 
 
         });
+
+        function addCommas(nStr) {
+            nStr += '';
+            x = nStr.split('.');
+            x1 = x[0];
+            x2 = x.length > 1 ? '.' + x[1] : '';
+            var rgx = /(\d+)(\d{3})/;
+            while (rgx.test(x1)) {
+                x1 = x1.replace(rgx, '$1' + '.' + '$2');
+            }
+            return x1 + x2;
+        }
 
 
         function ilce(city) {
