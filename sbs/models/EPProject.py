@@ -12,6 +12,7 @@ from sbs.models.EPDocument import EPDocument
 from sbs.models.EPVest import EPVest
 from sbs.models.Company import Company
 from sbs.models.SubCompany import SubCompany
+from sbs.models.EPNeedDocument import EPNeedDocument
 class EPProject(models.Model):
 
 
@@ -115,6 +116,7 @@ class EPProject(models.Model):
 
 
     documents=models.ManyToManyField(EPDocument)
+    needDocument = models.ManyToManyField(EPNeedDocument)
 
     # projenin durumu ve  karakteristik  genel bilgiler
     karakteristik=models.CharField(blank=True, null=True, max_length=120, verbose_name='Karakteristik', choices=CHARACTERİSTİC, default=ETUTPROJE)

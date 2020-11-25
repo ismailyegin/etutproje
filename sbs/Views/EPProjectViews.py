@@ -34,6 +34,7 @@ from sbs.models.SubCompany import SubCompany
 from sbs.models.Town import Town
 from sbs.services import general_methods
 from sbs.services.general_methods import getProfileImage
+from sbs.models.EPNeedDocument import EPNeedDocument
 
 
 # from twisted.conch.insults.insults import privateModes
@@ -139,6 +140,9 @@ def edit_project(request, pk):
     project = EPProject.objects.get(pk=pk)
     user = request.user
 
+    # for item in project.needDocument.all():
+    #     print(item)
+
     # güvenlik icin sorgu yapıldı
     #
     # try:
@@ -183,6 +187,24 @@ def edit_project(request, pk):
 
     if request.method == 'POST':
 
+        # document = request.FILES['needfiles']
+        # data = EPNeedDocument()
+        # data.name = document
+        # data.save()
+        # project.documents.add(data)
+        # project.save()
+
+        try:
+            if request.FILES['needfiles']:
+                document = request.FILES['needfiles']
+                data = EPNeedDocument()
+                data.name = document
+                data.save()
+                project.needDocument.add(data)
+                project.save()
+        except:
+            print('neeed error')
+
 
         try:
             if request.FILES['files']:
@@ -194,7 +216,7 @@ def edit_project(request, pk):
                 project.save()
 
         except:
-            print('')
+            print('documnet none ')
         insaatAlani = request.POST.get('insaat')
         insaatAlani = insaatAlani.replace(".", "")
         insaatAlani = insaatAlani.replace(",", ".")
