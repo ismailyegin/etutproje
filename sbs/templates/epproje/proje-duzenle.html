@@ -1495,10 +1495,10 @@
                                 <!-- Custom Tabs -->
                                 <div class="nav-tabs-custom">
                                     <ul class="nav nav-tabs">
-                                        <li class="active"><a href="#tab_1" data-toggle="tab" aria-expanded="true">İhtiyaç
-                                            Listesi</a></li>
-                                        <li class=""><a href="#tab_2" data-toggle="tab" aria-expanded="false">Döküman
-                                            Listesi</a></li>
+                                        <li class="active"><a href="#tab_1" data-toggle="tab" aria-expanded="true">
+                                            İhtiyaç listesi yükleme</a></li>
+                                        <li class=""><a href="#tab_2" data-toggle="tab" aria-expanded="false"> İhtiyaç
+                                            listesine ekleme</a></li>
                                         {#                                        <li class=""><a href="#tab_3" data-toggle="tab" aria-expanded="false">Döküman#}
                                         {#                                            Ekle</a></li>#}
 
@@ -1506,76 +1506,6 @@
                                     <div class="tab-content">
                                         <div class="tab-pane active" id="tab_1">
 
-                                            <div class="row">
-
-                                                <div class="col-lg-12">
-                                                    <div class="btn-group">
-
-                                                        <div class="col-lg-6">
-                                                            <a class="btn btn-success"
-                                                               data-toggle="modal"
-                                                               onclick=addRequirement({{ project.pk }})><i
-                                                                    class="fa fa-plus"></i> İhtiyaç Ekle</a>
-
-                                                        </div>
-
-
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-lg-12">
-                                                    <table id="requirementtable"
-                                                           class="table table-bordered table-hover">
-                                                        <thead>
-                                                        <tr>
-                                                            <th>No</th>
-                                                            <th>Adet</th>
-                                                            <th>Tanım</th>
-                                                            <th>İşlemler</th>
-
-                                                        </tr>
-                                                        </thead>
-
-                                                        <tbody>
-                                                        {% if project.requirements.all %}
-                                                            {% for item in project.requirements.all %}
-                                                                <tr id="requi-{{ item.pk }}">
-                                                                    <td>{{ forloop.counter }} </td>
-                                                                    <td>{{ item.amount }}</td>
-                                                                    <td>{{ item.definition }}</td>
-                                                                    <td>
-                                                                        <div class="btn-group">
-
-
-                                                                            <a class="btn btn-warning"
-                                                                               data-toggle="modal"
-                                                                               onclick=editRequirement({{ project.pk }},{{ item.pk }})><i
-                                                                                    class="fa fa-edit"></i></a>
-
-
-                                                                            <a class="btn btn-danger"
-                                                                               data-toggle="modal"
-                                                                               onclick=deleteRequirement({{ project.pk }},{{ item.pk }})><i
-                                                                                    class="fa fa-trash"></i></a>
-                                                                        </div>
-                                                                    </td>
-                                                                </tr>
-
-                                                            {% endfor %}
-                                                        {% endif %}
-
-
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-
-
-                                            </div>
-                                            {% comment %}{% endcomment %}
-
-                                        </div>
-                                        <!-- /.tab-pane -->
-                                        <div class="tab-pane" id="tab_2">
                                             <div class="row" style="padding-bottom: 10px">
                                                 <div class="col-lg-12 ">
 
@@ -1645,8 +1575,78 @@
                                                             {% endfor %}
                                                         {% endif %}
 
-                                    </tbody>
-                                </table>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+
+
+                                            </div>
+
+
+                                        </div>
+                                        <!-- /.tab-pane -->
+                                        <div class="tab-pane" id="tab_2">
+                                            <div class="row">
+
+                                                <div class="col-lg-12">
+                                                    <div class="btn-group">
+
+                                                        <div class="col-lg-6">
+                                                            <a class="btn btn-success"
+                                                               data-toggle="modal"
+                                                               onclick=addRequirement({{ project.pk }})><i
+                                                                    class="fa fa-plus"></i> İhtiyaç Ekle</a>
+
+                                                        </div>
+
+
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-12">
+                                                    <table id="requirementtable"
+                                                           class="table table-bordered table-hover">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>No</th>
+                                                            <th>Adet</th>
+                                                            <th>Tanım</th>
+                                                            <th>İşlemler</th>
+
+                                                        </tr>
+                                                        </thead>
+
+                                                        <tbody>
+                                                        {% if project.requirements.all %}
+                                                            {% for item in project.requirements.all %}
+                                                                <tr id="requi-{{ item.pk }}">
+                                                                    <td>{{ forloop.counter }} </td>
+                                                                    <td>{{ item.amount }}</td>
+                                                                    <td>{{ item.definition }}</td>
+                                                                    <td>
+                                                                        <div class="btn-group">
+
+
+                                                                            <a class="btn btn-warning"
+                                                                               data-toggle="modal"
+                                                                               onclick=editRequirement({{ project.pk }},{{ item.pk }})><i
+                                                                                    class="fa fa-edit"></i></a>
+
+
+                                                                            <a class="btn btn-danger"
+                                                                               data-toggle="modal"
+                                                                               onclick=deleteRequirement({{ project.pk }},{{ item.pk }})><i
+                                                                                    class="fa fa-trash"></i></a>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+
+                                                            {% endfor %}
+                                                        {% endif %}
+
+
+                                                        </tbody>
+                                                    </table>
                                                 </div>
 
 
