@@ -1546,6 +1546,7 @@ def return_projects_mimar(request):
                 'insaatAlani__sum'] or 0)
 
         beka = {
+            'count': eprojects.count(),
             'employe': item,
             'totalsum': etotalsum,
             'eatvg_dev': eatvg_dev,
