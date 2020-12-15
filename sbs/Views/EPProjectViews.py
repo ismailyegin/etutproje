@@ -1493,3 +1493,76 @@ def update_vest_to_project(request, pk):
         messages.warning(request, 'Yeniden deneyiniz.')
 
     return redirect('sbs:proje-duzenle', pk=pk)
+
+
+@login_required
+def return_projects_mimar(request):
+    perm = general_methods.control_access(request)
+    if not perm:
+        logout(request)
+        return redirect('accounts:login')
+
+    employe = Employee.objects.filter(workDefinition__name="MİMAR")
+
+    data = []
+    for item in employe:
+        print(item.user)
+        eprojects = EPProject.objects.filter(projectStatus=EPProject.PDE,
+                                             employees__employee__user=item.user).distinct()
+        etotalsum = int(eprojects.aggregate(Sum('insaatAlani'))['insaatAlani__sum'] or 0)
+        ecezainfaz_dev = int(
+            eprojects.filter(projeCinsi=EPProject.CIK, projectStatus=EPProject.PDE).distinct().aggregate(
+                Sum('insaatAlani'))[
+                'insaatAlani__sum'] or 0)
+        eadaletbinasi_dev = int(
+            eprojects.filter(projeCinsi=EPProject.AB, projectStatus=EPProject.PDE).aggregate(Sum('insaatAlani'))[
+                'insaatAlani__sum'] or 0)
+        eadlitip_dev = int(
+            eprojects.filter(projeCinsi=EPProject.AT, projectStatus=EPProject.PDE).aggregate(Sum('insaatAlani'))[
+                'insaatAlani__sum'] or 0)
+        ebolgeadliye_dev = int(
+            eprojects.filter(projeCinsi=EPProject.BAM, projectStatus=EPProject.PDE).aggregate(Sum('insaatAlani'))[
+                'insaatAlani__sum'] or 0)
+        ebolgeidari_dev = int(
+            eprojects.filter(projeCinsi=EPProject.BIM, projectStatus=EPProject.PDE).aggregate(Sum('insaatAlani'))[
+                'insaatAlani__sum'] or 0)
+        edenetimserbeslik_dev = int(
+            eprojects.filter(projeCinsi=EPProject.DS, projectStatus=EPProject.PDE).aggregate(Sum('insaatAlani'))[
+                'insaatAlani__sum'] or 0)
+        epersonelegitim_dev = int(
+            eprojects.filter(projeCinsi=EPProject.PEM, projectStatus=EPProject.PDE).aggregate(Sum('insaatAlani'))[
+                'insaatAlani__sum'] or 0)
+        ebakanlikbinasi_dev = int(
+            eprojects.filter(projeCinsi=EPProject.BB, projectStatus=EPProject.PDE).aggregate(Sum('insaatAlani'))[
+                'insaatAlani__sum'] or 0)
+        ediger_dev = int(
+            eprojects.filter(projeCinsi=EPProject.DIGER, projectStatus=EPProject.PDE).aggregate(Sum('insaatAlani'))[
+                'insaatAlani__sum'] or 0)
+        elojman_dev = int(
+            eprojects.filter(projeCinsi=EPProject.LOJMAN, projectStatus=EPProject.PDE).aggregate(Sum('insaatAlani'))[
+                'insaatAlani__sum'] or 0)
+        eatvg_dev = int(
+            eprojects.filter(projeCinsi=EPProject.ATGV, projectStatus=EPProject.PDE).aggregate(Sum('insaatAlani'))[
+                'insaatAlani__sum'] or 0)
+
+        beka = {
+            'employe': item,
+            'totalsum': etotalsum,
+            'eatvg_dev': eatvg_dev,
+            'elojman_dev': elojman_dev,
+            'ediger_dev': ediger_dev,
+            'ebakanlikbinasi_dev': ebakanlikbinasi_dev,
+            'ebakanlikbinasi_dev': ebakanlikbinasi_dev,
+            'epersonelegitim_dev': epersonelegitim_dev,
+            'edenetimserbeslik_dev': edenetimserbeslik_dev,
+            'ebolgeidari_dev': ebolgeidari_dev,
+            'ebolgeadliye_dev': ebolgeadliye_dev,
+            'eadlitip_dev': eadlitip_dev,
+            'eadaletbinasi_dev': eadaletbinasi_dev,
+            'ecezainfaz_dev': ecezainfaz_dev,
+
+        }
+        data.append(beka)
+
+    return render(request, 'epproje/Mimarlar.html',
+                  {'data': data})

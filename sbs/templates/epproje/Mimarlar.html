@@ -1,0 +1,148 @@
+{% extends 'base_layout.html' %}
+
+
+{% block content %}
+
+    {% if messages %}
+        {% for message in messages %}
+
+
+            {% if message.tags == 'warning' %}
+
+                <div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <h4><i class="icon fa fa-ban"></i> Hata!</h4>
+
+
+                    <ul class="messages">
+                        {% for message in messages %}
+                            <li class="{{ message.tags }}">{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+
+
+                </div>
+
+            {% endif %}
+
+
+            {% if message.tags == 'success' %}
+
+                <div class="alert alert-success alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <h4><i class="icon fa fa-check"></i> Başarılı!</h4>
+
+
+                    <ul class="messages">
+                        {% for message in messages %}
+                            <li class="{{ message.tags }}">{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+
+
+                </div>
+
+            {% endif %}
+        {% endfor %}
+
+
+    {% endif %}
+
+
+    <!-- Main content -->
+    <section class="content">
+        {% for item in data %}
+            {#        {{ item.totalsum }} <br>#}
+            {#            {{ item.employe }}<br>#}
+
+            <div class="row">
+
+
+                <div class="col-lg-12">
+
+
+                    <div class="box box-success">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">{{ item.employe }} </h3>
+
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                        class="fa fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i
+                                        class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <div class="chart">
+                                <canvas id="employe-{{ item.employe.pk }}" class="canvas1"></canvas>
+                            </div>
+
+
+                            <center>
+                                {#                                <p class="label   layout-boxed  pull-left margin-right: 2rem "#}
+                                {#                                   style="background-color:rgba(151,187,205,100);#}
+                                {#                                     font-size: 14px;">#}
+                                {#                                    Toplam#}
+                                {#                                </p>#}
+                                {#                                <p class="label  layout-boxed " style="background-color:#FFB4B4;font-size: 14px;">#}
+                                {#                                    Tamamlanan </p>#}
+
+
+                                <p class="label  layout-boxed pull-right "
+                                   style="background-color:rgba(151,187,106,100);font-size: 14px;">Devam
+                                    Eden
+                                </p>
+
+                            </center>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+        {% endfor %}
+
+
+    </section>
+
+    <script>
+
+        {% for item in data %}
+            var barChartData{{item.employe.pk  }} = {
+                labels: ["Adalet Binası", "Ceza İnfaz", "Adli Tıp", "Bölge Adliye", "Bölge İdare", "Denetimli Serbestlik", "Bakanlık Bİnası", "Personel Eğitim", "Lojman", "ATGV", "Diger"],
+                datasets: [
+
+                    {
+                        fillColor: "rgba(151,187,106,0.5)",
+                        strokeColor: "rgba(151,187,205,0.8)",
+                        highlightFill: "rgba(151,187,205,0.75)",
+                        highlightStroke: "rgba(151,187,205,1)",
+                        data: [{{ item.eadaletbinasi_dev }}, {{item.ecezainfaz_dev}}, {{item.eadlitip_dev}}, {{ item.ebolgeadliye_dev }}, {{ item.ebolgeidari_dev }}, {{ item.edenetimserbeslik_dev }}, {{ item.ebakanlikbinasi_dev }}, {{ item.epersonelegitim_dev }}, {{ item.elojman_dev }}, {{ item.eatvg_dev }}, {{ item.ediger_dev }}]
+                    },
+                ]
+
+            };
+        {% endfor %}
+        window.onload = function () {
+            {% for item in data %}
+                var ctx = document.getElementById("employe-{{ item.employe.pk }}").getContext("2d");
+                window.myBar = new Chart(ctx).Bar(barChartData{{item.employe.pk  }}, {
+                    responsive: true
+                });
+            {% endfor %}
+        }
+
+    </script>
+
+
+
+{% endblock %}
+
+
+

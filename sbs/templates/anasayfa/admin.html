@@ -1431,7 +1431,47 @@
 
 
     <script>
+
+
+        function degerAta(count, city) {
+
+
+            var patternAColor = '#E9A635';
+            var patternBColor = '#E7721C';
+            var patternCColor = '#EC3333';
+
+
+            switch (count) {
+                case 1:
+                    $("g[data-plakakodu=" + city + "] path").css({fill: patternAColor})
+                    break;
+                case 2:
+                    $("g[data-plakakodu=" + city + "] path").css({fill: patternAColor})
+                    break;
+                case 3:
+                    $("g[data-plakakodu=" + city + "] path").css({fill: patternAColor})
+                    break;
+                case 4:
+                    $("g[data-plakakodu=" + city + "] path").css({fill: patternBColor})
+                    break;
+                case 5:
+                    $("g[data-plakakodu=" + city + "] path").css({fill: patternBColor})
+                    break;
+                case 6:
+                    $("g[data-plakakodu=" + city + "] path").css({fill: patternBColor})
+                    break;
+
+                default:
+                    $("g[data-plakakodu=" + city + "] path").css({fill: patternCColor})
+            }
+
+        }
+
+
+
+
         $(function () {
+
 
 
             var data = new Array();
@@ -1523,9 +1563,6 @@
                     highlight: '#d3d3d3',
                     label: 'ATGV'
                 },
-
-
-
                 {
                     value: {{diger}},
                     color: '#00f5ff',
@@ -1569,42 +1606,6 @@
 
         });
 
-
-        function degerAta(count, city) {
-
-
-            var patternAColor = '#E9A635';
-            var patternBColor = '#E7721C';
-            var patternCColor = '#EC3333';
-
-            console.log(count);
-
-
-            switch (count) {
-                    case 1:
-                        $("g[data-plakakodu=" + city + "] path").css({fill: patternAColor})
-                        break;
-                    case 2:
-                        $("g[data-plakakodu=" + city + "] path").css({fill: patternAColor})
-                        break;
-                    case 3:
-                        $("g[data-plakakodu=" + city + "] path").css({fill: patternAColor})
-                        break;
-                    case 4:
-                        $("g[data-plakakodu=" + city + "] path").css({fill: patternBColor})
-                        break;
-                    case 5:
-                        $("g[data-plakakodu=" + city + "] path").css({fill: patternBColor})
-                        break;
-                    case 6:
-                        $("g[data-plakakodu=" + city + "] path").css({fill: patternBColor})
-                        break;
-
-                    default:
-                        $("g[data-plakakodu=" + city + "] path").css({fill: patternCColor})
-                }
-
-        }
 
 
         var randomScalingFactor = function () {
@@ -1650,3 +1651,4 @@
 
 
 {% endblock %}
+
