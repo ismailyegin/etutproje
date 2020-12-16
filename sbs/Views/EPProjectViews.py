@@ -1502,7 +1502,11 @@ def return_projects_mimar(request):
         logout(request)
         return redirect('accounts:login')
 
-    employe = Employee.objects.filter(workDefinition__name="MİMAR")
+    get = request.GET.get('employe')
+    if get:
+        employe = Employee.objects.filter(workDefinition__name=get)
+    else:
+        employe = Employee.objects.filter(workDefinition__name="MİMAR")
 
     data = []
     for item in employe:

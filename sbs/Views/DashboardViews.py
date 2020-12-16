@@ -1,22 +1,19 @@
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.shortcuts import render, redirect
+from django.db.models import Sum
 # from rest_framework_simplejwt import views as jwt_views
 from django.http import JsonResponse
+from django.shortcuts import render, redirect
 
-from sbs.models import SportClubUser, SportsClub, Coach, Level, License, Athlete, Person, Judge, EPProject, City
+from sbs.models import SportClubUser, SportsClub, Coach, Level, Athlete, City, CategoryItem
 from sbs.models.EPProject import EPProject
 from sbs.models.Employee import Employee
-from sbs.services import general_methods
-from django.db.models import Sum
 from sbs.models.Message import Message
+from sbs.services import general_methods
+
+
 # from rest_framework.authtoken.models import Token
-
-
-from datetime import date, datetime
-
-from django.conf import settings
 
 
 @login_required
@@ -223,17 +220,31 @@ def return_admin_dashboard(request):
     ATGV_dev = int(
         projects.filter(projeCinsi=EPProject.ATGV, projectStatus=EPProject.PDE).aggregate(Sum('insaatAlani'))[
             'insaatAlani__sum'] or 0)
-
     cityArray = []
     for item in projects:
         cityArray.append(item.city.plateNo)
 
+    categori = CategoryItem.objects.all().distinct()
+    data = []
+    for item in categori:
+        employe = Employee.objects.filter(workDefinition__name=item.name)
+        beka = {
+            'count': employe.count(),
+            'categori': item.name
+        }
+        data.append(beka)
+
+
+
+
+
+
+
     return render(request, 'anasayfa/admin.html',
                   {
-
+                      'data': data,
                       'employees': last_employee,
                    'personel_count': personel_count,
-
                    'proje_count': proje_count,
                    'proje_status_PT': proje_status_PT,
                    'proje_status_PDE': proje_status_PDE,

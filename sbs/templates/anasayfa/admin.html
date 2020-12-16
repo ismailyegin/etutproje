@@ -1232,6 +1232,81 @@
 
             </div>
 
+
+            <div class="row">
+
+
+                <div class="col-lg-12">
+
+
+                    <div class="box box-success">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"> İş Tanımlarina Göre Personeller</h3>
+
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                        class="fa fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i
+                                        class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <div class="chart">
+                                <canvas id="employe" class="canvas1"></canvas>
+                            </div>
+
+
+                            {#                            <center>#}
+                            {#                                <p class="label   layout-boxed  pull-left margin-right: 2rem "#}
+                            {#                                   style="background-color:rgba(151,187,205,100);#}
+                            {#                                     font-size: 14px;">#}
+                            {#                                    Toplam#}
+                            {#                                </p>#}
+                            {#                                <p class="label  layout-boxed " style="background-color:#FFB4B4;font-size: 14px;">#}
+                            {#                                    Tamamlanan </p>#}
+
+
+                            {#                                <p class="label  layout-boxed pull-right "#}
+                            {#                                   style="background-color:rgba(151,187,106,100);font-size: 14px;">Proje Sayısı </p>#}
+
+                            {#                            </center>#}
+
+
+                        </div>
+
+
+                        <div class="row">
+
+
+                            {% for item in data %}
+                                {% if item.count != 0 %}
+                                    <div class="col-sm-3 col-xs-6"
+                                         onclick="location.href='{% url 'sbs:mimarlar' %}?employe={{ item.categori }}'">
+
+                                        <div class="description-block border-right">
+                                            {#                                    <span class="description-percentage text-green"><i#}
+                                            {#                                            class="fa fa-caret-up"></i> </span>#}
+                                            <h5 class="description-header text-primary">({{ item.count }})</h5>
+                                            <span class="label label-success">{{ item.categori }}</span>
+                                        </div>
+                                        <!-- /.description-block -->
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+
+
+                        </div>
+                    </div>
+
+                    <!-- /.box-body -->
+
+
+                </div>
+
+
+            </div>
+
             <div class="row">
                 <div class="box box-success">
 
@@ -1640,9 +1715,39 @@
             ]
 
         }
+
+        {#employe table #}
+
+
+        var barChartDataEmploye = {
+            labels: [{% for item in data %}{% if item.count != 0 %} "{{ item.categori }}", {% endif %}{% endfor %}],
+            datasets: [
+
+                {
+                    fillColor: "rgba(151,187,106,0.5)",
+                    strokeColor: "rgba(151,187,205,0.8)",
+                    highlightFill: "rgba(151,187,205,0.75)",
+                    highlightStroke: "rgba(151,187,205,1)",
+                    data: [{% for item in data %}{% if item.count != 0 %} "{{ item.count }}", {% endif %}{% endfor %}
+
+                    ],
+                }],
+
+        };
+
+
+        {#        employe Table the end  #}
+
+
         window.onload = function () {
             var ctx = document.getElementById("canvas").getContext("2d");
             window.myBar = new Chart(ctx).Bar(barChartData, {
+                responsive: true
+
+
+            });
+            var ctx = document.getElementById("employe").getContext("2d");
+            window.myBar = new Chart(ctx).Bar(barChartDataEmploye, {
                 responsive: true
             });
         }
