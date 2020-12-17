@@ -56,8 +56,15 @@ def return_log(request):
             firstName = user_form.cleaned_data.get('first_name')
             lastName = user_form.cleaned_data.get('last_name')
             email = user_form.cleaned_data.get('email')
+            playDate = request.POST.get('start')
+            finishDate = request.POST.get('End')
+            if playDate:
+                playDate = datetime.strptime(playDate, '%d/%m/%Y').date()
 
-            if not (firstName or lastName or email):
+            if finishDate:
+                finishDate = datetime.strptime(finishDate, "%d/%m/%Y").date()
+
+            if not (firstName or lastName or email or playDate or finishDate):
                 logs = Logs.objects.all().order_by('-creationDate')
 
             else:
@@ -68,6 +75,10 @@ def return_log(request):
                     query &= Q(user__first_name__icontains=firstName)
                 if email:
                     query &= Q(user__email__icontains=email)
+                if playDate:
+                    query &= Q(creationDate__gte=playDate)
+                if finishDate:
+                    query &= Q(creationDate__lt=finishDate)
 
                 logs = Logs.objects.filter(query).order_by('-creationDate')
     return render(request, 'Log/Logs.html', {'logs': logs, 'user_form': user_form})

@@ -1302,6 +1302,9 @@
 
                             {% for item in data %}
                                 {% if item.count != 0 %}
+
+
+                                    {% if item.categori != "İNŞAAT TEKNİKERİ"  and item.categori != "TEKNİSYEN" and item.categori != "MAKİNE TEKNİKERİ" and item.categori != "V.H.K.İ." and item.categori != "BİLGİSAYAR TEKNİKERİ" %}
                                     <div class="col-sm-3 col-xs-6"
                                          onclick="location.href='{% url 'sbs:mimarlar' %}?employe={{ item.categori }}'">
 
@@ -1311,8 +1314,9 @@
                                             <h5 class="description-header text-primary">({{ item.count }})</h5>
                                             <span class="label label-success">{{ item.categori }}</span>
                                         </div>
-                                        <!-- /.description-block -->
+
                                     </div>
+                                    {% endif %}
                                 {% endif %}
                             {% endfor %}
 
