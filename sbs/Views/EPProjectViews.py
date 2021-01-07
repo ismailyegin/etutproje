@@ -388,6 +388,17 @@ def return_projects(request):
             else:
                 projects = EPProject.objects.filter(pk=int(get))
 
+        employes = request.GET.get('employes')
+
+        if employes:
+            employe = Employee.objects.get(pk=int(employes))
+            projects = EPProject.objects.filter(employees__employee__user=employe.user,
+                                                projectStatus=EPProject.PDE).distinct()
+            projects |= EPProject.objects.filter(sorumlu__user=employe.user, projectStatus=EPProject.PDE).distinct()
+            # projects = EPProject.objects.filter(employees__employee=employe).distinct()
+
+
+
 
 
     elif user.groups.filter(name='Personel'):

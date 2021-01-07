@@ -87,10 +87,11 @@
                                 {#                                    Tamamlanan </p>#}
 
 
-                                <p class="label  layout-boxed pull-right "
+                                <a class="label  layout-boxed pull-right "
+                                   href="{% url "sbs:projeler" %}?employes={{ item.employe.pk }}"
                                    style="background-color:rgba(151,187,106,100);font-size: 14px;">Devam
                                     Eden
-                                </p>
+                                </a>
 
                             </center>
                         </div>
