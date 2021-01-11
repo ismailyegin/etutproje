@@ -24,18 +24,14 @@ class Claim(models.Model):
     MOBİL = 'MOBİL UYGULAMA'
     WEBSİTE = 'WEB SİTE'
 
-    STATUS_PROJECT = (
-        (SBS, 'SPOR BİLGİ SİSTEMİ'),
-        (MOBİL, 'MOBİL UYGULAMA'),
-        (WEBSİTE, 'WEB SİTE'),
-    )
+
 
     ACİL = 'ACİL'
     ONEMLİ = 'ÖNEMLİ'
     AZONEMLİ = 'AZ ÖNEMLİ'
 
     STATUS_PROJECT = (
-        (SBS, 'SPOR BİLGİ SİSTEMİ'),
+        (SBS, 'BİLGİ SİSTEMİ'),
         (MOBİL, 'MOBİL UYGULAMA'),
         (WEBSİTE, 'WEB SİTE'),
     )
