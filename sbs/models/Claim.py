@@ -20,7 +20,7 @@ class Claim(models.Model):
         (WAITED, 'Beklemede'),
     )
 
-    SBS = 'SPOR BİLGİ SİSTEMİ'
+    SBS = 'BİLGİ SİSTEMİ'
     MOBİL = 'MOBİL UYGULAMA'
     WEBSİTE = 'WEB SİTE'
 
