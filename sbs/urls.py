@@ -6,7 +6,7 @@ from sbs.api.message import UserModelViewSet, MessageModelViewSet, UserModelEndM
 
 from sbs.Views import DashboardViews, AthleteViews, RefereeViews, ClubViews, CoachViews, DirectoryViews, UserViews, \
     CompetitionViews, AdminViews, HelpViews, PageViews, PreRegistration, EPProjectViews, EmployeeViews, PdfView, \
-    TechnicalViews, LogViews, NotificationView, CompanyView, ClaimView
+    TechnicalViews, LogViews, NotificationView, CompanyView, ClaimView, GtasinamazView
 
 app_name = 'sbs'
 
@@ -506,6 +506,13 @@ urlpatterns = [
     url(r'destek/guncelle/(?P<pk>\d+)$', ClaimView.claim_update, name='destek-guncelle'),
 
     url(r'menu', ClaimView.menu, name='destek-talep-menu'),
+
+    #     gayrimenkul eklemeler
+    #     tasinamaz ekle
+
+    url(r'gayrimenkul/tasinmaz-ekle/$', GtasinamazView.add_tasinmaz, name='tasinmaz-add'),
+    url(r'gayrimenkul/tasinmaz-duzenle/(?P<pk>\d+)$', GtasinamazView.edit_tasinmaz, name='tasinmaz-duzenle'),
+
 
 
 

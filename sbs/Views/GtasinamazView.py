@@ -23,11 +23,11 @@ from sbs.models.Gtasinmaz import Gtasinmaz
 from sbs.models.Gkira import Gkira
 from sbs.models.Gtahsis import Gtahsis
 from sbs.models.Gkurum import Gkurum
-from sbs.models.GTapu import
+from sbs.models.GTapu import GTapu
 from sbs.models.Gteskilat import Gteskilat
 from sbs.models.GkiraBedeli import GkiraBedeli
 
-from sbs.Forms import GtasinmazForm
+from sbs.Forms.GtasinmazForm import GtasinmazForm
 
 
 # from twisted.conch.insults.insults import privateModes
@@ -40,24 +40,48 @@ def add_tasinmaz(request):
     if not perm:
         logout(request)
         return redirect('accounts:login')
-
-    item = Gtasinmaz.objects.all()
-
     project_form = GtasinmazForm()
 
-    # if request.method == 'POST':
-    #     project_form = EPProjectForm(request.POST)
-    #
-    #     project = project_form.save()
-    #     project.town = request.POST.get('town')
-    #     project.save()
-    #
-    #     log = str(project.name) + " projesini kaydetti"
-    #     log = general_methods.logwrite(request, log)
-    #
-    #     messages.success(request, 'Proje Kaydedilmiştir.')
-    #
-    #     return redirect('sbs:proje-duzenle', pk=project.pk)
+    if request.method == 'POST':
+        project_form = GtasinmazForm(request.POST)
+        if project_form.is_valid():
+            project = project_form.save()
+            log = str(project.name) + " tasınmaz  kaydetti"
+            log = general_methods.logwrite(request, log)
 
-    return render(request, 'epproje/proje-ekle.html',
+            messages.success(request, 'Tasınmaz  Kaydedilmiştir.')
+
+            return redirect('sbs:tasinmaz-duzenle', pk=project.pk)
+        else:
+            messages.warning(request, 'Alanları kontrol ediniz.')
+    return render(request, 'tasinmaz/tasinmazEkle.html',
                   {'project_form': project_form})
+
+
+@login_required
+def edit_tasinmaz(request, pk):
+    perm = general_methods.control_access_personel(request)
+
+    if not perm:
+        logout(request)
+        return redirect('accounts:login')
+    project = Gtasinmaz.objects.get(pk=pk)
+    user = request.user
+
+    project_form = GtasinmazForm(request.POST or None, instance=project)
+
+    if request.method == 'POST':
+
+        project_form = GtasinmazForm(request.POST)
+        if project_form.is_valid():
+            projectSave = project_form.save()
+            log = str(project.name) + "tasinmaz  güncelledi"
+            log = general_methods.logwrite(request, log)
+
+            messages.success(request, 'Tasinmaz Başarıyla Güncellendi')
+            return redirect('sbs:tasinmaz-duzenle', pk=project.pk)
+        else:
+            messages.warning(request, 'Alanları Kontrol Ediniz')
+    return render(request, 'tasinmaz/tasinmazGuncelle.html',
+                  {'project_form': project_form,
+                   'project': project, })

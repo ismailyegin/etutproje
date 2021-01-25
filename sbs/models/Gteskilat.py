@@ -1,5 +1,7 @@
 from django.db import models
 
+from sbs.models.EnumFields import EnumFields
+
 
 class Gteskilat(models.Model):
     creationDate = models.DateTimeField(auto_now_add=True)

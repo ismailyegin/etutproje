@@ -113,23 +113,4 @@ class EnumFields(enum.Enum):
         (B5, '5.BÖLGE'),
     )
 
-    Hazine = 'HAZİNE'
-    Hukumet_konagi_icinde = "HÜKÜMET KONAGI İÇERİSİNDE"
-    Hukumet_konagi_ayri = "HÜKÜMET KONAGI AYRİ BLOK"
-    Is_yurtlari = "İŞ YURTLARI"
-    Diger = "DİĞER KAMU KURUM KURULUŞLARINA AİT YAPILAR"
 
-    Mulkiyet = (
-        (Hazine, 'HAZİNE'),
-        (Hukumet_konagi_icinde, 'HÜKÜMET KONAĞI İÇİNDE'),
-        (Hukumet_konagi_ayri, 'HÜKÜMET KONAĞINDA AYRI BLOK'),
-        (Is_yurtlari, 'İŞ YURTLARI'),
-        (Diger, 'DİĞER KAMU KURUM KURULUŞLARINA AİT YAPILAR'),
-
-    )
-
-    TahsisDurumu = (
-
-        ('Tahsisli Arsa', 'Tahsisli Arsa '),
-        ('Kiralık', 'Kiralık'),
-    )

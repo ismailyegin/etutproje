@@ -18,4 +18,4 @@ class City(models.Model):
     class Meta:
         default_permissions = ()
         db_table = 'city'
-        managed = False
+        # managed = False
