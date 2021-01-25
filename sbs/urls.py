@@ -512,6 +512,9 @@ urlpatterns = [
 
     url(r'gayrimenkul/tasinmaz-ekle/$', GtasinamazView.add_tasinmaz, name='tasinmaz-add'),
     url(r'gayrimenkul/tasinmaz-duzenle/(?P<pk>\d+)$', GtasinamazView.edit_tasinmaz, name='tasinmaz-duzenle'),
+    url(r'gayrimenkul/tasinmazlar/$', GtasinamazView.tasinmaz_list, name='tasinmaz-list'),
+    url(r'gayrimenkul/tasinmaz/delete/(?P<pk>\d+)$', GtasinamazView.delete_tasinmaz,
+        name='tasinmaz-delete'),
 
 
 

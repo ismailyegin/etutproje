@@ -16,7 +16,7 @@ class GtasinmazForm(ModelForm):
 
         fields = (
             'name', 'sirano', 'block', 'floor', 'mulkiyet', 'tkgmno', 'UsageArea', 'kurum', 'tahsis_durumu',
-            'tasinmazinTuru')
+            'tasinmazinTuru', 'definition')
 
         labels = {'name': 'İsim',
                   'sirano': 'Sıra numarası',
@@ -28,6 +28,7 @@ class GtasinmazForm(ModelForm):
                   'kurum': 'Binayı Kullanan Birim',
                   'tahsis_durumu': "Tahsis durumu",
                   'tasinmazinTuru': 'Taşınmazın Türü',
+                  'definition': 'Açıklama'
 
                   }
 
@@ -54,5 +55,7 @@ class GtasinmazForm(ModelForm):
                 attrs={'class': 'form-control ', }),
             'name': forms.TextInput(
                 attrs={'class': 'form-control ', }),
+            'definition': forms.Textarea(
+                attrs={'class': 'form-control ', 'rows': '2'}),
 
         }

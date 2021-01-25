@@ -83,5 +83,4 @@ class Gtasinmaz(models.Model):
 
     kira = models.ForeignKey(Gkira, on_delete=models.SET_NULL, verbose_name='Kurum', null=True, blank=True)
     tahsis = models.ForeignKey(Gtahsis, on_delete=models.SET_NULL, verbose_name='Kurum', null=True, blank=True)
-
-
+    definition = models.CharField(max_length=128, verbose_name='Tasınmaz Açıklama ', null=True, blank=True)

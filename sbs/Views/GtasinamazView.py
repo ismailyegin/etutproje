@@ -71,8 +71,6 @@ def edit_tasinmaz(request, pk):
     project_form = GtasinmazForm(request.POST or None, instance=project)
 
     if request.method == 'POST':
-
-        project_form = GtasinmazForm(request.POST)
         if project_form.is_valid():
             projectSave = project_form.save()
             log = str(project.name) + "tasinmaz  güncelledi"
@@ -85,3 +83,36 @@ def edit_tasinmaz(request, pk):
     return render(request, 'tasinmaz/tasinmazGuncelle.html',
                   {'project_form': project_form,
                    'project': project, })
+
+
+@login_required
+def tasinmaz_list(request):
+    perm = general_methods.control_access_personel(request)
+
+    if not perm:
+        logout(request)
+        return redirect('accounts:login')
+
+    projects = Gtasinmaz.objects.all()
+    user = request.user
+
+    return render(request, 'tasinmaz/tasinmazlar.html', {'projects': projects})
+
+
+@login_required
+def delete_tasinmaz(request, pk):
+    perm = general_methods.control_access(request)
+
+    if not perm:
+        logout(request)
+        return redirect('accounts:login')
+    if request.method == 'POST' and request.is_ajax():
+        try:
+            obj = Gtasinmaz.objects.get(pk=pk)
+            obj.delete()
+            return JsonResponse({'status': 'Success', 'messages': 'save successfully'})
+        except:
+            return JsonResponse({'status': 'Fail', 'msg': 'Object does not exist'})
+
+    else:
+        return JsonResponse({'status': 'Fail', 'msg': 'Not a valid request'})
