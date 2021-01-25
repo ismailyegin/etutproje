@@ -1,10 +1,5 @@
 import enum
 
-from enum import IntEnum
-
-
-
-
 
 class EnumFields(enum.Enum):
     class LEVELTYPE2(enum.Enum):
@@ -55,4 +50,86 @@ class EnumFields(enum.Enum):
         (GRADE, 'GRADE'),
         (BELT, 'BELT'),
 
+    )
+
+    CIK = 'Ceza İnfaz Kurumu'
+    AB = 'Adalet Binası'
+    AT = 'Adli Tıp'
+    BAM = 'Bölge Adliye Mahkemesi'
+    BIM = 'Bölge İdare Mahkemesi'
+    DS = 'Denetimli Serbestlik'
+    PEM = 'Personel Eğitim Merkezi'
+    BB = 'Bakanlık Binası'
+    LOJMAN = 'Lojman'
+    SOS = "SOSYAL TESİS "
+    HAK = "HAKİM EVİ"
+
+    DIGER = 'Diğer'
+
+    TAHSİS_AMACİ = (
+        (CIK, 'Ceza İnfaz Kurumu'),
+        (AB, 'Adalet Binası'),
+        (AT, 'Adli Tıp'),
+        (BAM, 'Bölge Adliye Mahkemesi'),
+        (BIM, 'Bölge İdare Mahkemesi'),
+        (DS, 'Denetimli Serbestlik'),
+        (BB, 'Bakanlık Bİnası'),
+        (PEM, 'Personel Eğitim Merkezi'),
+        (LOJMAN, 'Lojman'),
+
+        (SOS, 'Sosyal Tesis'),
+        (HAK, 'Hakim Evi'),
+        (DIGER, 'Diğer'),
+    )
+
+    D1 = "1.DERECE"
+    D2 = "2.DERECE"
+    D3 = "3.DERECE"
+    D4 = "4.DERECE"
+    D5 = "5.DERECE"
+
+    DEPREM_DERECE = (
+
+        (D1, '1.DERECE'),
+        (D2, '2.DERECE'),
+        (D3, '3.DERECE'),
+        (D4, '4.DERECE'),
+        (D5, '5.DERECE'),
+
+    )
+
+    B1 = "1.BÖLGE"
+    B2 = "2.BÖLGE"
+    B3 = "3.BÖLGE"
+    B4 = "4.BÖLGE"
+    B5 = "5.BÖLGE"
+
+    Yargi_bolgesi = (
+
+        (B1, '1.BÖLGE'),
+        (B2, '2.BÖLGE'),
+        (B3, '3.BÖLGE'),
+        (B4, '4.BÖLGE'),
+        (B5, '5.BÖLGE'),
+    )
+
+    Hazine = 'HAZİNE'
+    Hukumet_konagi_icinde = "HÜKÜMET KONAGI İÇERİSİNDE"
+    Hukumet_konagi_ayri = "HÜKÜMET KONAGI AYRİ BLOK"
+    Is_yurtlari = "İŞ YURTLARI"
+    Diger = "DİĞER KAMU KURUM KURULUŞLARINA AİT YAPILAR"
+
+    Mulkiyet = (
+        (Hazine, 'HAZİNE'),
+        (Hukumet_konagi_icinde, 'HÜKÜMET KONAĞI İÇİNDE'),
+        (Hukumet_konagi_ayri, 'HÜKÜMET KONAĞINDA AYRI BLOK'),
+        (Is_yurtlari, 'İŞ YURTLARI'),
+        (Diger, 'DİĞER KAMU KURUM KURULUŞLARINA AİT YAPILAR'),
+
+    )
+
+    TahsisDurumu = (
+
+        ('Tahsisli Arsa', 'Tahsisli Arsa '),
+        ('Kiralık', 'Kiralık'),
     )
