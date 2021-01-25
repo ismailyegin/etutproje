@@ -2,20 +2,16 @@ from django import forms
 from django.forms import ModelForm
 
 from sbs.models.Gtasinmaz import Gtasinmaz
-from sbs.models.Gkira import Gkira
-from sbs.models.Gtahsis import Gtahsis
-from sbs.models.Gkurum import Gkurum
-from sbs.models.GTapu import GTapu
-from sbs.models.Gteskilat import Gteskilat
-from sbs.models.GkiraBedeli import GkiraBedeli
 
 
 class GtasinmazForm(ModelForm):
     class Meta:
         model = Gtasinmaz
 
+
         fields = (
             'name', 'sirano', 'block', 'floor', 'mulkiyet', 'tkgmno', 'UsageArea', 'kurum', 'tahsis_durumu',
+            'arsaDegeri', 'yapiRaic', 'yapiMalitet',
             'tasinmazinTuru', 'definition')
 
         labels = {'name': 'İsim',
@@ -28,11 +24,20 @@ class GtasinmazForm(ModelForm):
                   'kurum': 'Binayı Kullanan Birim',
                   'tahsis_durumu': "Tahsis durumu",
                   'tasinmazinTuru': 'Taşınmazın Türü',
-                  'definition': 'Açıklama'
+                  'definition': 'Açıklama',
+                  'arsaDegeri': 'Arsa Degeri:',
+                  'yapiMalitet': 'Yapı Maliyet degeri ',
+                  'yapiRaic': 'Yapı Raiç Degeri'
 
                   }
 
         widgets = {
+            'yapiMalitet': forms.TextInput(
+                attrs={'class': 'form-control ', }),
+            'yapiRaic': forms.TextInput(
+                attrs={'class': 'form-control ', }),
+            'arsaDegeri': forms.TextInput(
+                attrs={'class': 'form-control ', }),
 
             'kurum': forms.Select(attrs={'class': 'form-control select2 select2-hidden-accessible',
                                          'style': 'width: 100%; ', 'required': 'required'}),

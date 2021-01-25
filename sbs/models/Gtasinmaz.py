@@ -84,3 +84,7 @@ class Gtasinmaz(models.Model):
     kira = models.ForeignKey(Gkira, on_delete=models.SET_NULL, verbose_name='Kurum', null=True, blank=True)
     tahsis = models.ForeignKey(Gtahsis, on_delete=models.SET_NULL, verbose_name='Kurum', null=True, blank=True)
     definition = models.CharField(max_length=128, verbose_name='Tasınmaz Açıklama ', null=True, blank=True)
+
+    arsaDegeri = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
+    yapiMalitet = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
+    yapiRaic = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
