@@ -35,6 +35,7 @@ from sbs.models.Town import Town
 from sbs.services import general_methods
 from sbs.services.general_methods import getProfileImage
 from sbs.models.EPNeedDocument import EPNeedDocument
+from sbs.models.EPOffer import EPOffer
 
 
 # from twisted.conch.insults.insults import privateModes
@@ -1004,13 +1005,18 @@ def add_offer_to_project(request, pk):
     log = str(project.name) + " projesine yeni bir görüs ekledi time=" + str(dates)
     log = general_methods.logwrite(request, log)
 
-    project.offers.create(message=message, added_by=request.user)
+    offer = EPOffer(message=message, added_by=request.user)
+    offer.save()
+
+    project.offers.add(offer)
+    project.save()
 
     for item in project.employees.all().exclude(employee__user=request.user):
         notification = Notification(notification=project.name +" Projesine yeni bir görüs eklendi.",
                                     users=item.employee.user,
                                     entityId=project.pk,
                                     tableName="proje"
+
                                     )
         notification.save()
 
@@ -1021,11 +1027,8 @@ def add_offer_to_project(request, pk):
     try:
         print()
 
-
-
-
-
-        return JsonResponse({'status': 'Success', 'username': username, 'image': imageUrl, 'dates': dates})
+        return JsonResponse(
+            {'status': 'Success', 'username': username, 'image': imageUrl, 'dates': dates, 'offer': offer.pk})
     except:
         return JsonResponse({'status': 'Fail', 'msg': 'Not a valid request'})
 

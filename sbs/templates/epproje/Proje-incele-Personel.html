@@ -1183,6 +1183,12 @@
                                                 <a href="#" class="name">
                                                     <small class="text-muted pull-right"><i
                                                             class="fa fa-clock-o"></i> {{ item.creationDate | date:"d/m/Y H:i" }}
+
+
+                                                        {% if user.pk == project.sorumlu.user.pk or user.groups.all.0.name == 'Admin' or user.pk == item.added_by.pk %}
+                                                            <i class="fa fa-trash-o"
+                                                               onclick=deleteoffers({{ project.pk }},{{ item.pk }})></i>
+                                                        {% endif %}
                                                     </small>
                                                     {{ item.added_by.first_name }} {{ item.added_by.last_name }}
                                                 </a>
@@ -1214,6 +1220,41 @@
     <script>
 
 
+        function deleteoffers(id, competitionId) {
+
+            console.log(id);
+            var html = '';
+            $("#modal-danger").on("shown.bs.modal", function (e) {
+                $("#btn-conf").click(function (e) {
+
+                    $.ajax({
+                        url: "{% url "sbs:proje-gorus-kaldir" project_pk=212121223232323232 employee_pk=999999999999999 %}".replace(/212121223232323232/, id.toString()).replace(/999999999999999/, competitionId.toString()),
+                        type: "POST",
+                        data: {
+                            'csrfmiddlewaretoken': "{{  csrf_token  }}",
+                            isActive: 'False'
+                        },
+                        success: function (result) {
+                            if (result.status == 'Success') {
+                                html = 'Aşama başarıyla kaldırıldı.';
+                                $('#offset-' + competitionId).hide();
+
+                                console.log(result.status);
+
+
+                            }
+                        }
+                    });
+
+                });
+            }).modal('show');
+            $('#btn-close').click(function () {
+                $('#modal-danger').modal('hide');
+            });
+
+        };
+
+
         function addOffer(id) {
 
             $.ajax({
@@ -1228,9 +1269,10 @@
                 success: function (result) {
 
                     var currentTime = new Date();
-                    $("#chat-box").prepend('<div class="item"><img src="' + result.image + '" alt="user image" class="offline">' +
+                    $("#chat-box").prepend('<div class="item" id=offset-' + result.offer + '><img src="' + result.image + '" alt="user image" class="offline">' +
                         '<p class="message"><a href="#" class="name"><small class="text-muted pull-right">' +
-                        '<i class="fa fa-clock-o"></i>' + result.dates + '</small>' + result.username + '</a>' +
+                        '<i class="fa fa-clock-o"></i>' + result.dates + '<i class="fa fa-trash-o" onclick="deleteoffers({{ project.pk }},' + result.offer + ')"></i></small>' + result.username + '</a>' +
+
                         $('#offer').val() + '</p></div>');
 
                     $("#offer").val("");
