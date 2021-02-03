@@ -14,6 +14,7 @@ class EPOffer(models.Model):
     message = models.CharField(blank=False, null=False, max_length=1000)
     added_by = models.ForeignKey(settings.AUTH_USER_MODEL,
                                  null=True, blank=True, on_delete=models.SET_NULL)
+    kobilid = models.IntegerField(null=True, blank=True, default=1)
 
     def save_model(self, request, obj, form, change):
         obj.added_by = request.user

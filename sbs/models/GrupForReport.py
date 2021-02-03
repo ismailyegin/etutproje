@@ -38,6 +38,7 @@ class GrupForReport(models.Model):
     timekeeper = models.CharField(db_column='timeKeeper', max_length=255, blank=True,
                                   null=True)  # Field name made lowercase.
     competition = models.ForeignKey(Competition, on_delete=models.CASCADE, db_column='competition', blank=True, null=True)
+    kobilid = models.IntegerField(null=True, blank=True, default=1)
 
     class Meta:
         db_table = 'grupforreport'

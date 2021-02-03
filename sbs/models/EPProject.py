@@ -129,6 +129,8 @@ class EPProject(models.Model):
                                 null=True, blank=True)
     subcompany = models.ManyToManyField(SubCompany)
 
+    kobilid = models.IntegerField(null=True, blank=True, default=1)
+
 
 
     #

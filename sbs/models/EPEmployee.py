@@ -12,6 +12,7 @@ class EPEmployee(models.Model):
     operationDate = models.DateTimeField(auto_now=True)
     projectEmployeeTitle = models.ForeignKey(CategoryItem, on_delete=models.CASCADE,null=False)
     employee = models.ForeignKey(Employee, on_delete=models.DO_NOTHING,null=False)
+    kobilid = models.IntegerField(null=True, blank=True, default=1)
 
     def __str__(self):
         return '%s ' % self.employee

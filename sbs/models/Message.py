@@ -24,6 +24,7 @@ class Message(models.Model):
     is_show = models.BooleanField(default=False)
 
     chat_id = models.UUIDField(default=uuid.uuid4, editable=False, blank=False, null=False)
+    kobilid = models.IntegerField(null=True, blank=True, default=1)
 
     def __str__(self):
         return str(self.pk)

@@ -13,6 +13,7 @@ class CategoryItem(models.Model):
     isFirst = models.BooleanField()
     creationDate = models.DateTimeField(auto_now_add=True)
     operationDate = models.DateTimeField(auto_now=True)
+    kobilid = models.IntegerField(null=True, blank=True, default=1)
 
     def __str__(self):
         if self.branch == None:

@@ -11,6 +11,7 @@ class Communication(models.Model):
     address = models.TextField(blank=True, null=True, verbose_name='Adres')
     city = models.ForeignKey(City, on_delete=models.CASCADE, verbose_name='İl', db_column='city')
     country = models.ForeignKey(Country, on_delete=models.CASCADE, verbose_name='Ülke', db_column='country')
+    kobilid = models.IntegerField(null=True, blank=True, default=1)
 
     class Meta:
         default_permissions = ()
