@@ -56,6 +56,7 @@ class Claim(models.Model):
     importanceSort = models.CharField(max_length=128, verbose_name='Önem Durumu', choices=İMPORTANCE, default=ACİL)
     # ücret
     pay = models.IntegerField(blank=True, null=True)
+    kobilid = models.IntegerField(null=True, blank=True, default=1)
 
     def __str__(self):
         return '%s ' % self.title

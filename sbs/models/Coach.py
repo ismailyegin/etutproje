@@ -14,7 +14,7 @@ class Coach(models.Model):
     visa = models.ManyToManyField(Level, related_name='CoachVisa')
     creationDate = models.DateTimeField(auto_now_add=True)
     modificationDate = models.DateTimeField(auto_now=True)
-
+    kobilid = models.IntegerField(null=True, blank=True, default=1)
     def __str__(self):
         return '%s %s' % (self.user.first_name, self.user.last_name)
 

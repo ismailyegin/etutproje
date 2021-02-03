@@ -17,6 +17,7 @@ class DirectoryMember(models.Model):
     modificationDate = models.DateTimeField(auto_now=True)
     role = models.ForeignKey(DirectoryMemberRole, on_delete=models.CASCADE, verbose_name='Üye Rolü')
     commission = models.ForeignKey(DirectoryCommission, on_delete=models.CASCADE, verbose_name='Kurulu')
+    kobilid = models.IntegerField(null=True, blank=True, default=1)
 
     class Meta:
         default_permissions = ()

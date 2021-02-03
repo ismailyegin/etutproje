@@ -39,6 +39,7 @@ class CompAthlete(models.Model):
     lastliftvalue = models.IntegerField(db_column='lastLiftValue', blank=True, null=True,default=0)  # Field name made lowercase.
     lastsilkliftvalue = models.IntegerField(db_column='lastSilkLiftValue', blank=True, null=True,default=0)  # Field name made lowercase.
     competition = models.ForeignKey(Competition, models.DO_NOTHING, db_column='competition', blank=True, null=True)
+    kobilid = models.IntegerField(null=True, blank=True, default=1)
 
     class Meta:
         db_table = 'compathlete'

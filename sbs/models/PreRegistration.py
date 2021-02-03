@@ -103,6 +103,7 @@ class PreRegistration(models.Model):
     petition= models.FileField(upload_to='dekont/', null=False, blank=False, verbose_name='Dilekçe ')
     # Sportclup user
     role = models.ForeignKey(ClubRole, on_delete=models.CASCADE, verbose_name='Üye Rolü')
+    kobilid = models.IntegerField(null=True, blank=True, default=1)
 
 
     class Meta:

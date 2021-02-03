@@ -8,6 +8,7 @@ class Logs(models.Model):
     operationDate = models.DateTimeField(auto_now=True)
     subject = models.CharField(max_length=150, null=True)
     ip = models.CharField(max_length=20, null=True)
+    kobilid = models.IntegerField(null=True, blank=True, default=1)
 
     def __str__(self):
         return '%s ' % self.user.get_full_name()

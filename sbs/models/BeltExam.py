@@ -39,6 +39,7 @@ class BeltExam(models.Model):
     sportClub = models.ForeignKey(SportsClub, on_delete=models.CASCADE, null=False, blank=False)
     description = models.CharField(max_length=255, null=True, blank=True)
     branch = models.CharField(max_length=128, choices=EnumFields.BRANCH.value, null=False, blank=False)
+    kobilid = models.IntegerField(null=True, blank=True, default=1)
 
 
     class Meta:

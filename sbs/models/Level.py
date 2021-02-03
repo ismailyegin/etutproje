@@ -34,6 +34,7 @@ class Level(models.Model):
     # son eklemeler
     city = models.ForeignKey(City, on_delete=models.CASCADE, verbose_name='İl')
     form=models.FileField(upload_to='form/', null=False, blank=False, verbose_name='Form ')
+    kobilid = models.IntegerField(null=True, blank=True, default=1)
 
     def __str__(self):
         return '%s ' % self.branch

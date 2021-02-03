@@ -5,6 +5,7 @@ class Branch(models.Model):
     name = models.CharField(blank=True, null=True, max_length=120, verbose_name='Branş Adı')
     creationDate = models.DateTimeField(auto_now_add=True)
     modificationDate = models.DateTimeField(auto_now=True)
+    kobilid = models.IntegerField(null=True, blank=True, default=1)
 
     def __str__(self):
         return '%s ' % self.name

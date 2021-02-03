@@ -3,6 +3,7 @@ from django.db import models
 
 class ClubRole(models.Model):
     name = models.TextField(blank=True, null=True, verbose_name='Kulüp Üye Rolü')
+    kobilid = models.IntegerField(null=True, blank=True, default=1)
 
     def __str__(self):
         return '%s ' % self.name

@@ -9,6 +9,7 @@ class SubCompany(models.Model):
     jopDescription = models.ForeignKey(CategoryItem, on_delete=models.SET_NULL, verbose_name='item',
                                        related_name='item',
                                        null=True, blank=True)
+    kobilid = models.IntegerField(null=True, blank=True, default=1)
     creationDate = models.DateTimeField(auto_now_add=True)
     operationDate = models.DateTimeField(auto_now=True)
 

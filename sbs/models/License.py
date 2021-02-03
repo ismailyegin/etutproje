@@ -32,6 +32,7 @@ class License(models.Model):
     status = models.CharField(max_length=128, verbose_name='Onay Durumu', choices=STATUS_CHOICES, default=WAITED)
     lisansPhoto = models.FileField(upload_to='lisans/', null=False, blank=False, verbose_name='Lisans')
     reddetwhy=models.CharField(blank=True, null=True, max_length=255)
+    kobilid = models.IntegerField(null=True, blank=True, default=1)
 
 
     def __str__(self):

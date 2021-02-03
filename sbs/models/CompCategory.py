@@ -14,7 +14,11 @@ class CompCategory(models.Model):
     startdate = models.CharField(db_column='startDate', max_length=45, blank=True, null=True)  # Field name made lowercase.
     name = models.CharField(max_length=45, blank=True, null=True)
     starttime = models.CharField(db_column='startTime', max_length=45, blank=True, null=True)  # Field name made lowercase.
-    grupforreport = models.ForeignKey(GrupForReport, models.DO_NOTHING, db_column='grupForReport', blank=True, null=True)  # Field name made lowercase.
+    grupforreport = models.ForeignKey(GrupForReport, models.DO_NOTHING, db_column='grupForReport', blank=True,
+                                      null=True)
+    kobilid = models.IntegerField(null=True, blank=True, default=1)
+
+    # Field name made lowercase.
 
     class Meta:
         db_table = 'compcategory'

@@ -11,9 +11,7 @@ class Notification(models.Model):
     entityId = models.IntegerField()
     tableName = models.CharField(blank=True, null=True, max_length=120)
     kobilid = models.IntegerField(null=True, blank=True, default=1)
-
     def __str__(self):
         return '%s ' % self.notification
-
     class Meta:
         default_permissions = ()
