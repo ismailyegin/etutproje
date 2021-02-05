@@ -42,6 +42,18 @@ def claim_add(request):
         if claim_form.is_valid():
             claim_form.save()
 
+            # mail gönderilecek
+
+            html_content = ''
+            subject, from_email, to = 'Bilgi Sistemi Kullanıcı Bilgileri', 'etutproje@kobiltek.com', 'fatih@kobiltek.com'
+            html_content = '<h2>ADALET BAKANLIGI PROJE TAKİP  SİSTEMİ</h2>'
+            html_content = html_content + '<p><strong>Açıklama :' + str(
+                claim_form.cleaned_data['definition']) + '</strong></p>'
+
+            msg = EmailMultiAlternatives(subject, '', from_email, [to])
+            msg.attach_alternative(html_content, "text/html")
+            msg.send()
+
             messages.success(request, 'Destek Talep  Eklendi.')
             return redirect('sbs:destek-talep-listesi')
 
