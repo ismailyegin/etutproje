@@ -381,9 +381,9 @@
                         extend: 'print',
                         title: 'Projeler',
                         text: '<i class="fa  fa-print"></i>',
-                        exportOptions: {
-                            columns: [0, 1, ':visible']
-                        },
+                        {#exportOptions: {#}
+                        {#    columns: [0, 1, ':visible']#}
+                        {# },#}
 
                         titleAttr: 'Yazdır'
                     },
@@ -393,11 +393,11 @@
                         text: '<i class="fa fa-file-pdf-o"></i>',
                         orientation: 'landscape',
                         pageSize: 'LEGAL',
-                        exportOptions: {
-                            columns: [0, 1, ':visible'],
-
-
-                        },
+                        {#exportOptions: {#}
+                        {#    columns: [0, 1, ':visible'],#}
+                        {##}
+                        {##}
+                        {# },#}
 
                         titleAttr: 'Pdf Kaydet'
                     },
@@ -407,9 +407,9 @@
                         title: 'Projeler',
                         text: '<i class="fa fa-file-excel-o"></i>',
                         messageTop: 'Etüt Bilgi Sistemi ',
-                        exportOptions: {
-                            columns: [0, 1, ':visible']
-                        },
+                        {#exportOptions: {#}
+                        {#    columns: [0, 1, ':visible']#}
+                        {# },#}
 
                         titleAttr: 'Excel Kaydet'
                     },
@@ -432,10 +432,11 @@
                 'searching': true,
                 'ordering': true,
                 'info': true,
-                'autoWidth': true,"columnDefs": [
-                    {responsivePriority: 1, targets: 1},
-                    {responsivePriority: 2, targets: 7},
-                ],
+                'autoWidth': true,
+                {#"columnDefs": [#}
+                {#    {responsivePriority: 1, targets: 1},#}
+                {#    {responsivePriority: 2, targets: 7},#}
+                {#],#}
                 'responsive': {
                     'details': {
 
