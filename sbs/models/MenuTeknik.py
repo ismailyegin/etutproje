@@ -14,6 +14,7 @@ class MenuTeknik(models.Model):
     fa_icon = models.CharField(max_length=120, null=True , blank=True)
     parent = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True)
     count=models.IntegerField(null=True,blank=True)
+    kobilid = models.IntegerField(null=True, blank=True, default=1)
 
     class Meta:
         default_permissions = ()

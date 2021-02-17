@@ -30,24 +30,24 @@ def getMenu(request):
 
 
 def getAdminMenu(request):
-    adminmenus = MenuAdmin.objects.all()
+    adminmenus = MenuAdmin.objects.filter(kobilid=1).order_by('count')
 
     return {'adminmenus': adminmenus}
 
 def getPersonelMenu(request):
-    personelmenus = MenuPersonel.objects.all()
+    personelmenus = MenuPersonel.objects.filter(kobilid=1).order_by('count')
     return {'personelmenus': personelmenus}
 
 
 
 def getTeknikMenu(request):
-    teknikmenus = MenuTeknik.objects.all().order_by('count')
+    teknikmenus = MenuTeknik.objects.filter(kobilid=1).order_by('count')
     return {'teknikmenus': teknikmenus}
 
 
 
 def getDirectoryMenu(request):
-    directorymenus = MenuDirectory.objects.all()
+    directorymenus = MenuDirectory.objects.filter(kobilid=1).order_by('count')
     return {'directorymenus': directorymenus}
 
 
