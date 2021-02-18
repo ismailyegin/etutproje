@@ -60,12 +60,11 @@ def return_log(request):
             finishDate = request.POST.get('End')
             if playDate:
                 playDate = datetime.strptime(playDate, '%d/%m/%Y').date()
-
             if finishDate:
                 finishDate = datetime.strptime(finishDate, "%d/%m/%Y").date()
 
             if not (firstName or lastName or email or playDate or finishDate):
-                logs = Logs.objects.all().order_by('-creationDate')
+                logs = Logs.objects.filter(kobilid=1).order_by('-creationDate')
 
             else:
                 query = Q()
@@ -80,5 +79,5 @@ def return_log(request):
                 if finishDate:
                     query &= Q(creationDate__lt=finishDate)
 
-                logs = Logs.objects.filter(query).order_by('-creationDate')
+                logs = Logs.objects.filter(kobilid=1).filter(query).order_by('-creationDate')
     return render(request, 'Log/Logs.html', {'logs': logs, 'user_form': user_form})

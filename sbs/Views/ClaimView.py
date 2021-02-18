@@ -22,7 +22,7 @@ def return_claim(request):
     if not perm:
         logout(request)
         return redirect('accounts:login')
-    destek = Claim.objects.all().order_by('-creationDate')
+    destek = Claim.objects.filter(kobilid=1).order_by('-creationDate')
 
     return render(request, 'Destek/DestekTalepListesi.html', {'claims': destek})
 
