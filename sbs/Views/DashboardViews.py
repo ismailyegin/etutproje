@@ -12,6 +12,9 @@ from sbs.models.Employee import Employee
 from sbs.models.Message import Message
 from sbs.services import general_methods
 
+from sbs.models.DirectoryMember import DirectoryMember
+from sbs.models.Employee import Employee
+
 
 # from rest_framework.authtoken.models import Token
 
@@ -56,7 +59,9 @@ def return_coach_dashboard(request):
 def return_directory_dashboard(request):
     perm = general_methods.control_access(request)
 
-    if not perm:
+    member = DirectoryMember.objects.get(user=request.user)
+
+    if not perm or member.kobilid != 1:
         logout(request)
         return redirect('accounts:login')
     return render(request, 'anasayfa/federasyon.html')

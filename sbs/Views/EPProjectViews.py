@@ -1246,16 +1246,14 @@ def dokumanAdd(request):
     else:
         return JsonResponse({'status': 'Fail', 'msg': 'Not a valid request'})
 
-
-
-
-
-
-
 @login_required
 def return_personel_dashboard(request):
     perm = general_methods.control_access_personel(request)
     user = request.user
+    employe = Employee.objects.get(user=request.user)
+    if not perm or employe.kobilid != 1:
+        logout(request)
+        return redirect('accounts:login')
 
     proje = EPProject.objects.filter(employees__employee__user=user).distinct()
     proje |= EPProject.objects.filter(sorumlu__user=user).distinct()
@@ -1264,8 +1262,6 @@ def return_personel_dashboard(request):
     proje_status_PT = proje.filter(projectStatus=EPProject.PT).count()
     proje_status_PDE = proje.filter(projectStatus=EPProject.PDE).count()
     sorumlu_count = EPProject.objects.filter(sorumlu__user=user).count()
-
-
 
 
     cezainfaz = proje.filter(projeCinsi=EPProject.CIK).count()
@@ -1362,20 +1358,6 @@ def return_personel_dashboard(request):
         projects.filter(projeCinsi=EPProject.LOJMAN, projectStatus=EPProject.PDE).aggregate(Sum('insaatAlani'))[
             'insaatAlani__sum'] or 0)
 
-
-
-
-
-
-
-
-
-
-
-
-    if not perm:
-        logout(request)
-        return redirect('accounts:login')
     return render(request, 'anasayfa/personel.html', {'proje_count': proje_count,
                                                       'proje_status_PT': proje_status_PT,
                                                       'sorumlu_count': sorumlu_count,
