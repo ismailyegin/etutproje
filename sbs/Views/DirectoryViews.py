@@ -65,7 +65,7 @@ def add_directory_member(request):
 
             directoryMember = DirectoryMember(user=user, person=person, communication=communication)
             directoryMember.role = member_form.cleaned_data['role']
-            directoryMember.commission = member_form.cleaned_data['commission']
+            # directoryMember.commission = member_form.cleaned_data['commission']
 
             directoryMember.save()
 
