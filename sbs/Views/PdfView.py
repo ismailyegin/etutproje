@@ -273,7 +273,7 @@ def edit_project_pdf(request,pk):
     c = canvas.Canvas(buffer)
     c.setTitle('Etüt Proje')
 
-    logo = ImageReader("http://kobiltek.com:81/etutproje/media/profile/logo.png")
+    logo = ImageReader("https://kobiltek.com:81/etutproje/media/profile/logo.png")
     c.drawImage(logo, 460, 740, width=80, height=80, mask='auto')
     # for i in range(5):
     #     page_num = c.getPageNumber()
@@ -711,7 +711,7 @@ def edit_project_pdf_personel(request,pk):
     c = canvas.Canvas(buffer)
     c.setTitle('Etüt Proje ')
 
-    logo = ImageReader('http://kobiltek.com:81/etutproje/'+MEDIA_URL + "profile/logo.png")
+    logo = ImageReader('https://kobiltek.com:81/etutproje/'+MEDIA_URL + "profile/logo.png")
     c.drawImage(logo, 460, 730, width=80, height=80, mask='auto')
     # for i in range(5):
     #     page_num = c.getPageNumber()
@@ -1011,7 +1011,7 @@ def edit_project_pdf_teknik(request,pk):
     c = canvas.Canvas(buffer)
     c.setTitle('Kobiltek Bilişim')
 
-    logo = ImageReader('http://kobiltek.com:81/etutproje/'+MEDIA_URL + "profile/logo.png")
+    logo = ImageReader('https://kobiltek.com:81/etutproje/'+MEDIA_URL + "profile/logo.png")
     c.drawImage(logo, 460, 740, width=80, height=80, mask='auto')
     # for i in range(5):
     #     page_num = c.getPageNumber()
