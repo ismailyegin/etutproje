@@ -70,6 +70,10 @@ from django.utils import timezone
 import csv
 import xlwt
 
+from django.conf import settings
+from django.contrib.staticfiles.urls import static
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+
 
 @login_required
 
@@ -82,7 +86,14 @@ def return_pdf2(request):
     buffer = BytesIO()
     c = canvas.Canvas(buffer)
 
-    logo = ImageReader('https://www.google.com/images/srpr/logo11w.png')
+    urlpatterns = staticfiles_urlpatterns()
+    print(urlpatterns)
+    urlpatterns = static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    print(urlpatterns)
+
+
+
+    logo = ImageReader('https://pbs.twimg.com/profile_images/1324393219245965313/5iGZlgza_400x400.jpg')
     c.drawImage(logo, 100, 100, width=None,height=None,mask=None)
     c.showPage()
     c.save()
@@ -273,7 +284,7 @@ def edit_project_pdf(request,pk):
     c = canvas.Canvas(buffer)
     c.setTitle('Etüt Proje')
 
-    logo = ImageReader("https://kobiltek.com:81/etutproje/media/profile/logo.png")
+    logo = ImageReader("http://kobiltek.com:81/etutproje/media/profile/logo.png")
     c.drawImage(logo, 460, 740, width=80, height=80, mask='auto')
     # for i in range(5):
     #     page_num = c.getPageNumber()
@@ -711,7 +722,7 @@ def edit_project_pdf_personel(request,pk):
     c = canvas.Canvas(buffer)
     c.setTitle('Etüt Proje ')
 
-    logo = ImageReader('https://kobiltek.com:81/etutproje/'+MEDIA_URL + "profile/logo.png")
+    logo = ImageReader('http://kobiltek.com:81/etutproje/'+MEDIA_URL + "profile/logo.png")
     c.drawImage(logo, 460, 730, width=80, height=80, mask='auto')
     # for i in range(5):
     #     page_num = c.getPageNumber()
@@ -1011,7 +1022,7 @@ def edit_project_pdf_teknik(request,pk):
     c = canvas.Canvas(buffer)
     c.setTitle('Kobiltek Bilişim')
 
-    logo = ImageReader('https://kobiltek.com:81/etutproje/'+MEDIA_URL + "profile/logo.png")
+    logo = ImageReader('http://kobiltek.com:81/etutproje/'+MEDIA_URL + "profile/logo.png")
     c.drawImage(logo, 460, 740, width=80, height=80, mask='auto')
     # for i in range(5):
     #     page_num = c.getPageNumber()
