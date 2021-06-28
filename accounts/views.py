@@ -285,8 +285,8 @@ def forgot(request):
             html_content = html_content + '<p><strong>Kullanıcı Adınız :' + str(fdk.user.username) + '</strong></p>'
             # html_content = html_content + '<p> <strong>Site adresi:</strong> <a href="http://127.0.0.1:8000/newpassword?query=' + str(
             #     fdk.uuid) + '">http://127.0.0.1:8000/sbs/profil-guncelle/?query=' + str(fdk.uuid) + '</p></a>'
-            html_content = html_content + '<p> <strong>Yeni şifre oluşturma linki:</strong> <a href="https://www.kobiltek.com:81/etutproje/sbs/newpassword?query=' + str(
-                fdk.uuid) + '">https://www.kobiltek.com:81/etutproje/sbs/profil-guncelle/?query=' + str(
+            html_content = html_content + '<p> <strong>Yeni şifre oluşturma linki:</strong> <a href="http://www.kobiltek.com:81/etutproje/sbs/newpassword?query=' + str(
+                fdk.uuid) + '">http://www.kobiltek.com:81/etutproje/sbs/profil-guncelle/?query=' + str(
                 fdk.uuid) + '</p></a>'
 
             msg = EmailMultiAlternatives(subject, '', from_email, [to])
@@ -370,8 +370,8 @@ def newlogin(request, pk):
             html_content = html_content + '<p><strong>Kullanıcı Adınız :' + str(fdk.user.username) + '</strong></p>'
             # html_content = html_content + '<p> <strong>Site adresi:</strong> <a href="http://127.0.0.1:8000/newpassword?query=' + str(
             #     fdk.uuid) + '">http://127.0.0.1:8000/sbs/profil-guncelle/?query=' + str(fdk.uuid) + '</p></a>'
-            html_content = html_content + '<p> <strong>Site adresi:</strong> <a href="https://kobiltek.com:81/etutproje/newpassword?query=' + str(
-                fdk.uuid) + '">https://kobiltek.com:81/etutproje/sbs/profil-guncelle/?query=' + str(
+            html_content = html_content + '<p> <strong>Site adresi:</strong> <a href="http://kobiltek.com:81/etutproje/newpassword?query=' + str(
+                fdk.uuid) + '">http://kobiltek.com:81/etutproje/sbs/profil-guncelle/?query=' + str(
                 fdk.uuid) + '</p></a>'
 
             msg = EmailMultiAlternatives(subject, '', from_email, [to])
